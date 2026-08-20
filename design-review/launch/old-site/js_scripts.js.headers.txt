@@ -1,0 +1,12 @@
+200 OK
+
+accept-ranges: bytes
+content-encoding: gzip
+content-type: application/javascript
+date: Thu, 20 Aug 2026 21:44:31 GMT
+etag: "1dca647f6eeb2f6"
+last-modified: Wed, 25 Feb 2026 11:14:53 GMT
+server: Microsoft-IIS/10.0
+transfer-encoding: chunked
+vary: Accept-Encoding
+x-powered-by: ASP.NET

@@ -1,0 +1,342 @@
+/*
+ * Phase 6 Step A — per-direction tokens and photo treatments.
+ *
+ * Each direction owns its palette, type pairing, photographic grade and motion
+ * accent. Nothing here leaks into the live design system: every rule is scoped
+ * under .dir-a / .dir-b / .dir-c.
+ */
+
+/* ------------------------------------------------------------------ shared */
+
+.dir {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dir *,
+.dir *::before,
+.dir *::after {
+  box-sizing: border-box;
+}
+
+/*
+ * The study routes sit inside the site's root layout, so headings would
+ * otherwise inherit the live build's display serif. Reset them here and let
+ * each direction's own .display class assert the family it wants.
+ */
+.dir h1,
+.dir h2,
+.dir h3,
+.dir h4 {
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-wrap: initial;
+}
+
+/* ------------------------------------------------- A — Gallery Ivory */
+/* Museum wall. Near-white, enormous air, hairline rules, silence as luxury.
+   Photography hangs monochrome and only admits colour when you approach it. */
+
+.dir-a {
+  --bg: #fbfaf8;
+  --bg-alt: #f2f0ec;
+  --ink: #16161a;
+  --muted: #5f5f66;
+  --hair: #d8d5cf;
+  --accent: #16161a; /* no colour accent at all — the restraint is the point */
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.dir-a .display {
+  font-family: var(--font-instrument), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+
+.dir-a .label {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dir-a .plate img {
+  filter: grayscale(1) contrast(1.04) brightness(1.02);
+  transition: filter 1.2s var(--ease), transform 1.4s var(--ease);
+}
+
+.dir-a .plate:hover img,
+.dir-a .plate:focus-within img {
+  filter: grayscale(0) contrast(1.03) saturate(1.04);
+}
+
+.dir-a .hair {
+  height: 1px;
+  background: var(--hair);
+}
+
+/* ------------------------------------------------- B — Cretan Noir */
+/* Deep ink. The photograph is the only light in the room; it glows warm out of
+   darkness. Gold appears exactly once per screen and never twice. */
+
+.dir-b {
+  --bg: #0a0a0b;
+  --bg-alt: #121214;
+  --ink: #f3efe7;
+  --muted: #9b968c;
+  --hair: rgba(243, 239, 231, 0.14);
+  --accent: #b98f4a;
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-jost), system-ui, sans-serif;
+}
+
+.dir-b .display {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.dir-b .label {
+  font-family: var(--font-jost), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dir-b .plate img {
+  filter: contrast(1.14) saturate(1.12) brightness(0.92);
+  transition: transform 1.6s var(--ease), filter 1.2s var(--ease);
+}
+
+.dir-b .plate:hover img {
+  filter: contrast(1.1) saturate(1.16) brightness(1.02);
+}
+
+/* The glow: a warm bloom bleeding off the edges of every plate. */
+.dir-b .plate {
+  position: relative;
+}
+.dir-b .plate::after {
+  content: "";
+  position: absolute;
+  inset: -12% -8%;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(185, 143, 74, 0.16) 0%,
+    rgba(185, 143, 74, 0) 62%
+  );
+  opacity: 0;
+  transition: opacity 1.2s var(--ease);
+}
+.dir-b .plate:hover::after {
+  opacity: 1;
+}
+
+.dir-b .hair {
+  height: 1px;
+  background: var(--hair);
+}
+
+/* ------------------------------------------------- C — Editorial Sand */
+/* Magazine. Warm limestone paper, deliberate asymmetry, a high-contrast serif
+   against monospaced caps that behave like a contact sheet's annotations. */
+
+.dir-c {
+  --bg: #efe9df;
+  --bg-alt: #e4dccf;
+  --ink: #221f1a;
+  --muted: #6a6157;
+  --hair: #c7bdae;
+  --accent: #8a4b32;
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+.dir-c .display {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 0.94;
+}
+
+.dir-c .body {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: 0;
+}
+
+.dir-c .label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dir-c .plate img {
+  filter: sepia(0.16) saturate(1.1) contrast(1.06) brightness(1.01);
+  transition: transform 1.4s var(--ease);
+}
+
+.dir-c .hair {
+  height: 1px;
+  background: var(--hair);
+}
+
+/* ------------------------------------------------- D — Cretan Light */
+/* The White Desert language, translated. Sun-bleached warm white ground,
+   photography in full warm colour, haze veils standing in for their cloud
+   overlays — Cretan sea-light, never a copied cloud. Type inverts from B: the
+   geometric sans carries the display weight and the serif disappears entirely,
+   with a mono reserved for coordinates. Facts are set as the luxury. */
+
+.dir-d {
+  --bg: #faf7f1;
+  --bg-alt: #f2ede4;
+  --ink: #1c1a17;
+  --muted: #6b6459;
+  --hair: #ddd5c8;
+  --accent: #2f4f57; /* deep Aegean, used for coordinates and rules only */
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-jost), system-ui, sans-serif;
+}
+
+/* Display is the SANS here — the clearest inversion from noir. */
+.dir-d .display {
+  font-family: var(--font-jost), system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  text-transform: none;
+}
+
+.dir-d .label {
+  font-family: var(--font-jost), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Coordinates as annotation — the one place a mono appears. */
+.dir-d .coord {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+/* Numbers are the sell. */
+.dir-d .stat {
+  font-family: var(--font-jost), system-ui, sans-serif;
+  font-weight: 300;
+  font-size: clamp(3rem, 7vw, 7rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+}
+
+.dir-d .plate img {
+  /* Full warm colour, not a treatment. Cretan light is the point. */
+  filter: saturate(1.06) contrast(1.03) brightness(1.02);
+  transition: transform 1.4s var(--ease);
+}
+
+.dir-d .hair {
+  height: 1px;
+  background: var(--hair);
+}
+
+/*
+ * Haze — their cloud overlay, rebuilt as sea-light. A warm-white veil that
+ * bleeds the photograph into the page ground at the section seam, so sections
+ * dissolve into one another instead of butting up.
+ */
+/*
+ * The bottom veil is deep on purpose: the photograph dissolves into the page
+ * ground over roughly half the frame, so the oversized ink wordmark sits on
+ * what reads as paper rather than fighting the image behind it.
+ */
+.dir-d .haze-b {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 58%;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    var(--bg) 0%,
+    var(--bg) 22%,
+    rgba(250, 247, 241, 0.92) 42%,
+    rgba(250, 247, 241, 0.6) 66%,
+    transparent 100%
+  );
+}
+.dir-d .haze-t {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 22%;
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--bg) 0%, rgba(250, 247, 241, 0.55) 45%, transparent 100%);
+}
+
+/* ------------------------------------------------------------- motion */
+
+@keyframes dir-rise {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes dir-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* A: everything simply arrives, slowly. Silence as luxury. */
+.dir-a .in {
+  animation: dir-fade 1.8s var(--ease) both;
+}
+
+/* B: type rises behind a mask, like a title card. */
+.dir-b .in > span {
+  display: block;
+  animation: dir-rise 1.3s var(--ease) both;
+}
+
+/* C: staggered editorial slide. */
+.dir-c .in {
+  animation: dir-fade 1s var(--ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dir *,
+  .dir *::before,
+  .dir *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
