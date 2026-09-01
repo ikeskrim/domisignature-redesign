@@ -1,0 +1,13 @@
+# Review artefacts belong in the repository — that is how a reviewer sees the
+# build on GitHub without running it — but they are not part of the site and
+# nothing serves them. Excluding them here halves the deployment upload
+# (~147 MB of screenshots) without removing anything from version control.
+design-review/
+
+# Source HTML of the old site, kept for the content and fact audits only.
+scripts/source.html
+
+# Never needed by a build.
+node_modules/
+.next/
+.next-build/

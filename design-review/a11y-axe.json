@@ -1,0 +1,122 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "venues",
+    "path": "/venues",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "venue-detail",
+    "path": "/venues/thalasses",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "events",
+    "path": "/events",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "event-detail",
+    "path": "/events/villa-party",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "services",
+    "path": "/services",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "wedding-guide",
+    "path": "/wedding-guide",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "about",
+    "path": "/about",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "404",
+    "path": "/no-such-page",
+    "viewport": "mobile",
+    "violations": []
+  },
+  {
+    "route": "home",
+    "path": "/",
+    "viewport": "desktop",
+    "violations": []
+  },
+  {
+    "route": "venues",
+    "path": "/venues",
+    "viewport": "desktop",
+    "violations": []
+  },
+  {
+    "route": "venue-detail",
+    "path": "/venues/thalasses",
+    "viewport": "desktop",
+    "violations": []
+  },
+  {
+    "route": "events",
+    "path": "/events",
+    "viewport": "desktop",
+    "violations": []
+  },
+  {
+    "route": "event-detail",
+    "path": "/events/villa-party",
+    "viewport": "desktop",
+    "violations": []
+  },
+  {
+    "route": "services",
+    "path": "/services",
+    "viewport": "desktop",
+    "violations": []
+  },
+  {
+    "route": "wedding-guide",
+    "path": "/wedding-guide",
+    "viewport": "desktop",
+    "violations": []
+  },
+  {
+    "route": "about",
+    "path": "/about",
+    "viewport": "desktop",
+    "violations": []
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "viewport": "desktop",
+    "violations": []
+  },
+  {
+    "route": "404",
+    "path": "/no-such-page",
+    "viewport": "desktop",
+    "violations": []
+  }
+]

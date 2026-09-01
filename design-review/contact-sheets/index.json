@@ -1,0 +1,52 @@
+[
+  {
+    "slug": "sunset-by-the-pool",
+    "kind": "event",
+    "count": 24
+  },
+  {
+    "slug": "villa-party",
+    "kind": "event",
+    "count": 13
+  },
+  {
+    "slug": "party-celebration",
+    "kind": "event",
+    "count": 31
+  },
+  {
+    "slug": "wedding-rituals-aerial",
+    "kind": "event",
+    "count": 9
+  },
+  {
+    "slug": "dinner-celebration",
+    "kind": "event",
+    "count": 3
+  },
+  {
+    "slug": "party-drone",
+    "kind": "event",
+    "count": 15
+  },
+  {
+    "slug": "wedding-rituals-olive",
+    "kind": "event",
+    "count": 8
+  },
+  {
+    "slug": "thalasses",
+    "kind": "venue",
+    "count": 22
+  },
+  {
+    "slug": "mountain-escape",
+    "kind": "venue",
+    "count": 16
+  },
+  {
+    "slug": "olive-stories",
+    "kind": "venue",
+    "count": 5
+  }
+]
