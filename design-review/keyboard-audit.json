@@ -1,0 +1,65 @@
+{
+  "findings": [
+    {
+      "route": "home",
+      "path": "/",
+      "stops": 45,
+      "problems": []
+    },
+    {
+      "route": "venues",
+      "path": "/venues",
+      "stops": 35,
+      "problems": []
+    },
+    {
+      "route": "venue-detail",
+      "path": "/venues/thalasses",
+      "stops": 45,
+      "problems": [
+        "stop 36 (IFRAME \"\") stays off-screen after focus"
+      ]
+    },
+    {
+      "route": "events",
+      "path": "/events",
+      "stops": 44,
+      "problems": []
+    },
+    {
+      "route": "event-detail",
+      "path": "/events/villa-party",
+      "stops": 45,
+      "problems": []
+    },
+    {
+      "route": "services",
+      "path": "/services",
+      "stops": 39,
+      "problems": []
+    },
+    {
+      "route": "wedding-guide",
+      "path": "/wedding-guide",
+      "stops": 32,
+      "problems": []
+    },
+    {
+      "route": "about",
+      "path": "/about",
+      "stops": 32,
+      "problems": []
+    },
+    {
+      "route": "contact",
+      "path": "/contact",
+      "stops": 45,
+      "problems": [
+        "stop 34 (IFRAME \"\") stays off-screen after focus",
+        "stop 35 (IFRAME \"\") stays off-screen after focus",
+        "stop 36 (IFRAME \"\") stays off-screen after focus"
+      ]
+    }
+  ],
+  "stripLastCard": "in view"
+}

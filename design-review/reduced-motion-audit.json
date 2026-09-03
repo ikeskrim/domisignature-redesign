@@ -1,0 +1,52 @@
+[
+  {
+    "route": "home",
+    "path": "/",
+    "problems": []
+  },
+  {
+    "route": "venues",
+    "path": "/venues",
+    "problems": []
+  },
+  {
+    "route": "venue-detail",
+    "path": "/venues/thalasses",
+    "problems": []
+  },
+  {
+    "route": "events",
+    "path": "/events",
+    "problems": []
+  },
+  {
+    "route": "event-detail",
+    "path": "/events/villa-party",
+    "problems": []
+  },
+  {
+    "route": "services",
+    "path": "/services",
+    "problems": []
+  },
+  {
+    "route": "wedding-guide",
+    "path": "/wedding-guide",
+    "problems": []
+  },
+  {
+    "route": "about",
+    "path": "/about",
+    "problems": []
+  },
+  {
+    "route": "contact",
+    "path": "/contact",
+    "problems": []
+  },
+  {
+    "route": "404",
+    "path": "/no-such-page",
+    "problems": []
+  }
+]

@@ -1,0 +1,83 @@
+# The quality gate, on every push.
+#
+# The audits in scripts/ only protect the site if they actually run, and a check
+# that depends on someone remembering to run it is not a check. This runs the
+# same `npm run qa` a developer runs locally — same script, same ten checks — so
+# there is no second, weaker definition of "green" that only CI believes.
+#
+# Budget is ten minutes. Lighthouse is deliberately absent: it needs a quiet,
+# consistent machine to produce comparable numbers, and a shared CI runner is
+# neither. It stays a local, deliberate measurement (`npm run audit:lighthouse`,
+# results in design-review/lighthouse.md).
+
+name: QA
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # Only Chromium. WebKit and Firefox are for the cross-browser pass, which
+      # is a human-reviewed capture run, not a pass/fail gate.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      # No `--with-deps`. That runs apt-get, which the browser cache cannot cover
+      # and which is the only step here that depends on Ubuntu's mirrors being
+      # healthy — one run hung on them for fourteen minutes and hit the job
+      # ceiling. The ubuntu-latest image already ships the shared libraries
+      # Chromium needs, so this is pure risk for no benefit. If a library ever
+      # does go missing, Chromium fails to launch and the QA gate says so
+      # loudly; it cannot fail quietly.
+      - name: Install Chromium
+        run: npx playwright install chromium
+        timeout-minutes: 5
+
+      # Built as a production deployment on purpose. The SEO flips — robots.txt,
+      # the per-page robots meta, canonicals — are decided at BUILD time, so a
+      # default build would have the launch check asserting against the wrong
+      # environment and passing for the wrong reason.
+      - name: Build
+        run: npm run build
+        env:
+          VERCEL: "1"
+          VERCEL_ENV: production
+
+      - name: QA gate
+        run: npm run qa
+
+      # Only on failure, and only the files an audit writes when it finds
+      # something — enough to see what broke without downloading a green run.
+      - name: Upload audit output
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-output
+          path: |
+            design-review/*.json
+            design-review/redirect-map.md
+          retention-days: 7
+          if-no-files-found: ignore

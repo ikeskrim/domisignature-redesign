@@ -1,0 +1,514 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   CRETAN NOIR — Direction B, approved Phase 6.
+
+   The room is dark; the photographs are not. Every ground below is a shade of
+   night, but the photographic grade stays warm Cretan light — noir is the
+   architecture, never a filter over the work.
+
+   Contrast is quoted against `graphite` (#1e1e22), the lightest ground, so a
+   value that passes there passes on ink and charcoal too.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Grounds, deepest to lightest */
+  --color-ink: #0a0a0b;        /* hero, venue index, footer — the deep scenes */
+  --color-charcoal: #131316;   /* mid panels, galleries */
+  --color-graphite: #1e1e22;   /* long-reading surfaces: venue prose, guide, contact */
+  --color-hair: #2b2b30;       /* rules and borders */
+
+  /* Type */
+  --color-bone: #f3efe7;       /* primary text — 14.9:1 on graphite */
+  --color-muted: #9b968c;      /* secondary text —  5.8:1 on graphite */
+  --color-faint: #8d8880;      /* tertiary labels — 4.85:1 on graphite (was #7e7a72 at 3.97:1) */
+
+  /* The one accent. Rationed to a single appearance per screen. */
+  --color-gold: #b98f4a;
+
+  /* Type families */
+  --font-display: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+
+  /* Display scale */
+  --text-hero: clamp(3.5rem, 11vw, 11rem);
+  --text-display: clamp(2.5rem, 6vw, 6.5rem);
+  --text-title: clamp(2.25rem, 4.5vw, 4.25rem);
+  --text-heading: clamp(1.75rem, 2.6vw, 2.5rem);
+  --text-lead: clamp(1.0625rem, 1.1vw, 1.15rem);
+
+  /* Rhythm */
+  --spacing-gutter: clamp(1.5rem, 5vw, 6rem);
+  --spacing-section: clamp(6rem, 14vh, 12rem);
+
+  /* One global ease for every reveal */
+  --ease-cinema: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-curtain: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   EMBER INK — a study palette. NOT the default, and nothing selects it unless
+   ?palette=ember is in the URL.
+
+   The diagnosis both reviews agreed on: every shipped ground is blue-leaning
+   (r-b of -1, -3, -4, -5) while the type is warm (bone r-b +12, muted +15).
+   Warm type on cool ground is why the dark reads austere rather than candlelit.
+
+   Derived by measurement, not by eye — see scripts/derive-ember.mjs. The rung
+   spacing of the shipped ladder was measured as WCAG contrast ratios between
+   neighbours (1.0672 / 1.1162 / 1.1795) and rebuilt in the warm hue to within
+   0.0043. Every rung is now warm: r-b of +8, +11, +14, +19.
+
+   `faint` is the one type token that moves. Anchoring the ground at #17140f
+   puts it at more than twice ink's luminance, so the whole ladder lifts and
+   every pair loses about 7% of its ratio. bone (13.44) and muted (5.24) absorb
+   that; faint fell to 4.38 on graphite, under AA for the small uppercase
+   labels it is used for. #938e85 is the minimum lift that restores its shipped
+   ratio — 4.73 against 4.72 — in the same warm direction. Hue barely moves:
+   r-b goes 13 to 14.
+
+   bone, muted and gold are untouched. gold #b98f4a is already flat, muted,
+   in-range and rationed to one appearance per screen; #A89474 was suggested as
+   an alternative and is recorded in the report as a swatch, never applied.
+
+   Scrims and gradients need no changes: they are built with
+   color-mix(in srgb, var(--color-ink) …), so they follow the ground. Verified,
+   not assumed. `.grade` is a filter and carries no colour token, so the
+   photography is graded identically in both palettes.
+--------------------------------------------------------------------------- */
+[data-palette="ember"] {
+  --color-ink: #17140f;
+  --color-charcoal: #1f1b14;
+  --color-graphite: #29241b;
+  --color-hair: #373024;
+  --color-faint: #938e85;
+}
+
+/* EMBER INK (DEEP) — the same warmth, none of the cost.
+
+   Anchoring on #17140f is what costs contrast: it sits at more than twice
+   ink's luminance, so the ladder lifts and bone, muted and gold each give up
+   about 7% of their ratio. Warmth and lift are separable. These rungs carry the
+   same warm hue solved at the luminance each shipped rung already has, so every
+   contrast ratio on the site is preserved exactly — nothing regresses, faint
+   needs no correction, and every ground is still warm (r-b +4, +8, +12, +17).
+
+   Worth noting: graphite lands on #221e16, one digit from the #221E17 the
+   colour report proposed as its SURFACE anchor. That value was well judged. It
+   was the ground anchor that dragged the ladder up. */
+[data-palette="ember-deep"] {
+  --color-ink: #0b0a07;
+  --color-charcoal: #16130e;
+  --color-graphite: #221e16;
+  --color-hair: #312b20;
+}
+
+/* ---------------------------------------------------------------------------
+   THE GROUND LAYER — Aegean Bone, stage 1.
+
+   Two ladders and one switch. A section declares `data-ground="light"` or
+   `data-ground="dark"` and every role resolves underneath it, so a dark chapter
+   is a LOCAL INVERSION rather than a conditional. No component may name a
+   palette literal: it asks for --text-secondary, and whether that is stone or
+   muted is the section's business.
+
+   Every value is solved, not picked — scripts/derive-tokens.mjs — against the
+   ratio its ROLE requires: text 4.5:1, focus ring 3:1, rule-strong 3:1,
+   decorative rule exempt but measured anyway.
+
+   Two things this exposed that are worth knowing:
+
+   The light ground has room for a genuine three-step text ramp — 13.53 / 7.65 /
+   4.92 — but only just. Tertiary at 4.92:1 is close to the floor, so hierarchy
+   below it must come from size and tracking, not from another colour.
+
+   The dark ground had NO rule meeting the 3:1 a meaningful boundary needs:
+   today's `hair` is 1.41:1 on ink. That is a pre-existing gap, not one the
+   inversion created, and it is closed here with a solved `--rule-strong`.
+   `hair` keeps its job as the decorative hairline it already draws.
+
+   Gold appears in both ladders but means different things: on dark it is 6.68:1
+   and may carry text; on light it is 2.52:1 and is the mark and decorative
+   hairlines only, never text, never focus, never a boundary.
+--------------------------------------------------------------------------- */
+[data-ground="light"] {
+  --surface: #f2ece1;
+  --surface-raised: #fbf7f0;
+  --text-primary: #27211b;
+  --text-secondary: #4f4840;
+  --text-tertiary: #6b6558;
+  --rule: #d8cfc0;
+  --rule-strong: #8a8378;
+  --focus: #27211b;
+  --shadow-tint: 39 33 27;
+  --accent: #b98f4a;
+  --wash: 242 236 225;
+}
+
+[data-ground="dark"] {
+  --surface: #0a0a0b;
+  --surface-raised: #1e1e22;
+  --text-primary: #f3efe7;
+  --text-secondary: #9b968c;
+  --text-tertiary: #8d8880;
+  --rule: #2b2b30;
+  --rule-strong: #5f5f66;
+  --focus: #b98f4a;
+  --shadow-tint: 0 0 0;
+  --accent: #b98f4a;
+  --wash: 10 10 11;
+}
+
+/* Focus follows the ground it lands on. Gold is 6.68:1 on dark and 2.52:1 on
+   ivory, so a single ring colour cannot serve both — and axe will not catch the
+   failure, because it does not evaluate focus-indicator contrast. */
+[data-ground] :focus-visible {
+  outline-color: var(--focus);
+}
+
+/* The scrim/wash, expressed once so chapter boundaries cannot each invent one. */
+[data-ground] .wash-bottom {
+  background: linear-gradient(
+    to top,
+    rgb(var(--wash) / 0.88) 0%,
+    rgb(var(--wash) / 0.45) 34%,
+    transparent 70%
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    background-color: var(--color-ink);
+  }
+
+  html.lenis {
+    scroll-behavior: auto;
+  }
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-bone);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.96;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  iframe {
+    border: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Components
+--------------------------------------------------------------------------- */
+@layer components {
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .rule {
+    height: 1px;
+    background-color: var(--color-hair);
+  }
+
+  /*
+   * Inside a declared ground the hairline follows that ground's own rule role
+   * instead of the fixed noir one. On `data-ground="dark"` the role resolves to
+   * #2b2b30 — the same value `--color-hair` has always carried — so this is a
+   * no-op everywhere the site is dark, and the only thing it changes is that a
+   * light section stops drawing near-black hairlines on ivory.
+   *
+   * Deliberately inside @layer components, not outside it: an unlayered rule
+   * would outrank Tailwind's utilities and make `bg-[var(--rule-strong)]`
+   * un-overridable on a rule that wants to read heavier.
+   */
+  [data-ground] .rule {
+    background-color: var(--rule);
+  }
+
+  /*
+   * The single shared photographic grade — unchanged in register from Phase 5.
+   * Noir is the room, not the photographs, so this stays warm Cretan light.
+   */
+  .grade {
+    filter: contrast(1.06) saturate(1.08) brightness(1.015) sepia(0.05);
+  }
+
+  /*
+   * Hero and title-card media. Slightly lifted shadows so the noir scrims can
+   * sit on top without crushing the blacks out of the photograph.
+   */
+  /* ------------------------------------------------------------------
+     STAGE 2 — the two grade candidates, study routes only.
+
+     `.grade` was tuned to sit on near-black: contrast 1.06, saturate 1.08,
+     brightness 1.015, sepia 0.05. On ivory the same filter reads muddy, because
+     shadows that used to disappear into the ground now have a light ground
+     behind them and simply look grey.
+
+     Both candidates are FILTERS over the real photograph. No file is modified,
+     no pixel is generated, and either can be reverted by deleting a class.
+     ------------------------------------------------------------------ */
+
+  /* A — PLATE. Shadows lifted, contrast eased, warmth pulled back a touch.
+     Aims at a photograph printed on warm stock: the image belongs to the page. */
+  .grade-a {
+    filter: contrast(0.96) brightness(1.06) saturate(1.02) sepia(0.03);
+  }
+
+  /* B — WINDOW. Contrast raised, blacks held deep, warmth unchanged. Aims at a
+     dark photograph seen through an opening in a light wall: the image keeps
+     its own world and the paper frames it. */
+  .grade-b {
+    filter: contrast(1.12) brightness(0.99) saturate(1.1) sepia(0.05);
+  }
+
+  .grade-hero {
+    filter: contrast(1.04) saturate(1.1) brightness(1.06) sepia(0.05);
+  }
+
+  .prose-editorial {
+    font-size: var(--text-lead);
+    line-height: 1.7;
+    max-width: 62ch;
+    color: color-mix(in srgb, var(--color-bone) 82%, transparent);
+  }
+  .prose-editorial > * + * {
+    margin-top: 1.2em;
+  }
+  .prose-editorial strong {
+    font-weight: 500;
+    color: var(--color-bone);
+  }
+  .prose-editorial a {
+    color: var(--color-bone);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--color-gold) 70%, transparent);
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color 0.4s var(--ease-cinema);
+  }
+  .prose-editorial a:hover {
+    text-decoration-color: var(--color-gold);
+  }
+
+  /*
+   * Scrims. Tuned for noir: they darken enough to carry type but stop short of
+   * flattening the photograph's own shadows into the page ground.
+   */
+  .scrim-bottom {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-ink) 88%, transparent) 0%,
+      color-mix(in srgb, var(--color-ink) 45%, transparent) 34%,
+      transparent 70%
+    );
+  }
+
+  .scrim-full {
+    background:
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-ink) 62%, transparent) 0%,
+        color-mix(in srgb, var(--color-ink) 24%, transparent) 48%,
+        transparent 78%
+      ),
+      linear-gradient(
+        to top,
+        color-mix(in srgb, var(--color-ink) 86%, transparent) 0%,
+        color-mix(in srgb, var(--color-ink) 44%, transparent) 40%,
+        color-mix(in srgb, var(--color-ink) 18%, transparent) 66%,
+        color-mix(in srgb, var(--color-ink) 40%, transparent) 100%
+      );
+  }
+
+  /*
+   * The warm bloom that makes a photograph read as the light source in the
+   * room. Applied on hover to venue and gallery plates.
+   */
+  .bloom {
+    position: relative;
+  }
+  .bloom::after {
+    content: "";
+    position: absolute;
+    inset: -10% -6%;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      color-mix(in srgb, var(--color-gold) 16%, transparent) 0%,
+      transparent 62%
+    );
+    opacity: 0;
+    transition: opacity 1.1s var(--ease-cinema);
+  }
+  .bloom:hover::after,
+  .bloom:focus-within::after {
+    opacity: 1;
+  }
+
+  /*
+   * Hides the scrollbar on the horizontal events strip without disabling the
+   * scrolling itself — the container stays a real scroll container, so keyboard
+   * and touch both work and the browser still scrolls a focused card into view.
+   */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /*
+   * Film grain.
+   *
+   * A near-black ground renders as flat dead space on a good screen. A trace of
+   * grain gives it a surface, and ties the whole site to the "shot on film"
+   * register the photography already has.
+   *
+   * Deliberately STATIC. Real film grain shimmers, but animating it means
+   * repainting the full viewport every frame — the single most expensive thing
+   * this site could do, for an effect most visitors would not consciously see.
+   *
+   * The tile is one 160px feTurbulence patch repeated, so the cost is one small
+   * decode and a cheap repeat, not a full-viewport filter. Opacity is 0.04:
+   * enough to feel, far too little to touch text contrast. axe cannot see an
+   * overlay like this, so the number is conservative by intent rather than by
+   * measurement.
+   */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
+
+  /*
+   * Ambient light pools — the "photography is the only light" idea extended to
+   * the empty ground between scenes.
+   *
+   * Bone, not gold. Gold is the one accent and it is spent once per screen; a
+   * gold haze behind every section would quietly break that rule. This reads as
+   * light rather than as colour, which is the point.
+   */
+  .glow {
+    position: absolute;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      color-mix(in srgb, var(--color-bone) 7%, transparent) 0%,
+      transparent 68%
+    );
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Ken Burns
+--------------------------------------------------------------------------- */
+@layer utilities {
+  @keyframes ken-in {
+    from {
+      transform: scale(1.001) translate3d(0, 0, 0);
+    }
+    to {
+      transform: scale(1.09) translate3d(-1.2%, -1%, 0);
+    }
+  }
+
+  @keyframes ken-out {
+    from {
+      transform: scale(1.09) translate3d(1.2%, 1%, 0);
+    }
+    to {
+      transform: scale(1.001) translate3d(0, 0, 0);
+    }
+  }
+
+  .ken {
+    animation: ken-in 28s var(--ease-cinema) infinite alternate;
+    will-change: transform;
+  }
+  .ken-alt {
+    animation: ken-out 32s var(--ease-cinema) infinite alternate;
+    will-change: transform;
+  }
+
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .ken,
+  .ken-alt {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

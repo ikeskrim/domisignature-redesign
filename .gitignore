@@ -1,0 +1,99 @@
+# ─── Build output & dependencies ──────────────────────────────────────────────
+node_modules/
+.next/
+.next-build/
+out/
+build/
+next-env.d.ts
+*.tsbuildinfo
+.vercel
+
+# ─── Secrets ──────────────────────────────────────────────────────────────────
+# Every env form, not just the .local variants. This repository is public and
+# needs none of these to build: the enquiry form is a public Monday embed and
+# every contact detail on the site is already published. If an email provider is
+# added later its key belongs in Vercel's environment variables, never here.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# ─── OS / editor noise ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Scratch ──────────────────────────────────────────────────────────────────
+# One-off diagnostics and commit-message drafts. Anything worth keeping was
+# folded into scripts/ as a real, documented audit.
+_*.mjs
+_*.js
+msg*.txt
+*.bak
+*.log
+design-review/_prod.*
+public/_grade-preview.html
+
+# ─── Withheld frames — MUST NOT be published ──────────────────────────────────
+# Pulled in Phase 6 §4 and deliberately absent from the public tree. They remain
+# in local history. Rationale for each is in design-review/imagery-report.md and
+# design-review/publish-manifest.md; `npm run publish:manifest` fails if any of
+# them is ever referenced again.
+public/media/olLK_LD_072.jpg
+public/media/spire2.png
+public/media/thspire2.png
+public/media/stHARLEY.jpg
+public/media/blDSC_9849.jpg
+public/media/ae9Z8A4481-Edit.jpg
+public/media/aeIMG_2133.jpg
+
+# ─── Raw camera masters ───────────────────────────────────────────────────────
+# 125 MB of source footage. `content/*.ts` records each one in an `original:`
+# field so every transcode's provenance is documented, but nothing serves them —
+# the site plays the web transcodes in public/media/video/, which ARE committed.
+public/media/Wedding clip.mp4
+public/media/xorafi.mp4
+public/media/paDJI_2288.MP4
+public/media/paDJI_2282.mp4
+public/media/jdIMG_8749.MOV
+public/media/deIMG_8840.MOV
+public/media/deIMG_8845.MOV
+
+# ─── Unreferenced leftovers ───────────────────────────────────────────────────
+# posterimage.png is a 3 MB frame of a real couple's ceremony, superseded in §6
+# by an optimised poster. Nothing links to it and it shows identifiable people,
+# so it does not go to a public repository.
+public/media/posterimage.png
+public/media/about_updated.png
+public/assets/img/close-icon.svg
+
+# Villa Aetos was withdrawn from the collection by the owner, so its ten
+# photographs are orphaned — no reference in content/ or src/. They follow the
+# manifest's orphan rule rather than lingering as dead weight in a public
+# repository. Still on local disk; the venue can be restored from history.
+public/media/ae9Z8A4450-Edit.jpg
+public/media/ae9Z8A4452-Edit.jpg
+public/media/ae9Z8A4458.jpg
+public/media/ae9Z8A4482.jpg
+public/media/ae12.2023 _ 2.jpg
+public/media/aeIMG_2088.jpg
+public/media/aeIMG_2102.jpg
+public/media/aeIMG_2122.jpg
+public/media/aeIMG_2131.jpg
+public/media/aeIMG_6743_4_5.jpg
+
+# ─── Review screenshots ───────────────────────────────────────────────────────
+# design-review/ IS published — it is how a reviewer sees the build without
+# running it.
+#
+# The eight superseded round-by-round sets were DELETED outright in the final QA
+# pass rather than merely ignored, so the repository cannot show two eras of the
+# design at once. Everything current is published: final/, final-scroll/,
+# contact-sheets/, directions/, grade/, atmosphere/, graffiti/, stats/ and every
+# report. All of it is reproducible — see design-review/publish-manifest.md.
+#
+# cross-browser/ stays out: it is raw engine probe output, superseded by the
+# summary in the report.
+design-review/cross-browser/
+.dns-watch/
