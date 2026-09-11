@@ -16,24 +16,24 @@ export function VenueFacts({ venue }: { venue: Venue }) {
 
   return (
     <aside className="lg:sticky lg:top-32">
-      <div className="border-t border-hair pt-7">
-        <h2 className="eyebrow text-muted">At a glance</h2>
+      <div className="border-t border-[var(--rule)] pt-7">
+        <h2 className="eyebrow">At a glance</h2>
 
         <dl className="mt-7 space-y-6">
           <div>
-            <dt className="text-xs uppercase tracking-[0.16em] text-faint">Capacity</dt>
-            <dd className="mt-1.5 font-display text-2xl font-light text-bone">{capacity}</dd>
+            <dt className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Capacity</dt>
+            <dd className="mt-1.5 font-display text-2xl font-light text-[var(--text-primary)]">{capacity}</dd>
           </div>
 
           <div>
-            <dt className="text-xs uppercase tracking-[0.16em] text-faint">Location</dt>
-            <dd className="mt-1.5 leading-relaxed text-bone/85">{venue.location}</dd>
+            <dt className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Location</dt>
+            <dd className="mt-1.5 leading-relaxed text-[var(--text-primary)]">{venue.location}</dd>
           </div>
 
           {venue.note && (
             <div>
-              <dt className="text-xs uppercase tracking-[0.16em] text-faint">Please note</dt>
-              <dd className="mt-1.5 leading-relaxed text-bone/85 underline decoration-hair underline-offset-4">
+              <dt className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Please note</dt>
+              <dd className="mt-1.5 leading-relaxed text-[var(--text-primary)] underline decoration-[var(--rule)] underline-offset-4">
                 {venue.note}
               </dd>
             </div>
@@ -41,14 +41,14 @@ export function VenueFacts({ venue }: { venue: Venue }) {
 
           {venue.factList && (
             <div>
-              <dt className="text-xs uppercase tracking-[0.16em] text-faint">
+              <dt className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
                 {venue.factList.heading}
               </dt>
               <dd className="mt-2.5">
                 <ul className="space-y-1.5">
                   {venue.factList.items.map((item) => (
-                    <li key={item} className="flex gap-2.5 leading-relaxed text-bone/85">
-                      <span aria-hidden className="text-faint">
+                    <li key={item} className="flex gap-2.5 leading-relaxed text-[var(--text-primary)]">
+                      <span aria-hidden className="text-[var(--text-tertiary)]">
                         &ndash;
                       </span>
                       {item}
@@ -60,14 +60,14 @@ export function VenueFacts({ venue }: { venue: Venue }) {
           )}
 
           <div>
-            <dt className="text-xs uppercase tracking-[0.16em] text-faint">
+            <dt className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
               {venue.advantagesHeading}
             </dt>
             <dd className="mt-2.5">
               <ul className="space-y-2.5">
                 {venue.advantages.map((item) => (
-                  <li key={item} className="flex gap-3 leading-relaxed text-bone/85">
-                    <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-muted" />
+                  <li key={item} className="flex gap-3 leading-relaxed text-[var(--text-primary)]">
+                    <span aria-hidden className="mt-2.5 h-px w-3 shrink-0 bg-[var(--rule-strong)]" />
                     {item}
                   </li>
                 ))}

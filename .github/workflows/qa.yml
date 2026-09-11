@@ -2,7 +2,7 @@
 #
 # The audits in scripts/ only protect the site if they actually run, and a check
 # that depends on someone remembering to run it is not a check. This runs the
-# same `npm run qa` a developer runs locally — same script, same ten checks — so
+# same `npm run qa` a developer runs locally — same script, same twelve checks — so
 # there is no second, weaker definition of "green" that only CI believes.
 #
 # Budget is ten minutes. Lighthouse is deliberately absent: it needs a quiet,

@@ -266,7 +266,7 @@ export function Arrival() {
 
       <div className="relative mx-auto w-full max-w-[104rem] px-gutter pt-28 lg:pt-36">
         <div className="flex items-center gap-6">
-          <span className="eyebrow text-[var(--text-tertiary)]">Arrival</span>
+          <span className="eyebrow">Arrival</span>
           <RuleDraw className="w-20 bg-[var(--rule-strong)]" />
         </div>
       </div>
@@ -307,7 +307,7 @@ export function Arrival() {
                   measure="arrival-stat"
                   className="block font-display text-[clamp(3rem,7vw,7rem)] font-light leading-[0.85] tracking-[-0.04em] text-[var(--text-primary)] tabular-nums"
                 />
-                <span aria-hidden className="eyebrow mt-5 block text-[var(--text-tertiary)]">
+                <span aria-hidden className="eyebrow mt-5 block">
                   {stat.label}
                 </span>
               </dd>

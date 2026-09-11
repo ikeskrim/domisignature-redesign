@@ -142,6 +142,18 @@
   --shadow-tint: 39 33 27;
   --accent: #b98f4a;
   --wash: 242 236 225;
+  /* An inverted fill on this ground - a solid pill, a text selection - is the
+     other ladder's surface with the other ladder's primary on it. */
+  --inverse: #27211b;
+  --text-on-inverse: #f2ece1;
+  /* The ambient pool a `.glow` draws. Night lifts - the raised surface at 60%
+     - but paper cannot: the same mix on ivory is +5 codes and reads as
+     nothing. So paper shadows instead, the warm shadow tint at 4%. Solved at
+     the pool's centre, its darkest pixel: tertiary type holds 4.57:1 there,
+     while a rule-strong boundary would read 2.96:1 - so a pool sits behind
+     type and the wordmark, never behind a form. 4% is the ceiling, not a
+     taste. */
+  --pool: rgb(var(--shadow-tint) / 0.04);
 }
 
 [data-ground="dark"] {
@@ -156,24 +168,12 @@
   --shadow-tint: 0 0 0;
   --accent: #b98f4a;
   --wash: 10 10 11;
+  --inverse: #f3efe7;
+  --text-on-inverse: #0a0a0b;
+  /* The pool that shipped: the raised surface at 60%, a lift on night. */
+  --pool: color-mix(in srgb, var(--surface-raised) 60%, transparent);
 }
 
-/* Focus follows the ground it lands on. Gold is 6.68:1 on dark and 2.52:1 on
-   ivory, so a single ring colour cannot serve both — and axe will not catch the
-   failure, because it does not evaluate focus-indicator contrast. */
-[data-ground] :focus-visible {
-  outline-color: var(--focus);
-}
-
-/* The scrim/wash, expressed once so chapter boundaries cannot each invent one. */
-[data-ground] .wash-bottom {
-  background: linear-gradient(
-    to top,
-    rgb(var(--wash) / 0.88) 0%,
-    rgb(var(--wash) / 0.45) 34%,
-    transparent 70%
-  );
-}
 
 /* ---------------------------------------------------------------------------
    Base
@@ -182,7 +182,9 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    background-color: var(--color-ink);
+    /* The root declares the page ground (layout.tsx), so this resolves to
+       ivory. Nothing below names a palette; everything asks for a role. */
+    background-color: var(--surface);
   }
 
   html.lenis {
@@ -196,8 +198,8 @@
   }
 
   body {
-    background-color: var(--color-ink);
-    color: var(--color-bone);
+    background-color: var(--surface);
+    color: var(--text-primary);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
     line-height: 1.65;
@@ -207,12 +209,16 @@
   }
 
   ::selection {
-    background-color: var(--color-bone);
-    color: var(--color-ink);
+    background-color: var(--inverse);
+    color: var(--text-on-inverse);
   }
 
+  /* Focus follows the ground it lands on. Gold is 6.68:1 on dark and 2.52:1 on
+     ivory, so one ring colour cannot serve both - near-black on paper, gold in
+     a dark chapter - and axe will not catch the failure, because it does not
+     evaluate focus-indicator contrast. Law, not preference (plan section 2). */
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--focus);
     outline-offset: 3px;
     border-radius: 1px;
   }
@@ -241,6 +247,11 @@
    Components
 --------------------------------------------------------------------------- */
 @layer components {
+  /*
+   * Small letterspaced labels take the tertiary step - stage 1's finding, made
+   * the default here so an eyebrow cannot land on a different rung from the
+   * one beside it. A control label that must read as primary says so itself.
+   */
   .eyebrow {
     font-family: var(--font-sans);
     font-size: 0.6875rem;
@@ -248,27 +259,14 @@
     letter-spacing: 0.24em;
     text-transform: uppercase;
     line-height: 1;
+    color: var(--text-tertiary);
   }
 
   .rule {
     height: 1px;
-    background-color: var(--color-hair);
-  }
-
-  /*
-   * Inside a declared ground the hairline follows that ground's own rule role
-   * instead of the fixed noir one. On `data-ground="dark"` the role resolves to
-   * #2b2b30 — the same value `--color-hair` has always carried — so this is a
-   * no-op everywhere the site is dark, and the only thing it changes is that a
-   * light section stops drawing near-black hairlines on ivory.
-   *
-   * Deliberately inside @layer components, not outside it: an unlayered rule
-   * would outrank Tailwind's utilities and make `bg-[var(--rule-strong)]`
-   * un-overridable on a rule that wants to read heavier.
-   */
-  [data-ground] .rule {
     background-color: var(--rule);
   }
+
 
   /*
    * The single shared photographic grade — unchanged in register from Phase 5.
@@ -311,58 +309,84 @@
     filter: contrast(1.04) saturate(1.1) brightness(1.06) sepia(0.05);
   }
 
+  /*
+   * Running prose sits on the secondary step, not on a faded primary. An
+   * alpha-faded colour was the dark site's idiom; on ivory it has no room -
+   * primary needs alpha >= 0.64 just to hold AA - so the ramp is three solved
+   * colours and prose takes the middle one. Links and emphasis step up to
+   * primary; the underline is a strong rule, never gold, which cannot carry
+   * anything that matters on paper.
+   */
   .prose-editorial {
     font-size: var(--text-lead);
     line-height: 1.7;
     max-width: 62ch;
-    color: color-mix(in srgb, var(--color-bone) 82%, transparent);
+    color: var(--text-secondary);
   }
   .prose-editorial > * + * {
     margin-top: 1.2em;
   }
   .prose-editorial strong {
     font-weight: 500;
-    color: var(--color-bone);
+    color: var(--text-primary);
   }
   .prose-editorial a {
-    color: var(--color-bone);
+    color: var(--text-primary);
     text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--color-gold) 70%, transparent);
+    text-decoration-color: var(--rule-strong);
     text-underline-offset: 0.25em;
     transition: text-decoration-color 0.4s var(--ease-cinema);
   }
   .prose-editorial a:hover {
-    text-decoration-color: var(--color-gold);
+    text-decoration-color: var(--text-primary);
   }
 
   /*
-   * Scrims. Tuned for noir: they darken enough to carry type but stop short of
-   * flattening the photograph's own shadows into the page ground.
+   * Washes - the scrims, expressed once in the ground's own colour so that a
+   * chapter boundary cannot invent its own. Inside a dark chapter `--wash` is
+   * night and these are exactly the noir scrims that shipped; on ivory they
+   * wash a plate back into the paper. Same shapes, same stops.
    */
+  .wash-bottom,
   .scrim-bottom {
     background: linear-gradient(
       to top,
-      color-mix(in srgb, var(--color-ink) 88%, transparent) 0%,
-      color-mix(in srgb, var(--color-ink) 45%, transparent) 34%,
+      rgb(var(--wash) / 0.88) 0%,
+      rgb(var(--wash) / 0.45) 34%,
       transparent 70%
     );
   }
 
+  .wash-full,
   .scrim-full {
     background:
       linear-gradient(
         to right,
-        color-mix(in srgb, var(--color-ink) 62%, transparent) 0%,
-        color-mix(in srgb, var(--color-ink) 24%, transparent) 48%,
+        rgb(var(--wash) / 0.62) 0%,
+        rgb(var(--wash) / 0.24) 48%,
         transparent 78%
       ),
       linear-gradient(
         to top,
-        color-mix(in srgb, var(--color-ink) 86%, transparent) 0%,
-        color-mix(in srgb, var(--color-ink) 44%, transparent) 40%,
-        color-mix(in srgb, var(--color-ink) 18%, transparent) 66%,
-        color-mix(in srgb, var(--color-ink) 40%, transparent) 100%
+        rgb(var(--wash) / 0.86) 0%,
+        rgb(var(--wash) / 0.44) 40%,
+        rgb(var(--wash) / 0.18) 66%,
+        rgb(var(--wash) / 0.4) 100%
       );
+  }
+
+  /*
+   * The chapter mask - see components/layout/Chapter.tsx, the one definition
+   * of a light/dark boundary. Two insets, scrubbed on entry and exit; the
+   * larger wins. Both default to zero so the server render and reduced motion
+   * are the full-bleed final state.
+   */
+  .chapter {
+    --chapter-in: 0px;
+    --chapter-out: 0px;
+    clip-path: inset(
+      0 max(var(--chapter-in), var(--chapter-out)) 0 max(var(--chapter-in), var(--chapter-out))
+    );
   }
 
   /*
@@ -379,7 +403,7 @@
     pointer-events: none;
     background: radial-gradient(
       ellipse at center,
-      color-mix(in srgb, var(--color-gold) 16%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 16%, transparent) 0%,
       transparent 62%
     );
     opacity: 0;
@@ -419,6 +443,20 @@
    * enough to feel, far too little to touch text contrast. axe cannot see an
    * overlay like this, so the number is conservative by intent rather than by
    * measurement.
+   *
+   * Stage 4 tuning for paper - by measurement this time: the tile composited
+   * over each ground in a headless browser, read back in sRGB codes. The
+   * filter's grey lands near 187, so over night the noise is a big step and
+   * reads as fibre (a spread of ±1.0 codes) while over ivory it is a small one
+   * and vanishes (±0.5). Opacity is not the lever: this is ONE fixed layer
+   * over both grounds, and the 0.10 ivory would need lifts every dark
+   * chapter's blacks by 9 codes and triples their speckle. The lever is the
+   * tile's own contrast. feComponentTransfer stretches the grey (slope 3) and
+   * leaves alpha alone, which at the same 0.04 gives ivory ±1.25 codes
+   * (L* 0.44, above night's shipped 0.34) while night's lift stays where it
+   * shipped - +3.1 codes against +3.3 - and its extremes barely move
+   * ([9,18] against [10,17]). Mean shift on paper is -1.2 codes, so every
+   * solved ratio still holds.
    */
   .grain {
     position: fixed;
@@ -426,25 +464,59 @@
     z-index: 60;
     pointer-events: none;
     opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
     background-repeat: repeat;
   }
 
   /*
-   * Ambient light pools — the "photography is the only light" idea extended to
-   * the empty ground between scenes.
+   * Ambient pools — the "photography is the only light" idea extended to the
+   * empty ground between scenes.
    *
    * Bone, not gold. Gold is the one accent and it is spent once per screen; a
    * gold haze behind every section would quietly break that rule. This reads as
    * light rather than as colour, which is the point.
+   *
+   * The colour is the ground's - `--pool` in the ladders. A pool on night is a
+   * lift; a pool on paper is a warm shadow, because ivory has no room above it
+   * (the lift that shipped resolved to +5 codes on paper and read as nothing).
+   * Same shape, same stops; the ground answers.
    */
   .glow {
     position: absolute;
     pointer-events: none;
-    background: radial-gradient(
-      ellipse at center,
-      color-mix(in srgb, var(--color-bone) 7%, transparent) 0%,
-      transparent 68%
+    background: radial-gradient(ellipse at center, var(--pool) 0%, transparent 68%);
+  }
+
+  /*
+   * The paper's edge - the warm wash/vignette the inversion plan pre-approved
+   * as a tuning device, for exactly the case stage 4's captures showed: a
+   * pixel-uniform ivory reads as screen, not as stock. A ground device, not a
+   * colour: the shadow tint at 3% along the page's two long edges, gone by a
+   * fifth of the width. Horizontal only, on purpose - every section that is
+   * the ground spans the full width, so stacked sections join without a seam,
+   * where a per-section radial would band at every join.
+   *
+   * 3% is solved, not chosen: it is the strongest tint under which every ratio
+   * the ladder promises still holds at the darkest pixel (rule-strong 3.02:1,
+   * tertiary 4.66:1), so a full-bleed form or boundary at the very edge is
+   * still lawful. Inside a dark chapter the tint resolves to black on night
+   * and disappears.
+   *
+   * It sits on `body`, the page ground. But every section that IS the ground
+   * paints its own `bg-[var(--surface)]` over the body - PageHeader, the
+   * events grid, Statement, Footer - and an opaque surface hides what is
+   * under it. `.paper` is the same device for those sections: the page ground
+   * resuming, adopted in place of the bare surface.
+   */
+  body,
+  .paper {
+    background-color: var(--surface);
+    background-image: linear-gradient(
+      to right,
+      rgb(var(--shadow-tint) / 0.03) 0%,
+      transparent 20%,
+      transparent 80%,
+      rgb(var(--shadow-tint) / 0.03) 100%
     );
   }
 }

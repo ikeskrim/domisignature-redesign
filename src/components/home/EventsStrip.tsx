@@ -118,8 +118,15 @@ export function EventsStrip() {
           href={`/events/${event.slug}`}
           className="group block w-[78vw] shrink-0 snap-start sm:w-[46vw] lg:w-[30vw] xl:w-[26rem]"
         >
+          {/*
+            The title and category sit directly on the photograph, so the frame
+            declares the photograph's ground: a picture is a dark chapter in
+            miniature, and type set on it takes that ladder. No mask — this is
+            a plate on the shelf, not a section boundary.
+          */}
           <div
-            className={`relative overflow-hidden bg-graphite ${
+            data-ground="dark"
+            className={`relative overflow-hidden bg-[var(--surface-raised)] ${
               i % 3 === 0 ? "aspect-[4/5]" : i % 3 === 1 ? "aspect-[4/3]" : "aspect-square"
             }`}
           >
@@ -132,21 +139,21 @@ export function EventsStrip() {
               draggable={false}
               className="grade object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
             />
-            <div aria-hidden className="scrim-bottom absolute inset-0" />
+            <div aria-hidden className="wash-bottom absolute inset-0" />
 
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-7">
               <div>
                 {/* No index number — a collection, not a sequence. */}
-                <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-bone">
+                <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-[var(--text-primary)]">
                   {event.title}
                 </h3>
-                <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-bone/60">
+                <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
                   {event.category}
                 </p>
               </div>
               <span
                 aria-hidden
-                className="shrink-0 pb-1 text-bone/60 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
+                className="shrink-0 pb-1 text-[var(--text-secondary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
               >
                 &rarr;
               </span>

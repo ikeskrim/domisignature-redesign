@@ -7,7 +7,7 @@ push. This is what stops the site quietly rotting.
 npm run qa
 ```
 
-Green means all eleven passed. It exits non-zero if any failed, so it is safe to
+Green means all twelve passed. It exits non-zero if any failed, so it is safe to
 put in front of anything.
 
 `npm run qa` builds nothing — run `npm run build` first, or the server-backed
@@ -23,6 +23,7 @@ half will be measuring a stale build. CI does the build itself.
 | --- | --- | --- |
 | **typecheck** | `tsc --noEmit` | TypeScript compiles with no errors. |
 | **lint** | `eslint .` | No lint errors, including the accessibility rules. |
+| **palette** | `scripts/palette-literals.mjs` | **Zero palette literals** outside the token definitions. Every component asks for a semantic role (`--text-primary`, `--surface`, `--rule`) and the ground it sits on answers; the moment a file names `text-bone` or `#0a0a0b`, a dark chapter stops being a local inversion and becomes a conditional again. Comments do not count; `themeColor` in `layout.tsx` is the one named exception, because metadata cannot read a CSS variable. Rules in `design-review/SEMANTIC-TOKENS.md`. |
 | **claims** | `scripts/claims-audit.mjs` | Every number and factual claim rendered on the site traces to `content/`. This is the one that enforces **no invented facts**: "3 venues", "up to 300 guests" and the rest are derived from the content files, never typed into a component. If someone hard-codes a figure, this fails. |
 | **prose** | `scripts/prose-audit.mjs` | No placeholder text, no lorem ipsum, no `TODO`, no doubled spaces, no straight quotes where the design uses typographic ones. |
 | **media** | `scripts/media-audit.mjs` | Every image and video path referenced in `content/` exists in `public/`. Catches a renamed file before a visitor finds the gap. |

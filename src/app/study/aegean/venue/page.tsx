@@ -36,7 +36,7 @@ export default function AegeanVenue() {
         <div aria-hidden className="wash-bottom absolute inset-0" />
 
         <div className="relative mx-auto w-full max-w-[104rem] px-gutter pb-14">
-          <p className="eyebrow text-[var(--text-tertiary)]">{venue.category}</p>
+          <p className="eyebrow">{venue.category}</p>
           <h1 className="mt-6 font-display text-[clamp(3rem,8vw,7.5rem)] font-light leading-[0.9] tracking-[-0.03em] text-[var(--text-primary)]">
             {venue.name}
           </h1>

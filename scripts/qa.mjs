@@ -30,6 +30,8 @@ const STATIC_ONLY = process.argv.includes("--static");
 const STATIC_CHECKS = [
   ["typecheck", ["node_modules/typescript/bin/tsc", "--noEmit"], "TypeScript compiles"],
   ["lint", ["node_modules/eslint/bin/eslint.js", "."], "ESLint is clean"],
+  /* Stage 4's completion test: a count that has to be zero. */
+  ["palette", ["scripts/palette-literals.mjs"], "zero palette literals outside the token definitions"],
   ["claims", ["scripts/claims-audit.mjs"], "no claim on the site is unsupported by content/"],
   ["prose", ["scripts/prose-audit.mjs"], "no placeholder, no lorem, no double space"],
   ["media", ["scripts/media-audit.mjs"], "every image and video referenced actually exists"],

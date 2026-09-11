@@ -61,24 +61,24 @@ export function MapEmbed({
 
   if (state === "error") {
     return (
-      <div className="flex aspect-[16/10] w-full flex-col justify-between border border-hair bg-graphite p-8 lg:aspect-[21/9] lg:p-12">
+      <div className="flex aspect-[16/10] w-full flex-col justify-between border border-[var(--rule)] bg-[var(--surface-raised)] p-8 lg:aspect-[21/9] lg:p-12">
         <div>
-          <p className="eyebrow text-faint">Location</p>
-          <p className="mt-5 font-display text-[clamp(1.6rem,2.4vw,2.25rem)] font-light leading-tight text-bone">
+          <p className="eyebrow">Location</p>
+          <p className="mt-5 font-display text-[clamp(1.6rem,2.4vw,2.25rem)] font-light leading-tight text-[var(--text-primary)]">
             {name}
           </p>
-          <p className="mt-3 text-bone/85">{location}</p>
+          <p className="mt-3 text-[var(--text-primary)]">{location}</p>
         </div>
 
         <a
           href={mapLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-4 self-start text-[0.7rem] font-medium uppercase tracking-[0.2em] text-bone"
+          className="group inline-flex items-center gap-4 self-start text-[0.7rem] font-medium uppercase tracking-[0.2em] text-[var(--text-primary)]"
         >
           Open in Google Maps
-          <span className="relative block h-px w-14 bg-hair sm:w-20">
-            <span className="absolute inset-0 origin-left scale-x-0 bg-bone transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+          <span className="relative block h-px w-14 bg-[var(--rule)] sm:w-20">
+            <span className="absolute inset-0 origin-left scale-x-0 bg-[var(--text-primary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
           </span>
         </a>
       </div>
@@ -90,12 +90,12 @@ export function MapEmbed({
       ref={shell}
       onPointerEnter={activate}
       onFocusCapture={activate}
-      className="relative aspect-[16/10] w-full overflow-hidden bg-graphite lg:aspect-[21/9]"
+      className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-raised)] lg:aspect-[21/9]"
     >
       {mounted ? (
         <>
           {state === "loading" && (
-            <div aria-hidden className="absolute inset-0 animate-pulse bg-hair/50" />
+            <div aria-hidden className="absolute inset-0 animate-pulse bg-[var(--rule)]" />
           )}
           <iframe
             src={src}
@@ -110,20 +110,20 @@ export function MapEmbed({
         </>
       ) : (
         /* Same box, same aspect — mounting the map shifts nothing. */
-        <div className="absolute inset-0 flex flex-col justify-between border border-hair p-8 lg:p-12">
+        <div className="absolute inset-0 flex flex-col justify-between border border-[var(--rule)] p-8 lg:p-12">
           <div>
-            <p className="eyebrow text-faint">Location</p>
-            <p className="mt-5 font-display text-[clamp(1.6rem,2.4vw,2.25rem)] font-light leading-tight text-bone">
+            <p className="eyebrow">Location</p>
+            <p className="mt-5 font-display text-[clamp(1.6rem,2.4vw,2.25rem)] font-light leading-tight text-[var(--text-primary)]">
               {name}
             </p>
-            <p className="mt-3 text-bone/85">{location}</p>
+            <p className="mt-3 text-[var(--text-primary)]">{location}</p>
           </div>
 
           <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
             <button
               type="button"
               onClick={activate}
-              className="border border-hair/35 px-6 py-3 text-[0.6875rem] uppercase tracking-[0.18em] text-bone transition-colors duration-500 hover:bg-bone hover:text-ink"
+              className="border border-[var(--rule)] px-6 py-3 text-[0.6875rem] uppercase tracking-[0.18em] text-[var(--text-primary)] transition-colors duration-500 hover:bg-[var(--inverse)] hover:text-[var(--text-on-inverse)]"
             >
               Show the map
             </button>
@@ -132,11 +132,11 @@ export function MapEmbed({
               href={mapLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-4 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-bone"
+              className="group inline-flex items-center gap-4 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-[var(--text-primary)]"
             >
               Open in Google Maps
-              <span className="relative block h-px w-14 bg-hair sm:w-20">
-                <span className="absolute inset-0 origin-left scale-x-0 bg-bone transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+              <span className="relative block h-px w-14 bg-[var(--rule)] sm:w-20">
+                <span className="absolute inset-0 origin-left scale-x-0 bg-[var(--text-primary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
               </span>
             </a>
           </div>

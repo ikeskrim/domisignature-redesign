@@ -10,15 +10,17 @@ import { consumeCurtainSuppression } from "@/components/motion/VenueTransition";
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
- * Page transition: a full-screen charcoal curtain wipes up off the arriving
- * route, the wordmark holds for a beat at its centre, a warm bloom flares
- * through the seam as it clears, and the incoming content settles. ~1.15s.
+ * Page transition: a full-screen ivory curtain — the page's raised surface, a
+ * plate laid over the arriving route — wipes up off it, the wordmark holds for
+ * a beat at its centre, a warm bloom flares through the seam as it clears, and
+ * the incoming content settles. ~1.15s.
  *
- * Phase 6 §5 rebuilt this on a GSAP timeline. The bloom is the "light through
- * the noir" beat the brief asks for at scene changes — a single gold flare on
- * an otherwise unlit ground, which is also the one place gold is allowed to
- * appear on a screen that has already spent its accent elsewhere, because it is
- * gone again inside half a second.
+ * Phase 6 §5 rebuilt this on a GSAP timeline. The bloom was the dark site's
+ * "light through the noir" beat — a single gold flare on an unlit ground. On
+ * paper there is no unlit ground for it to light, and gold on paper is the
+ * mark and decorative hairlines only, so the flare is now the raised
+ * surface's own warmth — the curtain's light spilling through the seam — not
+ * gold. Whether the beat survives at all is stage 6's call.
  *
  * The curtain is `aria-hidden` and `pointer-events-none` throughout, and the
  * whole thing is skipped outright under reduced motion — a full-screen wipe on
@@ -108,11 +110,11 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
       <div
         ref={curtain}
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-[95] flex items-center justify-center bg-charcoal opacity-0"
+        className="pointer-events-none fixed inset-0 z-[95] flex items-center justify-center bg-[var(--surface-raised)] opacity-0"
       >
         <span
           ref={word}
-          className="font-sans text-[0.7rem] font-medium uppercase tracking-[0.42em] text-bone opacity-0"
+          className="font-sans text-[0.7rem] font-medium uppercase tracking-[0.42em] text-[var(--text-primary)] opacity-0"
         >
           {site.name}
         </span>
@@ -124,7 +126,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
         className="pointer-events-none fixed inset-x-0 top-0 z-[94] h-[38vh] opacity-0"
         style={{
           background:
-            "radial-gradient(ellipse 90% 100% at 50% 0%, color-mix(in srgb, var(--color-gold) 22%, transparent) 0%, transparent 70%)",
+            "radial-gradient(ellipse 90% 100% at 50% 0%, color-mix(in srgb, var(--surface-raised) 70%, transparent) 0%, transparent 70%)",
         }}
       />
 

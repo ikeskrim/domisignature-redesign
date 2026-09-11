@@ -148,7 +148,7 @@ export function EventsBrowser() {
       </div>
 
       {visible.length === 0 && (
-        <p className="mt-24 text-center text-lead text-muted">No galleries in this category yet.</p>
+        <p className="mt-24 text-center text-lead text-[var(--text-secondary)]">No galleries in this category yet.</p>
       )}
     </>
   );
@@ -199,7 +199,15 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      <div className={cn("relative overflow-hidden bg-graphite", ratio)}>
+      {/*
+        The frame declares the dark ground: every word on this card — title,
+        category, badge — is set directly over the photograph, so it lives in
+        the photograph's ladder, and the placeholder that shows before the image
+        arrives is that ladder's raised plate rather than a pale hole in the
+        page. The `grade` filter stays for the same reason: it was tuned for
+        near-black behind the image, and here it still has it.
+      */}
+      <div data-ground="dark" className={cn("relative overflow-hidden bg-[var(--surface-raised)]", ratio)}>
         <Image
           src={event.coverImage}
           alt={`${event.title} — ${event.category}`}
@@ -229,24 +237,26 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
           </video>
         )}
 
-        <div aria-hidden className="scrim-bottom absolute inset-0" />
+        <div aria-hidden className="wash-bottom absolute inset-0" />
 
         {film && (
           /*
-            The card's scrim is `scrim-bottom`, and this badge sits at the TOP,
+            The card's wash is `wash-bottom`, and this badge sits at the TOP,
             over whatever the photograph happens to be doing there. Measured on
-            "A ceremony by the water" — bone/80 on a bright sky — it came out at
-            1.99:1 against the 4.5:1 that 11px text needs. axe cannot see this:
-            it has no way to compute contrast against a photograph.
+            "A ceremony by the water" — light type at 80% on a bright sky — it
+            came out at 1.99:1 against the 4.5:1 that 11px text needs. axe
+            cannot see this: it has no way to compute contrast against a
+            photograph.
 
-            A shadow rather than a scrim or a pill, because it costs nothing
-            where the photograph is already dark and does not add a second
-            rectangle to a card that is deliberately clean.
+            A text-shadow was tried first and did not hold: on an overcast sky
+            the play triangle and the word still dissolved. So the badge now
+            carries its own ground — a translucent pill of the frame's wash,
+            which inside this dark ladder is near-black. Where the photograph
+            is already dark the pill disappears into it; where the sky is
+            bright it is the small dark plate the type needs, never a second
+            bright rectangle on a card that is deliberately clean.
           */
-          <span
-            className="absolute right-5 top-5 flex items-center gap-2 text-[0.6875rem] uppercase tracking-[0.18em] text-bone/80"
-            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.85), 0 0 10px rgba(0,0,0,0.55)" }}
-          >
+          <span className="absolute right-5 top-5 flex items-center gap-2 rounded-full bg-[rgb(var(--wash)/0.7)] px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.18em] text-[var(--text-primary)]">
             <svg viewBox="0 0 24 24" className="h-2.5 w-2.5 fill-current" aria-hidden>
               <path d="M8 5v14l11-7z" />
             </svg>
@@ -257,18 +267,18 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-5 p-7">
           <div>
             {/* No index number here — the galleries are a collection, not a sequence. */}
-            <h2 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-bone">
+            <h2 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-[var(--text-primary)]">
               {event.title}
             </h2>
-            <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-bone/60">
+            <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
               {event.category}
-              <span className="mx-2.5 text-bone/30">/</span>
+              <span className="mx-2.5 text-[var(--text-tertiary)]">/</span>
               {event.gallery.length} images
             </p>
           </div>
           <span
             aria-hidden
-            className="shrink-0 pb-1 text-bone/60 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5 group-hover:text-bone"
+            className="shrink-0 pb-1 text-[var(--text-secondary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5 group-hover:text-[var(--text-primary)]"
           >
             &rarr;
           </span>
@@ -296,8 +306,8 @@ function FilterChip({
         "inline-flex items-center gap-2.5 rounded-full border px-6 py-3 text-[0.6875rem] uppercase tracking-[0.18em]",
         "transition-[color,background-color,border-color] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
         active
-          ? "border-bone bg-bone text-ink"
-          : "border-hair/30 text-muted hover:border-bone hover:text-bone",
+          ? "border-[var(--text-primary)] bg-[var(--inverse)] text-[var(--text-on-inverse)]"
+          : "border-[var(--rule)] text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-[var(--text-primary)]",
       )}
     >
       {children}
@@ -306,5 +316,5 @@ function FilterChip({
 }
 
 function Count({ children }: { children: React.ReactNode }) {
-  return <span className="text-[0.58rem] opacity-55">{children}</span>;
+  return <span className="text-[0.58rem]">{children}</span>;
 }

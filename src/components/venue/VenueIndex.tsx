@@ -63,7 +63,7 @@ export function VenueIndex() {
   };
 
   return (
-    <section className="relative bg-ink text-bone" aria-labelledby="venue-index-heading">
+    <section className="relative bg-[var(--surface)] text-[var(--text-primary)]" aria-labelledby="venue-index-heading">
       {/* ---------- Desktop: the hover list ---------- */}
       <div className="relative hidden min-h-[100svh] lg:flex lg:flex-col lg:justify-center">
         {/*
@@ -99,17 +99,27 @@ export function VenueIndex() {
                 quality={80}
                 loading="lazy"
                 className={cn(
-                  "grade object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+                  "grade-b object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
                   active === i ? "scale-105" : "scale-100",
                 )}
               />
             </div>
           ))}
-          {/* Scrim strengthens only while an image is up, so type stays legible. */}
+          {/*
+            The wash strengthens only while an image is up, so type stays legible.
+
+            0.85 is the ground veil the header uses, re-solved for ivory rather
+            than carried across at the noir value (0.62). `grade-b` holds the
+            plate's blacks deep, and over a dark plate 0.62 left secondary at
+            ~2.9–4.4:1 and tertiary at ~1.9–3.7:1; at 0.85 secondary holds
+            ≥ 5.4:1 over black. Tertiary alone cannot be veiled to AA without
+            erasing the photograph (it would need α ≈ 0.93), so the two tertiary
+            spans below step up to secondary while a backdrop is up.
+          */}
           <div
             className={cn(
               "absolute inset-0 transition-colors duration-[900ms]",
-              active !== null ? "bg-ink/62" : "bg-ink/0",
+              active !== null ? "bg-[rgb(var(--wash)/0.85)]" : "bg-transparent",
             )}
           />
         </div>
@@ -121,7 +131,7 @@ export function VenueIndex() {
 
           <ul onMouseLeave={() => setActive(null)}>
             {venues.map((venue, i) => (
-              <li key={venue.slug} className="border-t border-bone/12 last:border-b">
+              <li key={venue.slug} className="border-t border-[var(--rule)] last:border-b">
                 <Link
                   href={`/venues/${venue.slug}`}
                   onMouseEnter={() => setActive(i)}
@@ -133,7 +143,12 @@ export function VenueIndex() {
                     active !== null && active !== i ? "opacity-30" : "opacity-100",
                   )}
                 >
-                  <span className="eyebrow w-8 shrink-0 pt-3 text-bone/55">
+                  <span
+                    className={cn(
+                      "eyebrow w-8 shrink-0 pt-3",
+                      active !== null ? "text-[var(--text-secondary)]" : "text-[var(--text-tertiary)]",
+                    )}
+                  >
                     {pad2(i + 1)}
                   </span>
 
@@ -148,31 +163,36 @@ export function VenueIndex() {
 
                   {/*
                     Condition 4 — C's contact-sheet density, held inside the
-                    noir register. Capacity and location are always present, in
-                    fixed-width columns so nothing reflows on hover, and every
-                    row carries the sitewide primary CTA rather than a bare
-                    arrow.
+                    editorial register. Capacity and location are always
+                    present, in fixed-width columns so nothing reflows on hover,
+                    and every row carries the sitewide primary CTA rather than a
+                    bare arrow.
                   */}
-                  <span className="w-32 shrink-0 pb-2 text-right text-[0.6875rem] uppercase leading-relaxed tracking-[0.18em] text-bone/70">
+                  <span className="w-32 shrink-0 pb-2 text-right text-[0.6875rem] uppercase leading-relaxed tracking-[0.18em] text-[var(--text-secondary)]">
                     {capacityLabel(venue.capacity)}
                   </span>
                   {/* Coordinates as annotation — the venue's own published
                       position, decoded from its live map embed. */}
                   <span className="hidden w-56 shrink-0 pb-2 text-right leading-relaxed lg:block">
-                    <span className="block text-[0.6875rem] tracking-[0.06em] text-muted">
+                    <span className="block text-[0.6875rem] tracking-[0.06em] text-[var(--text-secondary)]">
                       {venue.coordinates}
                     </span>
-                    <span className="mt-1 block text-[0.6875rem] uppercase tracking-[0.18em] text-bone/55">
+                    <span
+                      className={cn(
+                        "mt-1 block text-[0.6875rem] uppercase tracking-[0.18em]",
+                        active !== null ? "text-[var(--text-secondary)]" : "text-[var(--text-tertiary)]",
+                      )}
+                    >
                       {venue.location}
                     </span>
                   </span>
                   <span className="flex shrink-0 items-center gap-3 pb-2">
-                    <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-bone/70 transition-colors duration-[600ms] group-hover:text-bone">
+                    <span className="text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)] transition-colors duration-[600ms] group-hover:text-[var(--text-primary)]">
                       Enquire
                     </span>
                     <span
                       aria-hidden
-                      className="relative block h-px w-10 bg-bone/30 transition-colors duration-[600ms] group-hover:bg-bone"
+                      className="relative block h-px w-10 bg-[var(--rule)] transition-colors duration-[600ms] group-hover:bg-[var(--text-primary)]"
                     />
                   </span>
                 </Link>
@@ -187,7 +207,7 @@ export function VenueIndex() {
         {venues.map((venue, i) => (
           <li key={venue.slug}>
             <Link href={`/venues/${venue.slug}`} className="group block">
-              <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[16/10]">
+              <div data-ground="dark" className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--surface-raised)] sm:aspect-[16/10]">
                 <Image
                   src={venue.coverImage}
                   alt=""
@@ -197,14 +217,14 @@ export function VenueIndex() {
                   loading="lazy"
                   className={cn("grade object-cover", i % 2 === 0 ? "ken" : "ken-alt")}
                 />
-                <div aria-hidden className="scrim-bottom absolute inset-0" />
+                <div aria-hidden className="wash-bottom absolute inset-0" />
 
                 <div className="absolute inset-x-0 bottom-0 p-gutter pb-10">
                   <Reveal y={12}>
-                    <span className="eyebrow block text-bone/60">{pad2(i + 1)}</span>
+                    <span className="eyebrow block">{pad2(i + 1)}</span>
                   </Reveal>
 
-                  <h3 className="mt-4 font-display text-[clamp(2.5rem,11vw,4rem)] font-light leading-[0.95]">
+                  <h3 className="mt-4 font-display text-[clamp(2.5rem,11vw,4rem)] font-light leading-[0.95] text-[var(--text-primary)]">
                     {venue.name}
                   </h3>
 
@@ -213,18 +233,18 @@ export function VenueIndex() {
                     row shows its photograph by default, with the same capacity,
                     location and CTA the desktop rows carry.
                   */}
-                  <p className="mt-4 text-[0.6875rem] tracking-[0.06em] text-muted">
+                  <p className="mt-4 text-[0.6875rem] tracking-[0.06em] text-[var(--text-secondary)]">
                     {venue.coordinates}
                   </p>
-                  <p className="mt-2 text-[0.6875rem] uppercase tracking-[0.2em] text-bone/70">
+                  <p className="mt-2 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
                     {capacityLabel(venue.capacity)}
-                    <span className="mx-3 text-bone/40">/</span>
+                    <span className="mx-3 text-[var(--text-tertiary)]">/</span>
                     {venue.location}
                   </p>
 
-                  <span className="mt-6 inline-flex items-center gap-3 text-[0.6875rem] uppercase tracking-[0.2em] text-bone">
+                  <span className="mt-6 inline-flex items-center gap-3 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-primary)]">
                     Enquire
-                    <span aria-hidden className="block h-px w-10 bg-bone/50" />
+                    <span aria-hidden className="block h-px w-10 bg-[var(--rule-strong)]" />
                   </span>
                 </div>
               </div>

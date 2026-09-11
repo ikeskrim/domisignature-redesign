@@ -41,7 +41,7 @@ export default function AegeanHero() {
         <div aria-hidden className="wash-bottom absolute inset-0" />
 
         <div className="relative mx-auto flex h-full w-full max-w-[104rem] flex-col justify-end px-gutter pb-16">
-          <p className="eyebrow text-[var(--text-tertiary)]">{hero.eyebrow}</p>
+          <p className="eyebrow">{hero.eyebrow}</p>
           <h1 className="mt-6 max-w-4xl font-display text-[clamp(2.75rem,7vw,6.5rem)] font-light leading-[0.95] text-[var(--text-primary)]">
             {hero.tagline}
           </h1>

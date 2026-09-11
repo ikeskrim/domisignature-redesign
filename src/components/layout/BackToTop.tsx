@@ -12,7 +12,7 @@ export function BackToTop() {
             : "smooth",
         })
       }
-      className="group inline-flex items-center gap-2.5 self-start text-xs uppercase tracking-[0.18em] text-bone/55 transition-colors duration-300 hover:text-bone"
+      className="group inline-flex items-center gap-2.5 self-start text-xs uppercase tracking-[0.18em] text-[var(--text-tertiary)] transition-colors duration-300 hover:text-[var(--text-primary)]"
     >
       Back to top
       <span

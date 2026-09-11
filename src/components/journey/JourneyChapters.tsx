@@ -20,8 +20,8 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * Phase 6 §5 — the second scrubbed scene. A chapter rail holds at the left edge
  * for the length of the sequence: six numerals, a hairline track, and a fill
  * that scrubs with scroll position so you can always see how far through a
- * six-step process you are. The active numeral lifts from faint to bone as its
- * chapter arrives.
+ * six-step process you are. The active numeral lifts from tertiary to primary
+ * as its chapter arrives.
  *
  * Held with CSS `position: sticky` rather than a GSAP pin, deliberately. A pin
  * injects a pin-spacer into the flow, and these chapters bleed their images
@@ -68,7 +68,7 @@ export function JourneyChapters() {
           if (!numeral) return;
 
           gsap.to(numeral, {
-            color: "var(--color-bone)",
+            color: "var(--text-primary)",
             ease: "none",
             scrollTrigger: {
               trigger: chapter,
@@ -94,10 +94,10 @@ export function JourneyChapters() {
         className="pointer-events-none absolute -left-2 top-0 hidden h-full xl:block"
       >
         <div className="sticky top-1/2 flex -translate-y-1/2 items-center gap-4">
-          <span className="relative block h-40 w-px bg-hair">
+          <span className="relative block h-40 w-px bg-[var(--rule)]">
             <span
               ref={fill}
-              className="absolute inset-x-0 top-0 block h-full origin-top bg-bone/70"
+              className="absolute inset-x-0 top-0 block h-full origin-top bg-[var(--rule-strong)]"
             />
           </span>
           <span className="flex flex-col gap-2.5">
@@ -107,7 +107,7 @@ export function JourneyChapters() {
                 ref={(node) => {
                   numerals.current[i] = node;
                 }}
-                className="block font-sans text-[0.6rem] uppercase tracking-[0.18em] text-faint"
+                className="block font-sans text-[0.6rem] uppercase tracking-[0.18em] text-[var(--text-tertiary)]"
               >
                 {pad2(step.number)}
               </span>
@@ -155,14 +155,14 @@ export function JourneyChapters() {
                   <Reveal>
                     <span
                       aria-hidden
-                      className="block font-display text-[clamp(3.5rem,6vw,5.5rem)] font-light leading-[0.8] text-faint"
+                      className="block font-display text-[clamp(3.5rem,6vw,5.5rem)] font-light leading-[0.8] text-[var(--text-tertiary)]"
                     >
                       {pad2(step.number)}
                     </span>
                   </Reveal>
 
                   <Reveal delay={0.06}>
-                    <h3 className="mt-7 font-display text-[clamp(2rem,3.3vw,3.25rem)] font-light leading-[1.0] text-bone">
+                    <h3 className="mt-7 font-display text-[clamp(2rem,3.3vw,3.25rem)] font-light leading-[1.0] text-[var(--text-primary)]">
                       <span className="sr-only">Step {step.number} — </span>
                       {title}
                     </h3>
@@ -184,8 +184,8 @@ export function JourneyChapters() {
                     <Reveal delay={0.18}>
                       <ul className="mt-6 space-y-3">
                         {step.bullets.map((bullet) => (
-                          <li key={bullet} className="flex gap-4 leading-relaxed text-bone/85">
-                            <span aria-hidden className="mt-3.5 h-px w-4 shrink-0 bg-muted" />
+                          <li key={bullet} className="flex gap-4 leading-relaxed text-[var(--text-primary)]">
+                            <span aria-hidden className="mt-3.5 h-px w-4 shrink-0 bg-[var(--text-secondary)]" />
                             {bullet}
                           </li>
                         ))}

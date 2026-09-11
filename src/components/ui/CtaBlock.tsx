@@ -1,4 +1,5 @@
 import { contact, site } from "@content/site";
+import { Chapter } from "@/components/layout/Chapter";
 import { Reveal, RuleDraw, TextReveal } from "@/components/motion/Reveal";
 import { ScrollImage } from "@/components/motion/ScrollImage";
 import { Button } from "@/components/ui/Button";
@@ -6,6 +7,10 @@ import { Button } from "@/components/ui/Button";
 /**
  * The closing invitation, sized as a scene rather than a strip. Sits above the
  * footer on every page so there is always a way to start a conversation.
+ *
+ * One of the designated dark chapters: the ground inverts here, so everything
+ * inside asks for a role and the chapter's ladder answers — the buttons
+ * included, which need no override to sit on night.
  */
 export function CtaBlock({
   heading = "Begin with\na conversation",
@@ -19,19 +24,26 @@ export function CtaBlock({
   imageAlt?: string;
 }) {
   return (
-    <section className="relative flex min-h-[85svh] items-center overflow-hidden bg-charcoal text-bone">
+    <Chapter ground="dark" className="flex min-h-[85svh] items-center overflow-hidden">
       <div className="absolute inset-0">
         <ScrollImage
           src={image}
           alt=""
           sizes="100vw"
           className="h-full w-full opacity-40"
+          grade="grade"
           drift={5}
           zoom={0.08}
         />
+        {/* The veil over the photograph, heaviest on the left where the type
+            sits, drawn in the chapter's own ground rather than a named black. */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/40"
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, rgb(var(--wash) / 0.88) 0%, rgb(var(--wash) / 0.88) 20%, rgb(var(--wash) / 0.4) 100%)",
+          }}
         />
       </div>
 
@@ -40,35 +52,31 @@ export function CtaBlock({
           <div className="lg:col-span-7">
             <Reveal>
               <div className="flex items-center gap-6">
-                <span className="eyebrow text-bone/55">Enquire</span>
-                <RuleDraw className="w-20 bg-bone/25" />
+                <span className="eyebrow">Enquire</span>
+                <RuleDraw className="w-20 bg-[var(--rule)]" />
               </div>
             </Reveal>
 
             <TextReveal
               text={heading}
-              className="mt-10 text-display font-light text-bone"
+              className="mt-10 text-display font-light text-[var(--text-primary)]"
               delay={0.05}
             />
 
             <Reveal delay={0.16}>
-              <p className="prose-editorial mt-10 text-bone/70">{standfirst}</p>
+              <p className="prose-editorial mt-10 text-[var(--text-secondary)]">{standfirst}</p>
             </Reveal>
 
             <Reveal delay={0.24}>
               <div className="mt-14 flex flex-wrap items-center gap-8">
-                <Button
-                  href="/contact"
-                  className="border-bone/40 text-bone hover:border-bone hover:bg-bone hover:text-ink"
-                  size="lg"
-                >
+                <Button href="/contact" size="lg">
                   Enquire
                 </Button>
                 <Button
                   href={contact.whatsapp.href}
                   external
                   variant="ghost"
-                  className="text-bone/75 hover:text-bone"
+                  className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 >
                   Or message us on WhatsApp
                 </Button>
@@ -78,37 +86,37 @@ export function CtaBlock({
 
           <div className="lg:col-span-4 lg:col-start-9 lg:self-end">
             <Reveal delay={0.32}>
-              <dl className="space-y-7 border-t border-bone/15 pt-9">
+              <dl className="space-y-7 border-t border-[var(--rule)] pt-9">
                 <div>
-                  <dt className="eyebrow text-bone/55">Call</dt>
+                  <dt className="eyebrow">Call</dt>
                   <dd className="mt-3">
                     <a
                       href={contact.phone.href}
-                      className="font-display text-[1.6rem] font-light text-bone/90 transition-colors duration-[450ms] hover:text-gold"
+                      className="font-display text-[1.6rem] font-light text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]"
                     >
                       {contact.phone.display}
                     </a>
                   </dd>
                 </div>
                 <div>
-                  <dt className="eyebrow text-bone/55">Email</dt>
+                  <dt className="eyebrow">Email</dt>
                   <dd className="mt-3">
                     <a
                       href={contact.email.href}
-                      className="break-all font-display text-[1.6rem] font-light text-bone/90 transition-colors duration-[450ms] hover:text-gold"
+                      className="break-all font-display text-[1.6rem] font-light text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]"
                     >
                       {contact.email.display}
                     </a>
                   </dd>
                 </div>
                 <div>
-                  <dt className="eyebrow text-bone/55">Brochure</dt>
+                  <dt className="eyebrow">Brochure</dt>
                   <dd className="mt-3">
                     <a
                       href={contact.brochure.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-display text-[1.6rem] font-light text-bone/90 transition-colors duration-[450ms] hover:text-gold"
+                      className="font-display text-[1.6rem] font-light text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]"
                     >
                       {contact.brochure.label}
                     </a>
@@ -119,6 +127,6 @@ export function CtaBlock({
           </div>
         </div>
       </div>
-    </section>
+    </Chapter>
   );
 }

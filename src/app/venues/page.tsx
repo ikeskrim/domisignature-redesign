@@ -34,16 +34,16 @@ export default function VenuesPage() {
         meta={
           <dl className="flex gap-12">
             <div>
-              <dt className="eyebrow text-faint">Venues</dt>
-              <dd className="mt-3 font-display text-[2.75rem] font-light leading-none text-bone">
+              <dt className="eyebrow">Venues</dt>
+              <dd className="mt-3 font-display text-[2.75rem] font-light leading-none text-[var(--text-primary)]">
                 {venues.length}
               </dd>
             </div>
             <div>
-              <dt className="eyebrow text-faint">Up to</dt>
-              <dd className="mt-3 font-display text-[2.75rem] font-light leading-none text-bone">
+              <dt className="eyebrow">Up to</dt>
+              <dd className="mt-3 font-display text-[2.75rem] font-light leading-none text-[var(--text-primary)]">
                 300
-                <span className="ml-2 text-base tracking-normal text-muted">guests</span>
+                <span className="ml-2 text-base tracking-normal text-[var(--text-secondary)]">guests</span>
               </dd>
             </div>
           </dl>

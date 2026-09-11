@@ -20,8 +20,8 @@ import { gsap, EASE, prefersReducedMotion } from "@/lib/gsap";
  * `currentSrc`, which is the already-decoded, already-cached, correctly-sized
  * next/image variant. There is no second fetch and no resolution pop.
  *
- * While this runs, `suppressCurtain` tells PageTransition to sit out — a
- * charcoal curtain wiping over a shared-element transition would hide the one
+ * While this runs, `suppressCurtain` tells PageTransition to sit out — the
+ * page curtain wiping over a shared-element transition would hide the one
  * thing it exists to show.
  */
 
@@ -122,7 +122,13 @@ export function VenueTransition() {
     >
       {/* Deliberately a bare <img>: the src is copied from an already-resolved
           next/image element at runtime, so there is nothing left to optimise
-          and next/image would only re-request it. */}
+          and next/image would only re-request it.
+
+          grade, not grade-b: this overlay ends as the venue chapter's hero, and
+          the dissolve is the frame that must match. The index backdrop it lifts
+          from is grade-b on paper; the grade shift happens during the 0.62s
+          lift while the frame is in motion, not at the stationary full-screen
+          dissolve onto the dark chapter's `grade` image. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img ref={picture} alt="" className="grade h-full w-full object-cover" />
     </div>

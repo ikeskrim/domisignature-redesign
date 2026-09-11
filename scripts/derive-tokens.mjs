@@ -99,6 +99,11 @@ const MAP = {
     focus: LIGHT_PRIMARY,
     "shadow-tint": "39 33 27",
     accent: SHIPPED.gold,
+    /* An inverted fill on this ground - a solid pill, a selection highlight -
+       is the OTHER ladder's surface with the other ladder's primary on it.
+       Nothing new is solved: 13.53:1 is the pair already proven above. */
+    inverse: LIGHT_PRIMARY,
+    "text-on-inverse": LIGHT.surface,
   },
   dark: {
     surface: DARK.surface,
@@ -111,6 +116,8 @@ const MAP = {
     focus: SHIPPED.gold,
     "shadow-tint": "0 0 0",
     accent: SHIPPED.gold,
+    inverse: SHIPPED.bone,
+    "text-on-inverse": DARK.surface,
   },
 };
 
@@ -136,6 +143,9 @@ for (const ground of ["light", "dark"]) {
 
   const f = ratio(m.focus, m.surface);
   line(f >= 3, `focus  ${m.focus}`, `${f.toFixed(2)}:1 on surface   (needs 3.0)`);
+
+  const inv = ratio(m["text-on-inverse"], m.inverse);
+  line(inv >= 4.5, `text-on-inverse  ${m["text-on-inverse"]}`, `${inv.toFixed(2)}:1 on inverse ${m.inverse}   (needs 4.5)`);
 
   const rs = ratio(m["rule-strong"], m.surface);
   line(rs >= 3, `rule-strong  ${m["rule-strong"]}`, `${rs.toFixed(2)}:1 on surface   (needs 3.0)`);

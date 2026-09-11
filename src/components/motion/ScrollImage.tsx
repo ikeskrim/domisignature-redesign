@@ -30,6 +30,11 @@ export function ScrollImage({
   drift = 8,
   /** Extra scale headroom the inner image starts with. */
   zoom = 0.1,
+  /**
+   * The photographic grade. `grade-b` is the light-ground grade for a
+   * photograph on paper; a caller inside a dark chapter passes `grade`.
+   */
+  grade = "grade-b",
 }: {
   src: string;
   alt: string;
@@ -39,6 +44,7 @@ export function ScrollImage({
   quality?: 75 | 80 | 85;
   drift?: number;
   zoom?: number;
+  grade?: "grade" | "grade-b";
 }) {
   const frame = useRef<HTMLDivElement>(null);
   const inner = useRef<HTMLDivElement>(null);
@@ -70,7 +76,7 @@ export function ScrollImage({
   }, [drift, zoom]);
 
   return (
-    <div ref={frame} className={cn("relative overflow-hidden bg-graphite", className)}>
+    <div ref={frame} className={cn("relative overflow-hidden bg-[var(--surface-raised)]", className)}>
       <div ref={inner} className="absolute inset-0">
         <Image
           src={src}
@@ -80,7 +86,7 @@ export function ScrollImage({
           priority={priority}
           quality={quality}
           loading={priority ? "eager" : "lazy"}
-          className="grade object-cover"
+          className={cn(grade, "object-cover")}
         />
       </div>
     </div>

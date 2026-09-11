@@ -99,7 +99,7 @@ export function EditorialGallery({
             data-cursor="view"
             onClick={() => setIndex(i)}
             aria-label={`Open image ${i + 1} of ${images.length} full screen`}
-            className="group mb-5 block w-full break-inside-avoid overflow-hidden bg-graphite lg:mb-10"
+            className="group mb-5 block w-full break-inside-avoid overflow-hidden bg-[var(--surface-raised)] lg:mb-10"
           >
             <span className="relative block overflow-hidden">
               <Image
@@ -114,11 +114,11 @@ export function EditorialGallery({
                 }
                 loading={i < eager ? "eager" : "lazy"}
                 priority={i < 2}
-                className="grade h-auto w-full transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                className="grade-b h-auto w-full transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
               />
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-700 group-hover:bg-bone/10"
+                className="pointer-events-none absolute inset-0 bg-transparent transition-colors duration-700 group-hover:bg-[color-mix(in_srgb,var(--text-primary)_10%,transparent)]"
               />
             </span>
           </button>

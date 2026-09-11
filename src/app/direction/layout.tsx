@@ -55,13 +55,13 @@ export default function DirectionLayout({ children }: { children: React.ReactNod
       {/* Switcher — study only, never ships */}
       <nav
         aria-label="Direction switcher"
-        className="fixed left-1/2 top-4 z-[200] flex -translate-x-1/2 gap-1 rounded-full bg-black/70 p-1 backdrop-blur-md"
+        className="fixed left-1/2 top-4 z-[200] flex -translate-x-1/2 gap-1 rounded-full bg-[rgb(var(--wash)/0.7)] p-1 backdrop-blur-md"
       >
         {(["a", "b", "c", "d"] as const).map((d) => (
           <Link
             key={d}
             href={`/direction/${d}`}
-            className="rounded-full px-4 py-2 font-sans text-[0.6875rem] uppercase tracking-[0.2em] text-white/70 transition-colors hover:bg-white hover:text-black"
+            className="rounded-full px-4 py-2 font-sans text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)] transition-colors hover:bg-[var(--inverse)] hover:text-[var(--text-on-inverse)]"
           >
             {d}
           </Link>

@@ -39,13 +39,13 @@ export default function AboutPage() {
       />
 
       {/* Statement */}
-      <section className="bg-ink py-section">
+      <section className="bg-[var(--surface)] py-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
             <div className="lg:col-span-7">
               <TextReveal
                 text={site.tagline}
-                className="font-display text-display font-light italic text-bone"
+                className="font-display text-display font-light italic text-[var(--text-primary)]"
               />
               <Reveal delay={0.15}>
                 <p className="prose-editorial mt-10 max-w-2xl">{teamStatement}</p>
@@ -54,14 +54,14 @@ export default function AboutPage() {
 
             <div className="lg:col-span-4 lg:col-start-9">
               <Reveal delay={0.1}>
-                <span className="eyebrow text-muted">Where we work</span>
+                <span className="eyebrow">Where we work</span>
               </Reveal>
               <RuleDraw className="mt-5" />
               <ul className="mt-7 space-y-3.5">
                 {venues.map((venue, i) => (
                   <Reveal as="li" key={venue.slug} delay={0.05 + i * 0.05} y={14}>
-                    <span className="text-bone/85">{venue.name}</span>
-                    <span className="ml-2 text-sm text-faint">{venue.location}</span>
+                    <span className="text-[var(--text-primary)]">{venue.name}</span>
+                    <span className="ml-2 text-sm text-[var(--text-tertiary)]">{venue.location}</span>
                   </Reveal>
                 ))}
               </ul>
@@ -71,8 +71,8 @@ export default function AboutPage() {
                 <dl className="mt-12 grid grid-cols-2 gap-8">
                   {stats.map((stat) => (
                     <div key={stat.label}>
-                      <dt className="eyebrow text-faint">{stat.label}</dt>
-                      <dd className="mt-2 font-display text-4xl font-light text-bone">
+                      <dt className="eyebrow">{stat.label}</dt>
+                      <dd className="mt-2 font-display text-4xl font-light text-[var(--text-primary)]">
                         {stat.value}
                       </dd>
                     </div>
@@ -85,11 +85,11 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="bg-graphite py-section" aria-labelledby="team-heading">
+      <section className="bg-[var(--surface-raised)] py-section" aria-labelledby="team-heading">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
-            <span className="eyebrow text-muted">The team</span>
-            <h2 id="team-heading" className="mt-6 font-display text-title font-light text-bone">
+            <span className="eyebrow">The team</span>
+            <h2 id="team-heading" className="mt-6 font-display text-title font-light text-[var(--text-primary)]">
               Who you will be working with
             </h2>
           </Reveal>
@@ -98,20 +98,20 @@ export default function AboutPage() {
             {team.map((member, i) => (
               <li key={member.name} className={i === 1 ? "sm:mt-16" : undefined}>
                 <MaskReveal delay={i * 0.1}>
-                  <div className="relative aspect-[3/4] overflow-hidden bg-hair">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-[var(--rule)]">
                     <Image
                       src={member.image}
                       alt={`${member.name} — ${member.role}`}
                       fill
                       sizes="(max-width: 640px) 100vw, 33vw"
                       priority={i === 0}
-                      className="grade object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.04]"
+                      className="grade-b object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.04]"
                     />
                   </div>
                 </MaskReveal>
                 <Reveal delay={0.1 + i * 0.1}>
-                  <h3 className="mt-6 font-display text-2xl font-light text-bone">{member.name}</h3>
-                  <p className="mt-2 text-xs uppercase tracking-[0.18em] text-faint">
+                  <h3 className="mt-6 font-display text-2xl font-light text-[var(--text-primary)]">{member.name}</h3>
+                  <p className="mt-2 text-xs uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
                     {member.role}
                   </p>
                 </Reveal>

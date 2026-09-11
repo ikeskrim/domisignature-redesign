@@ -66,14 +66,14 @@ export function Accordion({ items }: { items: AccordionEntry[] }) {
   if (items.length === 0) return null;
 
   return (
-    <ul className="border-t border-hair">
+    <ul className="border-t border-[var(--rule)]">
       {items.map((item, i) => {
         const expanded = open === i;
         const panelId = `accordion-panel-${i}`;
         const buttonId = `accordion-button-${i}`;
 
         return (
-          <li key={item.heading} className="border-b border-hair">
+          <li key={item.heading} className="border-b border-[var(--rule)]">
             <h3>
               <button
                 id={buttonId}
@@ -83,12 +83,12 @@ export function Accordion({ items }: { items: AccordionEntry[] }) {
                 onClick={() => setOpen(expanded ? null : i)}
                 className="group flex w-full items-start justify-between gap-8 py-6 text-left"
               >
-                <span className="font-display text-[1.35rem] font-light leading-snug text-bone lg:text-[1.6rem]">
+                <span className="font-display text-[1.35rem] font-light leading-snug text-[var(--text-primary)] lg:text-[1.6rem]">
                   {item.heading}
                 </span>
                 <span
                   aria-hidden
-                  className="relative mt-2.5 block h-3.5 w-3.5 shrink-0 text-muted transition-colors group-hover:text-bone"
+                  className="relative mt-2.5 block h-3.5 w-3.5 shrink-0 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]"
                 >
                   <span className="absolute left-0 top-1/2 block h-px w-3.5 bg-current" />
                   <span
@@ -109,7 +109,7 @@ export function Accordion({ items }: { items: AccordionEntry[] }) {
               aria-labelledby={buttonId}
               className="overflow-hidden"
             >
-              <p className="pb-7 pr-10 leading-relaxed text-bone/85">{item.body}</p>
+              <p className="pb-7 pr-10 leading-relaxed text-[var(--text-secondary)]">{item.body}</p>
             </div>
           </li>
         );

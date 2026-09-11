@@ -13,25 +13,25 @@ export function JourneyTeaser() {
   const [lead, ...rest] = journey;
 
   return (
-    <section className="bg-graphite py-section">
+    <section className="bg-[var(--surface-raised)] py-section">
       <div className="mx-auto w-full max-w-[104rem] px-gutter">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Reveal>
               <div className="flex items-center gap-6">
-                <span className="eyebrow text-muted">{journeyIntro.heading}</span>
+                <span className="eyebrow">{journeyIntro.heading}</span>
                 <RuleDraw className="w-20" />
               </div>
             </Reveal>
             <TextReveal
               text={"Six steps, from\nfirst note to\nthe ceremony"}
-              className="mt-9 text-display font-light text-bone"
+              className="mt-9 text-display font-light text-[var(--text-primary)]"
               delay={0.05}
             />
           </div>
           <div className="lg:col-span-3 lg:col-start-10 lg:pt-6">
             <Reveal delay={0.2}>
-              <p className="text-[0.95rem] leading-relaxed text-muted">
+              <p className="text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
                 {journeyIntro.subheading}
               </p>
             </Reveal>
@@ -50,11 +50,11 @@ export function JourneyTeaser() {
             <Reveal delay={0.08}>
               <span
                 aria-hidden
-                className="mt-10 block font-display text-[clamp(3rem,5vw,4.5rem)] font-light leading-[0.8] text-faint"
+                className="mt-10 block font-display text-[clamp(3rem,5vw,4.5rem)] font-light leading-[0.8] text-[var(--text-tertiary)]"
               >
                 {pad2(lead.number)}
               </span>
-              <h3 className="mt-5 font-display text-[clamp(1.6rem,2.6vw,2.35rem)] font-light leading-[1.05] text-bone">
+              <h3 className="mt-5 font-display text-[clamp(1.6rem,2.6vw,2.35rem)] font-light leading-[1.05] text-[var(--text-primary)]">
                 {lead.title.replace(/^Step \d+\s*[—-]\s*/, "")}
               </h3>
               <div className="prose-editorial mt-6">
@@ -74,16 +74,16 @@ export function JourneyTeaser() {
                   <div className="flex gap-8 py-7">
                   <span
                     aria-hidden
-                    className="shrink-0 font-display text-[1.75rem] font-light leading-none text-faint"
+                    className="shrink-0 font-display text-[1.75rem] font-light leading-none text-[var(--text-tertiary)]"
                   >
                     {pad2(step.number)}
                   </span>
                   <div>
-                    <h3 className="font-display text-[1.4rem] font-light leading-snug text-bone lg:text-[1.6rem]">
+                    <h3 className="font-display text-[1.4rem] font-light leading-snug text-[var(--text-primary)] lg:text-[1.6rem]">
                       {step.title.replace(/^Step \d+\s*[—-]\s*/, "")}
                     </h3>
                     {step.body[0] && (
-                      <p className="mt-2.5 max-w-md text-[0.95rem] leading-relaxed text-muted">
+                      <p className="mt-2.5 max-w-md text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
                         {step.body[0]}
                       </p>
                     )}

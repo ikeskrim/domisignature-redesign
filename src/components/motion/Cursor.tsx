@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, hasFinePointer, prefersReducedMotion } from "@/lib/gsap";
 
 /**
- * The cursor states — a small bone dot that trails the pointer, and swells into
- * a labelled disc over anything that declares what it does.
+ * The cursor states — a small dot that trails the pointer, and swells into a
+ * labelled disc over anything that declares what it does.
  *
  * Opt in from anywhere with `data-cursor="view" | "play" | "drag"`. A gallery
  * tile says View, an event card carrying film says Play, a draggable strip says
@@ -23,6 +23,12 @@ import { gsap, hasFinePointer, prefersReducedMotion } from "@/lib/gsap";
  *     hiding it with `cursor: none`, so the system pointer — which some people
  *     rely on, and which carries OS accessibility settings like size and
  *     contrast — is never taken away.
+ *   - **Ground-agnostic.** A fixed overlay cannot know whether paper or a dark
+ *     chapter lies beneath it, so it never asks the ground for a colour. It is
+ *     painted in the light ladder's paper and composited with
+ *     `mix-blend-difference`: over ivory it reads near-black, over night it
+ *     reads ivory, and the label goes with it. The fill stays a faint tint so
+ *     the label is not lost against a disc of its own colour.
  *   - `pointer-events: none` and `aria-hidden` throughout: it can never
  *     intercept a click or reach the accessibility tree.
  */
@@ -92,11 +98,11 @@ export function Cursor() {
     <div
       ref={dot}
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[90] flex h-[9px] w-[9px] items-center justify-center rounded-full border border-bone/70 bg-bone/12 backdrop-blur-[2px]"
+      className="pointer-events-none fixed left-0 top-0 z-[90] flex h-[9px] w-[9px] items-center justify-center rounded-full border border-[var(--text-on-inverse)] bg-[color-mix(in_srgb,var(--text-on-inverse)_12%,transparent)] mix-blend-difference backdrop-blur-[2px]"
     >
       <span
         ref={label}
-        className="select-none font-sans text-[0.55rem] uppercase tracking-[0.22em] text-bone opacity-0"
+        className="select-none font-sans text-[0.55rem] uppercase tracking-[0.22em] text-[var(--text-on-inverse)] opacity-0"
       />
     </div>
   );

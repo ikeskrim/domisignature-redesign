@@ -1,9 +1,16 @@
 /*
  * Phase 6 Step A — per-direction tokens and photo treatments.
  *
- * Each direction owns its palette, type pairing, photographic grade and motion
- * accent. Nothing here leaks into the live design system: every rule is scoped
- * under .dir-a / .dir-b / .dir-c.
+ * Each direction owns its type pairing, photographic grade and motion accent.
+ * Colour it does not own: every ground, line and step of type below is a ROLE
+ * (--surface, --rule, --text-primary …) and the ground the study sits on
+ * answers it — paper for all four: A, C and D by nature, and B too, whose page
+ * carries no ground attribute (every study is paper). Nothing here leaks into
+ * the live design system:
+ * every rule is scoped under .dir-a / .dir-b / .dir-c / .dir-d.
+ *
+ * The study pages read the short names --bg, --bg-alt, --ink, --muted and
+ * --hair. They are kept as aliases of the roles, never as values.
  */
 
 /* ------------------------------------------------------------------ shared */
@@ -35,19 +42,20 @@
 }
 
 /* ------------------------------------------------- A — Gallery Ivory */
-/* Museum wall. Near-white, enormous air, hairline rules, silence as luxury.
+/* Museum wall. Paper, enormous air, hairline rules, silence as luxury.
    Photography hangs monochrome and only admits colour when you approach it. */
 
 .dir-a {
-  --bg: #fbfaf8;
-  --bg-alt: #f2f0ec;
-  --ink: #16161a;
-  --muted: #5f5f66;
-  --hair: #d8d5cf;
-  --accent: #16161a; /* no colour accent at all — the restraint is the point */
+  --bg: var(--surface);
+  --bg-alt: var(--surface-raised);
+  --ink: var(--text-primary);
+  --muted: var(--text-secondary);
+  --hair: var(--rule);
+  /* No accent of its own — the restraint is the point. Nothing under .dir-a
+     asks for --accent, so the ground's gold is never drawn here. */
 
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--surface);
+  color: var(--text-primary);
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
@@ -58,12 +66,13 @@
   line-height: 1;
 }
 
+/* Small letterspaced labels are the tertiary step's job, in every direction. */
 .dir-a .label {
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text-tertiary);
 }
 
 .dir-a .plate img {
@@ -78,23 +87,28 @@
 
 .dir-a .hair {
   height: 1px;
-  background: var(--hair);
+  background: var(--rule);
 }
 
 /* ------------------------------------------------- B — Cretan Noir */
-/* Deep ink. The photograph is the only light in the room; it glows warm out of
-   darkness. Gold appears exactly once per screen and never twice. */
+/* Direction B was drawn as night; on this stage it inherits the light ground
+   like the others (SEMANTIC-TOKENS: every study is paper). The aliases below
+   are roles, so the study names no colour of its own. Gold appears once per
+   screen, as a rule. */
 
 .dir-b {
-  --bg: #0a0a0b;
-  --bg-alt: #121214;
-  --ink: #f3efe7;
-  --muted: #9b968c;
-  --hair: rgba(243, 239, 231, 0.14);
-  --accent: #b98f4a;
+  --bg: var(--surface);
+  --bg-alt: var(--surface-raised);
+  --ink: var(--text-primary);
+  --muted: var(--text-secondary);
+  --hair: var(--rule);
+  /* The study's hover bloom (.plate::after) was a gold glow. A glow is not a
+     hairline, so it has no role on paper; it is drawn in --surface-raised, the
+     paper's own warmth. Recorded as an accent request, not invented here. The
+     page's one gold is its h-px rule. */
 
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--surface);
+  color: var(--text-primary);
   font-family: var(--font-jost), system-ui, sans-serif;
 }
 
@@ -110,7 +124,7 @@
   font-size: 0.6875rem;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text-tertiary);
 }
 
 .dir-b .plate img {
@@ -133,8 +147,8 @@
   pointer-events: none;
   background: radial-gradient(
     ellipse at center,
-    rgba(185, 143, 74, 0.16) 0%,
-    rgba(185, 143, 74, 0) 62%
+    color-mix(in srgb, var(--surface-raised) 60%, transparent) 0%,
+    transparent 62%
   );
   opacity: 0;
   transition: opacity 1.2s var(--ease);
@@ -145,7 +159,7 @@
 
 .dir-b .hair {
   height: 1px;
-  background: var(--hair);
+  background: var(--rule);
 }
 
 /* ------------------------------------------------- C — Editorial Sand */
@@ -153,15 +167,16 @@
    against monospaced caps that behave like a contact sheet's annotations. */
 
 .dir-c {
-  --bg: #efe9df;
-  --bg-alt: #e4dccf;
-  --ink: #221f1a;
-  --muted: #6a6157;
-  --hair: #c7bdae;
-  --accent: #8a4b32;
+  --bg: var(--surface);
+  --bg-alt: var(--surface-raised);
+  --ink: var(--text-primary);
+  --muted: var(--text-secondary);
+  --hair: var(--rule);
+  /* The study's rust accent has no role on paper and nothing under .dir-c
+     draws it; recorded as an accent request, not invented here. */
 
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--surface);
+  color: var(--text-primary);
   font-family: var(--font-plex-mono), ui-monospace, monospace;
 }
 
@@ -183,7 +198,7 @@
   font-size: 0.6875rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text-tertiary);
 }
 
 .dir-c .plate img {
@@ -193,26 +208,27 @@
 
 .dir-c .hair {
   height: 1px;
-  background: var(--hair);
+  background: var(--rule);
 }
 
 /* ------------------------------------------------- D — Cretan Light */
-/* The White Desert language, translated. Sun-bleached warm white ground,
+/* The White Desert language, translated. Warm paper ground,
    photography in full warm colour, haze veils standing in for their cloud
    overlays — Cretan sea-light, never a copied cloud. Type inverts from B: the
    geometric sans carries the display weight and the serif disappears entirely,
    with a mono reserved for coordinates. Facts are set as the luxury. */
 
 .dir-d {
-  --bg: #faf7f1;
-  --bg-alt: #f2ede4;
-  --ink: #1c1a17;
-  --muted: #6b6459;
-  --hair: #ddd5c8;
-  --accent: #2f4f57; /* deep Aegean, used for coordinates and rules only */
+  --bg: var(--surface);
+  --bg-alt: var(--surface-raised);
+  --ink: var(--text-primary);
+  --muted: var(--text-secondary);
+  --hair: var(--rule);
+  /* The study's deep-Aegean accent carried the coordinates as text. The ramp
+     has no coloured text step; see .coord. */
 
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--surface);
+  color: var(--text-primary);
   font-family: var(--font-jost), system-ui, sans-serif;
 }
 
@@ -231,15 +247,17 @@
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text-tertiary);
 }
 
-/* Coordinates as annotation — the one place a mono appears. */
+/* Coordinates as annotation — the one place a mono appears. They were the
+   study's one accent-coloured text; accent text takes the primary step, which
+   keeps them distinct from the tertiary labels beside them. */
 .dir-d .coord {
   font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-size: 0.6875rem;
   letter-spacing: 0.04em;
-  color: var(--accent);
+  color: var(--text-primary);
 }
 
 /* Numbers are the sell. */
@@ -259,13 +277,14 @@
 
 .dir-d .hair {
   height: 1px;
-  background: var(--hair);
+  background: var(--rule);
 }
 
 /*
- * Haze — their cloud overlay, rebuilt as sea-light. A warm-white veil that
- * bleeds the photograph into the page ground at the section seam, so sections
- * dissolve into one another instead of butting up.
+ * Haze — their cloud overlay, rebuilt as sea-light. A veil in the ground's own
+ * colour (--wash is the surface as an rgb triple) that bleeds the photograph
+ * into the page at the section seam, so sections dissolve into one another
+ * instead of butting up.
  */
 /*
  * The bottom veil is deep on purpose: the photograph dissolves into the page
@@ -280,10 +299,10 @@
   pointer-events: none;
   background: linear-gradient(
     to top,
-    var(--bg) 0%,
-    var(--bg) 22%,
-    rgba(250, 247, 241, 0.92) 42%,
-    rgba(250, 247, 241, 0.6) 66%,
+    var(--surface) 0%,
+    var(--surface) 22%,
+    rgb(var(--wash) / 0.92) 42%,
+    rgb(var(--wash) / 0.6) 66%,
     transparent 100%
   );
 }
@@ -293,7 +312,7 @@
   top: 0;
   height: 22%;
   pointer-events: none;
-  background: linear-gradient(to bottom, var(--bg) 0%, rgba(250, 247, 241, 0.55) 45%, transparent 100%);
+  background: linear-gradient(to bottom, var(--surface) 0%, rgb(var(--wash) / 0.55) 45%, transparent 100%);
 }
 
 /* ------------------------------------------------------------- motion */

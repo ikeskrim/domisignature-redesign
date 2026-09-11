@@ -34,7 +34,7 @@ export function SectionHeading({
         <Reveal>
           <div
             className={cn(
-              "flex items-center gap-5 text-muted",
+              "flex items-center gap-5 text-[var(--text-secondary)]",
               align === "center" && "justify-center",
             )}
           >
@@ -47,14 +47,14 @@ export function SectionHeading({
       <TextReveal
         as={as}
         text={heading}
-        className={cn(sizes[size], "mt-6 text-bone")}
+        className={cn(sizes[size], "mt-6 text-[var(--text-primary)]")}
       />
 
       {standfirst && (
         <Reveal delay={0.12}>
           <p
             className={cn(
-              "mt-7 max-w-2xl text-lead leading-relaxed text-muted",
+              "mt-7 max-w-2xl text-lead leading-relaxed text-[var(--text-secondary)]",
               align === "center" && "mx-auto",
             )}
           >

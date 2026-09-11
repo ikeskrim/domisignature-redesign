@@ -9,6 +9,11 @@ import { venues } from "@content/venues";
  * bleeds edge to edge, images glow warm out of near-black, and type is set
  * enormous in a high-contrast serif over the top. Gold appears exactly once per
  * screen — a single rule, a single word — and never twice.
+ *
+ * The root carries no ground attribute. SEMANTIC-TOKENS.md names the only dark
+ * chapters and says every study is paper, so this one inherits the light ground
+ * like A, C and D; the scrims below ask for rgb(var(--wash) / α) and the ground
+ * answers with its own veil. Nothing below names a colour.
  */
 
 export default function DirectionB() {
@@ -33,7 +38,7 @@ export default function DirectionB() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to top, rgba(10,10,11,0.94) 0%, rgba(10,10,11,0.55) 34%, rgba(10,10,11,0.2) 62%, rgba(10,10,11,0.5) 100%)",
+              "linear-gradient(to top, rgb(var(--wash) / 0.94) 0%, rgb(var(--wash) / 0.55) 34%, rgb(var(--wash) / 0.2) 62%, rgb(var(--wash) / 0.5) 100%)",
           }}
         />
 
@@ -46,7 +51,7 @@ export default function DirectionB() {
           </h1>
 
           <div className="mt-8 flex flex-wrap items-end justify-between gap-6">
-            <p className="display text-[clamp(1.25rem,2.6vw,2.25rem)] italic text-[var(--ink)]/85">
+            <p className="display text-[clamp(1.25rem,2.6vw,2.25rem)] italic text-[var(--text-primary)]">
               Where Every Moment Is Signed
             </p>
             <p className="label">Crete — Greece</p>
@@ -68,7 +73,7 @@ export default function DirectionB() {
           <div
             aria-hidden
             className="absolute inset-0"
-            style={{ background: "linear-gradient(to right, #0a0a0b 0%, rgba(10,10,11,0.1) 55%)" }}
+            style={{ background: "linear-gradient(to right, var(--surface) 0%, rgb(var(--wash) / 0.1) 55%)" }}
           />
         </div>
 
@@ -78,7 +83,7 @@ export default function DirectionB() {
             Three private settings on one island, chosen for what each
             one lets you do.
           </p>
-          <p className="mt-10 max-w-md text-[0.95rem] leading-relaxed text-[var(--muted)]">
+          <p className="mt-10 max-w-md text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
             Chosen for what they let you do — the curfew, the capacity, the view
             at the moment you say yes.
           </p>
@@ -90,7 +95,7 @@ export default function DirectionB() {
         <p className="label">Venues</p>
         <ul className="mt-14">
           {venues.map((v, i) => (
-            <li key={v.slug} className="border-t border-[var(--hair)] last:border-b">
+            <li key={v.slug} className="border-t border-[var(--rule)] last:border-b">
               <a
                 href={`/venues/${v.slug}`}
                 className="plate group relative flex items-center gap-8 overflow-hidden py-10 lg:py-14"
@@ -101,7 +106,7 @@ export default function DirectionB() {
                   <span
                     aria-hidden
                     className="absolute inset-0"
-                    style={{ background: "rgba(10,10,11,0.62)" }}
+                    style={{ background: "rgb(var(--wash) / 0.62)" }}
                   />
                 </span>
 
@@ -131,14 +136,14 @@ export default function DirectionB() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to top, rgba(10,10,11,0.95) 0%, rgba(10,10,11,0.4) 45%, rgba(10,10,11,0.55) 100%)",
+              "linear-gradient(to top, rgb(var(--wash) / 0.95) 0%, rgb(var(--wash) / 0.4) 45%, rgb(var(--wash) / 0.55) 100%)",
           }}
         />
         <div className="relative px-6 pb-16 lg:px-16 lg:pb-20">
           <p className="label">Venue</p>
           <h2 className="display mt-7 text-[clamp(2.5rem,8vw,7.5rem)]">{venue.name}</h2>
-          <div className="mt-10 flex flex-wrap items-end justify-between gap-6 border-t border-[var(--hair)] pt-7">
-            <p className="max-w-md text-[0.95rem] leading-relaxed text-[var(--ink)]/75">
+          <div className="mt-10 flex flex-wrap items-end justify-between gap-6 border-t border-[var(--rule)] pt-7">
+            <p className="max-w-md text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
               A private 65-acre estate with three pools and panoramic mountain
               and sea views.
             </p>

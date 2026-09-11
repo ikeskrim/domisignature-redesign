@@ -81,7 +81,7 @@ export function ArrivalProposal({ variant }: { variant: "plate" | "chapter" }) {
 
       <div className="relative mx-auto w-full max-w-[104rem] px-gutter pt-28 lg:pt-36">
         <div className="flex items-center gap-6">
-          <span className="eyebrow text-[var(--text-tertiary)]">Arrival</span>
+          <span className="eyebrow">Arrival</span>
           <span aria-hidden className="h-px w-20 bg-[var(--rule-strong)]" />
         </div>
       </div>
@@ -114,7 +114,7 @@ export function ArrivalProposal({ variant }: { variant: "plate" | "chapter" }) {
                 >
                   {stat.value}
                 </span>
-                <span aria-hidden className="eyebrow mt-5 block text-[var(--text-tertiary)]">
+                <span aria-hidden className="eyebrow mt-5 block">
                   {stat.label}
                 </span>
               </dd>

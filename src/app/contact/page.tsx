@@ -46,13 +46,13 @@ export default function ContactPage() {
         crumbs={crumbs}
       />
 
-      <section className="bg-ink pb-section">
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
             {/* Direct channels */}
             <div className="lg:col-span-4">
               <Reveal>
-                <h2 className="eyebrow text-muted">Speak to us directly</h2>
+                <h2 className="eyebrow">Speak to us directly</h2>
               </Reveal>
 
               {/*
@@ -66,9 +66,9 @@ export default function ContactPage() {
                   <Reveal
                     key={channel.label}
                     delay={0.05 * i}
-                    className="border-t border-hair py-6"
+                    className="border-t border-[var(--rule)] py-6"
                   >
-                    <dt className="text-xs uppercase tracking-[0.16em] text-faint">
+                    <dt className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
                       {channel.label}
                     </dt>
                     <dd className="mt-2">
@@ -77,7 +77,7 @@ export default function ContactPage() {
                         {...(channel.external
                           ? { target: "_blank", rel: "noopener noreferrer" }
                           : {})}
-                        className="break-words font-display text-[1.5rem] font-light text-bone transition-colors duration-300 hover:text-gold"
+                        className="break-words font-display text-[1.5rem] font-light text-[var(--text-primary)] transition-colors duration-300 hover:text-[var(--text-secondary)]"
                       >
                         {channel.value}
                       </a>
@@ -87,16 +87,16 @@ export default function ContactPage() {
               </dl>
 
               <Reveal delay={0.2}>
-                <div className="border-t border-hair py-6">
-                  <h3 className="text-xs uppercase tracking-[0.16em] text-faint">Brochure</h3>
+                <div className="border-t border-[var(--rule)] py-6">
+                  <h3 className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Brochure</h3>
                   <a
                     href={contact.brochure.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group mt-3 inline-flex items-center gap-3 text-bone transition-colors duration-300 hover:text-gold"
+                    className="group mt-3 inline-flex items-center gap-3 text-[var(--text-primary)] transition-colors duration-300 hover:text-[var(--text-secondary)]"
                   >
                     {contact.brochure.label}
-                    <span className="text-xs uppercase tracking-[0.16em] text-faint">PDF</span>
+                    <span className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">PDF</span>
                     <span
                       aria-hidden
                       className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0.5"
@@ -108,8 +108,8 @@ export default function ContactPage() {
               </Reveal>
 
               <Reveal delay={0.26}>
-                <div className="border-t border-hair py-6">
-                  <h3 className="text-xs uppercase tracking-[0.16em] text-faint">Follow</h3>
+                <div className="border-t border-[var(--rule)] py-6">
+                  <h3 className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Follow</h3>
                   <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
                     {social.map((item) => (
                       <li key={item.href}>
@@ -117,7 +117,7 @@ export default function ContactPage() {
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-bone transition-colors duration-300 hover:text-gold"
+                          className="text-[var(--text-primary)] transition-colors duration-300 hover:text-[var(--text-secondary)]"
                         >
                           {item.label}
                         </a>
@@ -130,15 +130,15 @@ export default function ContactPage() {
               <RuleDraw className="mt-2" />
 
               <Reveal delay={0.3}>
-                <p className="mt-6 text-xs text-faint">{legal.registration}</p>
+                <p className="mt-6 text-xs text-[var(--text-tertiary)]">{legal.registration}</p>
               </Reveal>
             </div>
 
             {/* Enquiry form */}
             <div className="lg:col-span-7 lg:col-start-6">
               <Reveal>
-                <h2 className="eyebrow text-muted">Send an enquiry</h2>
-                <p className="mt-5 max-w-xl leading-relaxed text-bone/85">
+                <h2 className="eyebrow">Send an enquiry</h2>
+                <p className="mt-5 max-w-xl leading-relaxed text-[var(--text-secondary)]">
                   Tell us your date, your guest count and the atmosphere you have in mind. We
                   reply to every enquiry personally.
                 </p>
@@ -153,19 +153,19 @@ export default function ContactPage() {
       </section>
 
       {/* Venue locations */}
-      <section className="bg-graphite py-section" aria-labelledby="locations-heading">
+      <section className="bg-[var(--surface-raised)] py-section" aria-labelledby="locations-heading">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
-            <h2 id="locations-heading" className="font-display text-title font-light text-bone">
+            <h2 id="locations-heading" className="font-display text-title font-light text-[var(--text-primary)]">
               Find our venues
             </h2>
-            <p className="mt-4 text-muted">All three are within reach of Rethymno, Crete.</p>
+            <p className="mt-4 text-[var(--text-secondary)]">All three are within reach of Rethymno, Crete.</p>
           </Reveal>
 
           <div className="mt-12 grid gap-10 lg:grid-cols-2">
             {venues.map((venue, i) => (
               <Reveal key={venue.slug} delay={(i % 2) * 0.08}>
-                <h3 className="mb-4 font-display text-heading font-light text-bone">{venue.name}</h3>
+                <h3 className="mb-4 font-display text-heading font-light text-[var(--text-primary)]">{venue.name}</h3>
                 <MapEmbed
                   src={venue.mapEmbed}
                   title={`Map showing the location of ${venue.name}`}

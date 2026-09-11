@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { contact, hero } from "@content/site";
+import { Chapter } from "@/components/layout/Chapter";
 import { gsap, EASE, prefersReducedMotion } from "@/lib/gsap";
 import { introDone } from "@/lib/intro";
 
@@ -36,7 +37,7 @@ export function Hero() {
   /** Highest still index reached; -1 means none have been shown yet. */
   const [maxStill, setMaxStill] = useState(-1);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const root = useRef<HTMLElement>(null);
+  /** The media layer. Its parent is the chapter element the scoped effects bind to. */
   const media = useRef<HTMLDivElement>(null);
   const copy = useRef<HTMLDivElement>(null);
   const stillLayers = useRef<(HTMLDivElement | null)[]>([]);
@@ -93,7 +94,7 @@ export function Hero() {
 
   /* Entrance, once the intro gate opens. */
   useIsomorphicLayoutEffect(() => {
-    const el = root.current;
+    const el = media.current?.parentElement;
     if (!el || prefersReducedMotion()) return;
 
     let ctx: gsap.Context | undefined;
@@ -131,7 +132,7 @@ export function Hero() {
 
   /* Parallax: media drifts down, copy lifts and fades as the page leaves. */
   useIsomorphicLayoutEffect(() => {
-    const el = root.current;
+    const el = media.current?.parentElement;
     if (!el || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
@@ -149,11 +150,22 @@ export function Hero() {
     return () => ctx.revert();
   }, []);
 
+  /*
+   * A designated dark chapter, and the page opener. <Chapter> is the section
+   * element: it sets the ground, so every role below resolves to the night
+   * ladder, and it draws the one defined boundary. No entry mask, because
+   * there is nothing to arrive from; the exit mask is on, so the bottom edge
+   * narrows back into the margins before the arrival's ivory resumes rather
+   * than meeting it as a hard edge.
+   *
+   * Chapter owns its element and forwards no ref, so the effects above bind
+   * to it as the media layer's parent — the same element and geometry, and
+   * no second implementation of the join. Nothing here is pinned; the
+   * parallax scrub and the chapter's exit scrub are independent triggers on
+   * one element.
+   */
   return (
-    <section
-      ref={root}
-      className="relative h-[100svh] min-h-[36rem] w-full overflow-hidden bg-ink"
-    >
+    <Chapter ground="dark" enter={false} className="h-[100svh] min-h-[36rem] w-full overflow-hidden">
       <div ref={media} className="absolute inset-0">
         {/* LCP: the poster photograph, painted immediately. */}
         <Image
@@ -239,17 +251,17 @@ export function Hero() {
         )}
       </div>
 
-      {/* Scrim — gradient, never a box. */}
-      <div aria-hidden className="scrim-full absolute inset-0" />
+      {/* Wash — gradient, never a box; drawn in the chapter's own ground. */}
+      <div aria-hidden className="wash-full absolute inset-0" />
 
       {/* Copy */}
       <div ref={copy} className="relative flex h-full flex-col justify-end pb-20 lg:pb-24">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
-          <p data-hero-fade className="eyebrow text-bone/75">
+          <p data-hero-fade className="eyebrow">
             {hero.eyebrow}
           </p>
 
-          <h1 className="mt-8 text-bone">
+          <h1 className="mt-8 text-[var(--text-primary)]">
             <span className="block overflow-hidden">
               <span
                 data-hero-line
@@ -261,7 +273,7 @@ export function Hero() {
             <span className="mt-4 block overflow-hidden lg:mt-6">
               <span
                 data-hero-line
-                className="block font-display text-[clamp(1.5rem,3.4vw,3rem)] font-light italic leading-[1.05] text-bone/85"
+                className="block font-display text-[clamp(1.5rem,3.4vw,3rem)] font-light italic leading-[1.05] text-[var(--text-primary)]"
               >
                 {hero.tagline}
               </span>
@@ -269,18 +281,18 @@ export function Hero() {
           </h1>
 
           <div data-hero-fade className="mt-14 flex items-end justify-between gap-8">
-            <p className="max-w-sm text-[0.95rem] leading-relaxed text-bone/80">{hero.subtitle}</p>
+            <p className="max-w-sm text-[0.95rem] leading-relaxed text-[var(--text-primary)]">{hero.subtitle}</p>
 
             {/* Two persistent CTAs: Enquire primary, Wedding Brochure secondary. */}
             <div className="hidden shrink-0 items-center gap-8 pb-1 sm:flex">
               <Link
                 href={hero.cta.href}
                 data-magnetic
-                className="group flex items-center gap-4 text-bone"
+                className="group flex items-center gap-4 text-[var(--text-primary)]"
               >
                 <span className="eyebrow">{hero.cta.label}</span>
-                <span className="relative block h-px w-14 bg-bone/45 sm:w-20">
-                  <span className="absolute inset-0 origin-left scale-x-0 bg-bone transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+                <span className="relative block h-px w-14 bg-[var(--rule-strong)] sm:w-20">
+                  <span className="absolute inset-0 origin-left scale-x-0 bg-[var(--text-primary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
                 </span>
               </Link>
 
@@ -288,7 +300,7 @@ export function Hero() {
                 href={contact.brochure.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="eyebrow text-bone/60 transition-colors duration-[450ms] hover:text-bone"
+                className="eyebrow transition-colors duration-[450ms] hover:text-[var(--text-primary)]"
               >
                 {contact.brochure.label}
               </a>
@@ -298,7 +310,7 @@ export function Hero() {
       </div>
 
       <ScrollCue />
-    </section>
+    </Chapter>
   );
 }
 
@@ -325,8 +337,8 @@ function ScrollCue() {
       className="pointer-events-none absolute bottom-7 left-1/2 hidden -translate-x-1/2 lg:block"
       aria-hidden
     >
-      <span className="relative block h-14 w-px overflow-hidden bg-bone/25">
-        <span ref={tick} className="absolute inset-x-0 top-0 block h-5 bg-bone/80" />
+      <span className="relative block h-14 w-px overflow-hidden bg-[var(--rule)]">
+        <span ref={tick} className="absolute inset-x-0 top-0 block h-5 bg-[var(--text-primary)]" />
       </span>
     </div>
   );

@@ -11,9 +11,9 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
 const SEEN_KEY = "domi:intro-seen";
 
 /**
- * The opening curtain. Charcoal ground, the wordmark drawn in behind a rising
- * mask, a hairline that fills left to right, then the whole thing wipes up to
- * reveal the hero underneath.
+ * The opening curtain. An ivory panel on the page's raised surface, the
+ * wordmark drawn in behind a rising mask, a hairline that fills left to right,
+ * then the whole thing wipes up to reveal the hero underneath.
  *
  * Rules from the brief, all enforced here:
  *
@@ -98,12 +98,12 @@ export function Preloader() {
       /* aria-hidden: the page beneath is already the real content, and a screen
          reader should not be told to wait for an animation it cannot see. */
       aria-hidden
-      className="fixed inset-0 z-[105] flex flex-col items-center justify-center bg-charcoal"
+      className="fixed inset-0 z-[105] flex flex-col items-center justify-center bg-[var(--surface-raised)]"
     >
       <span className="block overflow-hidden">
         <span
           data-intro-word
-          className="block font-sans text-[0.78rem] font-medium uppercase tracking-[0.46em] text-bone"
+          className="block font-sans text-[0.78rem] font-medium uppercase tracking-[0.46em] text-[var(--text-primary)]"
         >
           {site.name}
         </span>
@@ -111,15 +111,15 @@ export function Preloader() {
 
       <span
         data-intro-rule
-        className="mt-6 block h-px w-28 origin-left bg-bone/35"
+        className="mt-6 block h-px w-28 origin-left bg-[var(--rule-strong)]"
       />
 
       <button
         type="button"
         onClick={() => timeline.current?.progress(1)}
-        /* Was text-bone/45, which lands near 4.0:1 on charcoal — under AA, and
-           on the one control a visitor may be actively looking for. */
-        className="absolute bottom-10 right-10 font-sans text-[0.65rem] uppercase tracking-[0.3em] text-bone/75 transition-colors duration-300 hover:text-bone focus-visible:text-bone"
+        /* Secondary, not tertiary: tertiary sits at the AA floor, and this is
+           the one control a visitor may be actively looking for. */
+        className="absolute bottom-10 right-10 font-sans text-[0.65rem] uppercase tracking-[0.3em] text-[var(--text-secondary)] transition-colors duration-300 hover:text-[var(--text-primary)] focus-visible:text-[var(--text-primary)]"
       >
         Skip
       </button>

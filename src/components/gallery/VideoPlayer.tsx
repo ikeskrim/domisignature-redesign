@@ -7,6 +7,10 @@ import { cn } from "@/lib/utils";
 /**
  * Video with a poster-frame overlay so nothing downloads until the visitor asks
  * for it. WebM is offered first, MP4 second.
+ *
+ * The figure is a dark chapter in miniature — a poster is a photograph, and the
+ * play affordance sits directly on it — so it declares `data-ground="dark"`
+ * itself and its controls take the night ladder on whatever page it is placed.
  */
 export function VideoPlayer({
   src,
@@ -31,7 +35,7 @@ export function VideoPlayer({
   };
 
   return (
-    <figure className={cn("relative overflow-hidden bg-ink", className)}>
+    <figure data-ground="dark" className={cn("relative overflow-hidden bg-[var(--surface)]", className)}>
       <video
         ref={videoRef}
         controls={started}
@@ -50,10 +54,10 @@ export function VideoPlayer({
         <button
           type="button"
           onClick={start}
-          className="group absolute inset-0 flex items-center justify-center bg-ink/20 transition-colors duration-500 hover:bg-bone/30"
+          className="group absolute inset-0 flex items-center justify-center bg-[rgb(var(--wash)/0.2)] transition-colors duration-500 hover:bg-[color-mix(in_srgb,var(--text-primary)_30%,transparent)]"
           aria-label={`Play video — ${label}`}
         >
-          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-bone/60 text-bone backdrop-blur-sm transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:border-bone group-hover:bg-bone/10">
+          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-[var(--rule-strong)] text-[var(--text-primary)] backdrop-blur-sm transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:border-[var(--text-primary)] group-hover:bg-[color-mix(in_srgb,var(--text-primary)_10%,transparent)]">
             <svg viewBox="0 0 24 24" className="ml-1 h-6 w-6 fill-current" aria-hidden>
               <path d="M8 5v14l11-7z" />
             </svg>

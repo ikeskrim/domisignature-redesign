@@ -65,17 +65,17 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         crumbs={crumbs}
       />
 
-      <section className="bg-ink pb-section">
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <EditorialGallery images={event.gallery} alt={`${event.title} — ${event.category}`} columns={3} />
         </div>
       </section>
 
       {event.videos && event.videos.length > 0 && (
-        <section className="bg-graphite py-section">
+        <section className="bg-[var(--surface-raised)] py-section">
           <div className="mx-auto w-full max-w-[104rem] px-gutter">
             <Reveal>
-              <h2 className="mb-12 font-display text-title font-light text-bone">
+              <h2 className="mb-12 font-display text-title font-light text-[var(--text-primary)]">
                 {event.videos.length > 1 ? "The films" : "The film"}
               </h2>
             </Reveal>
@@ -97,23 +97,23 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       )}
 
       {/* Next gallery */}
-      <section className="bg-ink py-section">
+      <section className="bg-[var(--surface)] py-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
             <Link
               href={`/events/${next.slug}`}
-              className="group flex flex-col gap-3 border-t border-hair pt-8 sm:flex-row sm:items-end sm:justify-between"
+              className="group flex flex-col gap-3 border-t border-[var(--rule)] pt-8 sm:flex-row sm:items-end sm:justify-between"
             >
               <div>
-                <span className="eyebrow text-faint">Next gallery</span>
-                <p className="mt-4 font-display text-title font-light text-bone">
+                <span className="eyebrow">Next gallery</span>
+                <p className="mt-4 font-display text-title font-light text-[var(--text-primary)]">
                   {next.title}{" "}
-                  <span className="text-muted">&mdash; {next.category}</span>
+                  <span className="text-[var(--text-secondary)]">&mdash; {next.category}</span>
                 </p>
               </div>
               <span
                 aria-hidden
-                className="text-3xl text-muted transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2"
+                className="text-3xl text-[var(--text-secondary)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2"
               >
                 &rarr;
               </span>

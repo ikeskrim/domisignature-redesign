@@ -15,12 +15,20 @@
 import { chromium } from "playwright";
 
 const BASE = process.env.SHOTS_BASE ?? "http://localhost:3004";
-const ROUTES = ["/study/aegean", "/study/aegean/hero", "/study/aegean/venues", "/study/aegean/venue"];
+/* Stage 4 moved the switch from the study routes onto the site itself, so the
+   cascade is read where it now matters: the real pages, with the studies kept
+   as the reference they were. */
+const ROUTES = [
+  "/", "/venues", "/venues/thalasses", "/events", "/events/villa-party",
+  "/services", "/wedding-guide", "/about", "/contact",
+  "/study/aegean", "/study/aegean/hero",
+];
 
 const ROLES = [
   "surface", "surface-raised",
   "text-primary", "text-secondary", "text-tertiary",
   "rule", "rule-strong", "focus", "accent",
+  "inverse", "text-on-inverse",
 ];
 
 let fails = 0;

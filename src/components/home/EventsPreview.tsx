@@ -13,19 +13,19 @@ import { EventsStrip } from "@/components/home/EventsStrip";
  */
 export function EventsPreview() {
   return (
-    <section className="bg-ink py-section">
+    <section className="bg-[var(--surface)] py-section">
       <div className="mx-auto w-full max-w-[104rem] px-gutter">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Reveal>
               <div className="flex items-center gap-6">
-                <span className="eyebrow text-muted">Signature Events</span>
+                <span className="eyebrow">Signature Events</span>
                 <RuleDraw className="w-20" />
               </div>
             </Reveal>
             <TextReveal
               text={"Our collection\nof events"}
-              className="mt-9 text-display font-light text-bone"
+              className="mt-9 text-display font-light text-[var(--text-primary)]"
               delay={0.05}
             />
           </div>

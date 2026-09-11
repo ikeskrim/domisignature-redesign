@@ -7,6 +7,14 @@ import { cn, pad2 } from "@/lib/utils";
 /**
  * Editorial venue card. Deliberately not a boxed "card" — no border, no shadow,
  * no rounded corners. Image, index, name, one line, capacity.
+ *
+ * The image frame declares its own dark ground: the index number is set
+ * directly over the photograph, so it reads in the photograph's ladder rather
+ * than the page's. A photograph's corner is not guaranteed dark, though — a
+ * pale sky under a bone index is near-invisible — so a short top-edge veil in
+ * the frame's own ground (`--wash`, the bottom scrim's shape inverted) sits
+ * beneath the index and keeps the ladder honest whatever the plate is.
+ * Everything below the frame is the page's.
  */
 export function VenueCard({
   venue,
@@ -29,7 +37,10 @@ export function VenueCard({
 
   return (
     <Link href={`/venues/${venue.slug}`} className={cn("group block", className)}>
-      <div className={cn("relative overflow-hidden bg-graphite", ratios[aspect])}>
+      <div
+        data-ground="dark"
+        className={cn("relative overflow-hidden bg-[var(--surface-raised)]", ratios[aspect])}
+      >
         <Image
           src={venue.coverImage}
           alt={`${venue.name} — ${venue.standfirst}`}
@@ -40,28 +51,36 @@ export function VenueCard({
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-ink/0 transition-colors duration-700 group-hover:bg-bone/12"
+          className="absolute inset-0 bg-transparent transition-colors duration-700 group-hover:bg-[color-mix(in_srgb,var(--text-primary)_12%,transparent)]"
         />
-        <span className="eyebrow absolute left-5 top-5 text-bone/80 mix-blend-difference">
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-28"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgb(var(--wash) / 0.88) 0%, rgb(var(--wash) / 0.6) 40%, transparent 100%)",
+          }}
+        />
+        <span className="eyebrow absolute left-5 top-5 text-[var(--text-primary)]">
           {pad2(index + 1)}
         </span>
       </div>
 
       <div className="mt-6 flex items-baseline justify-between gap-6">
-        <h3 className="font-display text-[1.75rem] leading-none text-bone lg:text-[2.15rem]">
+        <h3 className="font-display text-[1.75rem] leading-none text-[var(--text-primary)] lg:text-[2.15rem]">
           {venue.name}
         </h3>
         <span
           aria-hidden
-          className="shrink-0 text-lg text-muted transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
+          className="shrink-0 text-lg text-[var(--text-secondary)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
         >
           &rarr;
         </span>
       </div>
 
-      <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">{venue.standfirst}</p>
+      <p className="mt-3 max-w-md text-sm leading-relaxed text-[var(--text-secondary)]">{venue.standfirst}</p>
 
-      <p className="mt-4 text-xs uppercase tracking-[0.16em] text-faint">
+      <p className="mt-4 text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
         {venue.capacity.replace("How many people can fit: ", "Capacity ")}
       </p>
     </Link>
