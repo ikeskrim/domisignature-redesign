@@ -486,7 +486,7 @@ hook is now a FAIL.
 stays reachable as the runner-up, as `?grade=a` does for the grade. Gate 11/11.
 
 **Stage 4 — leaf components and scenes: DONE.** Branch preview
-PREVIEW-PENDING · captures `design-review/stage4/` (all routes, 1440 and 390) ·
+[`lwycv01tj`](https://domisignature-redesign-lwycv01tj-domisi.vercel.app) (snapshot `118f48c`) · captures `design-review/stage4/` (all routes, 1440 and 390) ·
 amendment 5 before / rejected / after in `design-review/stage4-vignette-{before,rails,after}/`.
 
 **The completion test is mechanical and it is met.** `npm run verify:palette`

@@ -21,7 +21,9 @@ then Next, then a freshness check; a silent death is named as one.
 **Gate:** fifteen checks (`npm run qa`, `PORT` env sets the server port).
 Measurement scripts read `SHOTS_BASE`.
 
-**Stage state:** see the stage log in `design-review/INVERSION-PLAN.md`. Stage
+**Stage state:** see the stage log in `design-review/INVERSION-PLAN.md`.
+Stage 4 closed at snapshot `118f48c` (preview `lwycv01tj`, gate 15/15). Next:
+`stage5-prep.sh`, then the `stage5-implement.js` workflow. Stage
 5 decisions are settled in `design-review/STAGE5-DECISIONS.md`; the shared
 primitives (`Plate`, `Phone`, the chapter rest state) are built before the
 fan-out; the implementation workflow is `stage5-implement.js`. The stage-5 kit
