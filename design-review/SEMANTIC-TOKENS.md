@@ -21,12 +21,13 @@ for a role, and the ground it sits on answers.**
 | `--text-tertiary` | `#6b6558` | `#8d8880` | small letterspaced labels, meta, captions — 4.92 / 5.7 : 1 |
 | `--rule` | `#d8cfc0` | `#2b2b30` | decorative hairlines; no one needs to see them to understand the page |
 | `--rule-strong` | `#8a8378` | `#5f5f66` | a boundary that must be seen — 3.1 : 1 |
-| `--focus` | `#27211b` | `#b98f4a` | the focus ring; the global `:focus-visible` already uses it |
-| `--accent` | `#b98f4a` | `#b98f4a` | gold: the mark and decorative hairlines. On light, **never** text, focus, or a border that matters |
+| `--focus` | `#27211b` | `#f3efe7` | the focus ring, with a `--surface` halo; the global `:focus-visible` uses it. Never gold (owner's stage-5 law) |
+| `--accent` | `#b98f4a` | `#b98f4a` | gold: the mark and decorative hairlines. On **either** ground, never text, focus, or a border that matters |
 | `--inverse` | `#27211b` | `#f3efe7` | a solid inverted fill: a pill, a selection highlight |
 | `--text-on-inverse` | `#f2ece1` | `#0a0a0b` | the text on that fill |
 | `--wash` | `242 236 225` | `10 10 11` | rgb triple — the ground as a translucent veil over a photograph |
 | `--shadow-tint` | `39 33 27` | `0 0 0` | rgb triple — soft shadows, warm on paper |
+| `--paper-sheet` | a lamp: centre lift + two flank lobes | `none` | amendment 5: the paper's light, a background layer on every element that paints `--surface` (see below) |
 
 Every value was solved by measurement (`scripts/derive-tokens.mjs`) and is
 proven in the browser's cascade (`npm run verify:ground`), not in the file.
@@ -135,6 +136,49 @@ Everything else — the mobile menu panel, the preloader, the page-transition
 curtain, the footer, every inner page, every study — is paper. They inherit
 the light ground and need no attribute; their surfaces are `--surface` or
 `--surface-raised`.
+
+## Three rules added after the migration, all in globals.css
+
+They came out of measuring the migrated tree, and each closes a class of
+failure rather than one instance.
+
+1. **Colour re-resolves at every ground.** `[data-ground] { color:
+   var(--text-primary) }`, in the base layer. CSS `color` inherits as a
+   computed value, so an unroled child of a dark frame used to keep the paper
+   ink its section had already resolved — near-black type on a night
+   photograph, shipped once on the mobile venue cards. Now an unroled child
+   always takes its nearest ground's primary, and any role a component names
+   still wins. `npm run verify:ground` checks every visible text element on
+   every route against its nearest ground's ladder.
+2. **The focus ring has a halo.** `box-shadow: 0 0 0 7px var(--surface)`
+   under the 3px `--focus` ring at a 3px offset. A single-colour ring vanished
+   wherever it crossed something its own colour (the dark hero, the mark). With
+   the halo, every point of the indicator is either ring-against-halo or
+   halo-against-page, and one of the two always clears 3:1. Measured at every
+   perimeter position of every tab stop by `npm run audit:focus`. A component
+   with its own `box-shadow` utility loses the halo on focus — the audit finds it.
+   Where a ring outside the element would be clipped — a tile in a
+   multi-column masonry (Chrome clips ink overflow at a column's edge), a
+   button filling a clipped frame — the element takes `.focus-inset`: the same
+   ring and halo drawn 4px inside, on a pseudo-element above the photograph.
+   An embed (`iframe`) is the one exception, recorded rather than fixed: with
+   focus inside a third-party document the frame matches neither `:focus` nor
+   `:focus-within` in this page (measured), so no rule here can draw its
+   indicator. The audit lists embeds instead of scoring them, as axe does. The ring
+   is never gold: near-black on paper, bone on night.
+3. **Paper has a lamp (amendment 5).** `--paper-sheet` is three soft layers on
+   every sheet: a lift in its middle (about +3%) and two warm shaded lobes on
+   its flanks (~6% at the very edge, ~2% where type begins). Every layer fades
+   to nothing before the sheet's top and bottom, so a sheet meets any
+   neighbour on the plain ground and no join can step. The first version, an
+   inset-shadow vignette down both margins, read as grey rails and stepped at
+   every join with an unshaded neighbour; an independent review measured both
+   and this replaced it. It is a background layer painted by
+   `:where(section, footer, header, main, div).bg-[var(--surface)]`, so no
+   component is touched and it sits behind all content. Stated cost: axe
+   reports contrast on those sheets as "needs review" (the a11y script prints
+   the count); `npm run audit:paper` measures every text element on paper
+   against the worst pixel behind its glyphs instead, every route, both widths.
 
 ## Laws, restated for this stage
 

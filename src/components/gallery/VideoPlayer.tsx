@@ -54,7 +54,10 @@ export function VideoPlayer({
         <button
           type="button"
           onClick={start}
-          className="group absolute inset-0 flex items-center justify-center bg-[rgb(var(--wash)/0.2)] transition-colors duration-500 hover:bg-[color-mix(in_srgb,var(--text-primary)_30%,transparent)]"
+          /* The button fills a figure that clips its overflow, so the ring the
+             page draws outside it was invisible (measured: no indicator at all).
+             .focus-inset draws the same ring and halo inside the frame instead. */
+          className="group absolute inset-0 flex items-center justify-center bg-[rgb(var(--wash)/0.2)] focus-inset transition-colors duration-500 hover:bg-[color-mix(in_srgb,var(--text-primary)_30%,transparent)]"
           aria-label={`Play video — ${label}`}
         >
           <span className="flex h-20 w-20 items-center justify-center rounded-full border border-[var(--rule-strong)] text-[var(--text-primary)] backdrop-blur-sm transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:border-[var(--text-primary)] group-hover:bg-[color-mix(in_srgb,var(--text-primary)_10%,transparent)]">

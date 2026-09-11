@@ -111,7 +111,8 @@ for (const ground of ["light", "dark"]) {
     check(a < 3, "accent is decorative-only on light", `${a.toFixed(2)} — mark and hairlines, never text or focus`);
     check(m.focus !== m.accent, "focus is NOT the accent on light", `${m.focus}`);
   } else {
-    check(a >= 4.5, "accent may carry text on dark", `${a.toFixed(2)}`);
+    check(m.focus !== m.accent, "focus is NOT the accent on dark - gold never carries focus", `${m.focus}`);
+    console.log(`  --    accent on dark  ${a.toFixed(2)}:1 - the mark and hairlines only; gold carries no text on either ground`);
   }
 }
 
@@ -123,6 +124,80 @@ if (ladders.light && ladders.dark) {
     ladders.light["text-primary"] !== ladders.dark["text-primary"] &&
       ladders.light.surface !== ladders.dark.surface,
     "surface and primary text both flip",
+  );
+}
+
+/* ---- every text element resolves inside its own ground's ladder ----
+ *
+ * The failure this catches is invisible in CSS and was shipped once. `color`
+ * inherits as a computed value, so a child that names no role inside a dark
+ * frame keeps the paper ink its section already resolved, and near-black type
+ * lands on a night photograph. The base layer now re-resolves colour on every
+ * ground; this proves it holds, on every route: each visible text element's
+ * colour must be one of the text roles of its NEAREST ground, as that ground
+ * resolves them. Gold is a text role on neither ground.
+ */
+const TEXT_ROLES = {
+  light: ["text-primary", "text-secondary", "text-tertiary", "text-on-inverse", "rule", "rule-strong"],
+  dark: ["text-primary", "text-secondary", "text-tertiary", "text-on-inverse", "rule", "rule-strong"],
+};
+
+console.log("\ntext on its own ground — every visible text element, every route\n");
+for (const route of ROUTES) {
+  await page.goto(`${BASE}${route}`, { waitUntil: "domcontentloaded", timeout: 60000 });
+  await page.waitForTimeout(1200);
+  const res = await page.evaluate((TEXT_ROLES) => {
+    const cache = new Map();
+    const allowed = (g) => {
+      if (cache.has(g)) return cache.get(g);
+      const kind = g.getAttribute("data-ground");
+      const set = new Set();
+      const probe = document.createElement("span");
+      g.appendChild(probe);
+      const cs = getComputedStyle(g);
+      for (const r of TEXT_ROLES[kind] ?? []) {
+        probe.style.color = cs.getPropertyValue(`--${r}`).trim();
+        set.add(getComputedStyle(probe).color);
+      }
+      probe.remove();
+      cache.set(g, set);
+      return set;
+    };
+    const seen = new Set();
+    const bad = [];
+    let n = 0;
+    let faded = 0;
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim()) continue;
+      const el = node.parentElement;
+      if (!el || seen.has(el)) continue;
+      seen.add(el);
+      if (el.closest("script,style,noscript,template")) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) continue;
+      const cs = getComputedStyle(el);
+      if (cs.visibility === "hidden") continue;
+      const g = el.closest("[data-ground]");
+      if (!g) continue;
+      const a = cs.color.match(/rgba?\(([^)]+)\)/);
+      const parts = a ? a[1].split(",").map((x) => x.trim()) : [];
+      if (parts.length === 4 && Number(parts[3]) < 1) {
+        faded++;
+        continue;
+      }
+      n++;
+      if (!allowed(g).has(cs.color)) {
+        bad.push({ text: el.textContent.trim().replace(/\s+/g, " ").slice(0, 36), color: cs.color, ground: g.getAttribute("data-ground") });
+      }
+    }
+    return { n, faded, bad };
+  }, TEXT_ROLES);
+  check(
+    res.bad.length === 0,
+    `${route.padEnd(24)} ${String(res.n).padStart(3)} text elements on their own ground` + (res.faded ? ` (${res.faded} alpha-faded, skipped)` : ""),
+    res.bad.length ? `${res.bad.length} off-ladder: ` + res.bad.slice(0, 3).map((b) => `"${b.text}" ${b.color} on ${b.ground}`).join("; ") : "",
   );
 }
 

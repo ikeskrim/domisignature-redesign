@@ -2,7 +2,7 @@
 #
 # The audits in scripts/ only protect the site if they actually run, and a check
 # that depends on someone remembering to run it is not a check. This runs the
-# same `npm run qa` a developer runs locally — same script, same twelve checks — so
+# same `npm run qa` a developer runs locally — same script, same fifteen checks — so
 # there is no second, weaker definition of "green" that only CI believes.
 #
 # Budget is ten minutes. Lighthouse is deliberately absent: it needs a quiet,
@@ -24,7 +24,9 @@ concurrency:
 jobs:
   qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # The light system added three browser-driven checks (ground, focus,
+    # paper); together they add about six minutes on a runner.
+    timeout-minutes: 25
 
     steps:
       - uses: actions/checkout@v4

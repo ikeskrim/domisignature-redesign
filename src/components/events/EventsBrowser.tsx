@@ -194,7 +194,7 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="group block"
+      className="focus-inset group block"
       data-cursor={film ? "play" : "view"}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}

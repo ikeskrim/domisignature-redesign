@@ -1,0 +1,392 @@
+[
+  {
+    "width": "1440",
+    "route": "home",
+    "measured": 134,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.673429838396537,
+      "bar": 4.5,
+      "text": "Venues",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venues",
+    "measured": 45,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "Venues",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venue-mountain-escape",
+    "measured": 65,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.704205397808176,
+      "bar": 4.5,
+      "text": "© 2026 Domisignature",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venue-thalasses",
+    "measured": 75,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "Get in touch",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venue-olive-stories",
+    "measured": 66,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.704205397808176,
+      "bar": 4.5,
+      "text": "© 2026 Domisignature",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "events",
+    "measured": 52,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.700619590624362,
+      "bar": 4.5,
+      "text": "Signature Events",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "event-sunset-by-the-pool",
+    "measured": 43,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "Celebration",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "event-villa-party",
+    "measured": 45,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "Villa Party",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "services",
+    "measured": 66,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "Get in touch",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "wedding-guide",
+    "measured": 67,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.700619590624362,
+      "bar": 4.5,
+      "text": "Wedding Guide",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "about",
+    "measured": 64,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.697671675985583,
+      "bar": 4.5,
+      "text": "Wedding Brochure",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "contact",
+    "measured": 60,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.704205397808176,
+      "bar": 4.5,
+      "text": "Follow",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "404",
+    "measured": 31,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "© 2026 Domisignature",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "home",
+    "measured": 134,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.741035624360071,
+      "bar": 4.5,
+      "text": "What we create",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venues",
+    "measured": 45,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "Wedding Brochure",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-mountain-escape",
+    "measured": 65,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.710083719091031,
+      "bar": 4.5,
+      "text": "Explore",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-thalasses",
+    "measured": 69,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.741035624360071,
+      "bar": 4.5,
+      "text": "–",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-olive-stories",
+    "measured": 66,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.741035624360071,
+      "bar": 4.5,
+      "text": "Perfect for:",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "events",
+    "measured": 52,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.741035624360071,
+      "bar": 4.5,
+      "text": "Explore",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "event-sunset-by-the-pool",
+    "measured": 46,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.744001076753331,
+      "bar": 4.5,
+      "text": "Celebration",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "event-villa-party",
+    "measured": 41,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.738087709721292,
+      "bar": 4.5,
+      "text": "Next gallery",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "services",
+    "measured": 67,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.747604768402507,
+      "bar": 4.5,
+      "text": "Home",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "wedding-guide",
+    "measured": 62,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7505526830412865,
+      "bar": 4.5,
+      "text": "Follow",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "about",
+    "measured": 64,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.738087709721292,
+      "bar": 4.5,
+      "text": "Follow",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "contact",
+    "measured": 60,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.738087709721292,
+      "bar": 4.5,
+      "text": "Follow",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "404",
+    "measured": 31,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.738087709721292,
+      "bar": 4.5,
+      "text": "Follow",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  }
+]

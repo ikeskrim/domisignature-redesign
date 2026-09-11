@@ -21,25 +21,10 @@ export function ServiceScenes({ idPrefix = true }: { idPrefix?: boolean }) {
           <section
             key={service.slug}
             id={idPrefix ? service.slug : undefined}
-            className="relative scroll-mt-32"
+            className="scroll-mt-32"
             aria-labelledby={`${service.slug}-heading`}
           >
-            {/*
-              The same light the Statement and the Footer carry, set under the
-              copy column so the ground between scenes has a source rather than
-              a flat field. It overreaches the scene top and bottom to meet the
-              next pool in the gap, and stays inside the section's width — the
-              page does not clip horizontal overflow.
-            */}
-            <div
-              aria-hidden
-              className={cn(
-                "glow left-0 right-0 top-[20%] bottom-[-30%] lg:top-[-30%] lg:bottom-[-30%] lg:w-[62%]",
-                flipped ? "lg:right-auto" : "lg:left-auto",
-              )}
-            />
-
-            <div className="relative mx-auto w-full max-w-[104rem] px-gutter">
+            <div className="mx-auto w-full max-w-[104rem] px-gutter">
               <div className="lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-14">
                 {/* Image — 8 of 12 columns, bleeding past the gutter to the viewport edge */}
                 <div

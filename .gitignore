@@ -96,4 +96,11 @@ public/media/aeIMG_6743_4_5.jpg
 # cross-browser/ stays out: it is raw engine probe output, superseded by the
 # summary in the report.
 design-review/cross-browser/
+# Review intermediates stay out too: the tile crops cut from the full-page
+# captures for the visual reviewers, and the Hero's per-offset state frames.
+# Both are reproducible (scripts/tile-capture.mjs, scripts/hero-states.mjs) and
+# what they found is in the stage log.
+design-review/*/tiles/
+design-review/*-tiles/
+design-review/*/hero/
 .dns-watch/

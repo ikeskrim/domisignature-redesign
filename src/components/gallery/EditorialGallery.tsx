@@ -99,7 +99,7 @@ export function EditorialGallery({
             data-cursor="view"
             onClick={() => setIndex(i)}
             aria-label={`Open image ${i + 1} of ${images.length} full screen`}
-            className="group mb-5 block w-full break-inside-avoid overflow-hidden bg-[var(--surface-raised)] lg:mb-10"
+            className="focus-inset group mb-5 block w-full break-inside-avoid overflow-hidden bg-[var(--surface-raised)] lg:mb-10"
           >
             <span className="relative block overflow-hidden">
               <Image

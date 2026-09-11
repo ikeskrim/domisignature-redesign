@@ -126,9 +126,10 @@
    inversion created, and it is closed here with a solved `--rule-strong`.
    `hair` keeps its job as the decorative hairline it already draws.
 
-   Gold appears in both ladders but means different things: on dark it is 6.68:1
-   and may carry text; on light it is 2.52:1 and is the mark and decorative
-   hairlines only, never text, never focus, never a boundary.
+   Gold appears in both ladders and means the same thing in each: the mark and
+   decorative hairlines. It measures 6.68:1 on night and 2.52:1 on ivory, but the
+   owner's stage-5 law is ground-independent - gold never carries text or focus.
+   The focus ring is near-black on paper and bone on night.
 --------------------------------------------------------------------------- */
 [data-ground="light"] {
   --surface: #f2ece1;
@@ -146,14 +147,24 @@
      other ladder's surface with the other ladder's primary on it. */
   --inverse: #27211b;
   --text-on-inverse: #f2ece1;
-  /* The ambient pool a `.glow` draws. Night lifts - the raised surface at 60%
-     - but paper cannot: the same mix on ivory is +5 codes and reads as
-     nothing. So paper shadows instead, the warm shadow tint at 4%. Solved at
-     the pool's centre, its darkest pixel: tertiary type holds 4.57:1 there,
-     while a rule-strong boundary would read 2.96:1 - so a pool sits behind
-     type and the wordmark, never behind a form. 4% is the ceiling, not a
-     taste. */
-  --pool: rgb(var(--shadow-tint) / 0.04);
+  /*
+   * Amendment 5 - the paper's own light. Every sheet of paper carries a lamp:
+   * a soft lift in its middle (the raised surface at 65%, about +3%:
+   * the raised step is only 4.6% above the page, so a weaker mix - 30% was
+   * tried - peaks near +1.3% and reads as nothing, as review measured) and two
+   * warm shaded lobes on its flanks (the shadow tint, ~6% at the very edge,
+   * ~2% where type begins at the gutter). Every layer fades to nothing before
+   * the sheet's top and bottom, so a sheet meets any neighbour - another
+   * sheet, a raised band, a veiled photograph, a dark chapter - on the plain
+   * ground, and no join can step. The first version darkened the margins top
+   * to bottom; an independent review measured it reading as rails and
+   * stepping at joins, and this replaced it. Ceiling, solved: no pixel under
+   * type or a boundary takes more than 3%.
+   */
+  --paper-sheet:
+    radial-gradient(ellipse 70% 42% at 50% 50%, color-mix(in srgb, var(--surface-raised) 65%, transparent) 0%, transparent 100%),
+    radial-gradient(ellipse 14% 40% at 0% 50%, rgb(var(--shadow-tint) / 0.06) 0%, rgb(var(--shadow-tint) / 0.02) 40%, transparent 100%),
+    radial-gradient(ellipse 14% 40% at 100% 50%, rgb(var(--shadow-tint) / 0.06) 0%, rgb(var(--shadow-tint) / 0.02) 40%, transparent 100%);
 }
 
 [data-ground="dark"] {
@@ -164,14 +175,14 @@
   --text-tertiary: #8d8880;
   --rule: #2b2b30;
   --rule-strong: #5f5f66;
-  --focus: #b98f4a;
+  --focus: #f3efe7;
   --shadow-tint: 0 0 0;
   --accent: #b98f4a;
   --wash: 10 10 11;
   --inverse: #f3efe7;
   --text-on-inverse: #0a0a0b;
-  /* The pool that shipped: the raised surface at 60%, a lift on night. */
-  --pool: color-mix(in srgb, var(--surface-raised) 60%, transparent);
+  /* Night needs no lamp; a dark chapter carries its own photograph. */
+  --paper-sheet: none;
 }
 
 
@@ -197,6 +208,23 @@
     overscroll-behavior: contain;
   }
 
+  /*
+   * Colour re-resolves at every ground.
+   *
+   * CSS `color` inherits as a computed value, not as a variable: a section that
+   * sets text-[var(--text-primary)] hands its children the paper ink already
+   * resolved. A dark frame nested inside it redefines --text-primary, but a
+   * child that names no role never asks again - it keeps the ink, and
+   * near-black type lands on a night photograph. Stage 4 shipped exactly that
+   * on the mobile venue cards. Declaring the colour on the ground itself means
+   * an unroled child always inherits its NEAREST ground's primary. In the base
+   * layer, so any role a component names on the same element still wins.
+   * scripts/ground-verify.mjs proves it on every route.
+   */
+  [data-ground] {
+    color: var(--text-primary);
+  }
+
   body {
     background-color: var(--surface);
     color: var(--text-primary);
@@ -213,14 +241,27 @@
     color: var(--text-on-inverse);
   }
 
-  /* Focus follows the ground it lands on. Gold is 6.68:1 on dark and 2.52:1 on
-     ivory, so one ring colour cannot serve both - near-black on paper, gold in
-     a dark chapter - and axe will not catch the failure, because it does not
-     evaluate focus-indicator contrast. Law, not preference (plan section 2). */
+  /* Focus follows the ground it lands on: near-black on paper, bone on night -
+     never gold, on either (owner's law). axe will not catch a failure here,
+     because it does not evaluate focus-indicator contrast; the ring is
+     measured instead, at every perimeter position, by scripts/focus-ring.mjs. */
   :focus-visible {
-    outline: 2px solid var(--focus);
+    outline: 3px solid var(--focus);
     outline-offset: 3px;
     border-radius: 1px;
+    /*
+     * The halo. A ring of one colour is only as visible as its faintest
+     * stretch: measured, the near-black ring vanished wherever it crossed the
+     * dark hero or the mark. A band of the ground's own surface under the ring
+     * - the 3px gap inside it and a pixel outside - means every point of the
+     * indicator is either ring against halo or halo against page, and one of
+     * the two always clears 3:1. Near-black on paper, as the law says; the
+     * halo only guarantees it can be seen on whatever it lands on.
+     * Measured by scripts/focus-ring.mjs. The ring is 3px, not 2: over a dark
+     * scrim a night halo changes nothing, and a 2px ring on the venue title
+     * card's pill came to 572px2 of change against WCAG 2.4.13's 576.
+     */
+    box-shadow: 0 0 0 7px var(--surface);
   }
 
   h1,
@@ -376,6 +417,51 @@
   }
 
   /*
+   * An indicator drawn INSIDE the element, for the places a ring outside it is
+   * clipped: a tile in a multi-column masonry (Chrome clips ink overflow at a
+   * column's edges - measured, the ring vanished along the bottom of a gallery
+   * tile and the sides of an event tile) and a button that fills a clipped
+   * frame. The same ring and halo as :focus-visible, 4px in from the edge, on a
+   * pseudo-element above the photograph. One definition; nothing else draws an
+   * inset ring.
+   */
+  .focus-inset {
+    position: relative;
+  }
+  .focus-inset:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+  .focus-inset:focus-visible::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    z-index: 2;
+    pointer-events: none;
+    border: 3px solid var(--focus);
+    box-shadow:
+      0 0 0 3px var(--surface),
+      inset 0 0 0 3px var(--surface);
+  }
+
+  /*
+   * Amendment 5 - where the paper's light is painted.
+   *
+   * Every sheet of paper on the site is an element that paints --surface, so
+   * the lamp rides on that and no component is touched. It is a background
+   * layer: painted under the element's content, behind every word and every
+   * photograph. The cost, stated rather than hidden: axe will not compute
+   * contrast over a background image and reports those checks as "needs
+   * review" - scripts/a11y.mjs prints the count. The contrast of every text
+   * element on paper is measured instead, on the worst pixel behind its
+   * glyphs, by scripts/paper-legibility.mjs: every route, both widths, in the
+   * gate. Inside a dark chapter the token is none.
+   */
+  :where(section, footer, header, main, div).bg-\[var\(--surface\)\] {
+    background-image: var(--paper-sheet);
+  }
+
+  /*
    * The chapter mask - see components/layout/Chapter.tsx, the one definition
    * of a light/dark boundary. Two insets, scrubbed on entry and exit; the
    * larger wins. Both default to zero so the server render and reduced motion
@@ -444,19 +530,11 @@
    * overlay like this, so the number is conservative by intent rather than by
    * measurement.
    *
-   * Stage 4 tuning for paper - by measurement this time: the tile composited
-   * over each ground in a headless browser, read back in sRGB codes. The
-   * filter's grey lands near 187, so over night the noise is a big step and
-   * reads as fibre (a spread of ±1.0 codes) while over ivory it is a small one
-   * and vanishes (±0.5). Opacity is not the lever: this is ONE fixed layer
-   * over both grounds, and the 0.10 ivory would need lifts every dark
-   * chapter's blacks by 9 codes and triples their speckle. The lever is the
-   * tile's own contrast. feComponentTransfer stretches the grey (slope 3) and
-   * leaves alpha alone, which at the same 0.04 gives ivory ±1.25 codes
-   * (L* 0.44, above night's shipped 0.34) while night's lift stays where it
-   * shipped - +3.1 codes against +3.3 - and its extremes barely move
-   * ([9,18] against [10,17]). Mean shift on paper is -1.2 codes, so every
-   * solved ratio still holds.
+   * A paper retune was tried in stage 4 (the tile's contrast stretched so ivory
+   * would show fibre). Read on the worst pixel under type it failed: the dark
+   * specks took tertiary text to 4.41:1 on the footer's legal line, and tertiary
+   * has only 9% headroom above AA. So the shipped tile stands; stage 6 re-tunes
+   * grain with scripts/paper-legibility.mjs in the gate to say how far it can go.
    */
   .grain {
     position: fixed;
@@ -464,7 +542,7 @@
     z-index: 60;
     pointer-events: none;
     opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
     background-repeat: repeat;
   }
 
@@ -476,49 +554,20 @@
    * gold haze behind every section would quietly break that rule. This reads as
    * light rather than as colour, which is the point.
    *
-   * The colour is the ground's - `--pool` in the ladders. A pool on night is a
-   * lift; a pool on paper is a warm shadow, because ivory has no room above it
-   * (the lift that shipped resolved to +5 codes on paper and read as nothing).
-   * Same shape, same stops; the ground answers.
+   * On paper this lift resolves to about +5 codes and reads as nothing, which
+   * is harmless and temporary: the pools are light, nothing blooms on paper,
+   * and stage 6 deletes them.
    */
   .glow {
     position: absolute;
     pointer-events: none;
-    background: radial-gradient(ellipse at center, var(--pool) 0%, transparent 68%);
-  }
-
-  /*
-   * The paper's edge - the warm wash/vignette the inversion plan pre-approved
-   * as a tuning device, for exactly the case stage 4's captures showed: a
-   * pixel-uniform ivory reads as screen, not as stock. A ground device, not a
-   * colour: the shadow tint at 3% along the page's two long edges, gone by a
-   * fifth of the width. Horizontal only, on purpose - every section that is
-   * the ground spans the full width, so stacked sections join without a seam,
-   * where a per-section radial would band at every join.
-   *
-   * 3% is solved, not chosen: it is the strongest tint under which every ratio
-   * the ladder promises still holds at the darkest pixel (rule-strong 3.02:1,
-   * tertiary 4.66:1), so a full-bleed form or boundary at the very edge is
-   * still lawful. Inside a dark chapter the tint resolves to black on night
-   * and disappears.
-   *
-   * It sits on `body`, the page ground. But every section that IS the ground
-   * paints its own `bg-[var(--surface)]` over the body - PageHeader, the
-   * events grid, Statement, Footer - and an opaque surface hides what is
-   * under it. `.paper` is the same device for those sections: the page ground
-   * resuming, adopted in place of the bare surface.
-   */
-  body,
-  .paper {
-    background-color: var(--surface);
-    background-image: linear-gradient(
-      to right,
-      rgb(var(--shadow-tint) / 0.03) 0%,
-      transparent 20%,
-      transparent 80%,
-      rgb(var(--shadow-tint) / 0.03) 100%
+    background: radial-gradient(
+      ellipse at center,
+      color-mix(in srgb, var(--surface-raised) 60%, transparent) 0%,
+      transparent 68%
     );
   }
+
 }
 
 /* ---------------------------------------------------------------------------

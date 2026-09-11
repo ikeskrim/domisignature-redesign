@@ -485,6 +485,158 @@ hook is now a FAIL.
 [`/study/aegean/arrival/chapter`](https://domisignature-redesign-jkb8xq8vf-domisi.vercel.app/study/aegean/arrival/chapter)
 stays reachable as the runner-up, as `?grade=a` does for the grade. Gate 11/11.
 
+**Stage 4 — leaf components and scenes: DONE.** Branch preview
+PREVIEW-PENDING · captures `design-review/stage4/` (all routes, 1440 and 390) ·
+amendment 5 before / rejected / after in `design-review/stage4-vignette-{before,rails,after}/`.
+
+**The completion test is mechanical and it is met.** `npm run verify:palette`
+reports zero palette literals outside the token definitions across all 91 files
+under `src/`, and it is a permanent check in the gate. Dark chapters declare
+`data-ground="dark"` locally; nothing references a ladder. The one light→dark
+boundary is `Chapter.tsx`, used by the three designated chapters (home hero,
+enquiry block, venue title card) and nothing else.
+
+Thirteen agents migrated 49 files against one rulebook
+(`design-review/SEMANTIC-TOKENS.md`); three fresh sweeps closed what they
+missed; thirteen reviewers then read every route at 1440 and 390 against the
+dark captures, tile by tile. Worst finding, a blocker: the venue names on the
+mobile cards were near-black on dark photographs.
+
+**Three rules came out of measuring the result — each closes a class, not an instance:**
+
+1. *Colour re-resolves at every ground.* CSS `color` inherits as a computed
+   value, so an unroled child inside a dark frame kept its section's paper ink —
+   that is how the venue names went dark on dark. `[data-ground]` now declares
+   its own primary, and `verify:ground` checks every visible text element on
+   every route against its nearest ground's ladder: 1,050 on eleven routes, all
+   on their own ground.
+2. *The focus ring has a halo and is never gold.* A `--surface` band under the
+   ring means every point is ring-against-halo or halo-against-page. The ring
+   is 3px, not 2: over a dark scrim a night halo changes nothing, so the ring
+   alone must carry 2.4.13, and at 2px the venue title card's "Enquire" pill
+   measured 572px² of change against the 576 required. Near-
+   black on paper, **bone on night** (your stage-5 law, and the arithmetic
+   agrees: gold with a night halo leaves photograph tones where neither clears
+   3:1). Where a ring outside would be clipped — a masonry tile, a button
+   filling a clipped frame — `.focus-inset` draws the same ring and halo inside.
+3. *Paper has a lamp* (amendment 5). All thirteen reviewers called the ivory flat. The first remedy, an
+   inset-shadow vignette down both margins, was measured by an independent
+   review as grey rails (-4.7% at the edge, nothing from 10% to 90% of the
+   width, no vertical variation) that stepped 9-22 levels wherever a shaded
+   sheet met an unshaded one - rejected; its captures are kept. Each paper
+   sheet now carries its own lamp: a soft lift in its middle and two warm
+   lobes on its flanks, every layer zero before the sheet's top and bottom, so
+   no join can step. A second review found the lift peaking at only +1.3% (my
+   comment claimed +3%; the raised step is only 4.6% above the page), so the
+   mix went from 30% to 65%. Measured on the final captures, lamp minus flat:
+   centre +2.8 to +3.3%, very edge -2.9 to -3.4%, -0.4 to -0.5% at the gutter
+   where type begins, and down the centre 0.8 -> 3 -> 0.8% - the paper varies
+   both ways. The largest step at any join is 1-2 levels, the gradient's own
+   banding (the rails' was 11). No ground under type is darker than 1.6%; the
+   3% ceiling holds. It is a background layer, so axe reports 1,680
+   contrast checks as "needs review" - printed, and covered on pixels by the
+   paper sweep, every route, both widths. Not fixed: the 404's first screen,
+   under its photograph's veil, stays flat; changing that means touching a
+   section.
+
+**The five open items, each measured:**
+
+- **The silent type-check death — found, in Next.** 15.5 runs type checking in
+  a worker with `maxRetries: 0` and catches any failure from it with a bare
+  `process.exit(1)`, assuming the worker already logged. A dead worker logs
+  nothing. Proved by killing the worker mid-check (bare Next printed one cryptic
+  line and died) and by a deliberate type error (Next prints it loudly — the
+  silence is specific to a death). Three traced rebuilds of the failing tree
+  passed. `npm run build` is now `scripts/build.mjs`: tsc first, so a type error
+  stops the build with file and line; then Next; then a check that a fresh,
+  type-checked build exists — and a death with no reason is named as a death.
+  `next.config.ts` states `ignoreBuildErrors: false` explicitly.
+- **What was killing processes — found, and not this project.** Three other
+  Claude sessions on this machine work on the sibling projects; at 10:33 UTC
+  every node process on the machine was terminated, theirs and ours. That is
+  every "silent" server death since 4 September: exit 1, empty stderr, no crash
+  in the event log. The ink-hotels session has since confirmed it from its
+  side. Our long suites now run under a renamed copy of node.exe on port 3104
+  through a supervisor that logs and restarts; nothing of theirs was touched.
+- **The Hero's root rewire — verified by behaviour, kept.** Built the Hero both
+  ways and read the choreography at sixteen scroll offsets: parallax, the copy's
+  lift and fade, the arrival's pin and spacer, the plate's exposure and scale,
+  which photograph is up — identical at every one. Only the hero's clip differs:
+  the chapter exit mask, by design. Re-measured on the final build: identical,
+  clip included.
+- **The focus ring on Home — fixed.** Before: 31 of 412 tab stops failed — the
+  gold ring over the hero photograph, the skip link over the hero, the events
+  strip clipping its cards' rings, the video buttons and gallery tiles clipping
+  theirs. After: **0 of 391** stops on the ten audited routes fail WCAG
+  2.4.13's area test or the no-gap test. The last three closed on the final
+  build. The ring went to 3px: over a dark scrim a night halo changes nothing,
+  and at 2px the venue title card's "Enquire" pill measured 572px² against the
+  576 required. And the events strip now keeps a focused card whole: the
+  mandatory snap had parked the shade-sail card 36px past the viewport, and
+  the shelf's end padding lay off-screen, so the last card sat flush on the
+  window's edge with its ring outside it. Embeds (the venue map; the contact
+  form and maps) are recorded, not scored — see the flags below.
+- **Amendment 5 — applied, reviewed, re-shaped.** See rule 3.
+- **The review fix pass — finished.** Nine fixes from the visual review, plus:
+  the breadcrumb separator moved from a hairline role to a text role (it was
+  1.24:1); the journey rail became a thumb-index tab in the gutter, clear of
+  the text it overran ("05" at 3.56:1); the events strip gained room for a
+  focused card's ring without moving; the per-scene glow pools a fixer added to
+  ServiceScenes were taken back (amendment 5 touches no section).
+
+**Found in an interrupted fixer's work, and decided.** A globals fixer that hit
+the session limit left a half-built amendment 5 in the committed tree: a body
+gradient plus a `.paper` class every section would have had to adopt, the pools
+re-cast as shadows, and a grain retune. The gradient and class were removed;
+the pools went back to the harmless lift stage 6 deletes; the grain retune was
+measured — its dark specks took tertiary type to 4.41:1 on the worst pixel — and
+reverted. Its one solid number was kept: 3% is the most any pixel under type may
+take.
+
+**Instruments corrected on the way, because a wrong instrument is worse than
+none:** the paper sweep scored whole element boxes, so a bullet hairline or a
+pill's rounded corner counted as "the ground behind the text" — it now samples
+the glyphs' own line boxes. The focus audit looked only outward, so indicators
+drawn inside read as missing — it now looks both ways, centres each stop before
+measuring, and applies WCAG 2.4.13's area test plus a no-gap test (no side may
+fade out along more than 5% of its length). Every sub-3:1 position is still
+printed. Scoring every single position was stricter than 2.4.13 and could not
+survive photographs: a 2px umbrella pole ran exactly under the ring for seven
+rows with pale sea under both halos.
+
+**Measured, final build:** axe **0** on every route at both widths; 1,680
+contrast checks axe cannot compute over the lamp, reported rather than hidden,
+and covered on pixels by the paper sweep — every route, both widths, green;
+arrival legibility green on the final build (tightest: the standfirst at
+5.13:1 against 4.5, worst pixel); ground switch clean.
+Gate **15/15 green** on the final build. Lighthouse mobile against the
+floor (performance ≥ 80, the rest ≥ 90): Home 90, Venues 93, Venue detail 87,
+Signature Events 92, Wedding Guide 92, Contact 92; accessibility 98–100, best
+practices and SEO 100 (`design-review/lighthouse-stage4.md`) — measured on the
+build before the last two focus fixes, which change neither loading nor
+anything at rest.
+
+**Flagged, not changed — copy and facts are frozen:**
+
+- Home, the venues standfirst: *"A mountain estate, a private beach, an olive
+  field and a house in the hills"* — four settings for three venues; the house
+  in the hills was Villa Aetos. The third stale count of this kind; no audit can
+  see one inside correct prose.
+- `/venues` header: "Up to **300** guests" is typed, not derived from
+  `content/venues.ts`. Right today; not guarded.
+- The Monday enquiry form is published from another brand's Monday account (a
+  "Crete Holiday Home" logo) and paints a cool white card. Both live in the
+  Monday builder, outside this repository.
+- Embeds and focus: with focus inside the Monday form or a Google map, the frame
+  matches neither `:focus` nor `:focus-within` in this page, so no rule here can
+  draw its indicator; the keyboard audit records the same four iframes on
+  `main`. Recorded, not chased this stage, as instructed.
+
+Privacy gate: a false alarm from my own grep (a keep-list entry in the manifest
+script read as withheld) was run down before any push; the gate now reads the
+manifest's exported `WITHHELD` map, requires exactly seven entries and zero
+hits by exact path.
+
 ---
 
 ## Stages and gates

@@ -30,7 +30,8 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * The *scrubbing* is still GSAP, sharing Lenis's clock with everything else.
  *
  * The rail is `aria-hidden`: it is a decorative restatement of the ordered list
- * beside it, and a screen reader already gets "1 of 6" from the <ol>.
+ * beside it, and a screen reader already gets "1 of 6" from the <ol>. On paper
+ * it is a thumb-index tab in the gutter - see the note at the element.
  */
 export function JourneyChapters() {
   const root = useRef<HTMLDivElement>(null);
@@ -91,9 +92,12 @@ export function JourneyChapters() {
       {/* The chapter rail */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-2 top-0 hidden h-full xl:block"
+        className="pointer-events-none absolute right-full top-0 z-10 mr-3 hidden h-full xl:block"
       >
-        <div className="sticky top-1/2 flex -translate-y-1/2 items-center gap-4">
+        {/* A thumb-index tab: raised paper and a hairline, so the numerals read
+            on paper even while a bleeding plate passes beneath it. It lives
+            wholly in the gutter (right-full), clear of every text column. */}
+        <div className="sticky top-1/2 flex -translate-y-1/2 items-center gap-3 border border-[var(--rule)] bg-[var(--surface-raised)] px-2 py-3">
           <span className="relative block h-40 w-px bg-[var(--rule)]">
             <span
               ref={fill}

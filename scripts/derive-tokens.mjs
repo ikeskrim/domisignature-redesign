@@ -113,7 +113,7 @@ const MAP = {
     "text-tertiary": SHIPPED.faint,
     rule: "#2b2b30",
     "rule-strong": DARK_RULE_STRONG,
-    focus: SHIPPED.gold,
+    focus: SHIPPED.bone,
     "shadow-tint": "0 0 0",
     accent: SHIPPED.gold,
     inverse: SHIPPED.bone,
@@ -157,7 +157,7 @@ for (const ground of ["light", "dark"]) {
   const accentOk = ground === "dark" ? a >= 4.5 : true;
   console.log(
     `  ${ground === "dark" ? (accentOk ? "ok  " : "FAIL") : "--  "}  accent ${m.accent}` +
-      `                        ${a.toFixed(2)}:1 — ${ground === "dark" ? "may carry text" : "MARK AND HAIRLINES ONLY"}`,
+      `                        ${a.toFixed(2)}:1 — MARK AND HAIRLINES ONLY (gold carries no text or focus on either ground)`,
   );
   if (ground === "dark" && !accentOk) fails++;
 }

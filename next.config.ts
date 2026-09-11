@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
   // The dev overlay badge sits on top of the design in review screenshots.
   devIndicators: false,
 
+  /*
+   * Next's defaults, written down so nobody turns them off by accident: a build
+   * that does not type-check or lint does not count. scripts/build.mjs also
+   * runs tsc first and refuses any build whose output says either was skipped.
+   */
+  typescript: { ignoreBuildErrors: false },
+  eslint: { ignoreDuringBuilds: false },
+
   images: {
     formats: ["image/avif", "image/webp"],
     // Next 16 requires every `quality` used with next/image to be declared here.

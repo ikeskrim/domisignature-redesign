@@ -104,13 +104,62 @@ export function EventsStrip() {
     };
   }, []);
 
+  /* A card focused from the keyboard lands on its own snap position. The
+     browser scrolls a focused card to the NEAREST edge, then the mandatory snap
+     re-aligns the shelf to whichever card start is closest - measured at 1440,
+     that was the previous card's, which left the focused card and its ring 36px
+     past the viewport. Run a frame later, after the browser's own scroll and
+     snap, and only when the card is not already whole in view. Every device:
+     a keyboard can be attached to anything. */
+  useEffect(() => {
+    const el = scroller.current;
+    if (!el) return;
+
+    let frame = 0;
+    const onFocus = (e: FocusEvent) => {
+      const card = e.target as HTMLElement;
+      if (card.parentElement !== el || !card.matches(":focus-visible")) return;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const box = el.getBoundingClientRect();
+        const r = card.getBoundingClientRect();
+        const room = 8; // the ring and its halo reach 7px beyond the card
+        /* The shelf bleeds past the viewport, so "in view" is the scroller
+           clipped to the window. */
+        const left = Math.max(box.left, 0);
+        const right = Math.min(box.right, window.innerWidth);
+        if (r.left - room >= left && r.right + room <= right) return;
+        const inset = parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0;
+        el.scrollTo({
+          left: gsap.utils.clamp(0, el.scrollWidth - el.clientWidth, el.scrollLeft + r.left - box.left - inset),
+          behavior: prefersReducedMotion() ? "auto" : "smooth",
+        });
+      });
+    };
+
+    el.addEventListener("focusin", onFocus);
+    return () => {
+      cancelAnimationFrame(frame);
+      el.removeEventListener("focusin", onFocus);
+    };
+  }, []);
+
   return (
     <div
       ref={scroller}
       data-cursor="drag"
-      className="no-scrollbar mt-20 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 lg:mt-28 lg:gap-12"
-      /* Bleed the shelf to the viewport edge so it reads as continuing past it. */
-      style={{ scrollPaddingInline: "var(--spacing-gutter, 1.5rem)" }}
+      className="no-scrollbar -mx-3 mt-[4.25rem] flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 pl-3 pr-[calc(var(--spacing-gutter,1.5rem)+0.75rem)] pt-3 lg:mt-[6.25rem] lg:gap-12"
+      /* Bleed the shelf to the viewport edge so it reads as continuing past it.
+         A scroller clips everything outside its padding box, and a focused
+         card's ring and halo reach 7px beyond the card - measured, the ring was
+         cut off at the top and on the first card's left side. So the scroller
+         carries 0.75rem of padding it takes back from its margins, and the snap
+         inset grows by the same amount: the shelf sits exactly where it did,
+         with room for the indicator. The far end takes a full gutter more:
+         the shelf runs past the viewport's right edge, so 0.75rem of end
+         padding lay off-screen and the last card, scrolled fully home, sat
+         flush on the window's edge with its ring outside it. */
+      style={{ scrollPaddingInline: "calc(var(--spacing-gutter, 1.5rem) + 0.75rem)" }}
     >
       {signatureEvents.map((event, i) => (
         <Link

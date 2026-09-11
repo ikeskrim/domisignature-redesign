@@ -7,7 +7,7 @@ push. This is what stops the site quietly rotting.
 npm run qa
 ```
 
-Green means all twelve passed. It exits non-zero if any failed, so it is safe to
+Green means all fifteen passed. It exits non-zero if any failed, so it is safe to
 put in front of anything.
 
 `npm run qa` builds nothing — run `npm run build` first, or the server-backed
@@ -39,6 +39,9 @@ half will be measuring a stale build. CI does the build itself.
 | **assets** | `scripts/asset-check.mjs` | Every asset the rendered pages request returns 200. Not "the file exists" — what the browser actually asks for, including the responsive image variants Next generates. |
 | **a11y** | `scripts/a11y.mjs` | axe-core finds **zero** violations across every route. Zero is the standard, not a target. |
 | **arrival** | `scripts/arrival-legibility.mjs` | The arrival's type stays legible over the photograph it sits on. The scene is rendered twice — once as it is, once with the type hidden — and every pixel behind each text block is scored against that text's own computed colour, with the **worst** one reported. Bars: 4.5:1 for the standfirst, 3:1 for the display word and the figures. Replaced the graffiti check, which asked whether that same seascape's graffitied rock stayed hidden inside the ink band; the ink band went with the light ground, and the live risk inverted with it. The rock was re-checked on the real composite before the swap and still does not resolve under the ivory wash. |
+| **ground** | `scripts/ground-verify.mjs` | The semantic switch resolves, read from the browser's cascade rather than the token file: every role clears its bar on both ladders, gold is the focus on neither, and — on every route — every visible text element's colour is one of the text roles of its *nearest* ground. That last part catches the failure CSS inheritance makes invisible: an unroled child inside a dark frame keeping its section's paper ink. |
+| **focus** | `scripts/focus-ring.mjs` | Every route is tabbed through as a keyboard user would. At each stop the element is photographed focused and with its indicator suppressed, and the perimeter is walked: at every position the strongest change on the line running outward must be 3:1 or more (WCAG 2.4.13). A ring that fades over a photograph, is clipped by a scroller, or is never drawn fails. Embeds (`iframe`) are listed, not scored: focus inside a third-party document is invisible to this page, the same reason axe excludes them. axe does not evaluate any of this. |
+| **paper** | `scripts/paper-legibility.mjs` | Every text element on paper, at 1440 and 390, scored against the worst pixel behind its glyphs with every glyph hidden — so the vignette, the grain and anything else painted on the ground are counted, which axe (reading CSS colours) cannot do. 4.5:1, or 3:1 for large text. |
 | **launch** | `scripts/launch-check.mjs` | The SEO environment flips are correct for this build, the sitemap resolves, and all 21 legacy URLs from the old site land where `design-review/redirect-map.md` says. Also regenerates that map, with the real result of each row. |
 
 ---

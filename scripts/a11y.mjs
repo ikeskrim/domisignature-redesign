@@ -70,10 +70,22 @@ async function main() {
           .exclude("[data-a11y-exempt='decorative-logotype']")
           .analyze();
 
+        /*
+         * Contrast axe could not compute. The paper lamp is a background layer,
+         * and axe will not guess a colour over a gradient, so text on paper
+         * comes back "needs review" rather than pass or fail. Printed, never
+         * hidden: that coverage moved to scripts/paper-legibility.mjs, which
+         * reads the actual pixels behind every glyph on paper.
+         */
+        const needsReview = scan.incomplete
+          .filter((i) => i.id === "color-contrast")
+          .reduce((n, i) => n + i.nodes.length, 0);
+
         results.push({
           route: name,
           path: route,
           viewport: vp.tag,
+          contrastNeedsReview: needsReview,
           violations: scan.violations.map((v) => ({
             id: v.id,
             impact: v.impact,
@@ -84,7 +96,10 @@ async function main() {
         });
 
         const count = scan.violations.length;
-        console.log(`  ${vp.tag.padEnd(8)} ${name.padEnd(14)} ${count === 0 ? "clean" : `${count} violation(s)`}`);
+        console.log(
+          `  ${vp.tag.padEnd(8)} ${name.padEnd(14)} ${count === 0 ? "clean" : `${count} violation(s)`}` +
+            (needsReview ? `   (${needsReview} contrast checks need review — measured by audit:paper)` : ""),
+        );
       } catch (err) {
         results.push({ route: name, path: route, viewport: vp.tag, error: err.message.split("\n")[0] });
         console.log(`  ${vp.tag.padEnd(8)} ${name.padEnd(14)} ERROR`);
@@ -98,7 +113,9 @@ async function main() {
   await writeFile(path.join(OUT, "a11y-axe.json"), JSON.stringify(results, null, 2), "utf8");
 
   const total = results.reduce((n, r) => n + (r.violations?.length ?? 0), 0);
+  const review = results.reduce((n, r) => n + (r.contrastNeedsReview ?? 0), 0);
   console.log(`\ntotal violations: ${total}`);
+  console.log(`contrast checks axe could not compute: ${review} (covered on pixels by audit:paper)`);
   console.log("written -> design-review/a11y-axe.json");
 }
 

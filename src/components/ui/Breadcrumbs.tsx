@@ -23,7 +23,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
                 </Link>
               )}
               {!last && (
-                <span aria-hidden className="text-[var(--rule)]">
+                <span aria-hidden className="text-[var(--text-tertiary)]">
                   /
                 </span>
               )}

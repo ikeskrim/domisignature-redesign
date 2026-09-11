@@ -1,0 +1,617 @@
+[
+  {
+    "width": "1440",
+    "route": "home",
+    "measured": 134,
+    "failing": 1,
+    "worst": {
+      "ratio": 4.4101049977270295,
+      "bar": 4.5,
+      "text": "Γ.Ε.ΜΗ.: 021943650000",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 4.4101049977270295,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "venues",
+    "measured": 45,
+    "failing": 2,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "venue-mountain-escape",
+    "measured": 65,
+    "failing": 3,
+    "worst": {
+      "ratio": 4.4101049977270295,
+      "bar": 4.5,
+      "text": "Γ.Ε.ΜΗ.: 021943650000",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 4.493745107322034,
+        "bar": 4.5,
+        "text": "© 2026 Domisignature",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.4101049977270295,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.493745107322034,
+        "bar": 4.5,
+        "text": "Back to top↑",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "venue-thalasses",
+    "measured": 75,
+    "failing": 1,
+    "worst": {
+      "ratio": 4.451802875521267,
+      "bar": 4.5,
+      "text": "Γ.Ε.ΜΗ.: 021943650000",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "venue-olive-stories",
+    "measured": 66,
+    "failing": 1,
+    "worst": {
+      "ratio": 4.451802875521267,
+      "bar": 4.5,
+      "text": "Γ.Ε.ΜΗ.: 021943650000",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "events",
+    "measured": 52,
+    "failing": 2,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.4101049977270295,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "event-sunset-by-the-pool",
+    "measured": 43,
+    "failing": 3,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 1.254199957854822,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "event-villa-party",
+    "measured": 45,
+    "failing": 3,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 1.254199957854822,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.412930985655001,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "services",
+    "measured": 66,
+    "failing": 2,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "wedding-guide",
+    "measured": 67,
+    "failing": 3,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 3.557805420736268,
+        "bar": 4.5,
+        "text": "05",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "about",
+    "measured": 64,
+    "failing": 2,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "contact",
+    "measured": 60,
+    "failing": 2,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.412930985655001,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "1440",
+    "route": "404",
+    "measured": 31,
+    "failing": 1,
+    "worst": {
+      "ratio": 4.412930985655001,
+      "bar": 4.5,
+      "text": "Γ.Ε.ΜΗ.: 021943650000",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 4.412930985655001,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "390",
+    "route": "home",
+    "measured": 134,
+    "failing": 4,
+    "worst": {
+      "ratio": 4.451802875521267,
+      "bar": 4.5,
+      "text": "Γ.Ε.ΜΗ.: 021943650000",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 4.493745107322034,
+        "bar": 4.5,
+        "text": "What we create",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Back to top↑",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.490901791573961,
+        "bar": 4.5,
+        "text": "↑",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "390",
+    "route": "venues",
+    "measured": 45,
+    "failing": 4,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Back to top↑",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.490901791573961,
+        "bar": 4.5,
+        "text": "↑",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "390",
+    "route": "venue-thalasses",
+    "measured": 69,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.575486200052095,
+      "bar": 4.5,
+      "text": "At a glance",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "contact",
+    "measured": 60,
+    "failing": 4,
+    "worst": {
+      "ratio": 1.2426949309591684,
+      "bar": 4.5,
+      "text": "/",
+      "color": "rgb(216, 207, 192)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 1.2426949309591684,
+        "bar": 4.5,
+        "text": "/",
+        "color": "rgb(216, 207, 192)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Back to top↑",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.490901791573961,
+        "bar": 4.5,
+        "text": "↑",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  },
+  {
+    "width": "390",
+    "route": "404",
+    "measured": 31,
+    "failing": 3,
+    "worst": {
+      "ratio": 4.451802875521267,
+      "bar": 4.5,
+      "text": "Γ.Ε.ΜΗ.: 021943650000",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": [
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Γ.Ε.ΜΗ.: 021943650000",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.451802875521267,
+        "bar": 4.5,
+        "text": "Back to top↑",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      },
+      {
+        "ratio": 4.490901791573961,
+        "bar": 4.5,
+        "text": "↑",
+        "color": "rgb(107, 101, 88)",
+        "alpha": 1,
+        "opacity": 1
+      }
+    ]
+  }
+]

@@ -5,7 +5,8 @@
   "description": "Domisignature — Luxury Events, Weddings & Private Celebrations in Crete",
   "scripts": {
     "dev": "next dev -p 3004",
-    "build": "next build",
+    "build": "node scripts/build.mjs",
+    "build:next": "next build",
     "start": "next start -p 3004",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
@@ -38,6 +39,8 @@
     "watch:dns": "node scripts/watch-dns.mjs",
     "verify:ground": "node scripts/ground-verify.mjs",
     "verify:palette": "node scripts/palette-literals.mjs",
+    "audit:paper": "node scripts/paper-legibility.mjs",
+    "audit:hero": "node scripts/hero-states.mjs",
     "derive:tokens": "node scripts/derive-tokens.mjs"
   },
   "dependencies": {

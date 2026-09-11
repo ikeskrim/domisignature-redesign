@@ -50,6 +50,10 @@ const SERVED_CHECKS = [
    * opposite one. Swapped rather than dropped, so coverage never shrinks.
    */
   ["arrival", ["scripts/arrival-legibility.mjs"], "the arrival type holds over the photograph it sits on"],
+  /* Stage 4 depended on these three; they are the light system's own guards. */
+  ["ground", ["scripts/ground-verify.mjs"], "every role resolves on its ground; all text on its own ladder"],
+  ["focus", ["scripts/focus-ring.mjs"], "every focus indicator changes the page by 3:1, all round"],
+  ["paper", ["scripts/paper-legibility.mjs"], "all text on paper clears its bar on the worst pixel"],
   ["launch", ["scripts/launch-check.mjs"], "SEO flips, sitemap and all 21 legacy redirects"],
 ];
 
