@@ -26,14 +26,31 @@ Stage 4 closed at snapshot `118f48c` (preview `lwycv01tj`, gate 15/15).
 Stage 5 is implemented and reviewed in local commits `656c9e9` (primitives),
 `cfec893` (nine groups + the law sweep), `d968a13` (the visual-review
 fixes) and `f371558` (the enquiry block's fluid contact size). The final
-tree `f371558` is verified: gate 15/15 green (chain-s5c, 2026-09-13), 390
-captures re-shot. Remaining for stage 5: two more Lighthouse mobile samples on
-a quiet machine (`chain-s5-lh.sh`; sample a is `step-lighthouse-mobile-a.log`)
-for the log's median, then insert `stage5-log.md`, commit the captures and
-reports, the boundary push and the preview follow-up. Chains now serve on
-port 3114 (`DOMI_PORT`): the routes-crete session binds 3104. A read-only
-audit of an external research brief is in progress; its report becomes
-`design-review/BRIEF-AUDIT.md`. Stage 6 is planned in the scratchpad's
+tree `f371558` is verified (gate 15/15; Lighthouse mobile medians of three,
+Home 81 against the floor of 80). **Stage 5 closed at snapshot `0c89d8c`**
+(preview `7apxf9ext`), after two close commits: `e6db177` (the gate server
+binds loopback; a couple's names and a session id out of the review docs)
+and `c918be5` (with-server.ps1 binds loopback, refuses a busy port, stops
+only its own tree).
+
+**Next — stage 6 pre-work, in this order** (from the brief audit,
+`design-review/BRIEF-AUDIT.md`): (1) `next` and `eslint-config-next` to
+15.5.25 — 15.5.22 is inside GHSA-2xp9-vwfh-vxw4 and GHSA-p293-qw3h-jr36 /
+CVE-2026-75604; until it lands, no local server may listen beyond
+127.0.0.1; (2) a stream-copy remux removing location metadata from the 8
+videos that carry it, and `-map_metadata -1` in the transcode scripts; (3) the
+four loading fixes (PageTransition first mount, gallery tile preloads, the
+/venues fetch priority, GSAP Flip out of the shared chunk) before the
+drop-level matrix; (4) the conventions layer. The still-photo metadata strip
+waits for the owner's scope decision (stage 7, before baselines; otherwise a
+stage-8 blocker).
+
+**Publishing rule:** never push a local branch — local history holds the
+private originals. Push only single-parent snapshots through `boundary.sh`,
+whose gate (widened 2026-09-14) checks withheld paths, withheld blobs under
+any name, an eighth leftover file, key/env files, withheld-name counts from a
+list kept outside the repo, secret patterns and snapshot ancestry. Chains
+serve on port 3114 (`DOMI_PORT`): the routes-crete session binds 3104. Stage 6 is planned in the scratchpad's
 `stage6-plan.md` (read-only planning pass; lead primitives first, then six
 disjoint groups, then the Lighthouse drop-level matrix). Stage
 5 decisions are settled in `design-review/STAGE5-DECISIONS.md`; the shared

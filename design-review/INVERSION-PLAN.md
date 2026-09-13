@@ -638,7 +638,7 @@ manifest's exported `WITHHELD` map, requires exactly seven entries and zero
 hits by exact path.
 
 **Stage 5 — chrome, menu, preloader, footer and cursor on ivory; the editorial
-plate system: DONE.** Branch preview PREVIEW-PENDING · captures
+plate system: DONE.** Branch preview [`7apxf9ext`](https://domisignature-redesign-7apxf9ext-domisi.vercel.app) (snapshot `0c89d8c`) · captures
 `design-review/stage5/` (all routes, 1440 and 390).
 
 **One plate, built once.** Before any group fanned out, the shared primitives
