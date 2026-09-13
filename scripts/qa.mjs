@@ -23,7 +23,9 @@ import { spawn } from "node:child_process";
 import { setTimeout as sleep } from "node:timers/promises";
 
 const PORT = Number(process.env.PORT ?? 3004);
-const BASE = `http://localhost:${PORT}`;
+/* Loopback, not localhost: the server below binds 127.0.0.1 only, and
+   "localhost" can resolve to ::1 first. */
+const BASE = `http://127.0.0.1:${PORT}`;
 const STATIC_ONLY = process.argv.includes("--static");
 
 /** Audits that read the repository. No server, no browser. */
@@ -124,7 +126,11 @@ if (!STATIC_ONLY) {
   }
 
   console.log(`\nstarting a production server on ${PORT}`);
-  server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "-p", String(PORT)], {
+  /* Loopback only. Without -H, next start listens on every interface, and a
+     build of a vulnerable next (GHSA-p293-qw3h-jr36 / CVE-2026-75604 is an RCE
+     on Windows-hosted servers) would be reachable from the network while the
+     gate runs. The gate only ever needs this machine to reach it. */
+  server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "-p", String(PORT), "-H", "127.0.0.1"], {
     stdio: "ignore",
     env: { ...process.env, NODE_ENV: "production" },
   });

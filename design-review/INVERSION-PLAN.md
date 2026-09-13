@@ -637,6 +637,151 @@ script read as withheld) was run down before any push; the gate now reads the
 manifest's exported `WITHHELD` map, requires exactly seven entries and zero
 hits by exact path.
 
+**Stage 5 — chrome, menu, preloader, footer and cursor on ivory; the editorial
+plate system: DONE.** Branch preview PREVIEW-PENDING · captures
+`design-review/stage5/` (all routes, 1440 and 390).
+
+**One plate, built once.** Before any group fanned out, the shared primitives
+went in: `Plate` (the sourcebook plate from the venues-index study — the
+photograph in a mat of the raised surface, a `--rule` hairline, a caption
+beneath on paper, a derived number), `Phone` (Playfair has no plus sign; the
+"+" of a phone number is set in the sans, the number itself untouched), and
+the chapter's rest state — the reviewers' most repeated finding, a mid-page
+dark chapter resting as a full-bleed slab with a razor cut across the paper:
+masked on both edges, it now rests inset by a gutter, a plate on the page,
+wherever no scrub runs (reduced motion, the server render, every capture);
+openers rest full-bleed. Nine groups then worked on disjoint files, and a
+fresh law sweep read every change. It came back with one finding — the venue
+film unplated while the event films were plated — and two notes; all three
+were taken.
+
+**Where the plate landed.** `/venues` ships the north star: `VenuePlates`, the
+approved study made real — alternating 7/5 plates, number, name, standfirst,
+rule, capacity / location, coordinates, Enquire; every fact the shipped list
+showed is still there, the shared-element transition lifts from the plate's
+own photograph, and the home page keeps its hover list. Venue and event
+galleries are matted tiles; the facts panel is a specimen card (coordinates
+now among the facts, under the existing "Location"); related venues, team
+portraits, the home strip, the journey teaser and the films are plates; the
+events index is captioned plates, the title and category on paper beneath and
+the type off the photograph at last. Full-bleed scenes (the hero, the service
+scenes, the journey chapters) stay full-bleed.
+
+**A rule came out of it: a plate sits on the page ground; a raised section
+hosts no plates.** A mat is the raised tone, so on a raised band a plate reads
+as a bare hairline — four groups hit it independently. Six sections moved to
+paper: the venue gallery and films, the event films, the related venues, both
+team sections, the journey teaser, the contact maps band. Raised surfaces that
+host no plate stay raised: the footer, the facts card, the form and map
+shells, the menu panel, the guide's band.
+
+**Chrome.** The menu now has the focus trap and restore the plan always said
+it had: opening moves focus in, Tab and Shift+Tab cycle the panel and Close,
+the page behind is `inert`, Escape closes, focus returns to the menu button.
+It is a named dialog without `aria-modal`, on purpose — Close lives in the
+header, outside the panel, and aria-modal lets VoiceOver hide everything
+outside a dialog, the one way out included; `inert` already takes the page out
+of reach for every assistive technology. No audit had ever opened the menu —
+the keyboard audit runs at 1440 — so a new check (`menu-trap`) opens it at 390
+on four routes and walks the cycle both ways: it holds on every one. A real
+defect went with it:
+opening the menu over the hero left the header on the dark ground above the
+ivory panel, Close bone on ivory at about 1.07:1. The header's hover dimming
+is a colour step, not an opacity fade, and on paper only — over the unveiled
+hero nothing below primary holds. The footer is an editorial colophon on the
+raised surface: near-black headings, tertiary meta, one gold hairline, the
+wordmark mixed toward the ground so it is felt rather than read. Hairlines
+that sit over photographs are `--rule-strong`; the video ring comes from the
+type ladder; a map that has mounted but painted nothing still reads as a
+framed plate.
+
+**The visual review, and what it changed.** Six reviewers read every route,
+tile by tile, at 1440 and 390 against stage 4. All six found the same fault,
+and it was mine: the enquiry block at rest had its type on the plate's cut
+edge — eyebrow, heading and pill 0–1px inside it — and stood straight on the
+footer, because the rest state inset only the sides of the clip and moved
+nothing inside. Fixed in the one definition: a resting mid-page chapter now
+insets its foot too, so paper lies beneath it, and its content steps in by
+the same gutter (static padding, never tied to the scrub, so nothing re-wraps
+while the sides open). Eleven smaller findings were taken: Home was 12px wider
+than the window (the strip's negative margin pushed it past the edge it
+already reached — there since before this phase, visible now against the
+lighter footer); related venues said their name twice; gallery numbers ran
+down the masonry columns (01 / 09 / 17 across the top row) and were dropped;
+the facts card broke its button onto two lines and outran its column (five
+columns, not four); the coordinates became Location's second line instead of
+an unlabelled row; sections that now share one ground stacked two paddings
+into dead air; the footer's WhatsApp tag inherited the serif; every plate's
+caption now aligns with the photograph's edge; Home's tightest join opened by
+5rem; and below 1024px the full-bleed scenes of /services and /wedding-guide
+— inside the gutter there, objects on the page, their pale edges dissolving —
+are matted as plates, bare again where they bleed.
+
+**Judgements recorded.** The /venues photographs keep the empty alt the list
+always had — the link beside them already reads the name and standfirst, and
+alt text is frozen. A related venue's link name kept its "02" (Plate hides its
+number; the same derived number is restored for screen readers). The first
+/venues plate loads with priority — it is in the first screen. `verify:ground`
+now skips the one decorative logotype axe already excludes; nothing else is
+exempt.
+
+**Surfaces that wanted a text accent:** none — no group asked for one.
+**Surfaces that wanted words they do not have** (reported, not written): a
+label for the coordinates row (it sits under "Location"); a visible caption
+for each film ("Film 1" exists only as an aria-label).
+
+**Measured, final build:** axe **0** on every route at both widths (1,243
+contrast checks axe cannot compute over the lamp, fewer than stage 4's 1,680
+now that six raised sections are paper, covered on pixels by the paper sweep);
+ground switch clean — every visible text element on its own ladder; the paper
+sweep **1,799 text elements, every one clearing its bar on the worst pixel**
+(tightest 4.67:1 against 4.5, a tertiary eyebrow over the lamp); arrival
+legibility unchanged (tightest: the standfirst, 5.13:1 against 4.5); focus
+**391 stops on ten routes, and at every position of every perimeter the
+indicator changes the page by 3:1 or more** — the strict criterion now holds
+everywhere, not only 2.4.13's area test (weakest 4.04:1, a film's play button
+over its poster); the menu trap holds on every route; the keyboard audit
+shows only the recorded third-party frames, as on `main`. The Hero's pin and
+scrub are identical to stage 4's at all sixteen offsets; the only value that
+differs is the page's height (16,622 → 16,860px, the plates below it and the
+5rem opened above "How it works"). Every capture is exactly 1440 or 390 wide —
+Home's extra 12px is gone. Gate **15/15 green** on the final tree (`f371558`), including axe, the ground
+switch, focus, paper and arrival legibility, assets and the launch checks. Lighthouse mobile, median of three
+runs on the final tree (performance, runs in brackets; LCP): Home **81**
+(84/81/81; 3.9 s), Venues **91** (91/91/91; 3.2 s), Venue detail **87**
+(86/87/87; 3.7 s), Signature Events **91** (92/91/91; 3.1 s), Wedding Guide
+**91** (92/90/91; 3.1 s), Contact **93** (92/93/94; 2.9 s); accessibility
+98–100, best practices and SEO 100, CLS 0–0.001 — every route over the floor
+(≥ 80, the rest ≥ 90), Home by one point. Read it as a margin to win back, not
+noise: the stage-5 tree before the review fixes read 94 in a single run and
+stage 4 read 90, though two of the three samples here overlapped a sibling
+session's dev server on the same machine. The brief audit found the likely
+cause class — loading, not motion: the page curtain sets content to opacity 0
+on first mount, React 19 preloads the first gallery tiles, /venues lacks a
+fetch priority on its first plate, and GSAP Flip sits in the shared chunk. They
+are the first work of stage 6, ahead of its drop-level matrix, so motion is
+not cut to pay for loading.
+
+**Flagged, not changed:**
+
+- The venue page now sets capacity large twice — the page's own line under
+  the description and the specimen card's value. Both are right; the echo is
+  a design call for the owner.
+- Map shells render blank in the headless captures: Google Maps does not
+  paint there. Real browsers draw the map inside the framed plate.
+- Carried forward from stage 4, unchanged: Home's "four settings" sentence
+  for three venues; the typed "300" on /venues; the Monday form published
+  from another brand's account; focus inside a third-party frame.
+- Seen by the reviewers, there before this phase: the /events masonry splits
+  3/3/1 with a repeating aspect stack; the fine venue details over pale water
+  on the mobile venue list read faintly; the hero wordmark is cut at 390.
+- Found by the stage-6 planning pass, all for stage 6: the preloader's Skip
+  button sits inside an aria-hidden root; the page curtain runs on first load
+  too; motion hides the focus ring in four places (every audit runs with
+  reduced motion, so none saw it); the arrival's facts are a scrubbed fade on
+  paper text; Lighthouse 13 dropped the audit the report's LCP-element column
+  read.
+
 ---
 
 ## Stages and gates

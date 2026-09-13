@@ -173,10 +173,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 248,
         "failing": 0,
-        "worst": 14.05,
+        "worst": 12.76,
         "failSides": [],
         "strict": "0/248",
-        "area": "1722px² changed, 1091px² required"
+        "area": "1721px² changed, 1091px² required"
       },
       {
         "label": "<a> villas",
@@ -217,7 +217,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 230,
         "failing": 0,
-        "worst": 12.92,
+        "worst": 12.88,
         "failSides": [],
         "strict": "0/230",
         "area": "1614px² changed, 1018px² required"
@@ -226,78 +226,78 @@
         "label": "<a> Sunset by the poolCelebration→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 912,
+        "positions": 986,
         "failing": 0,
-        "worst": 12.67,
+        "worst": 12.59,
         "failSides": [],
-        "strict": "0/912",
-        "area": "5694px² changed, 3741px² required"
+        "strict": "0/986",
+        "area": "6150px² changed, 4042px² required"
       },
       {
         "label": "<a> Villa PartyVilla Party→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 912,
+        "positions": 800,
         "failing": 0,
-        "worst": 12.84,
+        "worst": 13.13,
         "failSides": [],
-        "strict": "0/912",
-        "area": "5694px² changed, 3741px² required"
+        "strict": "0/800",
+        "area": "5028px² changed, 3294px² required"
       },
       {
         "label": "<a> Everyone in whiteCelebration→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 912,
+        "positions": 892,
         "failing": 0,
-        "worst": 12.09,
+        "worst": 12.19,
         "failSides": [],
-        "strict": "0/912",
-        "area": "5693px² changed, 3741px² required"
+        "strict": "0/892",
+        "area": "5584px² changed, 3668px² required"
       },
       {
         "label": "<a> Vows on the sandWedding→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 912,
+        "positions": 986,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 12.88,
         "failSides": [],
-        "strict": "0/912",
-        "area": "5694px² changed, 3741px² required"
+        "strict": "0/986",
+        "area": "6150px² changed, 4042px² required"
       },
       {
         "label": "<a> Under the shade sailCelebration→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 912,
+        "positions": 800,
         "failing": 0,
-        "worst": 12.76,
+        "worst": 12.9,
         "failSides": [],
-        "strict": "0/912",
-        "area": "5694px² changed, 3741px² required"
+        "strict": "0/800",
+        "area": "5028px² changed, 3294px² required"
       },
       {
         "label": "<a> From aboveFrom the air→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 912,
+        "positions": 892,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 13,
         "failSides": [],
-        "strict": "0/912",
-        "area": "5694px² changed, 3741px² required"
+        "strict": "0/892",
+        "area": "5586px² changed, 3668px² required"
       },
       {
         "label": "<a> A ceremony by the waterWedding→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 912,
+        "positions": 1020,
         "failing": 0,
-        "worst": 12.63,
+        "worst": 12.64,
         "failSides": [],
-        "strict": "0/912",
-        "area": "5692px² changed, 3741px² required"
+        "strict": "0/1020",
+        "area": "6348px² changed, 4176px² required"
       },
       {
         "label": "<a> About Domisignature→",
@@ -305,10 +305,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 218,
         "failing": 0,
-        "worst": 13.97,
+        "worst": 12.76,
         "failSides": [],
         "strict": "0/218",
-        "area": "1862px² changed, 1178px² required"
+        "area": "1843px² changed, 1178px² required"
       },
       {
         "label": "<a> Enquire→",
@@ -316,10 +316,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 122,
         "failing": 0,
-        "worst": 15.23,
+        "worst": 15.32,
         "failSides": [],
         "strict": "0/122",
-        "area": "1447px² changed, 868px² required"
+        "area": "1445px² changed, 868px² required"
       },
       {
         "label": "<a> Or message us on WhatsApp",
@@ -327,7 +327,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 316,
         "failing": 0,
-        "worst": 13.14,
+        "worst": 12.94,
         "failSides": [],
         "strict": "0/316",
         "area": "2125px² changed, 1365px² required"
@@ -338,10 +338,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 180,
         "failing": 0,
-        "worst": 10.45,
+        "worst": 10.46,
         "failSides": [],
         "strict": "0/180",
-        "area": "1314px² changed, 819px² required"
+        "area": "1314px² changed, 820px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -349,7 +349,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 318,
         "failing": 0,
-        "worst": 9.07,
+        "worst": 9.47,
         "failSides": [],
         "strict": "0/318",
         "area": "2139px² changed, 1370px² required"
@@ -360,7 +360,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 222,
         "failing": 0,
-        "worst": 10.03,
+        "worst": 10.05,
         "failSides": [],
         "strict": "0/222",
         "area": "1566px² changed, 986px² required"
@@ -369,23 +369,23 @@
         "label": "<a> +30 211 444 5757",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 190,
+        "positions": 192,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/190",
-        "area": "1374px² changed, 860px² required"
+        "strict": "0/192",
+        "area": "1386px² changed, 868px² required"
       },
       {
         "label": "<a> +30 697 406 9475WhatsApp",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 292,
+        "positions": 290,
         "failing": 0,
-        "worst": 12.78,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/292",
-        "area": "1974px² changed, 1262px² required"
+        "strict": "0/290",
+        "area": "1968px² changed, 1257px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -393,7 +393,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 342,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/342",
         "area": "2274px² changed, 1462px² required"
@@ -404,7 +404,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 262,
         "failing": 0,
-        "worst": 12.83,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/262",
         "area": "1806px² changed, 1147px² required"
@@ -415,7 +415,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 38,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/38",
         "area": "456px² changed, 248px² required"
@@ -426,7 +426,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "780px² changed, 466px² required"
@@ -437,7 +437,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 44,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/44",
         "area": "492px² changed, 274px² required"
@@ -448,7 +448,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.5,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "774px² changed, 461px² required"
@@ -459,7 +459,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/30",
         "area": "414px² changed, 219px² required"
@@ -470,7 +470,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 40,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/40",
         "area": "468px² changed, 256px² required"
@@ -481,7 +481,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 50,
         "failing": 0,
-        "worst": 13.34,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/50",
         "area": "528px² changed, 295px² required"
@@ -492,7 +492,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 96,
         "failing": 0,
-        "worst": 13.33,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/96",
         "area": "804px² changed, 480px² required"
@@ -503,7 +503,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 70,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/70",
         "area": "654px² changed, 378px² required"
@@ -514,7 +514,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "534px² changed, 303px² required"
@@ -525,7 +525,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.18,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "540px² changed, 304px² required"
@@ -536,7 +536,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/30",
         "area": "408px² changed, 217px² required"
@@ -547,10 +547,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 104,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 13.97,
         "failSides": [],
         "strict": "0/104",
-        "area": "851px² changed, 514px² required"
+        "area": "852px² changed, 514px² required"
       }
     ]
   },
@@ -668,37 +668,37 @@
         "area": "419px² changed, 223px² required"
       },
       {
-        "label": "<a> 01ThalassesUp to 300 guests35°22'51.7\"",
+        "label": "<a> 01ThalassesWhite walls, blue water, an",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 1524,
+        "positions": 772,
         "failing": 0,
-        "worst": 9.2,
+        "worst": 12.69,
         "failSides": [],
-        "strict": "0/1524",
-        "area": "9373px² changed, 6195px² required"
+        "strict": "0/772",
+        "area": "4864px² changed, 3190px² required"
       },
       {
-        "label": "<a> 02Mountain EscapeUp to 200 guests35°16",
+        "label": "<a> 02Mountain EscapeMountains behind, the",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 1552,
+        "positions": 800,
         "failing": 0,
-        "worst": 9.28,
+        "worst": 12.6,
         "failSides": [],
-        "strict": "0/1552",
-        "area": "9541px² changed, 6307px² required"
+        "strict": "0/800",
+        "area": "5040px² changed, 3301px² required"
       },
       {
-        "label": "<a> 03Olive Stories200–300 guests35°21'00.",
+        "label": "<a> 03Olive StoriesOpen land and olive tre",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 1524,
+        "positions": 800,
         "failing": 0,
-        "worst": 9.19,
+        "worst": 12.65,
         "failSides": [],
-        "strict": "0/1524",
-        "area": "9366px² changed, 6195px² required"
+        "strict": "0/800",
+        "area": "5032px² changed, 3301px² required"
       },
       {
         "label": "<a> Enquire→",
@@ -706,10 +706,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 122,
         "failing": 0,
-        "worst": 15.23,
+        "worst": 15.32,
         "failSides": [],
         "strict": "0/122",
-        "area": "1419px² changed, 868px² required"
+        "area": "1444px² changed, 868px² required"
       },
       {
         "label": "<a> Or message us on WhatsApp",
@@ -717,10 +717,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 316,
         "failing": 0,
-        "worst": 13.26,
+        "worst": 12.94,
         "failSides": [],
         "strict": "0/316",
-        "area": "2131px² changed, 1365px² required"
+        "area": "2125px² changed, 1365px² required"
       },
       {
         "label": "<a> +30 211 444 5757",
@@ -731,7 +731,7 @@
         "worst": 10.42,
         "failSides": [],
         "strict": "0/180",
-        "area": "1314px² changed, 819px² required"
+        "area": "1314px² changed, 820px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -739,7 +739,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 318,
         "failing": 0,
-        "worst": 9,
+        "worst": 9.32,
         "failSides": [],
         "strict": "0/318",
         "area": "2139px² changed, 1370px² required"
@@ -759,23 +759,23 @@
         "label": "<a> +30 211 444 5757",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 190,
+        "positions": 192,
         "failing": 0,
-        "worst": 12.83,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/190",
-        "area": "1374px² changed, 860px² required"
+        "strict": "0/192",
+        "area": "1386px² changed, 868px² required"
       },
       {
         "label": "<a> +30 697 406 9475WhatsApp",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 292,
+        "positions": 290,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/292",
-        "area": "1974px² changed, 1262px² required"
+        "strict": "0/290",
+        "area": "1968px² changed, 1257px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -783,7 +783,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 342,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/342",
         "area": "2274px² changed, 1462px² required"
@@ -794,7 +794,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 262,
         "failing": 0,
-        "worst": 12.83,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/262",
         "area": "1806px² changed, 1147px² required"
@@ -805,7 +805,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 38,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/38",
         "area": "456px² changed, 248px² required"
@@ -816,7 +816,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.47,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "780px² changed, 466px² required"
@@ -827,7 +827,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 44,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/44",
         "area": "492px² changed, 274px² required"
@@ -838,7 +838,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.5,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "774px² changed, 461px² required"
@@ -849,7 +849,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/30",
         "area": "414px² changed, 219px² required"
@@ -860,7 +860,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 40,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/40",
         "area": "468px² changed, 256px² required"
@@ -871,7 +871,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 50,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/50",
         "area": "528px² changed, 295px² required"
@@ -882,7 +882,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 96,
         "failing": 0,
-        "worst": 13.26,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/96",
         "area": "804px² changed, 480px² required"
@@ -893,7 +893,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 70,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/70",
         "area": "654px² changed, 378px² required"
@@ -904,7 +904,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "534px² changed, 303px² required"
@@ -915,7 +915,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "540px² changed, 304px² required"
@@ -926,7 +926,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/30",
         "area": "408px² changed, 217px² required"
@@ -937,10 +937,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 104,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 13.97,
         "failSides": [],
         "strict": "0/104",
-        "area": "851px² changed, 514px² required"
+        "area": "852px² changed, 514px² required"
       }
     ]
   },
@@ -1072,296 +1072,287 @@
         "label": "<a> Enquire about Thalasses→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 332,
+        "positions": 380,
         "failing": 0,
-        "worst": 12.7,
+        "worst": 14.11,
         "failSides": [],
-        "strict": "0/332",
-        "area": "2500px² changed, 1621px² required"
+        "strict": "0/380",
+        "area": "2809px² changed, 1816px² required"
       },
       {
         "label": "<a> WhatsApp us→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 330,
+        "positions": 378,
         "failing": 0,
-        "worst": 12.68,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/330",
-        "area": "2540px² changed, 1625px² required"
+        "strict": "0/378",
+        "area": "2821px² changed, 1820px² required"
       },
       {
         "label": "<button> Open image 1 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 3.64,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/650",
-        "area": "8195px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4008px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 2 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 986,
+        "positions": 966,
         "failing": 0,
-        "worst": 3.5,
+        "worst": 13.97,
         "failSides": [],
-        "strict": "0/986",
-        "area": "6478px² changed, 4050px² required"
+        "strict": "0/966",
+        "area": "5820px² changed, 3966px² required"
       },
       {
         "label": "<button> Open image 3 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 4.85,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/650",
-        "area": "4089px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4002px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 4 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 4.1,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/650",
-        "area": "7618px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4008px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 5 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
-        "failing": 1,
-        "worst": 2.73,
-        "failSides": [
-          "right"
-        ],
-        "strict": "1/650",
-        "area": "5976px² changed, 2701px² required",
-        "note": "1/650 isolated positions under 3:1 (right), no gap over 5% of a side"
+        "positions": 664,
+        "failing": 0,
+        "worst": 14.05,
+        "failSides": [],
+        "strict": "0/664",
+        "area": "4008px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 6 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 648,
+        "positions": 662,
         "failing": 0,
-        "worst": 3.97,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/648",
-        "area": "4467px² changed, 2698px² required"
+        "strict": "0/662",
+        "area": "4002px² changed, 2754px² required"
       },
       {
         "label": "<button> Open image 7 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 3.73,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/650",
-        "area": "5530px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4002px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 8 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 648,
+        "positions": 662,
         "failing": 0,
-        "worst": 4.13,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/648",
-        "area": "4346px² changed, 2698px² required"
+        "strict": "0/662",
+        "area": "4002px² changed, 2754px² required"
       },
       {
         "label": "<button> Open image 9 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 648,
-        "failing": 1,
-        "worst": 2.96,
-        "failSides": [
-          "left"
-        ],
-        "strict": "1/648",
-        "area": "5691px² changed, 2698px² required",
-        "note": "1/648 isolated positions under 3:1 (left), no gap over 5% of a side"
+        "positions": 662,
+        "failing": 0,
+        "worst": 13.97,
+        "failSides": [],
+        "strict": "0/662",
+        "area": "4008px² changed, 2754px² required"
       },
       {
         "label": "<button> Open image 10 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 3.89,
+        "worst": 13.97,
         "failSides": [],
-        "strict": "0/650",
-        "area": "4643px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4014px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 11 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 3.84,
+        "worst": 13.97,
         "failSides": [],
-        "strict": "0/650",
-        "area": "4979px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4008px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 12 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 3.81,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/650",
-        "area": "4755px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4014px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 13 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 3.62,
+        "worst": 13.97,
         "failSides": [],
-        "strict": "0/650",
-        "area": "7120px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4014px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 14 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 3.63,
+        "worst": 13.97,
         "failSides": [],
-        "strict": "0/650",
-        "area": "7482px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4008px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 15 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 682,
+        "positions": 694,
         "failing": 0,
-        "worst": 3.65,
+        "worst": 13.97,
         "failSides": [],
-        "strict": "0/682",
-        "area": "7873px² changed, 2834px² required"
+        "strict": "0/694",
+        "area": "4194px² changed, 2876px² required"
       },
       {
         "label": "<button> Open image 16 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 986,
+        "positions": 966,
         "failing": 0,
-        "worst": 3.78,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/986",
-        "area": "8179px² changed, 4050px² required"
+        "strict": "0/966",
+        "area": "5826px² changed, 3966px² required"
       },
       {
         "label": "<button> Open image 17 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 3.63,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/650",
-        "area": "5371px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4008px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 18 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 986,
-        "failing": 3,
-        "worst": 2.7,
-        "failSides": [
-          "bottom"
-        ],
-        "strict": "3/986",
-        "area": "6475px² changed, 4047px² required",
-        "note": "3/986 isolated positions under 3:1 (bottom), no gap over 5% of a side"
+        "positions": 966,
+        "failing": 0,
+        "worst": 14.05,
+        "failSides": [],
+        "strict": "0/966",
+        "area": "5814px² changed, 3963px² required"
       },
       {
         "label": "<button> Open image 19 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 642,
+        "positions": 656,
         "failing": 0,
-        "worst": 3.88,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/642",
-        "area": "4064px² changed, 2666px² required"
+        "strict": "0/656",
+        "area": "3960px² changed, 2725px² required"
       },
       {
         "label": "<button> Open image 20 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 986,
+        "positions": 966,
         "failing": 0,
-        "worst": 3.3,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/986",
-        "area": "11436px² changed, 4047px² required"
+        "strict": "0/966",
+        "area": "5814px² changed, 3963px² required"
       },
       {
         "label": "<button> Open image 21 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 650,
+        "positions": 664,
         "failing": 0,
-        "worst": 3.62,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/650",
-        "area": "7068px² changed, 2701px² required"
+        "strict": "0/664",
+        "area": "4008px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 22 of 22 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
+        "positions": 906,
         "failing": 0,
-        "worst": 3.67,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/920",
-        "area": "9394px² changed, 3781px² required"
+        "strict": "0/906",
+        "area": "5454px² changed, 3725px² required"
       },
       {
-        "label": "<a> 02Mountain Escape→Mountains behind, th",
+        "label": "<a> 0202Mountain Escape→Mountains behind, ",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 1048,
+        "positions": 1060,
         "failing": 0,
-        "worst": 14.11,
+        "worst": 12.67,
         "failSides": [],
-        "strict": "0/1048",
-        "area": "6516px² changed, 4290px² required"
+        "strict": "0/1060",
+        "area": "6594px² changed, 4342px² required"
       },
       {
-        "label": "<a> 03Olive Stories→Open land and olive tr",
+        "label": "<a> 0303Olive Stories→Open land and olive ",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 1048,
+        "positions": 1060,
         "failing": 0,
-        "worst": 13.98,
+        "worst": 12.8,
         "failSides": [],
-        "strict": "0/1048",
-        "area": "6510px² changed, 4290px² required"
+        "strict": "0/1060",
+        "area": "6588px² changed, 4342px² required"
       },
       {
         "label": "<a> Enquire→",
@@ -1369,10 +1360,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 122,
         "failing": 0,
-        "worst": 15.35,
+        "worst": 15.49,
         "failSides": [],
         "strict": "0/122",
-        "area": "1424px² changed, 868px² required"
+        "area": "1421px² changed, 868px² required"
       },
       {
         "label": "<a> Or message us on WhatsApp",
@@ -1380,10 +1371,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 316,
         "failing": 0,
-        "worst": 13.92,
+        "worst": 13.38,
         "failSides": [],
         "strict": "0/316",
-        "area": "2132px² changed, 1365px² required"
+        "area": "2131px² changed, 1365px² required"
       },
       {
         "label": "<a> +30 211 444 5757",
@@ -1391,10 +1382,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 180,
         "failing": 0,
-        "worst": 11.59,
+        "worst": 10.96,
         "failSides": [],
         "strict": "0/180",
-        "area": "1315px² changed, 819px² required"
+        "area": "1313px² changed, 820px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -1402,7 +1393,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 318,
         "failing": 0,
-        "worst": 9.98,
+        "worst": 10.79,
         "failSides": [],
         "strict": "0/318",
         "area": "2142px² changed, 1370px² required"
@@ -1413,7 +1404,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 222,
         "failing": 0,
-        "worst": 10.64,
+        "worst": 10.8,
         "failSides": [],
         "strict": "0/222",
         "area": "1566px² changed, 986px² required"
@@ -1422,23 +1413,23 @@
         "label": "<a> +30 211 444 5757",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 190,
+        "positions": 192,
         "failing": 0,
-        "worst": 12.75,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/190",
-        "area": "1374px² changed, 860px² required"
+        "strict": "0/192",
+        "area": "1386px² changed, 868px² required"
       },
       {
         "label": "<a> +30 697 406 9475WhatsApp",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 292,
+        "positions": 290,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/292",
-        "area": "1974px² changed, 1262px² required"
+        "strict": "0/290",
+        "area": "1968px² changed, 1257px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -1446,7 +1437,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 342,
         "failing": 0,
-        "worst": 12.78,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/342",
         "area": "2274px² changed, 1462px² required"
@@ -1457,10 +1448,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 262,
         "failing": 0,
-        "worst": 12.83,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/262",
-        "area": "1805px² changed, 1147px² required"
+        "area": "1806px² changed, 1147px² required"
       },
       {
         "label": "<a> Venues",
@@ -1468,7 +1459,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 38,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/38",
         "area": "456px² changed, 248px² required"
@@ -1479,7 +1470,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.47,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "780px² changed, 466px² required"
@@ -1490,7 +1481,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 44,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/44",
         "area": "492px² changed, 274px² required"
@@ -1501,7 +1492,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "774px² changed, 461px² required"
@@ -1512,7 +1503,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/30",
         "area": "414px² changed, 219px² required"
@@ -1523,7 +1514,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 40,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/40",
         "area": "468px² changed, 256px² required"
@@ -1534,7 +1525,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 50,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/50",
         "area": "528px² changed, 295px² required"
@@ -1545,7 +1536,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 96,
         "failing": 0,
-        "worst": 13.26,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/96",
         "area": "804px² changed, 480px² required"
@@ -1556,7 +1547,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 70,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/70",
         "area": "654px² changed, 378px² required"
@@ -1567,7 +1558,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "534px² changed, 303px² required"
@@ -1578,7 +1569,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "540px² changed, 304px² required"
@@ -1589,7 +1580,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/30",
         "area": "408px² changed, 217px² required"
@@ -1600,10 +1591,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 104,
         "failing": 0,
-        "worst": 12.7,
+        "worst": 13.97,
         "failSides": [],
         "strict": "0/104",
-        "area": "851px² changed, 514px² required"
+        "area": "852px² changed, 514px² required"
       }
     ]
   },
@@ -1779,78 +1770,78 @@
         "label": "<a> Sunset by the poolCelebration/24 image",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 862,
+        "positions": 958,
         "failing": 0,
-        "worst": 3.66,
+        "worst": 12.77,
         "failSides": [],
-        "strict": "0/862",
-        "area": "7737px² changed, 3548px² required"
+        "strict": "0/958",
+        "area": "5772px² changed, 3929px² required"
       },
       {
-        "label": "<a> 2 filmsVilla PartyVilla Party/13 image",
+        "label": "<a> Villa PartyVilla Party/13 images2 film",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 664,
+        "positions": 782,
         "failing": 0,
-        "worst": 3.69,
+        "worst": 9.84,
         "failSides": [],
-        "strict": "0/664",
-        "area": "6979px² changed, 2759px² required"
+        "strict": "0/782",
+        "area": "4710px² changed, 3224px² required"
       },
       {
         "label": "<a> Everyone in whiteCelebration/31 images",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 764,
+        "positions": 870,
         "failing": 0,
-        "worst": 3.64,
+        "worst": 12.76,
         "failSides": [],
-        "strict": "0/764",
-        "area": "9402px² changed, 3154px² required"
+        "strict": "0/870",
+        "area": "5238px² changed, 3577px² required"
       },
       {
         "label": "<a> Vows on the sandWedding/9 images→",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 862,
+        "positions": 958,
         "failing": 0,
-        "worst": 3.86,
+        "worst": 13.3,
         "failSides": [],
-        "strict": "0/862",
-        "area": "7537px² changed, 3548px² required"
+        "strict": "0/958",
+        "area": "5766px² changed, 3929px² required"
       },
       {
-        "label": "<a> FilmUnder the shade sailCelebration/3 ",
+        "label": "<a> Under the shade sailCelebration/3 imag",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 664,
+        "positions": 782,
         "failing": 0,
-        "worst": 3.73,
+        "worst": 9.97,
         "failSides": [],
-        "strict": "0/664",
-        "area": "7396px² changed, 2759px² required"
+        "strict": "0/782",
+        "area": "4704px² changed, 3224px² required"
       },
       {
-        "label": "<a> 2 filmsFrom aboveFrom the air/15 image",
+        "label": "<a> From aboveFrom the air/15 images2 film",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 764,
+        "positions": 870,
         "failing": 0,
-        "worst": 3.65,
+        "worst": 12.76,
         "failSides": [],
-        "strict": "0/764",
-        "area": "7560px² changed, 3154px² required"
+        "strict": "0/870",
+        "area": "5232px² changed, 3577px² required"
       },
       {
-        "label": "<a> FilmA ceremony by the waterWedding/8 i",
+        "label": "<a> A ceremony by the waterWedding/8 image",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 862,
+        "positions": 992,
         "failing": 0,
-        "worst": 3.67,
+        "worst": 12.65,
         "failSides": [],
-        "strict": "0/862",
-        "area": "8138px² changed, 3548px² required"
+        "strict": "0/992",
+        "area": "5970px² changed, 4064px² required"
       },
       {
         "label": "<a> Enquire→",
@@ -1861,7 +1852,7 @@
         "worst": 16.38,
         "failSides": [],
         "strict": "0/122",
-        "area": "1427px² changed, 868px² required"
+        "area": "1431px² changed, 868px² required"
       },
       {
         "label": "<a> Or message us on WhatsApp",
@@ -1869,7 +1860,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 316,
         "failing": 0,
-        "worst": 15.6,
+        "worst": 15.45,
         "failSides": [],
         "strict": "0/316",
         "area": "2132px² changed, 1365px² required"
@@ -1880,10 +1871,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 180,
         "failing": 0,
-        "worst": 11.06,
+        "worst": 11.04,
         "failSides": [],
         "strict": "0/180",
-        "area": "1316px² changed, 819px² required"
+        "area": "1315px² changed, 820px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -1891,7 +1882,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 318,
         "failing": 0,
-        "worst": 12.2,
+        "worst": 12.29,
         "failSides": [],
         "strict": "0/318",
         "area": "2144px² changed, 1370px² required"
@@ -1902,7 +1893,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 222,
         "failing": 0,
-        "worst": 13.3,
+        "worst": 13.41,
         "failSides": [],
         "strict": "0/222",
         "area": "1568px² changed, 986px² required"
@@ -1911,23 +1902,23 @@
         "label": "<a> +30 211 444 5757",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 190,
+        "positions": 192,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/190",
-        "area": "1374px² changed, 860px² required"
+        "strict": "0/192",
+        "area": "1386px² changed, 868px² required"
       },
       {
         "label": "<a> +30 697 406 9475WhatsApp",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 292,
+        "positions": 290,
         "failing": 0,
-        "worst": 12.77,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/292",
-        "area": "1974px² changed, 1262px² required"
+        "strict": "0/290",
+        "area": "1968px² changed, 1257px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -1935,7 +1926,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 342,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/342",
         "area": "2274px² changed, 1462px² required"
@@ -1946,7 +1937,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 262,
         "failing": 0,
-        "worst": 12.91,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/262",
         "area": "1806px² changed, 1147px² required"
@@ -1957,7 +1948,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 38,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/38",
         "area": "456px² changed, 248px² required"
@@ -1968,7 +1959,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "780px² changed, 466px² required"
@@ -1979,7 +1970,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 44,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/44",
         "area": "492px² changed, 274px² required"
@@ -1990,7 +1981,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.5,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "774px² changed, 461px² required"
@@ -2001,7 +1992,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/30",
         "area": "414px² changed, 219px² required"
@@ -2012,7 +2003,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 40,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/40",
         "area": "468px² changed, 256px² required"
@@ -2023,7 +2014,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 50,
         "failing": 0,
-        "worst": 13.34,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/50",
         "area": "528px² changed, 295px² required"
@@ -2034,7 +2025,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 96,
         "failing": 0,
-        "worst": 13.33,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/96",
         "area": "804px² changed, 480px² required"
@@ -2045,7 +2036,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 70,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/70",
         "area": "654px² changed, 378px² required"
@@ -2056,7 +2047,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "534px² changed, 303px² required"
@@ -2067,7 +2058,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.18,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "540px² changed, 304px² required"
@@ -2078,7 +2069,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/30",
         "area": "408px² changed, 217px² required"
@@ -2089,10 +2080,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 104,
         "failing": 0,
-        "worst": 12.7,
+        "worst": 13.97,
         "failSides": [],
         "strict": "0/104",
-        "area": "851px² changed, 514px² required"
+        "area": "852px² changed, 514px² required"
       }
     ]
   },
@@ -2224,172 +2215,166 @@
         "label": "<button> Open image 1 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
+        "positions": 906,
         "failing": 0,
-        "worst": 3.64,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/920",
-        "area": "11437px² changed, 3781px² required"
+        "strict": "0/906",
+        "area": "5460px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 2 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
+        "positions": 906,
         "failing": 0,
-        "worst": 3.63,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/920",
-        "area": "7874px² changed, 3781px² required"
+        "strict": "0/906",
+        "area": "5454px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 3 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
+        "positions": 906,
         "failing": 0,
-        "worst": 3.47,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/920",
-        "area": "7090px² changed, 3781px² required"
+        "strict": "0/906",
+        "area": "5460px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 4 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
-        "failing": 1,
-        "worst": 2.38,
-        "failSides": [
-          "top"
-        ],
-        "strict": "1/920",
-        "area": "8872px² changed, 3781px² required",
-        "note": "1/920 isolated positions under 3:1 (top), no gap over 5% of a side"
+        "positions": 906,
+        "failing": 0,
+        "worst": 14.05,
+        "failSides": [],
+        "strict": "0/906",
+        "area": "5460px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 5 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 682,
+        "positions": 694,
         "failing": 0,
-        "worst": 3.84,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/682",
-        "area": "8632px² changed, 2834px² required"
+        "strict": "0/694",
+        "area": "4188px² changed, 2876px² required"
       },
       {
         "label": "<button> Open image 6 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 682,
+        "positions": 694,
         "failing": 0,
-        "worst": 3.66,
+        "worst": 13.97,
         "failSides": [],
-        "strict": "0/682",
-        "area": "7154px² changed, 2834px² required"
+        "strict": "0/694",
+        "area": "4194px² changed, 2876px² required"
       },
       {
         "label": "<button> Open image 7 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
+        "positions": 906,
         "failing": 0,
-        "worst": 3.61,
+        "worst": 13.98,
         "failSides": [],
-        "strict": "0/920",
-        "area": "11639px² changed, 3781px² required"
+        "strict": "0/906",
+        "area": "5466px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 8 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
+        "positions": 906,
         "failing": 0,
-        "worst": 3.6,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/920",
-        "area": "10967px² changed, 3781px² required"
+        "strict": "0/906",
+        "area": "5460px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 9 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
+        "positions": 906,
         "failing": 0,
-        "worst": 3.62,
+        "worst": 13.97,
         "failSides": [],
-        "strict": "0/920",
-        "area": "11107px² changed, 3781px² required"
+        "strict": "0/906",
+        "area": "5466px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 10 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
-        "failing": 2,
-        "worst": 2.41,
-        "failSides": [
-          "left"
-        ],
-        "strict": "2/920",
-        "area": "9672px² changed, 3781px² required",
-        "note": "2/920 isolated positions under 3:1 (left), no gap over 5% of a side"
+        "positions": 906,
+        "failing": 0,
+        "worst": 13.98,
+        "failSides": [],
+        "strict": "0/906",
+        "area": "5460px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 11 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
+        "positions": 906,
         "failing": 0,
-        "worst": 3.63,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/920",
-        "area": "11042px² changed, 3781px² required"
+        "strict": "0/906",
+        "area": "5454px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 12 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 920,
+        "positions": 906,
         "failing": 0,
-        "worst": 3.65,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/920",
-        "area": "9126px² changed, 3781px² required"
+        "strict": "0/906",
+        "area": "5460px² changed, 3725px² required"
       },
       {
         "label": "<button> Open image 13 of 13 full screen",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 682,
+        "positions": 694,
         "failing": 0,
-        "worst": 3.66,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/682",
-        "area": "8634px² changed, 2834px² required"
+        "strict": "0/694",
+        "area": "4182px² changed, 2876px² required"
       },
       {
         "label": "<button> Play video — Villa Party — film 1",
         "ground": "dark",
         "outline": "rgb(243, 239, 231)",
-        "positions": 962,
+        "positions": 896,
         "failing": 0,
-        "worst": 4.12,
+        "worst": 4.04,
         "failSides": [],
-        "strict": "0/962",
-        "area": "11158px² changed, 3947px² required"
+        "strict": "0/896",
+        "area": "10462px² changed, 3684px² required"
       },
       {
         "label": "<button> Play video — Villa Party — film 2",
         "ground": "dark",
         "outline": "rgb(243, 239, 231)",
-        "positions": 962,
+        "positions": 896,
         "failing": 0,
-        "worst": 4.43,
+        "worst": 4.27,
         "failSides": [],
-        "strict": "0/962",
-        "area": "11402px² changed, 3947px² required"
+        "strict": "0/896",
+        "area": "10719px² changed, 3684px² required"
       },
       {
         "label": "<a> Next galleryEveryone in white — Celebr",
@@ -2397,7 +2382,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 1454,
         "failing": 0,
-        "worst": 12.62,
+        "worst": 12.74,
         "failSides": [],
         "strict": "0/1454",
         "area": "8957px² changed, 5916px² required"
@@ -2408,10 +2393,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 122,
         "failing": 0,
-        "worst": 16.33,
+        "worst": 15.79,
         "failSides": [],
         "strict": "0/122",
-        "area": "1446px² changed, 868px² required"
+        "area": "1425px² changed, 868px² required"
       },
       {
         "label": "<a> Or message us on WhatsApp",
@@ -2419,10 +2404,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 316,
         "failing": 0,
-        "worst": 14.92,
+        "worst": 13.73,
         "failSides": [],
         "strict": "0/316",
-        "area": "2126px² changed, 1365px² required"
+        "area": "2131px² changed, 1365px² required"
       },
       {
         "label": "<a> +30 211 444 5757",
@@ -2430,10 +2415,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 180,
         "failing": 0,
-        "worst": 10.97,
+        "worst": 10.94,
         "failSides": [],
         "strict": "0/180",
-        "area": "1315px² changed, 819px² required"
+        "area": "1314px² changed, 820px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -2441,7 +2426,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 318,
         "failing": 0,
-        "worst": 11.44,
+        "worst": 11.5,
         "failSides": [],
         "strict": "0/318",
         "area": "2142px² changed, 1370px² required"
@@ -2452,7 +2437,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 222,
         "failing": 0,
-        "worst": 11.37,
+        "worst": 10.82,
         "failSides": [],
         "strict": "0/222",
         "area": "1566px² changed, 986px² required"
@@ -2461,23 +2446,23 @@
         "label": "<a> +30 211 444 5757",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 190,
+        "positions": 192,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/190",
-        "area": "1374px² changed, 860px² required"
+        "strict": "0/192",
+        "area": "1386px² changed, 868px² required"
       },
       {
         "label": "<a> +30 697 406 9475WhatsApp",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 292,
+        "positions": 290,
         "failing": 0,
-        "worst": 12.77,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/292",
-        "area": "1974px² changed, 1262px² required"
+        "strict": "0/290",
+        "area": "1968px² changed, 1257px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -2485,7 +2470,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 342,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/342",
         "area": "2274px² changed, 1462px² required"
@@ -2496,10 +2481,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 262,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/262",
-        "area": "1811px² changed, 1147px² required"
+        "area": "1806px² changed, 1147px² required"
       },
       {
         "label": "<a> Venues",
@@ -2507,7 +2492,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 38,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/38",
         "area": "456px² changed, 248px² required"
@@ -2518,7 +2503,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.51,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "780px² changed, 466px² required"
@@ -2529,7 +2514,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 44,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/44",
         "area": "492px² changed, 274px² required"
@@ -2540,7 +2525,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.5,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "774px² changed, 461px² required"
@@ -2551,7 +2536,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/30",
         "area": "414px² changed, 219px² required"
@@ -2562,7 +2547,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 40,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/40",
         "area": "468px² changed, 256px² required"
@@ -2573,7 +2558,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 50,
         "failing": 0,
-        "worst": 13.34,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/50",
         "area": "528px² changed, 295px² required"
@@ -2584,7 +2569,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 96,
         "failing": 0,
-        "worst": 13.33,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/96",
         "area": "804px² changed, 480px² required"
@@ -2595,7 +2580,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 70,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/70",
         "area": "654px² changed, 378px² required"
@@ -2606,7 +2591,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "534px² changed, 303px² required"
@@ -2617,7 +2602,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.18,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "540px² changed, 304px² required"
@@ -2628,7 +2613,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/30",
         "area": "408px² changed, 217px² required"
@@ -2639,10 +2624,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 104,
         "failing": 0,
-        "worst": 12.7,
+        "worst": 13.97,
         "failSides": [],
         "strict": "0/104",
-        "area": "851px² changed, 514px² required"
+        "area": "852px² changed, 514px² required"
       }
     ]
   },
@@ -2853,7 +2838,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 316,
         "failing": 0,
-        "worst": 13.3,
+        "worst": 12.88,
         "failSides": [],
         "strict": "0/316",
         "area": "2131px² changed, 1365px² required"
@@ -2864,10 +2849,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 180,
         "failing": 0,
-        "worst": 10.46,
+        "worst": 10.42,
         "failSides": [],
         "strict": "0/180",
-        "area": "1314px² changed, 819px² required"
+        "area": "1314px² changed, 820px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -2875,7 +2860,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 318,
         "failing": 0,
-        "worst": 8.97,
+        "worst": 9.32,
         "failSides": [],
         "strict": "0/318",
         "area": "2139px² changed, 1370px² required"
@@ -2895,23 +2880,23 @@
         "label": "<a> +30 211 444 5757",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 190,
+        "positions": 192,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/190",
-        "area": "1374px² changed, 860px² required"
+        "strict": "0/192",
+        "area": "1386px² changed, 868px² required"
       },
       {
         "label": "<a> +30 697 406 9475WhatsApp",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 292,
+        "positions": 290,
         "failing": 0,
-        "worst": 12.78,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/292",
-        "area": "1974px² changed, 1262px² required"
+        "strict": "0/290",
+        "area": "1968px² changed, 1257px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -2919,7 +2904,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 342,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/342",
         "area": "2274px² changed, 1462px² required"
@@ -2930,10 +2915,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 262,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/262",
-        "area": "1811px² changed, 1147px² required"
+        "area": "1812px² changed, 1147px² required"
       },
       {
         "label": "<a> Venues",
@@ -2941,7 +2926,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 38,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/38",
         "area": "456px² changed, 248px² required"
@@ -2952,10 +2937,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.51,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
-        "area": "779px² changed, 466px² required"
+        "area": "780px² changed, 466px² required"
       },
       {
         "label": "<a> Services",
@@ -2963,10 +2948,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 44,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/44",
-        "area": "494px² changed, 274px² required"
+        "area": "492px² changed, 274px² required"
       },
       {
         "label": "<a> Wedding Guide",
@@ -2974,10 +2959,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.5,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
-        "area": "776px² changed, 461px² required"
+        "area": "774px² changed, 461px² required"
       },
       {
         "label": "<a> About",
@@ -2985,7 +2970,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/30",
         "area": "414px² changed, 219px² required"
@@ -2996,7 +2981,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 40,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/40",
         "area": "468px² changed, 256px² required"
@@ -3007,7 +2992,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 50,
         "failing": 0,
-        "worst": 13.34,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/50",
         "area": "528px² changed, 295px² required"
@@ -3018,10 +3003,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 96,
         "failing": 0,
-        "worst": 13.33,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/96",
-        "area": "802px² changed, 480px² required"
+        "area": "804px² changed, 480px² required"
       },
       {
         "label": "<a> Olive Stories",
@@ -3029,10 +3014,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 70,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/70",
-        "area": "656px² changed, 378px² required"
+        "area": "654px² changed, 378px² required"
       },
       {
         "label": "<a> Facebook",
@@ -3040,7 +3025,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "534px² changed, 303px² required"
@@ -3051,10 +3036,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.18,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
-        "area": "538px² changed, 304px² required"
+        "area": "540px² changed, 304px² required"
       },
       {
         "label": "<a> TikTok",
@@ -3062,10 +3047,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/30",
-        "area": "410px² changed, 217px² required"
+        "area": "408px² changed, 217px² required"
       },
       {
         "label": "<button> Back to top↑",
@@ -3073,10 +3058,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 104,
         "failing": 0,
-        "worst": 12.7,
+        "worst": 13.97,
         "failSides": [],
         "strict": "0/104",
-        "area": "851px² changed, 514px² required"
+        "area": "852px² changed, 514px² required"
       }
     ]
   },
@@ -3210,10 +3195,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 316,
         "failing": 0,
-        "worst": 14.24,
+        "worst": 13.46,
         "failSides": [],
         "strict": "0/316",
-        "area": "2132px² changed, 1365px² required"
+        "area": "2131px² changed, 1365px² required"
       },
       {
         "label": "<a> +30 211 444 5757",
@@ -3221,10 +3206,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 180,
         "failing": 0,
-        "worst": 11.59,
+        "worst": 10.96,
         "failSides": [],
         "strict": "0/180",
-        "area": "1315px² changed, 819px² required"
+        "area": "1313px² changed, 820px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -3232,7 +3217,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 318,
         "failing": 0,
-        "worst": 9.97,
+        "worst": 10.78,
         "failSides": [],
         "strict": "0/318",
         "area": "2142px² changed, 1370px² required"
@@ -3243,7 +3228,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 222,
         "failing": 0,
-        "worst": 10.64,
+        "worst": 10.75,
         "failSides": [],
         "strict": "0/222",
         "area": "1566px² changed, 986px² required"
@@ -3252,23 +3237,23 @@
         "label": "<a> +30 211 444 5757",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 190,
+        "positions": 192,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/190",
-        "area": "1374px² changed, 860px² required"
+        "strict": "0/192",
+        "area": "1386px² changed, 868px² required"
       },
       {
         "label": "<a> +30 697 406 9475WhatsApp",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 292,
+        "positions": 290,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/292",
-        "area": "1974px² changed, 1262px² required"
+        "strict": "0/290",
+        "area": "1968px² changed, 1257px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -3276,7 +3261,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 342,
         "failing": 0,
-        "worst": 12.77,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/342",
         "area": "2274px² changed, 1462px² required"
@@ -3287,10 +3272,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 262,
         "failing": 0,
-        "worst": 12.81,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/262",
-        "area": "1805px² changed, 1147px² required"
+        "area": "1806px² changed, 1147px² required"
       },
       {
         "label": "<a> Venues",
@@ -3298,7 +3283,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 38,
         "failing": 0,
-        "worst": 13.63,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/38",
         "area": "456px² changed, 248px² required"
@@ -3309,7 +3294,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.5,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "780px² changed, 466px² required"
@@ -3320,7 +3305,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 44,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/44",
         "area": "492px² changed, 274px² required"
@@ -3331,7 +3316,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "774px² changed, 461px² required"
@@ -3342,7 +3327,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/30",
         "area": "414px² changed, 219px² required"
@@ -3353,7 +3338,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 40,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/40",
         "area": "468px² changed, 256px² required"
@@ -3364,7 +3349,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 50,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/50",
         "area": "528px² changed, 295px² required"
@@ -3375,7 +3360,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 96,
         "failing": 0,
-        "worst": 13.26,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/96",
         "area": "804px² changed, 480px² required"
@@ -3386,7 +3371,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 70,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/70",
         "area": "654px² changed, 378px² required"
@@ -3397,7 +3382,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "534px² changed, 303px² required"
@@ -3408,7 +3393,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "540px² changed, 304px² required"
@@ -3419,7 +3404,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/30",
         "area": "408px² changed, 217px² required"
@@ -3430,10 +3415,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 104,
         "failing": 0,
-        "worst": 12.7,
+        "worst": 13.97,
         "failSides": [],
         "strict": "0/104",
-        "area": "851px² changed, 514px² required"
+        "area": "852px² changed, 514px² required"
       }
     ]
   },
@@ -3556,10 +3541,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 122,
         "failing": 0,
-        "worst": 15.79,
+        "worst": 15.62,
         "failSides": [],
         "strict": "0/122",
-        "area": "1449px² changed, 868px² required"
+        "area": "1447px² changed, 868px² required"
       },
       {
         "label": "<a> Or message us on WhatsApp",
@@ -3567,10 +3552,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 316,
         "failing": 0,
-        "worst": 13.73,
+        "worst": 13.57,
         "failSides": [],
         "strict": "0/316",
-        "area": "2126px² changed, 1365px² required"
+        "area": "2125px² changed, 1365px² required"
       },
       {
         "label": "<a> +30 211 444 5757",
@@ -3578,10 +3563,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 180,
         "failing": 0,
-        "worst": 13.94,
+        "worst": 13.22,
         "failSides": [],
         "strict": "0/180",
-        "area": "1316px² changed, 819px² required"
+        "area": "1316px² changed, 820px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -3589,10 +3574,10 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 318,
         "failing": 0,
-        "worst": 10.48,
+        "worst": 10.5,
         "failSides": [],
         "strict": "0/318",
-        "area": "2143px² changed, 1370px² required"
+        "area": "2144px² changed, 1370px² required"
       },
       {
         "label": "<a> Wedding Brochure",
@@ -3600,7 +3585,7 @@
         "outline": "rgb(243, 239, 231)",
         "positions": 222,
         "failing": 0,
-        "worst": 10.83,
+        "worst": 10.77,
         "failSides": [],
         "strict": "0/222",
         "area": "1567px² changed, 986px² required"
@@ -3609,23 +3594,23 @@
         "label": "<a> +30 211 444 5757",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 190,
+        "positions": 192,
         "failing": 0,
-        "worst": 12.86,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/190",
-        "area": "1374px² changed, 860px² required"
+        "strict": "0/192",
+        "area": "1386px² changed, 868px² required"
       },
       {
         "label": "<a> +30 697 406 9475WhatsApp",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 292,
+        "positions": 290,
         "failing": 0,
-        "worst": 12.78,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/292",
-        "area": "1974px² changed, 1262px² required"
+        "strict": "0/290",
+        "area": "1968px² changed, 1257px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -3633,7 +3618,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 342,
         "failing": 0,
-        "worst": 12.77,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/342",
         "area": "2274px² changed, 1462px² required"
@@ -3644,10 +3629,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 262,
         "failing": 0,
-        "worst": 12.81,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/262",
-        "area": "1805px² changed, 1147px² required"
+        "area": "1806px² changed, 1147px² required"
       },
       {
         "label": "<a> Venues",
@@ -3655,7 +3640,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 38,
         "failing": 0,
-        "worst": 13.55,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/38",
         "area": "456px² changed, 248px² required"
@@ -3666,7 +3651,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.51,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "780px² changed, 466px² required"
@@ -3677,7 +3662,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 44,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/44",
         "area": "492px² changed, 274px² required"
@@ -3688,7 +3673,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "774px² changed, 461px² required"
@@ -3699,7 +3684,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/30",
         "area": "414px² changed, 219px² required"
@@ -3710,7 +3695,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 40,
         "failing": 0,
-        "worst": 13.6,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/40",
         "area": "468px² changed, 256px² required"
@@ -3721,7 +3706,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 50,
         "failing": 0,
-        "worst": 13.38,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/50",
         "area": "528px² changed, 295px² required"
@@ -3732,7 +3717,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 96,
         "failing": 0,
-        "worst": 13.34,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/96",
         "area": "804px² changed, 480px² required"
@@ -3743,7 +3728,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 70,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/70",
         "area": "654px² changed, 378px² required"
@@ -3754,7 +3739,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "534px² changed, 303px² required"
@@ -3765,7 +3750,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "540px² changed, 304px² required"
@@ -3776,7 +3761,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/30",
         "area": "408px² changed, 217px² required"
@@ -3787,10 +3772,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 104,
         "failing": 0,
-        "worst": 12.7,
+        "worst": 13.97,
         "failSides": [],
         "strict": "0/104",
-        "area": "850px² changed, 514px² required"
+        "area": "852px² changed, 514px² required"
       }
     ]
   },
@@ -3916,7 +3901,7 @@
         "worst": 12.68,
         "failSides": [],
         "strict": "0/168",
-        "area": "1236px² changed, 768px² required"
+        "area": "1236px² changed, 769px² required"
       },
       {
         "label": "<a> +30 697 406 9475",
@@ -3927,7 +3912,7 @@
         "worst": 12.68,
         "failSides": [],
         "strict": "0/180",
-        "area": "1307px² changed, 816px² required"
+        "area": "1307px² changed, 817px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -3935,7 +3920,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 298,
         "failing": 0,
-        "worst": 12.68,
+        "worst": 12.63,
         "failSides": [],
         "strict": "0/298",
         "area": "2010px² changed, 1285px² required"
@@ -3957,7 +3942,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 68,
         "failing": 0,
-        "worst": 12.79,
+        "worst": 12.77,
         "failSides": [],
         "strict": "0/68",
         "area": "636px² changed, 368px² required"
@@ -3968,7 +3953,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 68,
         "failing": 0,
-        "worst": 13.05,
+        "worst": 13.02,
         "failSides": [],
         "strict": "0/68",
         "area": "636px² changed, 369px² required"
@@ -4180,23 +4165,23 @@
         "label": "<a> +30 211 444 5757",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 190,
+        "positions": 192,
         "failing": 0,
-        "worst": 12.8,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/190",
-        "area": "1374px² changed, 860px² required"
+        "strict": "0/192",
+        "area": "1386px² changed, 868px² required"
       },
       {
         "label": "<a> +30 697 406 9475WhatsApp",
         "ground": "light",
         "outline": "rgb(39, 33, 27)",
-        "positions": 292,
+        "positions": 290,
         "failing": 0,
-        "worst": 12.77,
+        "worst": 14.05,
         "failSides": [],
-        "strict": "0/292",
-        "area": "1974px² changed, 1262px² required"
+        "strict": "0/290",
+        "area": "1968px² changed, 1257px² required"
       },
       {
         "label": "<a> domisignature@gmail.com",
@@ -4204,7 +4189,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 342,
         "failing": 0,
-        "worst": 12.74,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/342",
         "area": "2274px² changed, 1462px² required"
@@ -4215,7 +4200,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 262,
         "failing": 0,
-        "worst": 12.91,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/262",
         "area": "1806px² changed, 1147px² required"
@@ -4226,7 +4211,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 38,
         "failing": 0,
-        "worst": 13.55,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/38",
         "area": "456px² changed, 248px² required"
@@ -4237,7 +4222,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.52,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "780px² changed, 466px² required"
@@ -4248,7 +4233,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 44,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/44",
         "area": "492px² changed, 274px² required"
@@ -4259,7 +4244,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 92,
         "failing": 0,
-        "worst": 13.5,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/92",
         "area": "774px² changed, 461px² required"
@@ -4270,7 +4255,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/30",
         "area": "414px² changed, 219px² required"
@@ -4281,7 +4266,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 40,
         "failing": 0,
-        "worst": 13.64,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/40",
         "area": "468px² changed, 256px² required"
@@ -4292,7 +4277,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 50,
         "failing": 0,
-        "worst": 13.34,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/50",
         "area": "528px² changed, 295px² required"
@@ -4303,7 +4288,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 96,
         "failing": 0,
-        "worst": 13.33,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/96",
         "area": "804px² changed, 480px² required"
@@ -4314,7 +4299,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 70,
         "failing": 0,
-        "worst": 13.39,
+        "worst": 14.11,
         "failSides": [],
         "strict": "0/70",
         "area": "654px² changed, 378px² required"
@@ -4325,7 +4310,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.21,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "534px² changed, 303px² required"
@@ -4336,7 +4321,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 52,
         "failing": 0,
-        "worst": 13.18,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/52",
         "area": "540px² changed, 304px² required"
@@ -4347,7 +4332,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 30,
         "failing": 0,
-        "worst": 13.13,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/30",
         "area": "408px² changed, 217px² required"
@@ -4358,10 +4343,10 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 104,
         "failing": 0,
-        "worst": 12.7,
+        "worst": 13.97,
         "failSides": [],
         "strict": "0/104",
-        "area": "851px² changed, 514px² required"
+        "area": "852px² changed, 514px² required"
       }
     ]
   }

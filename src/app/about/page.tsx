@@ -8,6 +8,7 @@ import { team, teamIntro, teamStatement } from "@content/team";
 import { testimonials, stats } from "@content/pending";
 import { venues } from "@content/venues";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { Plate } from "@/components/ui/Plate";
 import { MaskReveal, Reveal, RuleDraw, TextReveal } from "@/components/motion/Reveal";
 import { CtaBlock } from "@/components/ui/CtaBlock";
 import { Testimonials } from "@/components/ui/Testimonials";
@@ -84,8 +85,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="bg-[var(--surface-raised)] py-section" aria-labelledby="team-heading">
+      {/*
+        Team. The portraits are objects on the page, so each is a Plate — and
+        the section rests on paper, not on the raised band it used to be: the
+        plate's mat IS the raised surface, and on a band of its own colour the
+        mat vanishes, leaving the frame to a decorative hairline. Sharing the
+        statement's ground, it takes only a bottom margin; two section paddings
+        on one paper stack into a void.
+      */}
+      <section className="bg-[var(--surface)] pb-section" aria-labelledby="team-heading">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
             <span className="eyebrow">The team</span>
@@ -97,8 +105,13 @@ export default function AboutPage() {
           <ul className="mt-16 grid gap-10 sm:grid-cols-3 lg:mt-24 lg:gap-14">
             {team.map((member, i) => (
               <li key={member.name} className={i === 1 ? "sm:mt-16" : undefined}>
+                {/* The mask wipes the whole plate in, as it did the bare
+                    photograph. No caption: the name and role beneath already
+                    caption it on paper, and three people have no order to
+                    number. The frame has no fill of its own, so a portrait not
+                    yet loaded reads as an empty plate, not a hole. */}
                 <MaskReveal delay={i * 0.1}>
-                  <div className="relative aspect-[3/4] overflow-hidden bg-[var(--rule)]">
+                  <Plate as="div" frameClassName="aspect-[3/4]">
                     <Image
                       src={member.image}
                       alt={`${member.name} — ${member.role}`}
@@ -107,11 +120,13 @@ export default function AboutPage() {
                       priority={i === 0}
                       className="grade-b object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.04]"
                     />
-                  </div>
+                  </Plate>
                 </MaskReveal>
+                {/* The caption aligns with the photograph's edge inside the mat,
+                    as every plate caption does (px = the mat's padding). */}
                 <Reveal delay={0.1 + i * 0.1}>
-                  <h3 className="mt-6 font-display text-2xl font-light text-[var(--text-primary)]">{member.name}</h3>
-                  <p className="mt-2 text-xs uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                  <h3 className="mt-6 px-3 font-display text-2xl font-light text-[var(--text-primary)] sm:px-4 lg:px-5">{member.name}</h3>
+                  <p className="mt-2 px-3 text-xs uppercase tracking-[0.18em] text-[var(--text-tertiary)] sm:px-4 lg:px-5">
                     {member.role}
                   </p>
                 </Reveal>
@@ -126,7 +141,7 @@ export default function AboutPage() {
 
       {/*
         No `standfirst` here on purpose. It used to pass teamStatement, which is
-        already printed in full eighty lines above — the same 250-character
+        already printed in full in the statement section above — the same 250-character
         paragraph twice on one page. Omitting it falls back to CtaBlock's own
         default, the site descriptor, which is what every other page's closing
         block uses.

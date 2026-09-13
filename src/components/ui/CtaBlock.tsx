@@ -3,6 +3,7 @@ import { Chapter } from "@/components/layout/Chapter";
 import { Reveal, RuleDraw, TextReveal } from "@/components/motion/Reveal";
 import { ScrollImage } from "@/components/motion/ScrollImage";
 import { Button } from "@/components/ui/Button";
+import { Phone } from "@/components/ui/Phone";
 
 /**
  * The closing invitation, sized as a scene rather than a strip. Sits above the
@@ -11,6 +12,11 @@ import { Button } from "@/components/ui/Button";
  * One of the designated dark chapters: the ground inverts here, so everything
  * inside asks for a role and the chapter's ladder answers — the buttons
  * included, which need no override to sit on night.
+ *
+ * Its two hairlines — the rule beside the eyebrow and the rule over the
+ * contact list — lie on the photograph, not on plain night, so they take
+ * --rule-strong: a line over an image whose tone nobody can promise has to be
+ * seen, and --rule is solved only against the bare ground.
  */
 export function CtaBlock({
   heading = "Begin with\na conversation",
@@ -53,7 +59,7 @@ export function CtaBlock({
             <Reveal>
               <div className="flex items-center gap-6">
                 <span className="eyebrow">Enquire</span>
-                <RuleDraw className="w-20 bg-[var(--rule)]" />
+                <RuleDraw className="w-20 bg-[var(--rule-strong)]" />
               </div>
             </Reveal>
 
@@ -86,15 +92,20 @@ export function CtaBlock({
 
           <div className="lg:col-span-4 lg:col-start-9 lg:self-end">
             <Reveal delay={0.32}>
-              <dl className="space-y-7 border-t border-[var(--rule)] pt-9">
+              {/* The three values take a fluid size - 1.6rem from about 460px
+                  up. Resting as a plate, the block's content steps in a gutter
+                  at each side, and at 390 the email broke mid-address
+                  ("gmail.co / m") at a fixed 1.6rem. One size for all three,
+                  so they stay a set. */}
+              <dl className="space-y-7 border-t border-[var(--rule-strong)] pt-9">
                 <div>
                   <dt className="eyebrow">Call</dt>
                   <dd className="mt-3">
                     <a
                       href={contact.phone.href}
-                      className="font-display text-[1.6rem] font-light text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]"
+                      className="font-display text-[clamp(1.25rem,5.6vw,1.6rem)] font-light text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]"
                     >
-                      {contact.phone.display}
+                      <Phone number={contact.phone.display} />
                     </a>
                   </dd>
                 </div>
@@ -103,7 +114,7 @@ export function CtaBlock({
                   <dd className="mt-3">
                     <a
                       href={contact.email.href}
-                      className="break-all font-display text-[1.6rem] font-light text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]"
+                      className="break-all font-display text-[clamp(1.25rem,5.6vw,1.6rem)] font-light text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]"
                     >
                       {contact.email.display}
                     </a>
@@ -116,7 +127,7 @@ export function CtaBlock({
                       href={contact.brochure.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-display text-[1.6rem] font-light text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]"
+                      className="font-display text-[clamp(1.25rem,5.6vw,1.6rem)] font-light text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]"
                     >
                       {contact.brochure.label}
                     </a>

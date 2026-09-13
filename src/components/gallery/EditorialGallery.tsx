@@ -4,6 +4,7 @@ import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
+import { Plate } from "@/components/ui/Plate";
 import { Lightbox, type LightboxItem } from "@/components/gallery/Lightbox";
 import {
   gsap,
@@ -28,6 +29,13 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * batch() collects whatever actually enters the viewport in the same moment and
  * staggers *those*, which is the difference between a considered reveal and a
  * page that looks like it is still loading.
+ *
+ * Stage 5: each tile is a sourcebook Plate: the photograph in a mat of the
+ * raised surface, a hairline at its edge, numbered by position. That way the
+ * gallery reads as photographs laid on the page, not as bare frames
+ * dissolving into ivory. The mat and hairline paint from the first frame, and
+ * the image's width/height attributes reserve its window. So a tile whose lazy
+ * image has not arrived reads as an empty plate, not a hole.
  */
 export function EditorialGallery({
   images,
@@ -99,9 +107,19 @@ export function EditorialGallery({
             data-cursor="view"
             onClick={() => setIndex(i)}
             aria-label={`Open image ${i + 1} of ${images.length} full screen`}
-            className="focus-inset group mb-5 block w-full break-inside-avoid overflow-hidden bg-[var(--surface-raised)] lg:mb-10"
+            className="focus-inset group mb-5 block w-full break-inside-avoid lg:mb-10"
           >
-            <span className="relative block overflow-hidden">
+            {/* The mat and hairline live inside the button, so the whole plate is
+                the hit target. The frame clips the hover scale; the button does
+                not clip, and the inset ring (.focus-inset::after, z-index 2) is
+                the button's own child, so no overflow can cut it and nothing in
+                the frame, which sets no z-index, can rise over it. It lands on
+                the mat, clear of the image at every mat width. The plate is
+                built of spans: a button may hold phrasing content only. */}
+            {/* No plate number: the tiles fill masonry columns, so position runs
+                down each column and the top row read 01 / 09 / 17 (stage-5
+                review). The lightbox gives each image its place. */}
+            <Plate as="span">
               <Image
                 src={src}
                 alt=""
@@ -120,7 +138,7 @@ export function EditorialGallery({
                 aria-hidden
                 className="pointer-events-none absolute inset-0 bg-transparent transition-colors duration-700 group-hover:bg-[color-mix(in_srgb,var(--text-primary)_10%,transparent)]"
               />
-            </span>
+            </Plate>
           </button>
         ))}
       </div>

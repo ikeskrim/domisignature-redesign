@@ -2,7 +2,7 @@
   {
     "width": "1440",
     "route": "home",
-    "measured": 134,
+    "measured": 145,
     "failing": 0,
     "worst": {
       "ratio": 4.673429838396537,
@@ -17,12 +17,12 @@
   {
     "width": "1440",
     "route": "venues",
-    "measured": 45,
+    "measured": 68,
     "failing": 0,
     "worst": {
-      "ratio": 4.7071358044522515,
+      "ratio": 4.700619590624362,
       "bar": 4.5,
-      "text": "Venues",
+      "text": "Up to 200 guests/25 minutes from Rethymn",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -32,12 +32,12 @@
   {
     "width": "1440",
     "route": "venue-mountain-escape",
-    "measured": 65,
+    "measured": 70,
     "failing": 0,
     "worst": {
-      "ratio": 4.704205397808176,
+      "ratio": 4.747604768402507,
       "bar": 4.5,
-      "text": "© 2026 Domisignature",
+      "text": "Capacity up to 300",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -50,9 +50,9 @@
     "measured": 75,
     "failing": 0,
     "worst": {
-      "ratio": 4.7071358044522515,
+      "ratio": 4.747604768402507,
       "bar": 4.5,
-      "text": "Get in touch",
+      "text": "Capacity up to 200",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -62,12 +62,12 @@
   {
     "width": "1440",
     "route": "venue-olive-stories",
-    "measured": 66,
+    "measured": 71,
     "failing": 0,
     "worst": {
-      "ratio": 4.704205397808176,
+      "ratio": 4.747604768402507,
       "bar": 4.5,
-      "text": "© 2026 Domisignature",
+      "text": "Capacity up to 300",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -77,7 +77,7 @@
   {
     "width": "1440",
     "route": "events",
-    "measured": 52,
+    "measured": 86,
     "failing": 0,
     "worst": {
       "ratio": 4.700619590624362,
@@ -92,7 +92,7 @@
   {
     "width": "1440",
     "route": "event-sunset-by-the-pool",
-    "measured": 43,
+    "measured": 48,
     "failing": 0,
     "worst": {
       "ratio": 4.7071358044522515,
@@ -122,12 +122,12 @@
   {
     "width": "1440",
     "route": "services",
-    "measured": 66,
+    "measured": 68,
     "failing": 0,
     "worst": {
-      "ratio": 4.7071358044522515,
+      "ratio": 4.738087709721292,
       "bar": 4.5,
-      "text": "Get in touch",
+      "text": "Services",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -137,7 +137,7 @@
   {
     "width": "1440",
     "route": "wedding-guide",
-    "measured": 67,
+    "measured": 69,
     "failing": 0,
     "worst": {
       "ratio": 4.700619590624362,
@@ -152,12 +152,12 @@
   {
     "width": "1440",
     "route": "about",
-    "measured": 64,
+    "measured": 66,
     "failing": 0,
     "worst": {
-      "ratio": 4.697671675985583,
+      "ratio": 4.738087709721292,
       "bar": 4.5,
-      "text": "Wedding Brochure",
+      "text": "Home",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -167,12 +167,12 @@
   {
     "width": "1440",
     "route": "contact",
-    "measured": 60,
+    "measured": 64,
     "failing": 0,
     "worst": {
       "ratio": 4.704205397808176,
       "bar": 4.5,
-      "text": "Follow",
+      "text": "Brochure",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -182,40 +182,10 @@
   {
     "width": "1440",
     "route": "404",
-    "measured": 31,
+    "measured": 33,
     "failing": 0,
     "worst": {
-      "ratio": 4.7071358044522515,
-      "bar": 4.5,
-      "text": "© 2026 Domisignature",
-      "color": "rgb(107, 101, 88)",
-      "alpha": 1,
-      "opacity": 1
-    },
-    "bad": []
-  },
-  {
-    "width": "390",
-    "route": "home",
-    "measured": 134,
-    "failing": 0,
-    "worst": {
-      "ratio": 4.741035624360071,
-      "bar": 4.5,
-      "text": "What we create",
-      "color": "rgb(107, 101, 88)",
-      "alpha": 1,
-      "opacity": 1
-    },
-    "bad": []
-  },
-  {
-    "width": "390",
-    "route": "venues",
-    "measured": 45,
-    "failing": 0,
-    "worst": {
-      "ratio": 4.7071358044522515,
+      "ratio": 5.233919103169988,
       "bar": 4.5,
       "text": "Wedding Brochure",
       "color": "rgb(107, 101, 88)",
@@ -226,13 +196,43 @@
   },
   {
     "width": "390",
-    "route": "venue-mountain-escape",
-    "measured": 65,
+    "route": "home",
+    "measured": 139,
     "failing": 0,
     "worst": {
-      "ratio": 4.710083719091031,
+      "ratio": 4.713722456489391,
       "bar": 4.5,
-      "text": "Explore",
+      "text": "Signature Events",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venues",
+    "measured": 68,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.704205397808176,
+      "bar": 4.5,
+      "text": "200–300 guests/Open countryside, Rethymn",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-mountain-escape",
+    "measured": 70,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.704205397808176,
+      "bar": 4.5,
+      "text": "16 images",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -242,12 +242,12 @@
   {
     "width": "390",
     "route": "venue-thalasses",
-    "measured": 69,
+    "measured": 68,
     "failing": 0,
     "worst": {
-      "ratio": 4.741035624360071,
+      "ratio": 4.704205397808176,
       "bar": 4.5,
-      "text": "–",
+      "text": "22 images",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -257,12 +257,12 @@
   {
     "width": "390",
     "route": "venue-olive-stories",
-    "measured": 66,
+    "measured": 71,
     "failing": 0,
     "worst": {
-      "ratio": 4.741035624360071,
+      "ratio": 4.747604768402507,
       "bar": 4.5,
-      "text": "Perfect for:",
+      "text": "05 images",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -272,12 +272,12 @@
   {
     "width": "390",
     "route": "events",
-    "measured": 52,
+    "measured": 86,
     "failing": 0,
     "worst": {
-      "ratio": 4.741035624360071,
+      "ratio": 4.7505526830412865,
       "bar": 4.5,
-      "text": "Explore",
+      "text": "Galleries",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -287,7 +287,7 @@
   {
     "width": "390",
     "route": "event-sunset-by-the-pool",
-    "measured": 46,
+    "measured": 48,
     "failing": 0,
     "worst": {
       "ratio": 4.744001076753331,
@@ -302,12 +302,12 @@
   {
     "width": "390",
     "route": "event-villa-party",
-    "measured": 41,
+    "measured": 46,
     "failing": 0,
     "worst": {
-      "ratio": 4.738087709721292,
+      "ratio": 4.744001076753331,
       "bar": 4.5,
-      "text": "Next gallery",
+      "text": "Villa Party",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -317,7 +317,7 @@
   {
     "width": "390",
     "route": "services",
-    "measured": 67,
+    "measured": 69,
     "failing": 0,
     "worst": {
       "ratio": 4.747604768402507,
@@ -332,12 +332,12 @@
   {
     "width": "390",
     "route": "wedding-guide",
-    "measured": 62,
+    "measured": 64,
     "failing": 0,
     "worst": {
-      "ratio": 4.7505526830412865,
+      "ratio": 4.784646674091984,
       "bar": 4.5,
-      "text": "Follow",
+      "text": "Wedding Guide",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -347,6 +347,21 @@
   {
     "width": "390",
     "route": "about",
+    "measured": 66,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7505526830412865,
+      "bar": 4.5,
+      "text": "Home",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "contact",
     "measured": 64,
     "failing": 0,
     "worst": {
@@ -361,28 +376,13 @@
   },
   {
     "width": "390",
-    "route": "contact",
-    "measured": 60,
-    "failing": 0,
-    "worst": {
-      "ratio": 4.738087709721292,
-      "bar": 4.5,
-      "text": "Follow",
-      "color": "rgb(107, 101, 88)",
-      "alpha": 1,
-      "opacity": 1
-    },
-    "bad": []
-  },
-  {
-    "width": "390",
     "route": "404",
-    "measured": 31,
+    "measured": 33,
     "failing": 0,
     "worst": {
-      "ratio": 4.738087709721292,
+      "ratio": 5.233919103169988,
       "bar": 4.5,
-      "text": "Follow",
+      "text": "WhatsApp",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1

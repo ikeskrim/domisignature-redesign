@@ -60,7 +60,12 @@ export function VideoPlayer({
           className="group absolute inset-0 flex items-center justify-center bg-[rgb(var(--wash)/0.2)] focus-inset transition-colors duration-500 hover:bg-[color-mix(in_srgb,var(--text-primary)_30%,transparent)]"
           aria-label={`Play video — ${label}`}
         >
-          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-[var(--rule-strong)] text-[var(--text-primary)] backdrop-blur-sm transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:border-[var(--text-primary)] group-hover:bg-[color-mix(in_srgb,var(--text-primary)_10%,transparent)]">
+          {/* The ring takes its colour from the type ladder, not the rule
+              ladder: a rule is solved against the bare ground, but this ring
+              sits on a poster of unknown tone around the glyph it frames.
+              Primary at 60% keeps it a step below the play mark, and it rises
+              to full primary on hover. */}
+          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--text-primary)_60%,transparent)] text-[var(--text-primary)] backdrop-blur-sm transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:border-[var(--text-primary)] group-hover:bg-[color-mix(in_srgb,var(--text-primary)_10%,transparent)]">
             <svg viewBox="0 0 24 24" className="ml-1 h-6 w-6 fill-current" aria-hidden>
               <path d="M8 5v14l11-7z" />
             </svg>

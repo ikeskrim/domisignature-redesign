@@ -347,7 +347,7 @@ A permanent redirect is in `next.config.ts` and the legacy anchor
 
 1. **A client's names are legible on the site.** In *A ceremony by the water*,
    frame 02 (`olLK_LD_072.jpg`) is a welcome chalkboard reading
-   *"Welcome to Linda ♡ Daniels Wedding"*. Two real first names, published.
+   *(the couple’s first names — transcription removed; the frame was withdrawn)*. Two real first names, published.
    This is inherited from the live site, not introduced here, so I have not
    removed it — but you may not have registered that it is on the page, and it
    is the kind of thing a couple might reasonably object to. Say the word and it

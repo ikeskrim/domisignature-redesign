@@ -463,15 +463,29 @@
 
   /*
    * The chapter mask - see components/layout/Chapter.tsx, the one definition
-   * of a light/dark boundary. Two insets, scrubbed on entry and exit; the
-   * larger wins. Both default to zero so the server render and reduced motion
-   * are the full-bleed final state.
+   * of a light/dark boundary. Two side insets, scrubbed on entry and exit;
+   * the larger wins. Both default to zero, so an opener's server render and
+   * reduced motion are its full-bleed final state.
+   *
+   * A mid-page chapter (data-rest="plate") rests as a plate laid on the page.
+   * Its sides are inset by a gutter, and so is its foot: paper shows on three
+   * sides, and it never stands on whatever follows (the footer, on every
+   * route). Its content steps in by the same gutter, so the type sits inside
+   * the plate rather than on the cut; the stage-5 review found the eyebrow,
+   * the heading and the Enquire pill 0-1px from the edge. The padding is
+   * static, never tied to the scrub, so nothing re-wraps while the sides open.
    */
+  .chapter[data-rest="plate"] {
+    --chapter-in: var(--spacing-gutter);
+    --chapter-foot: var(--spacing-gutter);
+    padding-inline: var(--spacing-gutter);
+  }
   .chapter {
     --chapter-in: 0px;
     --chapter-out: 0px;
+    --chapter-foot: 0px;
     clip-path: inset(
-      0 max(var(--chapter-in), var(--chapter-out)) 0 max(var(--chapter-in), var(--chapter-out))
+      0 max(var(--chapter-in), var(--chapter-out)) var(--chapter-foot) max(var(--chapter-in), var(--chapter-out))
     );
   }
 

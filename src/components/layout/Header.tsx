@@ -11,6 +11,11 @@ import { gsap, EASE, prefersReducedMotion } from "@/lib/gsap";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
+/* Body children the open menu never makes inert. They are not page content,
+   and Next's route announcer has to stay live so that a navigation made from
+   the menu is still announced. */
+const NEVER_INERT = new Set(["SCRIPT", "STYLE", "LINK", "TEMPLATE", "NOSCRIPT", "NEXT-ROUTE-ANNOUNCER"]);
+
 export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -18,6 +23,7 @@ export function Header() {
   /* Separate from `open` so the panel can animate out before it unmounts. */
   const [present, setPresent] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
 
   /* The homepage hero and the venue title card are the two page openers that
      are designated dark chapters — full-bleed imagery the header floats over —
@@ -25,8 +31,15 @@ export function Header() {
      the visitor scrolls past. The same flag sets the header's ground: over the
      opener it floats on a dark photograph and its roles resolve to the night
      ladder; scrolled, it takes the page. Every other route opens on paper.
-     Nothing below names a colour — the ground answers. */
-  const overHero = (pathname === "/" || /^\/venues\/[^/]+$/.test(pathname)) && !scrolled;
+     Nothing below names a colour — the ground answers.
+
+     While the menu is present the header floats on the menu's raised paper,
+     not on the photograph, so it takes the page there too. Left on the night
+     ladder it set bone on ivory — 1.07:1 by the tokens — and the Close control,
+     the dialog's one visible way out, all but vanished. It keeps the page
+     ground until the wipe has fully left, then returns to the hero. */
+  const overHero =
+    (pathname === "/" || /^\/venues\/[^/]+$/.test(pathname)) && !scrolled && !present;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -44,11 +57,76 @@ export function Header() {
     };
   }, [present]);
 
+  /*
+   * The open menu is a modal dialog, and behaves as one. Until this only Escape
+   * was real: Tab walked straight out of a full-screen panel into the page it
+   * covers.
+   *
+   * - Opening moves focus to the first link.
+   * - Tab and Shift+Tab cycle the panel's links and the Close control. Close is
+   *   the same toggle, which lives in the header above the panel rather than in
+   *   the dialog's DOM, so the cycle is kept by hand: the toggle, then the panel
+   *   in document order — which is also the order on screen.
+   * - Everything behind the panel (the page, the footer, the skip link) is
+   *   inert while it is open, so no click, screen-reader cursor or stray focus()
+   *   reaches what the panel hides. Only attributes set here are taken off.
+   * - Escape closes. Closing returns focus to the toggle, unless something has
+   *   already taken it on purpose (a route's own focus handling).
+   * - The panel and toggle exist below lg only. A tablet turned to landscape
+   *   crosses lg with the menu open; the panel goes display:none, and the page
+   *   would be left inert and scroll-locked under nothing. Crossing lg closes it.
+   */
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
+    const el = panel.current;
+    const btn = toggle.current;
+    if (!open || !present || !el || !btn) return;
+
+    const behind = Array.from(document.body.children).filter(
+      (n): n is HTMLElement =>
+        n instanceof HTMLElement &&
+        !n.contains(el) &&
+        !n.contains(btn) &&
+        !n.hasAttribute("inert") &&
+        !NEVER_INERT.has(n.tagName),
+    );
+    behind.forEach((n) => n.setAttribute("inert", ""));
+
+    const stops = () => [
+      btn,
+      ...Array.from(el.querySelectorAll<HTMLElement>("a[href], button:not([disabled])")),
+    ];
+    stops()[1]?.focus({ preventScroll: true });
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || e.altKey || e.ctrlKey || e.metaKey) return;
+      e.preventDefault();
+      const list = stops();
+      const at = list.indexOf(document.activeElement as HTMLElement);
+      const next = e.shiftKey ? (at <= 0 ? list.length - 1 : at - 1) : (at + 1) % list.length;
+      list[next]?.focus({ preventScroll: true });
+    };
+
+    const desktop = window.matchMedia("(min-width: 64rem)");
+    const onDesktop = () => {
+      if (desktop.matches) setOpen(false);
+    };
+
+    document.addEventListener("keydown", onKey);
+    desktop.addEventListener("change", onDesktop);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      desktop.removeEventListener("change", onDesktop);
+      behind.forEach((n) => n.removeAttribute("inert"));
+      const active = document.activeElement;
+      if (!active || active === document.body || el.contains(active)) {
+        btn.focus({ preventScroll: true });
+      }
+    };
+  }, [open, present]);
 
   /* Opening mounts immediately; closing waits for the wipe to finish. */
   useEffect(() => {
@@ -165,7 +243,11 @@ export function Header() {
             </span>
           </Link>
 
-          {/* Desktop navigation — hovering one item dims its siblings. */}
+          {/* Desktop navigation — hovering one item steps its siblings down to
+              tertiary. It was a 45% opacity fade, which on paper took the ink
+              under AA for as long as the pointer stayed; a solved step holds it.
+              Same 600ms and ease. The active underline keeps its primary ink,
+              so the current page still reads while a sibling is hovered. */}
           <nav aria-label="Primary" className="group/nav hidden items-center gap-9 lg:flex">
             {nav.map((item) => (
               <Link
@@ -174,14 +256,17 @@ export function Header() {
                 aria-current={isActive(item.href) ? "page" : undefined}
                 className={cn(
                   "group relative py-2 font-sans text-[0.7rem] font-medium uppercase tracking-[0.18em]",
-                  "transition-[color,opacity] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-                  "group-hover/nav:opacity-45 hover:!opacity-100",
+                  "transition-[color] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+                  // Siblings step down to tertiary while one link is hovered - on
+                  // paper only. Over the unveiled hero nothing below primary
+                  // holds (secondary ~2.5:1, tertiary ~2.2:1 on open sky), so
+                  // there the underline alone marks the hovered link.
+                  !overHero && "group-hover/nav:text-[var(--text-tertiary)] hover:!text-[var(--text-primary)]",
                   // Over the hero there is no veil: the night ladder's secondary
                   // floats on open sky at ~2.5:1 and reads as faded beside the
-                  // primary wordmark. Rest on primary there — the sibling-dimming
-                  // above already carries the hierarchy. Scrolled, on the paper
-                  // wash, secondary holds 7.65:1 and keeps its step.
-                  "hover:text-[var(--text-primary)]",
+                  // primary wordmark, so the links rest on primary there.
+                  // Scrolled, on the paper wash, secondary holds 7.65:1 and keeps
+                  // its step.
                   overHero ? "text-[var(--text-primary)]" : "text-[var(--text-secondary)]",
                   isActive(item.href) && "text-[var(--text-primary)]",
                 )}
@@ -211,12 +296,15 @@ export function Header() {
               data-magnetic
               className={cn(
                 "ml-2 rounded-full border px-7 py-3 font-sans text-[0.6875rem] font-medium uppercase tracking-[0.18em]",
-                "transition-[color,background-color,border-color,opacity] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-                "group-hover/nav:opacity-45 hover:!opacity-100",
+                "transition-[color,background-color,border-color] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+                // A sibling of the links, so it takes the same step down while
+                // one of them is hovered - on paper only, as the links do; its
+                // --rule-strong border stays, since that boundary has to be seen.
+                !overHero && "group-hover/nav:text-[var(--text-tertiary)]",
                 // Hover inverts: the fill is the other ladder's ground and the
                 // label its primary, so the label can never sink into the fill
                 // (the scrolled variant once hovered bone-on-bone).
-                "border-[var(--rule-strong)] text-[var(--text-primary)] hover:bg-[var(--inverse)] hover:text-[var(--text-on-inverse)]",
+                "border-[var(--rule-strong)] text-[var(--text-primary)] hover:bg-[var(--inverse)] hover:!text-[var(--text-on-inverse)]",
               )}
             >
               Enquire
@@ -225,6 +313,7 @@ export function Header() {
 
           {/* Mobile trigger */}
           <button
+            ref={toggle}
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
@@ -255,11 +344,19 @@ export function Header() {
       </header>
 
       {/* Mobile menu — outside the header, so it sits on the page's own ground:
-          a raised paper panel, whatever the header is floating over. */}
+          a raised paper panel, whatever the header is floating over. Modal in
+          behaviour (focus trap, inert page, focus restore: see the effect
+          above), named by the toggle's own "Menu". No aria-modal: the Close
+          toggle lives in the header, outside this panel, and aria-modal lets a
+          screen reader (VoiceOver on iOS) hide everything outside the dialog -
+          the one way out included. The inert page already takes everything
+          behind the panel out of reach for every assistive technology. */}
       {present && (
         <div
           ref={panel}
           id="mobile-menu"
+          role="dialog"
+          aria-label="Menu"
           className="fixed inset-0 z-40 flex flex-col bg-[var(--surface-raised)] lg:hidden"
         >
           <nav

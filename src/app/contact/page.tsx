@@ -5,6 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 import { contact, social, legal } from "@content/site";
 import { venues } from "@content/venues";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { Phone } from "@/components/ui/Phone";
 import { Reveal, RuleDraw } from "@/components/motion/Reveal";
 import { MondayForm } from "@/components/contact/MondayForm";
 import { MapEmbed } from "@/components/ui/MapEmbed";
@@ -24,11 +25,18 @@ const crumbs = [
 ];
 
 export default function ContactPage() {
+  /* The two numbers are set in the display serif, which has no "+": Phone sets
+     that one glyph in the sans. The strings are the content's, unchanged. */
   const channels = [
-    { label: "Telephone", value: contact.phone.display, href: contact.phone.href, external: false },
+    {
+      label: "Telephone",
+      value: <Phone number={contact.phone.display} />,
+      href: contact.phone.href,
+      external: false,
+    },
     {
       label: "WhatsApp",
-      value: contact.whatsapp.display,
+      value: <Phone number={contact.whatsapp.display} />,
       href: contact.whatsapp.href,
       external: true,
     },
@@ -86,9 +94,16 @@ export default function ContactPage() {
                 ))}
               </dl>
 
+              {/*
+                These two labels are <h3>s, and the base layer sets every
+                heading in the display serif — so they alone fell out of the
+                sans the <dt> labels above use. .eyebrow restores the face;
+                size, tracking and weight stay the <dt>'s, so every label in
+                the list is set alike.
+              */}
               <Reveal delay={0.2}>
                 <div className="border-t border-[var(--rule)] py-6">
-                  <h3 className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Brochure</h3>
+                  <h3 className="eyebrow text-xs font-normal uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Brochure</h3>
                   <a
                     href={contact.brochure.href}
                     target="_blank"
@@ -109,7 +124,7 @@ export default function ContactPage() {
 
               <Reveal delay={0.26}>
                 <div className="border-t border-[var(--rule)] py-6">
-                  <h3 className="text-xs uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Follow</h3>
+                  <h3 className="eyebrow text-xs font-normal uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Follow</h3>
                   <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
                     {social.map((item) => (
                       <li key={item.href}>
@@ -152,8 +167,10 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Venue locations */}
-      <section className="bg-[var(--surface-raised)] py-section" aria-labelledby="locations-heading">
+      {/* Venue locations. On the page ground: the map shells are plates - the
+          raised tone with a hairline - and on a raised band they read as the
+          hairline alone. */}
+      <section className="bg-[var(--surface)] py-section" aria-labelledby="locations-heading">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
             <h2 id="locations-heading" className="font-display text-title font-light text-[var(--text-primary)]">

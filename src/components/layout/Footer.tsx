@@ -5,17 +5,22 @@ import { venues } from "@content/venues";
 import { BackToTop } from "@/components/layout/BackToTop";
 import { Marquee } from "@/components/motion/Marquee";
 import { Stagger, StaggerItem, TextReveal } from "@/components/motion/Reveal";
+import { Phone } from "@/components/ui/Phone";
 
 /**
  * The closing scene — a full viewport of its own, not a strip of links.
  * The wordmark is set enormous and deliberately clipped by the bottom edge, so
  * the page ends on the brand rather than on legal small print.
  *
- * It is a section on the page ground, not a plate — the CtaBlock above it
- * narrows back into the ivory margins on its way out, and the footer is that
- * ivory resuming, so the last light/dark join lands on the page and not on a
- * surface step. The wordmark is drawn in the hairline colour so it is felt
- * rather than read. It inherits the page ground and declares none of its own.
+ * It is a colophon on the raised surface — the card at the back of the book
+ * (INVERSION-PLAN §6): heads near-black, meta tertiary, and one gold hairline,
+ * decorative, above the closing line. Gold is never its type. Where a CtaBlock
+ * comes before it, that chapter still narrows back into the ivory margins on
+ * its way out, so the dark plate ends on paper and the colophon begins beneath
+ * it as a tonal step (1.10:1) — the step a plate's mat makes against the page,
+ * so, like the mat, its edge needs no hairline. The paper lamp is keyed to
+ * --surface and does not paint here, as it does not on any mat. It inherits
+ * the light ground and declares none of its own.
  */
 export function Footer() {
   const columns = [
@@ -38,14 +43,21 @@ export function Footer() {
   ];
 
   return (
-    <footer className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden bg-[var(--surface)] text-[var(--text-primary)]">
-      {/* The closing scene gets the last light, low and wide behind the wordmark. */}
+    <footer className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden bg-[var(--surface-raised)] text-[var(--text-primary)]">
+      {/* The closing scene gets the last light, low and wide behind the wordmark.
+          On the raised colophon the pool paints its own ground and shows
+          nothing; it stays as it was because the pools are deleted in stage 6. */}
       <div
         aria-hidden
         className="glow bottom-[-18%] left-1/2 h-[60vh] w-[120vw] -translate-x-1/2"
       />
 
       <div className="relative mx-auto w-full max-w-[104rem] px-gutter pt-24 lg:pt-32">
+        {/* The one gold hairline the colophon is allowed — decorative, hidden
+            from assistive technology; gold marks, it never sets type. Static:
+            rule draw-ons are stage 6's. */}
+        <div aria-hidden className="mb-10 h-px w-14 bg-[var(--accent)] lg:mb-12" />
+
         {/* Closing line — the last thing the site says, so it is set. */}
         <TextReveal
           as="p"
@@ -56,16 +68,19 @@ export function Footer() {
         <Stagger className="mt-20 grid gap-14 lg:mt-28 lg:grid-cols-12 lg:gap-10">
           {/* Direct contact — the reason anyone reaches the footer */}
           <StaggerItem className="lg:col-span-5">
-            <h2 className="eyebrow">Get in touch</h2>
+            {/* The colophon's heads are near-black: they head columns, they are
+                not meta, so they say so over .eyebrow's tertiary default. */}
+            <h2 className="eyebrow text-[var(--text-primary)]">Get in touch</h2>
             {/* Set in primary; the hover steps down the ramp rather than to
-                gold, which on paper is not a text colour. */}
+                gold, which on paper is not a text colour. The numbers go
+                through <Phone>: Playfair has no plus, so it is set in the sans. */}
             <ul className="mt-8 space-y-5">
               <li>
                 <a
                   href={contact.phone.href}
                   className="group inline-block font-display text-[1.75rem] font-light leading-none transition-colors duration-300 hover:text-[var(--text-secondary)]"
                 >
-                  {contact.phone.display}
+                  <Phone number={contact.phone.display} />
                 </a>
               </li>
               <li>
@@ -75,8 +90,11 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="group inline-block font-display text-[1.75rem] font-light leading-none transition-colors duration-300 hover:text-[var(--text-secondary)]"
                 >
-                  {contact.whatsapp.display}
-                  <span className="ml-3 align-middle text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-tertiary)]">
+                  <Phone number={contact.whatsapp.display} />
+                  {/* font-sans: the link sets the display face for the number,
+                      and the label beside it inherited Playfair capitals; every
+                      other small label in the footer is in the sans. */}
+                  <span className="ml-3 align-middle font-sans text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-tertiary)]">
                     WhatsApp
                   </span>
                 </a>
@@ -109,7 +127,7 @@ export function Footer() {
           <nav aria-label="Footer" className="grid gap-12 sm:grid-cols-3 lg:col-span-6 lg:col-start-7">
             {columns.map((column) => (
               <StaggerItem key={column.heading}>
-                <h2 className="eyebrow">{column.heading}</h2>
+                <h2 className="eyebrow text-[var(--text-primary)]">{column.heading}</h2>
                 <ul className="mt-8 space-y-3.5">
                   {column.links.map((link) => (
                     <li key={link.href}>
@@ -155,12 +173,18 @@ export function Footer() {
           from assistive technology and carries data-a11y-exempt so the axe run
           skips it. Approved as a WCAG 1.4.3 logotype/decorative exemption —
           see design-review/a11y.md.
+
+          Its colour is --rule stepped 45% toward the colophon's ground, so it
+          is felt rather than read: plain --rule is 1.45:1 on --surface-raised,
+          stronger than the 1.31:1 at which it already read on paper; the mix
+          is 1.22:1, still above the 1.10:1 step that parts a plate's mat from
+          the page, so it does not vanish. Built from two roles, no colour named.
         */}
         <Marquee className="select-none">
           <span
             aria-hidden="true"
             data-a11y-exempt="decorative-logotype"
-            className="block translate-y-[22%] whitespace-nowrap pr-[0.35em] font-display text-[clamp(3.5rem,17.5vw,17rem)] font-light uppercase leading-[0.8] tracking-[-0.04em] text-[var(--rule)]"
+            className="block translate-y-[22%] whitespace-nowrap pr-[0.35em] font-display text-[clamp(3.5rem,17.5vw,17rem)] font-light uppercase leading-[0.8] tracking-[-0.04em] text-[color:color-mix(in_srgb,var(--rule)_55%,var(--surface-raised))]"
           >
             {site.name}
           </span>

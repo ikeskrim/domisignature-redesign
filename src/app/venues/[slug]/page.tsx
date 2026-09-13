@@ -11,6 +11,7 @@ import { EditorialGallery } from "@/components/gallery/EditorialGallery";
 import { VideoPlayer } from "@/components/gallery/VideoPlayer";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { CtaBlock } from "@/components/ui/CtaBlock";
+import { Plate } from "@/components/ui/Plate";
 import { Reveal } from "@/components/motion/Reveal";
 import { BreadcrumbSchema, VenueSchema } from "@/components/seo/StructuredData";
 import { capacityLabel, countWord } from "@/lib/utils";
@@ -87,16 +88,20 @@ export default async function VenuePage({ params }: { params: Promise<{ slug: st
         </div>
 
         <div className="relative mx-auto w-full max-w-[104rem] px-gutter pb-14 lg:pb-20">
+          {/* The two hairlines here sit directly on the photograph, so they are
+              the strong rule: --rule is decorative by definition, and a line
+              over an image nobody chose for it has to be seen whatever is
+              behind it. */}
           <div className="flex items-center gap-6">
             <span className="eyebrow">{venue.category}</span>
-            <span aria-hidden className="h-px w-20 bg-[var(--rule)]" />
+            <span aria-hidden className="h-px w-20 bg-[var(--rule-strong)]" />
           </div>
 
           <h1 className="mt-8 font-display text-[clamp(3rem,8.5vw,8.5rem)] font-light leading-[0.9] tracking-[-0.03em] text-[var(--text-primary)]">
             {venue.name}
           </h1>
 
-          <div className="mt-10 flex flex-col gap-6 border-t border-[var(--rule)] pt-7 lg:flex-row lg:items-end lg:justify-between">
+          <div className="mt-10 flex flex-col gap-6 border-t border-[var(--rule-strong)] pt-7 lg:flex-row lg:items-end lg:justify-between">
             <p className="max-w-md text-[0.95rem] leading-relaxed text-[var(--text-primary)]">
               {venue.standfirst}
             </p>
@@ -141,15 +146,25 @@ export default async function VenuePage({ params }: { params: Promise<{ slug: st
               </Reveal>
             </div>
 
-            <div className="lg:col-span-4 lg:col-start-9">
+            {/* Five columns, not four: as a specimen card the facts gained a mat
+                and hairline rows, and at four the Enquire button broke onto two
+                lines and the card ran far past the text beside it. */}
+            <div className="lg:col-span-5 lg:col-start-8">
               <VenueFacts venue={venue} />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="bg-[var(--surface-raised)] py-section">
+      {/*
+        Gallery. On the page ground, not a raised band: its tiles are Plates,
+        whose mat is the raised surface, and a mat on its own colour reads as a
+        bare hairline - a tile still loading looked like an empty box. From here
+        down every section shares that ground, so each takes bottom padding
+        only; two paddings stacked into dead air where a change of ground used
+        to mark the break.
+      */}
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
             <div className="mb-12 flex items-baseline justify-between gap-6 lg:mb-16">
@@ -164,25 +179,32 @@ export default async function VenuePage({ params }: { params: Promise<{ slug: st
         </div>
       </section>
 
-      {/* Video */}
+      {/* Video - continues the gallery's sheet (bottom padding only), so it
+          takes the same ground; left raised, its heading would sit flush on
+          the top edge of a band of its own. */}
       {venue.video && (
-        <section className="bg-[var(--surface-raised)] pb-section">
+        <section className="bg-[var(--surface)] pb-section">
           <div className="mx-auto w-full max-w-[104rem] px-gutter">
             <Reveal>
               <h2 className="mb-10 font-display text-title font-light text-[var(--text-primary)]">In motion</h2>
-              <VideoPlayer
-                src={venue.video.src}
-                webm={venue.video.webm}
-                poster={venue.video.poster}
-                label={`${venue.name} — venue film`}
-              />
+              {/* The film is laid as a plate, like the event pages' films: a
+                  poster is a photograph set on the page. A div - VideoPlayer is
+                  already the figure; no caption, the heading names it. */}
+              <Plate as="div">
+                <VideoPlayer
+                  src={venue.video.src}
+                  webm={venue.video.webm}
+                  poster={venue.video.poster}
+                  label={`${venue.name} — venue film`}
+                />
+              </Plate>
             </Reveal>
           </div>
         </section>
       )}
 
-      {/* Map */}
-      <section className="bg-[var(--surface)] py-section">
+      {/* Map - bottom padding only, like every section on this sheet. */}
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
             <div className="mb-10 flex flex-col gap-2">
@@ -200,8 +222,10 @@ export default async function VenuePage({ params }: { params: Promise<{ slug: st
         </div>
       </section>
 
-      {/* Related venues */}
-      <section className="bg-[var(--surface-raised)] py-section">
+      {/* Related venues. On the page ground: each is a plate, and a plate's mat
+          is the raised tone - on a raised band it read as a hairline alone.
+          Bottom padding only, like every section on this sheet. */}
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
             <h2 className="mb-12 font-display text-title font-light text-[var(--text-primary)] lg:mb-16">

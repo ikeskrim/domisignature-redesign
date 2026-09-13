@@ -2,6 +2,7 @@ import { services } from "@content/services";
 import { Reveal, RuleDraw } from "@/components/motion/Reveal";
 import { ScrollImage } from "@/components/motion/ScrollImage";
 import { CopyRuns } from "@/components/ui/CopyRuns";
+import { Plate } from "@/components/ui/Plate";
 import { cn } from "@/lib/utils";
 
 /**
@@ -33,12 +34,19 @@ export function ServiceScenes({ idPrefix = true }: { idPrefix?: boolean }) {
                     flipped ? "lg:order-2 lg:col-start-5 lg:-mr-gutter" : "lg:-ml-gutter",
                   )}
                 >
-                  <ScrollImage
-                    src={service.image}
-                    alt=""
-                    sizes="(max-width: 1024px) 100vw, 70vw"
-                    className="aspect-[4/3] w-full lg:aspect-auto lg:h-[80vh] lg:min-h-[32rem]"
-                  />
+                  {/* Below lg the scene sits inside the gutter - an object on
+                      the page, so it is matted as a plate; a pale sky or a
+                      white wall otherwise dissolved into the paper (stage-5
+                      review). From lg it bleeds past the gutter as a scene, and
+                      the mat, hairline and padding fall away. */}
+                  <Plate as="div" className="lg:border-0 lg:bg-transparent lg:p-0">
+                    <ScrollImage
+                      src={service.image}
+                      alt=""
+                      sizes="(max-width: 1024px) 100vw, 70vw"
+                      className="aspect-[4/3] w-full lg:aspect-auto lg:h-[80vh] lg:min-h-[32rem]"
+                    />
+                  </Plate>
                 </div>
 
                 {/* Copy */}

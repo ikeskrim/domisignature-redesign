@@ -5,6 +5,7 @@ import { useRef, useLayoutEffect, useEffect } from "react";
 import { journey } from "@content/journey";
 import { Reveal, RuleDraw } from "@/components/motion/Reveal";
 import { ScrollImage } from "@/components/motion/ScrollImage";
+import { Plate } from "@/components/ui/Plate";
 import { pad2 } from "@/lib/utils";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
@@ -139,12 +140,18 @@ export function JourneyChapters() {
                     : "lg:col-span-7 lg:-ml-gutter"
                 }
               >
-                <ScrollImage
-                  src={step.image}
-                  alt={step.imageAlt}
-                  sizes="(max-width: 1024px) 100vw, 62vw"
-                  className="aspect-[4/3] w-full lg:aspect-auto lg:h-[72vh] lg:min-h-[28rem]"
-                />
+                {/* Below lg the chapter's photograph sits inside the gutter - an
+                    object on the page, so it is matted as a plate; a burnt-out
+                    sun or a pale sky otherwise dissolved into the paper
+                    (stage-5 review). From lg it bleeds as a scene, bare. */}
+                <Plate as="div" className="lg:border-0 lg:bg-transparent lg:p-0">
+                  <ScrollImage
+                    src={step.image}
+                    alt={step.imageAlt}
+                    sizes="(max-width: 1024px) 100vw, 62vw"
+                    className="aspect-[4/3] w-full lg:aspect-auto lg:h-[72vh] lg:min-h-[28rem]"
+                  />
+                </Plate>
               </div>
 
               <div

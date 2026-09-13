@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { signatureEvents } from "@content/events";
 import { gsap, hasFinePointer, prefersReducedMotion } from "@/lib/gsap";
+import { Plate } from "@/components/ui/Plate";
 
 /**
  * The horizontal events strip — the seven galleries as one long shelf you pull
@@ -124,7 +125,7 @@ export function EventsStrip() {
         const box = el.getBoundingClientRect();
         const r = card.getBoundingClientRect();
         const room = 8; // the ring and its halo reach 7px beyond the card
-        /* The shelf bleeds past the viewport, so "in view" is the scroller
+        /* The shelf runs to the window's edge, so "in view" is the scroller
            clipped to the window. */
         const left = Math.max(box.left, 0);
         const right = Math.min(box.right, window.innerWidth);
@@ -148,36 +149,44 @@ export function EventsStrip() {
     <div
       ref={scroller}
       data-cursor="drag"
-      className="no-scrollbar -mx-3 mt-[4.25rem] flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 pl-3 pr-[calc(var(--spacing-gutter,1.5rem)+0.75rem)] pt-3 lg:mt-[6.25rem] lg:gap-12"
-      /* Bleed the shelf to the viewport edge so it reads as continuing past it.
-         A scroller clips everything outside its padding box, and a focused
-         card's ring and halo reach 7px beyond the card - measured, the ring was
-         cut off at the top and on the first card's left side. So the scroller
-         carries 0.75rem of padding it takes back from its margins, and the snap
-         inset grows by the same amount: the shelf sits exactly where it did,
-         with room for the indicator. The far end takes a full gutter more:
-         the shelf runs past the viewport's right edge, so 0.75rem of end
-         padding lay off-screen and the last card, scrolled fully home, sat
-         flush on the window's edge with its ring outside it. */
+      className="no-scrollbar -ml-3 mt-[4.25rem] flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 pl-3 pr-[calc(var(--spacing-gutter,1.5rem)+0.75rem)] pt-3 lg:mt-[6.25rem] lg:gap-12"
+      /* The shelf runs to the viewport's right edge so it reads as continuing
+         past it (EventsPreview gives it the gutter on the left only). A
+         scroller clips everything outside its padding box, and a focused card's
+         ring and halo reach 7px beyond the card - measured, the ring was cut off
+         at the top and on the first card's left side. So the scroller carries
+         0.75rem of padding, takes it back on the left with a negative margin,
+         and the snap inset grows by the same amount: the shelf starts exactly
+         where it did, with room for the indicator. Nothing is taken back on the
+         right - the shelf already ends at the window's edge, and a -mx-3 once
+         pushed it 12px past, widening the whole page (stage-5 review). The far
+         end carries a gutter and 0.75rem of padding, so the last card, scrolled
+         fully home, rests a gutter from the edge with its ring inside the
+         window. The caption now
+         sits beneath each plate, inside the link, so the tallest card's ring
+         ends below its caption, and pb-4 (16px) still clears the 7px halo. */
       style={{ scrollPaddingInline: "calc(var(--spacing-gutter, 1.5rem) + 0.75rem)" }}
     >
       {signatureEvents.map((event, i) => (
+        /* self-start: the cards are flex items, and a stretched link is as tall
+           as the tallest card - a focused 4:3 or square card's ring outlined
+           empty paper beneath it. Now the ring hugs the plate and its caption. */
         <Link
           key={event.slug}
           href={`/events/${event.slug}`}
-          className="group block w-[78vw] shrink-0 snap-start sm:w-[46vw] lg:w-[30vw] xl:w-[26rem]"
+          className="group block w-[78vw] shrink-0 snap-start self-start sm:w-[46vw] lg:w-[30vw] xl:w-[26rem]"
         >
           {/*
-            The title and category sit directly on the photograph, so the frame
-            declares the photograph's ground: a picture is a dark chapter in
-            miniature, and type set on it takes that ladder. No mask — this is
-            a plate on the shelf, not a section boundary.
+            The events-index idiom: the photograph is a plate on the shelf and
+            the title and category are its caption, set beneath on paper. With
+            no type on the photograph there is nothing to declare a dark ground
+            for, so the frame's data-ground and its wash are gone, and the grade
+            is the light-ground one. A div, not a figure: the plate sits inside
+            a link, and the link's name is its content, as before.
           */}
-          <div
-            data-ground="dark"
-            className={`relative overflow-hidden bg-[var(--surface-raised)] ${
-              i % 3 === 0 ? "aspect-[4/5]" : i % 3 === 1 ? "aspect-[4/3]" : "aspect-square"
-            }`}
+          <Plate
+            as="div"
+            frameClassName={i % 3 === 0 ? "aspect-[4/5]" : i % 3 === 1 ? "aspect-[4/3]" : "aspect-square"}
           >
             <Image
               src={event.coverImage}
@@ -186,27 +195,30 @@ export function EventsStrip() {
               sizes="(max-width: 640px) 78vw, (max-width: 1024px) 46vw, 30vw"
               loading="lazy"
               draggable={false}
-              className="grade object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+              className="grade-b object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
             />
-            <div aria-hidden className="wash-bottom absolute inset-0" />
+          </Plate>
 
-            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-7">
-              <div>
-                {/* No index number — a collection, not a sequence. */}
-                <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-[var(--text-primary)]">
-                  {event.title}
-                </h3>
-                <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
-                  {event.category}
-                </p>
-              </div>
-              <span
-                aria-hidden
-                className="shrink-0 pb-1 text-[var(--text-secondary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
-              >
-                &rarr;
-              </span>
+          {/* The caption, set here rather than in Plate's caption slot because
+              the title is a heading and the slot is one eyebrow span. Its side
+              padding matches the mat's, so the words align with the
+              photograph's edge - the same caption as the events index. */}
+          <div className="mt-5 flex items-end justify-between gap-4 px-3 sm:px-4 lg:mt-6 lg:px-5">
+            <div>
+              {/* No index number — a collection, not a sequence. */}
+              <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-[var(--text-primary)]">
+                {event.title}
+              </h3>
+              <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+                {event.category}
+              </p>
             </div>
+            <span
+              aria-hidden
+              className="shrink-0 pb-1 text-[var(--text-secondary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
+            >
+              &rarr;
+            </span>
           </div>
         </Link>
       ))}

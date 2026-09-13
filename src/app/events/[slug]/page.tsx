@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { EditorialGallery } from "@/components/gallery/EditorialGallery";
 import { VideoPlayer } from "@/components/gallery/VideoPlayer";
 import { CtaBlock } from "@/components/ui/CtaBlock";
+import { Plate } from "@/components/ui/Plate";
 import { Reveal } from "@/components/motion/Reveal";
 import { BreadcrumbSchema } from "@/components/seo/StructuredData";
 
@@ -71,8 +72,13 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         </div>
       </section>
 
+      {/* The films sit on the page ground, not a raised panel: they are plates,
+          and a plate's mat is the raised tone - on a raised panel it vanished
+          to a hairline. The heading and the section's space set the films
+          apart from the stills; on one ground it takes bottom padding only, or
+          two section paddings stack into dead air. */}
       {event.videos && event.videos.length > 0 && (
-        <section className="bg-[var(--surface-raised)] py-section">
+        <section className="bg-[var(--surface)] pb-section">
           <div className="mx-auto w-full max-w-[104rem] px-gutter">
             <Reveal>
               <h2 className="mb-12 font-display text-title font-light text-[var(--text-primary)]">
@@ -83,12 +89,19 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <div className="grid gap-8 lg:grid-cols-2">
               {event.videos.map((video, i) => (
                 <Reveal key={video.src} delay={i * 0.1}>
-                  <VideoPlayer
-                    src={video.src}
-                    webm={video.webm}
-                    poster={video.poster}
-                    label={`${event.title} — film ${i + 1}`}
-                  />
+                  {/* A poster is a photograph set on the page, so a film is laid
+                      as a plate like the stills above it rather than as a dark
+                      hole in the page. A div: VideoPlayer is already the
+                      figure. No caption - the heading above names the films,
+                      and there is no other text to set. */}
+                  <Plate as="div">
+                    <VideoPlayer
+                      src={video.src}
+                      webm={video.webm}
+                      poster={video.poster}
+                      label={`${event.title} — film ${i + 1}`}
+                    />
+                  </Plate>
                 </Reveal>
               ))}
             </div>
@@ -96,8 +109,9 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         </section>
       )}
 
-      {/* Next gallery */}
-      <section className="bg-[var(--surface)] py-section">
+      {/* Next gallery - bottom padding only: it follows a section on the same
+          ground, and its own rule marks the break. */}
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
             <Link

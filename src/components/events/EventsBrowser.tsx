@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { eventCategories, signatureEvents, type SignatureEvent } from "@content/events";
+import { Plate } from "@/components/ui/Plate";
 import { cn } from "@/lib/utils";
 import {
   gsap,
@@ -22,8 +23,9 @@ import {
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
- * The Signature Events index: an editorial masonry with generous gutters and
- * category filtering. Galleries that have film play it inline on hover.
+ * The Signature Events index: an editorial masonry of captioned plates, with
+ * generous gutters and category filtering. Galleries that have film play it
+ * inline on hover.
  *
  * Phase 6 §5: filtering now runs through GSAP Flip. Previously the surviving
  * tiles jumped to their new column positions while only the leavers animated,
@@ -167,7 +169,7 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
    * device cannot perform: there is no `mouseenter` on a phone, so the video
    * never played and the bytes were pure loss.
    *
-   * The "Film" badge still renders everywhere, because that is information
+   * The "Film" mark still renders everywhere, because that is information
    * about the gallery rather than a hover affordance.
    */
   const [canHover, setCanHover] = useState(false);
@@ -200,14 +202,18 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
       onMouseLeave={onLeave}
     >
       {/*
-        The frame declares the dark ground: every word on this card — title,
-        category, badge — is set directly over the photograph, so it lives in
-        the photograph's ladder, and the placeholder that shows before the image
-        arrives is that ladder's raised plate rather than a pale hole in the
-        page. The `grade` filter stays for the same reason: it was tuned for
-        near-black behind the image, and here it still has it.
+        A plate, not a card. Stage 4 set the title, category and Film badge
+        over the photograph, so the frame had to declare the dark ground and
+        carry a wash, and the badge a veil of its own (it measured 1.99:1 on a
+        bright sky without one). On paper that was a wall of dark cards; the
+        sourcebook idiom sets the words BENEATH the picture instead, so the
+        photograph is shown whole — no wash, no veil, no ground switch — and
+        takes grade-b, the light-ground grade. Before the image arrives the
+        frame shows the mat: an empty plate, not a hole in the page.
+        A div rather than Plate's default figure: inside a link, a figure role
+        is one more node between the link and the words that name it.
       */}
-      <div data-ground="dark" className={cn("relative overflow-hidden bg-[var(--surface-raised)]", ratio)}>
+      <Plate as="div" frameClassName={ratio}>
         <Image
           src={event.coverImage}
           alt={`${event.title} — ${event.category}`}
@@ -217,7 +223,7 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
           // everything below it stays lazy.
           priority={index === 0}
           loading={index === 0 ? "eager" : "lazy"}
-          className="grade object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+          className="grade-b object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
         />
 
         {film && canHover && (
@@ -230,59 +236,56 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
             poster={film.poster}
             aria-hidden
             tabIndex={-1}
-            className="grade absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100"
+            className="grade-b absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100"
           >
             {film.webm && <source src={film.webm} type="video/webm" />}
             <source src={film.src} type="video/mp4" />
           </video>
         )}
+      </Plate>
 
-        <div aria-hidden className="wash-bottom absolute inset-0" />
-
-        {film && (
-          /*
-            The card's wash is `wash-bottom`, and this badge sits at the TOP,
-            over whatever the photograph happens to be doing there. Measured on
-            "A ceremony by the water" — light type at 80% on a bright sky — it
-            came out at 1.99:1 against the 4.5:1 that 11px text needs. axe
-            cannot see this: it has no way to compute contrast against a
-            photograph.
-
-            A text-shadow was tried first and did not hold: on an overcast sky
-            the play triangle and the word still dissolved. So the badge now
-            carries its own ground — a translucent pill of the frame's wash,
-            which inside this dark ladder is near-black. Where the photograph
-            is already dark the pill disappears into it; where the sky is
-            bright it is the small dark plate the type needs, never a second
-            bright rectangle on a card that is deliberately clean.
-          */
-          <span className="absolute right-5 top-5 flex items-center gap-2 rounded-full bg-[rgb(var(--wash)/0.7)] px-3 py-1.5 text-[0.6875rem] uppercase tracking-[0.18em] text-[var(--text-primary)]">
-            <svg viewBox="0 0 24 24" className="h-2.5 w-2.5 fill-current" aria-hidden>
-              <path d="M8 5v14l11-7z" />
-            </svg>
-            {event.videos!.length === 1 ? "Film" : `${event.videos!.length} films`}
-          </span>
-        )}
-
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-5 p-7">
-          <div>
-            {/* No index number here — the galleries are a collection, not a sequence. */}
-            <h2 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-[var(--text-primary)]">
-              {event.title}
-            </h2>
-            <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+      {/*
+        The caption, on paper beneath the plate. It is set here rather than in
+        Plate's caption slot because the title is an h2 in display type, and
+        the slot is one eyebrow span. Its side padding matches the mat's, so
+        the words align with the photograph's edge as Plate's own caption does
+        — and that padding is also what keeps the .focus-inset ring (4px in,
+        3px wide, a 3px halo) off the type: the ring frames the whole link,
+        plate and caption, without crossing a letter.
+      */}
+      <div className="flex items-end justify-between gap-5 px-3 pb-4 pt-5 sm:px-4 lg:px-5 lg:pb-5 lg:pt-6">
+        <div>
+          {/* No index number here — the galleries are a collection, not a
+              sequence, so the plate carries none either (and a filter would
+              renumber it). */}
+          <h2 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-[var(--text-primary)]">
+            {event.title}
+          </h2>
+          <div className="mt-2.5 flex flex-wrap items-center gap-x-5 gap-y-2">
+            <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
               {event.category}
               <span className="mx-2.5 text-[var(--text-tertiary)]">/</span>
               {event.gallery.length} images
             </p>
+            {film && (
+              /* The Film badge, now a caption mark on the category's line. On
+                 paper it needs no ground of its own, so the pill goes; it
+                 takes the line's step so the apparatus reads as one line. */
+              <span className="flex items-center gap-2 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+                <svg viewBox="0 0 24 24" className="h-2.5 w-2.5 fill-current" aria-hidden>
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                {event.videos!.length === 1 ? "Film" : `${event.videos!.length} films`}
+              </span>
+            )}
           </div>
-          <span
-            aria-hidden
-            className="shrink-0 pb-1 text-[var(--text-secondary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5 group-hover:text-[var(--text-primary)]"
-          >
-            &rarr;
-          </span>
         </div>
+        <span
+          aria-hidden
+          className="shrink-0 pb-1 text-[var(--text-secondary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5 group-hover:text-[var(--text-primary)]"
+        >
+          &rarr;
+        </span>
       </div>
     </Link>
   );

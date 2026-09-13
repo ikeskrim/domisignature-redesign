@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 
 import { venues } from "@content/venues";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { VenueIndex } from "@/components/venue/VenueIndex";
+import { VenuePlates } from "@/components/venue/VenuePlates";
 import { CtaBlock } from "@/components/ui/CtaBlock";
 import { BreadcrumbSchema } from "@/components/seo/StructuredData";
 
@@ -50,7 +50,9 @@ export default function VenuesPage() {
         }
       />
 
-      <VenueIndex />
+      {/* The plates, not the hover list. /venues is the index you read, so it
+          ships the north-star study. VenueIndex stays Home's signature scene. */}
+      <VenuePlates />
 
       <CtaBlock
         heading={"Not sure which\nsuits you?"}

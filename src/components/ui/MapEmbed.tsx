@@ -85,12 +85,19 @@ export function MapEmbed({
     );
   }
 
+  /*
+   * The hairline frame is the shell's, not the facade's, so the plate reads as
+   * a plate in every state: before the map mounts, while it loads, and when a
+   * blocked embed has mounted but painted nothing. With the frame on the facade
+   * alone, that last state was an unframed raised block on paper — the hole
+   * this component exists to avoid.
+   */
   return (
     <div
       ref={shell}
       onPointerEnter={activate}
       onFocusCapture={activate}
-      className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface-raised)] lg:aspect-[21/9]"
+      className="relative aspect-[16/10] w-full overflow-hidden border border-[var(--rule)] bg-[var(--surface-raised)] lg:aspect-[21/9]"
     >
       {mounted ? (
         <>
@@ -109,8 +116,10 @@ export function MapEmbed({
           />
         </>
       ) : (
-        /* Same box, same aspect — mounting the map shifts nothing. */
-        <div className="absolute inset-0 flex flex-col justify-between border border-[var(--rule)] p-8 lg:p-12">
+        /* Same box, same aspect, same frame — mounting the map shifts nothing.
+           The shell draws the hairline now, so the facade's padding still
+           starts one hairline in from the edge, exactly where it did. */
+        <div className="absolute inset-0 flex flex-col justify-between p-8 lg:p-12">
           <div>
             <p className="eyebrow">Location</p>
             <p className="mt-5 font-display text-[clamp(1.6rem,2.4vw,2.25rem)] font-light leading-tight text-[var(--text-primary)]">

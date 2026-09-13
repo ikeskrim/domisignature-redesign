@@ -35,9 +35,13 @@ type Tag = "section" | "div" | "header" | "footer" | "article" | "figure";
  * composited layer is about as cheap as scroll-linked motion gets, which is
  * what the mobile floor requires of anything added to Home.
  *
- * Reduced motion, and the server render, are the FINAL state: both properties
- * default to 0px in CSS, so the chapter is full-bleed before JavaScript and
- * stays that way when the visitor has asked for less movement. A chapter that
+ * At rest - reduced motion, the server render, a capture - a mid-page chapter
+ * sits inset by one gutter at its sides and its foot, a plate laid within the
+ * page's margins with paper beneath it, and its content steps in by the same
+ * gutter so the type sits inside the plate (`data-rest="plate"`; the rule is
+ * in globals.css). Stage 4 rested every chapter full-bleed, and on paper that
+ * read as a razor cut across the page - the reviewers' most repeated finding.
+ * An opener still rests full-bleed. A chapter that
  * already fills the first screen at mount — a page's title card — skips the
  * entry mask, because there is nothing to arrive from.
  *
@@ -131,6 +135,11 @@ export function Chapter({
     {
       ref,
       "data-ground": ground,
+      /* A mid-page chapter (both edges masked) rests as a plate on the page:
+         inset by a gutter at the sides and the foot, its content a gutter in,
+         wherever no scrub is running - reduced motion, the server render, a
+         capture. An opener rests full-bleed. */
+      "data-rest": enter && exit ? "plate" : undefined,
       className: cn("chapter relative bg-[var(--surface)] text-[var(--text-primary)]", className),
       ...rest,
     },
