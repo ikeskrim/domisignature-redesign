@@ -16,10 +16,12 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CustomEase } from "gsap/CustomEase";
-import { Flip } from "gsap/Flip";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, CustomEase, Flip);
+  /* Flip is not registered here: only the events index uses it, and this
+     module is in every route's shared chunk. EventsBrowser imports and
+     registers it itself (stage 6, the loading fixes). */
+  gsap.registerPlugin(ScrollTrigger, CustomEase);
 
   /*
    * The house ease, identical to the CSS `--ease-cinema` token
@@ -30,7 +32,7 @@ if (typeof window !== "undefined") {
   CustomEase.create("cinema", "M0,0 C0.16,1 0.3,1 1,1");
 }
 
-export { gsap, ScrollTrigger, Flip };
+export { gsap, ScrollTrigger };
 
 /** The one ease. Named so a call site reads as intent, not as a magic string. */
 export const EASE = "cinema";

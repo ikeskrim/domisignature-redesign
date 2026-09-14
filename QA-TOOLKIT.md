@@ -1,13 +1,13 @@
 # QA toolkit
 
-Eleven automated checks, one command, and a GitHub Action that runs them on every
+Sixteen automated checks, one command, and a GitHub Action that runs them on every
 push. This is what stops the site quietly rotting.
 
 ```bash
 npm run qa
 ```
 
-Green means all fifteen passed. It exits non-zero if any failed, so it is safe to
+Green means all sixteen passed. It exits non-zero if any failed, so it is safe to
 put in front of anything.
 
 `npm run qa` builds nothing — run `npm run build` first, or the server-backed
@@ -27,7 +27,8 @@ half will be measuring a stale build. CI does the build itself.
 | **claims** | `scripts/claims-audit.mjs` | Every number and factual claim rendered on the site traces to `content/`. This is the one that enforces **no invented facts**: "3 venues", "up to 300 guests" and the rest are derived from the content files, never typed into a component. If someone hard-codes a figure, this fails. |
 | **prose** | `scripts/prose-audit.mjs` | No placeholder text, no lorem ipsum, no `TODO`, no doubled spaces, no straight quotes where the design uses typographic ones. |
 | **media** | `scripts/media-audit.mjs` | Every image and video path referenced in `content/` exists in `public/`. Catches a renamed file before a visitor finds the gap. |
-| **manifest** | `scripts/publish-manifest.mjs` | **The privacy gate.** Seven photographs were withheld from the public repository — identifiable people, a licence plate, a frame the owner pulled. This fails if any of them is referenced from anywhere in the code, so a withheld frame can never quietly come back through a component edit. Rationale per file is in `design-review/publish-manifest.md`. |
+| **manifest** | `scripts/publish-manifest.mjs` | **The privacy gate.** Eight photographs are withheld from the repository — identifiable people, a licence plate, frames the owner pulled. This fails if any of them is referenced from anywhere in the code, so a withheld frame can never quietly come back through a component edit. Rationale per file is in `design-review/publish-manifest.md`. |
+| **metadata** | `scripts/metadata-audit.mjs` | **No published file carries GPS, a camera serial or a hidden thumbnail** (owner decision, 2026-09-14). Reads every git-tracked image, video and PDF by its magic bytes — EXIF, XMP, IPTC/Photoshop blocks, MPF previews, bytes after a JPEG's end, MP4/MOV location atoms and telemetry tracks, WebM/Matroska tags — and fails on any location, serial or embedded thumbnail, and on any media file it cannot parse. Photographer/copyright credit is reported and kept, never a failure. It prints tag ids and offsets, never a value. A failing file is fixed with `npm run strip:metadata -- --apply --ledger <path outside the repository>`, which rewrites losslessly (identical pixels, ICC profile and credit; video streams stream-copied and hash-verified). |
 | **ingest** | `scripts/ingest-guard.mjs` | No gallery is half-published. `npm run ingest:gallery` writes a stub full of `TODO(title)` and `TODO(alt)` markers, because a title and a line of alt text need someone to look at the photograph. This fails the moment such a marker appears anywhere under `content/`, so a half-filled gallery cannot reach the site. |
 
 ### Served — drive a real browser against a real production server
@@ -62,13 +63,15 @@ Each audit is its own npm script. The server-backed ones need a running build:
 
 ```bash
 npm run build
-npx next start -p 3004
+npx next start -p 3004 -H 127.0.0.1
 ```
+
+(Loopback only: nothing here needs the server reachable from the network.)
 
 Then, in another shell, any of: `audit:claims`, `audit:prose`, `audit:media`,
 `audit:assets`, `audit:a11y`, `audit:arrival`, `audit:ingest`, `audit:keyboard`,
 `audit:layout`, `audit:reduced-motion`, `audit:ios-hero`, `audit:lighthouse`,
-`publish:manifest`, `launch:check`.
+`publish:manifest`, `audit:metadata`, `launch:check`.
 
 On Windows, `scripts/with-server.ps1` does the start/stop for one command:
 

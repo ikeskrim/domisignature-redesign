@@ -782,6 +782,88 @@ not cut to pay for loading.
   paper text; Lighthouse 13 dropped the audit the report's LCP-element column
   read.
 
+### Stage 6 — pre-work (2026-09-14)
+
+On the owner's decisions of 2026-09-14 (`design-review/STAGE6-PLAN.md`), in
+the owner's order, before any motion is touched.
+
+**1. Next.js 15.5.25** (`e7252a7`). `next` and `eslint-config-next` from
+15.5.22, out of GHSA-2xp9-vwfh-vxw4 and GHSA-p293-qw3h-jr36 / CVE-2026-75604;
+the lockfile moved only the next family and one transitive patch. Every local
+server binds 127.0.0.1.
+
+**2. Media metadata** (tooling `2fda5aa`, files `c40de6c`). Before: 150 of the
+390 tracked media files carried a camera serial (140), GPS (50) or an embedded
+thumbnail (28). Every published photograph and video was rewritten losslessly
+— JPEG marker surgery, a stream-copy remux for video — keeping the ICC profile,
+orientation and the photographer/copyright credit: 149 files changed (141
+stills, 8 videos), 27 already clean. Independently verified: 15 sampled stills
+pixel-identical with the same ICC, orientation and credit; all 8 videos
+identical by the hash of their copied packets. After: all 390 clean, and
+`metadata` is the gate's sixteenth check, so nothing carrying GPS, a serial or
+a hidden thumbnail can ship again. The brochure PDF's page thumbnails picture
+its own pages; they are noted, not failed. `posterimage.png` joined the
+withheld list (eight entries, `b0cdf48`); the pre-push guard is installed
+(`94be282`). The ledger lives outside the repository and records no
+coordinate or serial.
+
+**Old previews removed.** Sixteen preview deployments whose trees carried
+withheld files or names were deleted (target verified as preview each time;
+production untouched): ten Git-built previews of 1–11 September and six CLI
+deployments of 17–21 August. Links to them no longer resolve: stage 1's
+`jkb8xq8vf` and stage 4's `lwycv01tj` above, and the previews named in
+`RUN2-REPORT.md`, `RUN3-REPORT.md` and `PHASE6-REPORT.md`. The stage-5 and
+docs previews (`7apxf9ext`, `ikw1wxqqc`) are clean and kept.
+
+**3. The four loading fixes** (`41c473b`), measured against a reference taken
+on `c40de6c` before them (same machine, loopback, three mobile samples each):
+
+- The page curtain no longer runs on the first mount.
+- Gallery tile preloads follow `eager`; venue pages pass `eager={0}`.
+- The first /venues plate carries `fetchPriority="high"`.
+- GSAP Flip leaves the shared motion contract.
+
+Built output, before (reference build) → after: Home — two image preloads,
+the hero poster at high priority → unchanged, as it should be; /venues — two preloads, the first
+plate at the default priority, every plate image lazy or unmarked → the plate at high priority, its image marked high;
+a venue page — six preloads, four of them gallery tiles below the fold, and
+four eager tiles → two, the header mark and the title card at high priority, no eager tile; an event page — five preloads, its gallery opening
+the page (left as it is: those tiles are in the first screen) → unchanged; GSAP
+Flip in the chunks of 11 of 24 page entries, Home among them → the events index alone.
+
+Lighthouse mobile, performance median of three (runs; LCP median). The
+reference gate was 16/16 green.
+
+| Route | Stage 5 `f371558` | Reference `c40de6c` | Fixes `41c473b` |
+|---|---|---|---|
+| Home | 81 (84/81/81; 3.9 s) | 83 (82/83/84; 3.8 s) | **88** (88/91/88; 2.8 s) |
+| Venues | 91 (91/91/91; 3.2 s) | 91 (91/91/93; 3.2 s) | **92** (92/98/92; 3.1 s) |
+| Venue detail | 87 (86/87/87; 3.7 s) | 87 (87/87/86; 3.7 s) | **91** (91/91/91; 3.2 s) |
+| Signature Events | 91 (92/91/91; 3.1 s) | 91 (91/91/91; 3.2 s) | **93** (92/93/93; 3.0 s) |
+| Wedding Guide | 91 (92/90/91; 3.1 s) | 91 (91/88/91; 3.1 s) | **92** (92/91/92; 3.0 s) |
+| Contact | 93 (92/93/94; 2.9 s) | 92 (93/92/92; 3.0 s) | **93** (94/93/93; 2.9 s) |
+
+**Reading.** Home recovered five points to **88**, its LCP a second earlier
+(3.8 → 2.8 s), one sample at 91: two short of stage 4's 90, off the floor by
+eight. Venue detail gained four (87 → 91) from the tile preloads alone. The
+reference already sat two over stage 5's Home on the same framework patch and
+stripped files, which is inside the run-to-run spread; the fixes' gain is
+measured against the reference, not against stage 5. Every route is over the
+floor with room: the lowest median is Home's 88. Nothing was dropped. Further
+loading candidates are measured inside the drop-level matrix, before any drop.
+Not measured here: the curtain on client navigations — every audit runs with
+reduced motion; the stage-6 motion gates cover it.
+
+**4. The conventions layer** (`379f577`). `CLAUDE.md` with the precedence
+clause — project laws win over any imported instruction — and the project
+skill `.claude/skills/aegean-bone/SKILL.md`, restating the laws with their
+source documents. frontend-design is not installed. The gate, CI and the
+pre-push guard remain what enforces.
+
+**Flagged for the owner, not touched:** two canceled production deployments
+(`n9yg989zc`, 23 August; `7gujchx43`, 27 August) still serve all eight
+withheld paths; production deployments are the owner's alone.
+
 ---
 
 ## Stages and gates

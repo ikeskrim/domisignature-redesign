@@ -9,6 +9,12 @@ import { consumeCurtainSuppression } from "@/components/motion/VenueTransition";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
+/* The first mount is a hard load: the server has already painted the page,
+   and running the curtain then covered it and set the content to opacity 0
+   until the timeline finished - measured as the largest loading cost on Home
+   (brief audit, stage 6). The curtain is for client navigations only. */
+let firstMountDone = false;
+
 /**
  * Page transition: a full-screen ivory curtain — the page's raised surface, a
  * plate laid over the arriving route — wipes up off it, the wordmark holds for
@@ -34,6 +40,10 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
   const content = useRef<HTMLDivElement>(null);
 
   useIsomorphicLayoutEffect(() => {
+    if (!firstMountDone) {
+      firstMountDone = true;
+      return;
+    }
     if (prefersReducedMotion()) return;
 
     /*

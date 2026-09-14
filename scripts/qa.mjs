@@ -38,6 +38,10 @@ const STATIC_CHECKS = [
   ["prose", ["scripts/prose-audit.mjs"], "no placeholder, no lorem, no double space"],
   ["media", ["scripts/media-audit.mjs"], "every image and video referenced actually exists"],
   ["manifest", ["scripts/publish-manifest.mjs"], "no withheld frame is referenced anywhere"],
+  /* Owner decision 2026-09-14: no published file may carry GPS, a camera serial
+     or an embedded thumbnail, ever again. Reads every git-tracked image, video
+     and PDF by magic bytes; photographer credit is kept and never fails. */
+  ["metadata", ["scripts/metadata-audit.mjs"], "no file carries GPS, a camera serial or a hidden thumbnail"],
   ["ingest", ["scripts/ingest-guard.mjs"], "no gallery is half-published with unfilled TODOs"],
 ];
 

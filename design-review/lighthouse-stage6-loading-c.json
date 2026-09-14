@@ -1,0 +1,132 @@
+[
+  {
+    "preset": "mobile",
+    "label": "Home",
+    "route": "/",
+    "performance": 88,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "2.5 s",
+    "cls": "0",
+    "tbt": "190 ms",
+    "lcpElement": "—",
+    "failing": [
+      "mainthread-work-breakdown (3.2 s)",
+      "forced-reflow-insight",
+      "network-dependency-tree-insight",
+      "render-blocking-insight (Est savings of 150 ms)",
+      "max-potential-fid (360 ms)",
+      "speed-index (6.8 s)",
+      "image-delivery-insight (Est savings of 35 KiB)",
+      "legacy-javascript-insight (Est savings of 12 KiB)"
+    ]
+  },
+  {
+    "preset": "mobile",
+    "label": "Venues",
+    "route": "/venues",
+    "performance": 92,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "3.1 s",
+    "cls": "0",
+    "tbt": "50 ms",
+    "lcpElement": "—",
+    "failing": [
+      "forced-reflow-insight",
+      "network-dependency-tree-insight",
+      "render-blocking-insight (Est savings of 1,050 ms)",
+      "image-delivery-insight (Est savings of 124 KiB)",
+      "legacy-javascript-insight (Est savings of 12 KiB)",
+      "largest-contentful-paint (3.1 s)"
+    ]
+  },
+  {
+    "preset": "mobile",
+    "label": "Venue detail",
+    "route": "/venues/thalasses",
+    "performance": 91,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "3.2 s",
+    "cls": "0.001",
+    "tbt": "60 ms",
+    "lcpElement": "—",
+    "failing": [
+      "forced-reflow-insight",
+      "network-dependency-tree-insight",
+      "render-blocking-insight (Est savings of 900 ms)",
+      "image-delivery-insight (Est savings of 79 KiB)",
+      "legacy-javascript-insight (Est savings of 12 KiB)",
+      "largest-contentful-paint (3.2 s)",
+      "speed-index (3.5 s)"
+    ]
+  },
+  {
+    "preset": "mobile",
+    "label": "Signature Events",
+    "route": "/events",
+    "performance": 93,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "3.0 s",
+    "cls": "0",
+    "tbt": "60 ms",
+    "lcpElement": "—",
+    "failing": [
+      "network-dependency-tree-insight",
+      "render-blocking-insight (Est savings of 1,060 ms)",
+      "image-delivery-insight (Est savings of 39 KiB)",
+      "legacy-javascript-insight (Est savings of 12 KiB)",
+      "largest-contentful-paint (3.0 s)"
+    ]
+  },
+  {
+    "preset": "mobile",
+    "label": "Wedding Guide",
+    "route": "/wedding-guide",
+    "performance": 92,
+    "accessibility": 98,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "3.0 s",
+    "cls": "0",
+    "tbt": "110 ms",
+    "lcpElement": "—",
+    "failing": [
+      "heading-order",
+      "forced-reflow-insight",
+      "lcp-discovery-insight",
+      "network-dependency-tree-insight",
+      "render-blocking-insight (Est savings of 920 ms)",
+      "legacy-javascript-insight (Est savings of 12 KiB)",
+      "largest-contentful-paint (3.0 s)",
+      "max-potential-fid (170 ms)",
+      "speed-index (3.4 s)"
+    ]
+  },
+  {
+    "preset": "mobile",
+    "label": "Contact",
+    "route": "/contact",
+    "performance": 93,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "2.9 s",
+    "cls": "0",
+    "tbt": "40 ms",
+    "lcpElement": "—",
+    "failing": [
+      "forced-reflow-insight",
+      "network-dependency-tree-insight",
+      "render-blocking-insight (Est savings of 940 ms)",
+      "legacy-javascript-insight (Est savings of 12 KiB)",
+      "largest-contentful-paint (2.9 s)"
+    ]
+  }
+]

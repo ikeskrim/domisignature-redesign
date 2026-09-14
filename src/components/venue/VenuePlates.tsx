@@ -100,8 +100,11 @@ export function VenuePlates() {
                     sizes="(max-width: 1024px) 100vw, 58vw"
                     quality={80}
                     /* The first plate is in the first screen, under the page
-                       header: it is the page's largest paint, so it loads now. */
+                       header: it is the page's largest paint, so it loads now,
+                       at high fetch priority (priority alone preloads it at the
+                       default, behind the header mark - stage 6). */
                     priority={i === 0}
+                    fetchPriority={i === 0 ? "high" : undefined}
                     className="grade-b object-cover"
                   />
                 </Plate>

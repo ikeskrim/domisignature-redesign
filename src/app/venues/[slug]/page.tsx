@@ -175,7 +175,10 @@ export default async function VenuePage({ params }: { params: Promise<{ slug: st
             </div>
           </Reveal>
 
-          <EditorialGallery images={venue.gallery} alt={venue.name} columns={3} />
+          {/* eager={0}: on a venue page the gallery sits below the fold, and React 19
+              preloads every image that is not lazy - four tile preloads were
+              competing with the title card's photograph for the first paint. */}
+          <EditorialGallery images={venue.gallery} alt={venue.name} columns={3} eager={0} />
         </div>
       </section>
 

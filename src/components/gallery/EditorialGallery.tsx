@@ -131,7 +131,7 @@ export function EditorialGallery({
                     : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 }
                 loading={i < eager ? "eager" : "lazy"}
-                priority={i < 2}
+                priority={i < Math.min(2, eager)}
                 className="grade-b h-auto w-full transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
               />
               <span

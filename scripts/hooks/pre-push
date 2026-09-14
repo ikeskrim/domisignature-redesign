@@ -1,0 +1,92 @@
+#!/bin/sh
+# domisignature pre-push guard - fail-closed. Installed as .git/hooks/pre-push
+# (copy this file there). Owner decision 2026-09-14 (design-review/BRIEF-AUDIT.md).
+#
+# Local history holds private originals (withheld frames, camera masters), so a
+# plain `git push` of a local branch would publish them. Only single-parent
+# snapshots built by the boundary script may leave this machine. This hook
+# refuses, before anything is sent:
+#   - any ref other than refs/heads/aegean (main/master only with
+#     DOMI_OWNER_PUSH_MAIN=1, set on the owner's own decision for the stage-8
+#     merge), any ref deletion, and any first push of a ref;
+#   - anything but exactly one new commit whose single parent is the remote tip,
+#     and whose tree is HEAD's tree (so the checks below measure what ships);
+#   - withheld files by path or by content under any name;
+#   - .env/key/.vercel files;
+#   - any withheld name (list kept OUTSIDE the repository, in $PRIVATE);
+#   - published media carrying GPS, camera serials or embedded thumbnails
+#     (scripts/metadata-audit.mjs).
+# `git push --no-verify` bypasses every hook; the documented rule still applies.
+
+z40=0000000000000000000000000000000000000000
+ROOT=$(git rev-parse --show-toplevel) || exit 1
+PRIVATE="${DOMI_PRIVATE_DIR:-$HOME/.domisignature-private}"
+
+fail() {
+  echo "pre-push: REFUSED - $*" >&2
+  exit 1
+}
+
+pushed=0
+while read -r lref lsha rref rsha; do
+  [ -n "$lref" ] || continue
+  pushed=$((pushed + 1))
+  [ "$lsha" = "$z40" ] && fail "deleting $rref"
+  case "$rref" in
+    refs/heads/aegean) ;;
+    refs/heads/main | refs/heads/master)
+      [ "$DOMI_OWNER_PUSH_MAIN" = "1" ] || fail "$rref belongs to the owner (the stage-8 merge)" ;;
+    *) fail "only refs/heads/aegean may be pushed (got $rref)" ;;
+  esac
+  [ "$rsha" = "$z40" ] && fail "$rref does not exist on the remote; a first push of local history is refused"
+  git cat-file -e "$rsha^{commit}" 2>/dev/null || fail "the remote tip is not known locally; fetch first"
+
+  new=$(git rev-list "$lsha" "^$rsha" | wc -l | tr -d ' ')
+  [ "$new" = "1" ] || fail "$new new commits; push exactly one snapshot commit (the boundary script builds it)"
+  [ "$(git rev-parse "$lsha^")" = "$rsha" ] || fail "the pushed commit's parent is not the remote tip"
+  git rev-parse -q --verify "$lsha^2" >/dev/null 2>&1 && fail "the pushed commit has more than one parent"
+
+  tree=$(git rev-parse "$lsha^{tree}")
+  [ "$tree" = "$(git -C "$ROOT" rev-parse "HEAD^{tree}")" ] || fail "the pushed tree is not HEAD's tree"
+  git -C "$ROOT" diff --quiet HEAD -- public design-review || fail "uncommitted changes under public/ or design-review/"
+
+  # Withheld files: by path, and by content under any name.
+  withheld=$(cd "$ROOT" && node --input-type=module -e "const m = await import('./scripts/publish-manifest.mjs'); console.log('W::' + [...m.WITHHELD.keys()].map((k) => 'public' + k).join('|'))" 2>/dev/null | grep '^W::' | sed 's/^W:://' | tr '|' '\n')
+  [ -n "$withheld" ] || fail "could not read WITHHELD from scripts/publish-manifest.mjs"
+  listing=$(git ls-tree -r "$tree")
+  # The loop runs in a subshell: count hits explicitly and exit with that, so a
+  # grep that finds nothing is never mistaken for a hit.
+  echo "$withheld" | {
+    hits=0
+    while read -r p; do
+      [ -n "$p" ] || continue
+      if printf '%s\n' "$listing" | awk -F'\t' '{print $2}' | grep -qxF "$p"; then
+        echo "pre-push: withheld path $p" >&2
+        hits=$((hits + 1))
+      fi
+      if [ -f "$ROOT/$p" ]; then
+        b=$(git -C "$ROOT" hash-object "$ROOT/$p")
+        if printf '%s\n' "$listing" | grep -q " blob $b	"; then
+          echo "pre-push: withheld content of $p under another name" >&2
+          hits=$((hits + 1))
+        fi
+      fi
+    done
+    [ "$hits" -eq 0 ]
+  } || fail "withheld file in the pushed tree"
+
+  echo "$listing" | awk -F'\t' '{print $2}' | grep -qE '(^|/)\.env($|\.)|\.pem$|\.key$|(^|/)\.vercel/|(^|/)id_(rsa|ed25519)' \
+    && fail "an env, key or .vercel file is in the pushed tree"
+
+  names="$PRIVATE/withheld-names.txt"
+  [ -s "$names" ] || fail "the private name list is missing ($names); it must exist outside the repository"
+  count=$(git -C "$ROOT" grep -c -F -f "$names" "$tree" -- . 2>/dev/null | awk -F: '{s += $NF} END {print s + 0}')
+  [ "$count" = "0" ] || fail "$count occurrence(s) of a withheld name in the pushed tree"
+
+  [ -f "$ROOT/scripts/metadata-audit.mjs" ] || fail "scripts/metadata-audit.mjs is missing; media cannot be proven clean"
+  (cd "$ROOT" && node scripts/metadata-audit.mjs >/dev/null 2>&1) || fail "published media carry GPS, serials or thumbnails (run: node scripts/metadata-audit.mjs)"
+done
+
+[ "$pushed" -gt 0 ] || exit 0
+echo "pre-push: snapshot checks passed" >&2
+exit 0

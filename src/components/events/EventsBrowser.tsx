@@ -8,9 +8,10 @@ import Link from "next/link";
 import { eventCategories, signatureEvents, type SignatureEvent } from "@content/events";
 import { Plate } from "@/components/ui/Plate";
 import { cn } from "@/lib/utils";
+import { Flip } from "gsap/Flip";
+
 import {
   gsap,
-  Flip,
   ScrollTrigger,
   EASE,
   DUR,
@@ -21,6 +22,10 @@ import {
 } from "@/lib/gsap";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+/* Flip lives here, not in the shared motion contract: this is its only user, so
+   it now ships in the events route's chunk alone. */
+if (typeof window !== "undefined") gsap.registerPlugin(Flip);
 
 /**
  * The Signature Events index: an editorial masonry of captioned plates, with

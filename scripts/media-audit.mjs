@@ -40,6 +40,7 @@ const WITHDRAWN = new Set([
   "/media/aeIMG_2133.jpg",
   "/media/thspire2.png",
   "/media/spire2.png",
+  "/media/posterimage.png", // joined on the owner's decision, 2026-09-14
 ]);
 
 const problems = [];
