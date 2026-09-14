@@ -864,6 +864,199 @@ pre-push guard remain what enforces.
 (`n9yg989zc`, 23 August; `7gujchx43`, 27 August) still serve all eight
 withheld paths; production deployments are the owner's alone.
 
+### Stage 6 — motion on paper (2026-09-14)
+
+Motion re-tuned for paper, not rewritten: nothing on paper fades. Type is set
+from behind its line, blocks settle, photographs are uncovered, rules draw,
+sheets move. Built in three commits: the lead primitives (`60c5c3d`), six
+disjoint groups (`4483b9b`) and the lead's integration (`057bcde`).
+
+**The primitives.** `src/lib/motion-tier.ts` holds the owner's drop order
+(preloader, parallax, grain, shadow) and the one switch: an inline script sets
+`data-drop` on `<html>` before first paint, at phone widths only, to a prefix of
+that order (`?drop=N` for measurement). `gsap.ts` gains the sheet's curtain ease,
+named durations for a panel, a settle, a draw and an uncovering, and
+`finishOnFocus` — an entrance jumps to its end the moment focus arrives inside
+it. `intro.ts` decides once whether the preloader covers a load and tells a hard
+load from a client navigation. `<Plate lift>` and three shadow uses — a shadow
+only while something is lifted, never at rest, never animated as a box-shadow,
+never on the focused element.
+
+**The groups** (each reviewed by an independent reader, blockers and majors
+returned, then a cross-group check of ownership and contracts):
+
+- *Panels.* The preloader's Skip button no longer sits inside an `aria-hidden`
+  root; its word rises and its rule draws, then the sheet lifts — no opacity. The
+  page transition lost its bloom and its content fade: the curtain is a sheet
+  that lifts, and a keyboard-started navigation runs none. The venue transition
+  never covers a keyboard-activated row. The mobile menu's panel slides instead of
+  a clip wipe, the label masks sit inside the links so a ring is never clipped,
+  the hairlines draw, and focus lands once the panel has arrived. The reviewer's
+  one blocker — a row hairline painting over the next link's ring — was fixed.
+- *Reveals.* Reveal and Stagger settle without opacity and finish on focus.
+  TextReveal no longer clips ascenders and descenders. MaskReveal and RuleDraw
+  leave what is already in view alone. The accordion animates height only.
+- *Home.* The Hero holds its entrance only when something will cover it, and a
+  focus finishes it; its copy stays opaque while focused. The arrival's facts
+  arrive as a clip plus a lift instead of a scrubbed fade — the one intended
+  hero-states change. The stills pause off-screen; the scroll cue runs at `lg`.
+- *Deletions.* The light pools are gone; the footer's gold hairline and legal
+  rule draw; the marquee pauses off-screen.
+- *Plates.* Five interactive plates lift; gallery and events batches settle
+  without opacity and finish on focus.
+- *Gates.* `focus-motion` (motion on: a focused element is never hidden, clipped
+  or covered at 50/200/500/900 ms after a trigger), `motion-tier` (the switch
+  applies exactly its prefix at 390, nothing at 1440) and `typeset-clip` (no
+  clipped ink in any TextReveal line) join the gate; `paper-legibility --motion`
+  and `--lift`, INP under a 4× CPU throttle, hero-states `--intended`, and
+  Lighthouse medians with the worst run and the LCP element run beside it. The
+  reviewer's one major — `typeset-clip` could pass silently — was fixed.
+
+**Integration.** ScrollImage now clamps its drift to the headroom its scale
+leaves: unclamped, a strip of the mat showed at the top of a plate short against
+the viewport (JourneyTeaser, JourneyChapters, ServiceScenes at phone width).
+`.group:focus-visible` joins the plate lift. `.glow` is deleted.
+`focus-motion`'s ring box is 7px, the indicator's real reach.
+
+**The integration build (`057bcde`) measured, and what it found.** The gate
+read 16/19. Reduced motion was clean on every route, and the paper sweep with
+motion on saw 1,932 text elements, none part-transparent at any stop. Four
+defects came out, each cause established by measurement or by a read-only
+diagnosis whose every patch an independent skeptic checked:
+
+- *Focused elements scrolled slowly, and under the header.* `<html>` carried an
+  inline `scroll-behavior: smooth` that outranked the Lenis rule: GSAP
+  ScrollTrigger records the root's computed value before Lenis mounts and writes
+  it back inline after its own scroll work. Every Tab scroll animated for about
+  200ms (measured frame by frame), so a focused link sat off-screen; and nothing
+  accounted for the fixed header, so a focused link at 1440 settled under it.
+  The stylesheet no longer sets smooth scrolling on `<html>` (Lenis still smooths
+  the wheel), and `scroll-padding-top` is the header's height plus 8px.
+- *TextReveal still clipped ink* — 85 of 148 lines. Nothing clips at rest now:
+  the masks are clipped only for the length of an entrance. The line's extra
+  padding, which had grown the arrival word's measured box from 272 to 321px and
+  put an empty band of photograph into the legibility audit, is gone.
+- *The lift shadow's blur tail reached captions* under the event plates at 390
+  (3.8–4.8% darkening against the 3% ceiling). Only that layer's blur changed.
+- *The INP script demanded an FAQ the page does not render* — the wedding
+  guide's answers are still pending, and copy is frozen; it now skips that
+  action while the list is empty, says so, and checks every other tap did
+  something.
+
+**The fix round measured, and what it found next.** Re-measured on `747ad78`,
+the gate read 18/19: typeset-clip and the arrival passed, and every focus sample
+was clean. Hero-states matched the integration build at all sixteen offsets.
+The lift sweep passed all 1,800 elements (the worst shadow under type 1.0%).
+INP read 48–112 ms. Two more defects came out of what was left, and a third
+turned out not to be one:
+
+- *Home was 136px shorter than stage 5, and the reason was visible.* Placing the
+  difference band by band against stage 5's full-page capture put it exactly on
+  two TextReveal headings, which read "Thepeopleyouwill beworkingwith" and
+  "WhereEveryMomentIsSigned". The space after each word sat inside its
+  inline-block mask, and an inline-block drops a trailing space from its own
+  width — measured in Chromium, no gap in any inside-the-mask variant, a real
+  one with the space between the masks. The run-on words wrapped onto fewer
+  lines (−62 and −74px). The space now sits between the masks. typeset-clip
+  photographs a line masked and unmasked, which cannot see a missing space; the
+  height comparison against stage 5 did.
+- *At desktop sizes every scrub below the arrival ran a full pin distance early*
+  — older than this stage (the image-sequence arrival, 17 August). The gate's
+  one remaining failure was the closing chapter "not mid-scrub", and a sweep
+  showed why: at 1440 its exit inset read a full gutter at every scroll position,
+  while at 390, where the arrival does not pin, the same scrub matched its
+  geometry to 0.01. The arrival decides its sequence in an effect, so its pin is
+  created a commit after every section below it has made its ScrollTriggers, and
+  ScrollTrigger refreshes in creation order: everything below kept positions
+  measured without the pin's spacing. The arrival now sorts the instances back
+  into page order and refreshes once its pin exists.
+- *Lighthouse's accessibility score fell from 100 to 95–96 on a single node*:
+  axe's colour-contrast flags the footer's decorative logotype (`aria-hidden`,
+  1.21:1) on every route, at every moment after load. WCAG 1.4.3 exempts
+  logotypes and pure decoration, and the gate's own axe run already excludes this
+  element; stage 5's runs did not report it, most likely because the deleted light
+  pool had left its background indeterminate. Recorded, not changed; the ≥ 90 bar
+  holds.
+
+**Measured, final build (`4b7f238`):** the gate is **19/19 green** — including the
+three stage-6 checks: the drop switch applies exactly its prefix on a phone and
+nothing on desktop, no focused element is hidden, clipped or covered with motion
+on, and no TextReveal line clips its own ink. Hero-states against stage 5: pin and
+scrub **identical at all sixteen offsets**, the clip identical too; the only
+differences are the declared ones (the facts' clip and opacity), and the page is
+16,860px again. Home's full-page capture is 15,240px, as at stage 5, identical
+from the arrival's foot to the bottom of the page. The closing chapter's exit now
+runs where its geometry says at both widths (the sweep's 100px offset is its own
+step size, and the same at 390, where it was always right). Reduced motion: clean
+on every route. Paper with motion on: 1,932 text elements, none part-transparent
+at any stop. Every plate lifted: 1,800 text elements clear their bars, the lift
+shadow under type at most 1.0%. INP under a 4× CPU throttle at 390: 64–120 ms on
+every route (≤ 200), the FAQ left out and reported while its answers are pending.
+
+Lighthouse mobile, level 0 (phones drop nothing), three runs per route
+(performance median / worst; LCP median):
+
+| Route | Stage 5 | Pre-work fixes `41c473b` | Stage 6 `4b7f238` |
+|---|---|---|---|
+| Home | 81 | 88 | **87** / 86 · 3.3 s |
+| Venues | 91 | 92 | **92** / 92 · 3.1 s |
+| Venue detail | 87 | 91 | **91** / 91 · 3.2 s |
+| Signature Events | 91 | 93 | **93** / 92 · 3.0 s |
+| Wedding Guide | 91 | 92 | **92** / 91 · 3.0 s |
+| Contact | 93 | 93 | **93** / 93 · 2.9 s |
+
+Every route clears the mobile floor (≥ 80), Home by seven points; best practices
+and SEO 100; accessibility 95–96 (the logotype, above); CLS 0–0.001. Desktop,
+measured on the integration build: performance 99 on every route. The motion
+stage cost Home one point against the loading fixes and nothing elsewhere.
+
+**The drop level.** Lighthouse mobile on `057bcde`, three runs per route per
+level (performance median / worst; LCP median):
+
+| Route | L0 | L1 | L2 | L3 | L4 |
+|---|---|---|---|---|---|
+| Home | 86/86 · 3.4 s | 87/87 · 3.4 s | 88/88 · 3.4 s | 88/87 · 3.3 s | 87/82 · 3.4 s |
+| Venues | 92/92 · 3.1 s | 93/93 · 3.1 s | 93/93 · 3.1 s | 93/93 · 3.1 s | 92/92 · 3.1 s |
+| Venue detail | 91/90 · 3.2 s | 92/92 · 3.2 s | 92/92 · 3.2 s | 92/91 · 3.2 s | 93/92 · 3.0 s |
+| Signature Events | 93/92 · 3.0 s | 94/93 · 3.0 s | 93/93 · 3.0 s | 93/93 · 3.0 s | 93/92 · 3.0 s |
+| Wedding Guide | 92/91 · 3.0 s | 93/93 · 3.0 s | 93/93 · 3.0 s | 93/93 · 3.0 s | 92/92 · 3.0 s |
+| Contact | 94/94 · 2.9 s | 94/94 · 2.9 s | 95/94 · 2.9 s | 95/94 · 2.9 s | 94/94 · 2.9 s |
+
+Every level clears the plan's rule (every median ≥ 83, every worst run ≥ 80,
+the other categories ≥ 90), so the smallest — **level 0** — is the level: phones
+drop nothing. The planning pass had recommended level 1 (the preloader off on
+phones); measured, it buys Home one point, inside the spread, so the rule's
+literal reading stands and the recommendation is recorded for the owner.
+
+Desktop on `057bcde`: performance 99 on every route, accessibility 95–96, best
+practices and SEO 100.
+
+**Judgements recorded.** Hero copy fades stay: the Hero is a dark chapter over a
+photograph, not paper, and its fades are measured hero states — focus overrides
+them. Reveal's and Stagger's default lift moved from 28 and 24px to 20. The
+subagents could not load the new project skill (installed mid-session; skills
+register when a session starts) and read it directly.
+
+**Flagged for the owner, not changed:**
+
+- The home venue list's dimmed rows now step to the secondary text role instead
+  of fading to 30% — no text on paper fades. A change to a signature interaction.
+- Pre-existing: the mobile menu overflows on short landscape phones below `lg`;
+  the accordion's server render shows every panel open until hydration.
+- The drop level: the rule reads level 0 (phones drop nothing); the planning
+  pass recommended level 1 (no preloader on phones), which measured one point on
+  Home. The rule's reading ships; level 1 is one constant away if preferred.
+- `/services#…` landings: the service scenes carry their own `scroll-mt-32`, and
+  the new scroll padding for the fixed header now adds to it, so a scene link
+  stops about 232px below the top at `lg`. Dropping the scene's own margin is a
+  layout call, not made here.
+- The wedding guide's FAQ is not measured for INP while its answers are pending;
+  the script says so and will measure it as soon as answers exist.
+- Carried from the pre-work: the two kept previews (`7apxf9ext`, `ikw1wxqqc`)
+  and every deployment built before the metadata strip still serve the
+  unstripped media; two canceled production deployments (`n9yg989zc`,
+  `7gujchx43`) still serve all eight withheld paths. Production is the owner's.
+
 ---
 
 ## Stages and gates

@@ -7,7 +7,15 @@ import { usePathname } from "next/navigation";
 
 import { nav, site, contact } from "@content/site";
 import { cn } from "@/lib/utils";
-import { gsap, EASE, prefersReducedMotion } from "@/lib/gsap";
+import {
+  gsap,
+  CURTAIN,
+  DUR,
+  EASE,
+  STAGGER,
+  finishOnFocus,
+  prefersReducedMotion,
+} from "@/lib/gsap";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -15,6 +23,21 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
    and Next's route announcer has to stay live so that a navigation made from
    the menu is still announced. */
 const NEVER_INERT = new Set(["SCRIPT", "STYLE", "LINK", "TEMPLATE", "NOSCRIPT", "NEXT-ROUTE-ANNOUNCER"]);
+
+/* The menu's choreography, in seconds from the panel starting to move. The row
+   hairlines and labels start together. Each label rises for LABEL_RISE, so the
+   first one is at rest the instant the panel arrives (DUR.panel), and that is
+   when the first link takes focus. The later labels, the hairlines and the
+   foot carry on after it; none of them is the focused element. Focus lands at
+   about 0.7s after the toggle is pressed — inside the focus-in-motion gate's
+   900ms reading (scripts/focus-motion.mjs, the menu trigger). */
+const ROWS_AT = 0.15;
+const LABEL_RISE = DUR.panel - ROWS_AT;
+const FOOT_RULE_AT = 0.45;
+const FOOT_AT = 0.5;
+const FOCUS_AT = DUR.panel;
+/* Closing is quicker than opening: the visitor has already chosen to leave. */
+const CLOSE = 0.5;
 
 export function Header() {
   const pathname = usePathname();
@@ -24,6 +47,10 @@ export function Header() {
   const [present, setPresent] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
+  /* Where the panel stands, in yPercent, when one direction hands over to the
+     other: a close during the slide in (or a reopen during the slide out)
+     leaves from there instead of jumping. -100 is fully above the viewport. */
+  const panelY = useRef(-100);
 
   /* The homepage hero and the venue title card are the two page openers that
      are designated dark chapters — full-bleed imagery the header floats over —
@@ -37,7 +64,7 @@ export function Header() {
      not on the photograph, so it takes the page there too. Left on the night
      ladder it set bone on ivory — 1.07:1 by the tokens — and the Close control,
      the dialog's one visible way out, all but vanished. It keeps the page
-     ground until the wipe has fully left, then returns to the hero. */
+     ground until the panel has fully left, then returns to the hero. */
   const overHero =
     (pathname === "/" || /^\/venues\/[^/]+$/.test(pathname)) && !scrolled && !present;
 
@@ -62,7 +89,9 @@ export function Header() {
    * was real: Tab walked straight out of a full-screen panel into the page it
    * covers.
    *
-   * - Opening moves focus to the first link.
+   * - Opening moves focus to the first link — once the panel has arrived and
+   *   that link's label has risen (the open animation below does it; at once
+   *   under reduced motion), so a focus ring never travels with the sheet.
    * - Tab and Shift+Tab cycle the panel's links and the Close control. Close is
    *   the same toggle, which lives in the header above the panel rather than in
    *   the dialog's DOM, so the cycle is kept by hand: the toggle, then the panel
@@ -95,7 +124,6 @@ export function Header() {
       btn,
       ...Array.from(el.querySelectorAll<HTMLElement>("a[href], button:not([disabled])")),
     ];
-    stops()[1]?.focus({ preventScroll: true });
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -128,50 +156,109 @@ export function Header() {
     };
   }, [open, present]);
 
-  /* Opening mounts immediately; closing waits for the wipe to finish. */
+  /* Opening mounts immediately; closing waits for the slide out to finish. */
   useEffect(() => {
     if (open) setPresent(true);
   }, [open]);
 
+  /*
+   * The panel is a sheet of raised paper: it slides down over the page and
+   * back up, on the sheet's own ease. Nothing on it fades. The row hairlines
+   * draw from the left, each label rises from behind its line inside its own
+   * link, the foot rule draws and the foot links settle.
+   *
+   * Focus: the first link is focused the moment the panel has arrived, when its
+   * label has just come to rest. Any other focus arriving in the panel
+   * mid-choreography (a Tab during the slide) finishes it first, so a focused
+   * link is never moving or under a mask. Reduced motion: the final state, at
+   * once.
+   */
   useIsomorphicLayoutEffect(() => {
     const el = panel.current;
     if (!el) return;
     const reduced = prefersReducedMotion();
 
     if (open) {
+      const first = el.querySelector<HTMLElement>("a[href], button:not([disabled])");
+      if (reduced) {
+        first?.focus({ preventScroll: true });
+        return;
+      }
+
+      let releaseFinish = () => {};
       const ctx = gsap.context(() => {
         const tl = gsap.timeline();
         tl.fromTo(
           el,
-          reduced ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" },
-          reduced
-            ? { opacity: 1, duration: 0.2 }
-            : { clipPath: "inset(0 0 0% 0)", duration: 0.7, ease: EASE },
-        );
-        if (!reduced) {
-          tl.from(
-            el.querySelectorAll("[data-menu-item]"),
-            { opacity: 0, y: 20, duration: 0.6, ease: EASE, stagger: 0.06 },
-            0.18,
-          ).from(el.querySelector("[data-menu-foot]"), { opacity: 0, duration: 0.6 }, 0.5);
-        }
+          { yPercent: panelY.current },
+          { yPercent: 0, duration: DUR.panel, ease: CURTAIN },
+          0,
+        )
+          .from(
+            "[data-menu-rule]",
+            { scaleX: 0, duration: DUR.draw, ease: EASE, stagger: STAGGER.tight },
+            ROWS_AT,
+          )
+          /* 120, not 110: the mask carries padding below the line for the
+             descenders, and the label has to clear that too. */
+          .from(
+            "[data-menu-label]",
+            { yPercent: 120, duration: LABEL_RISE, ease: EASE, stagger: STAGGER.tight },
+            ROWS_AT,
+          )
+          .from("[data-menu-foot-rule]", { scaleX: 0, duration: DUR.draw, ease: EASE }, FOOT_RULE_AT)
+          .from(
+            "[data-menu-foot] a",
+            { y: 12, duration: DUR.settle, ease: EASE, stagger: STAGGER.tight },
+            FOOT_AT,
+          )
+          .call(
+            () => {
+              if (el.contains(document.activeElement)) return;
+              /* Our own focus must not cut the choreography short. */
+              releaseFinish();
+              first?.focus({ preventScroll: true });
+              releaseFinish = finishOnFocus(el, tl);
+            },
+            undefined,
+            FOCUS_AT,
+          );
+        releaseFinish = finishOnFocus(el, tl);
       }, el);
-      return () => ctx.revert();
+
+      return () => {
+        releaseFinish();
+        panelY.current = Number(gsap.getProperty(el, "yPercent")) || 0;
+        ctx.revert();
+      };
     }
 
-    /* Closing: wipe back down, then leave the DOM. */
+    /* Closing: slide back up, then leave the DOM. */
     if (reduced) {
+      panelY.current = -100;
       setPresent(false);
       return;
     }
-    const tween = gsap.to(el, {
-      clipPath: "inset(0 0 100% 0)",
-      duration: 0.55,
-      ease: EASE,
-      onComplete: () => setPresent(false),
-    });
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el,
+        { yPercent: panelY.current },
+        {
+          yPercent: -100,
+          duration: CLOSE,
+          ease: CURTAIN,
+          onComplete: () => {
+            /* Parked above the viewport, the sheet's edge gradient would
+               still hang under the header until React unmounts it. */
+            gsap.set(el, { visibility: "hidden" });
+            setPresent(false);
+          },
+        },
+      );
+    }, el);
     return () => {
-      tween.kill();
+      panelY.current = Number(gsap.getProperty(el, "yPercent"));
+      ctx.revert();
     };
   }, [open, present]);
 
@@ -277,12 +364,16 @@ export function Header() {
                   ground. It was once bg-ink — an all-but-black rule on an
                   all-but-black header, invisible in both states — collateral
                   from the Phase 6 token rename, fixed in §5.
+
+                  The active one is anchored on the left, so on a route change
+                  the new page's rule draws in from the left while the old one
+                  retracts to the right, on the same CSS transition as hover.
                 */}
                 <span
                   aria-hidden
                   className={cn(
                     "absolute bottom-0 left-0 h-px w-full origin-right scale-x-0 bg-[var(--text-primary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:origin-left group-hover:scale-x-100",
-                    isActive(item.href) && "scale-x-100",
+                    isActive(item.href) && "origin-left scale-x-100",
                   )}
                 />
               </Link>
@@ -357,28 +448,49 @@ export function Header() {
           id="mobile-menu"
           role="dialog"
           aria-label="Menu"
-          className="fixed inset-0 z-40 flex flex-col bg-[var(--surface-raised)] lg:hidden"
+          data-menu-panel
+          className="panel-edge fixed inset-0 z-40 flex flex-col bg-[var(--surface-raised)] lg:hidden"
         >
           <nav
             aria-label="Mobile"
             className="flex flex-1 flex-col justify-center gap-1 px-gutter pt-24"
           >
             {nav.map((item, i) => (
-              <div key={item.href} data-menu-item>
+              <div key={item.href} className="relative isolate pb-px">
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className="flex items-baseline gap-4 border-b border-[var(--rule)] py-4 font-display text-[2.25rem] leading-none text-[var(--text-primary)] transition-colors"
+                  className="block py-4 font-display text-[2.25rem] leading-none text-[var(--text-primary)] transition-colors"
                 >
-                  <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
-                  {item.label}
+                  {/* The mask is inside the link, never around it: the link's
+                      box is where the focus ring draws, and a mask there would
+                      cut it. The padding below the line, cancelled by an equal
+                      negative margin, keeps the descenders inside the mask. */}
+                  <span className="-mb-[0.2em] block overflow-hidden pb-[0.2em]">
+                    <span data-menu-label className="flex items-baseline gap-4">
+                      <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
+                      {item.label}
+                    </span>
+                  </span>
                 </Link>
+                {/* The row's hairline, drawn in from the left as the panel
+                    arrives. It was the link's own bottom border, which painted
+                    under the focus ring; a positioned line paints after the
+                    link's halo and outline and would run through them. So the
+                    row is its own stacking context and the line sits behind
+                    it (-z-10): the link's ring and halo cover this row's line,
+                    and the next row, painted after this one, covers it too. */}
+                <span
+                  aria-hidden
+                  data-menu-rule
+                  className="absolute inset-x-0 bottom-0 -z-10 h-px origin-left bg-[var(--rule)]"
+                />
               </div>
             ))}
           </nav>
 
           <div className="px-gutter pb-12" data-menu-foot>
-            <div className="rule mb-6" />
+            <div aria-hidden data-menu-foot-rule className="rule mb-6 origin-left" />
             <a href={contact.phone.href} className="block py-1 text-lead text-[var(--text-primary)]">
               {contact.phone.display}
             </a>

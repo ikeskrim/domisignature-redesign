@@ -19,6 +19,7 @@ import {
   prefersReducedMotion,
   startsInViewport,
   hasFinePointer,
+  finishOnFocus,
 } from "@/lib/gsap";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -37,12 +38,23 @@ if (typeof window !== "undefined") gsap.registerPlugin(Flip);
  * which read as a page reflowing rather than a collection rearranging. Flip
  * measures every tile before the filter changes and again after, then animates
  * the difference — so a tile that moves from column three to column one glides
- * there, and only genuinely departing tiles fade.
+ * there.
+ *
+ * Stage 6: nothing on paper fades. The arrival settles — a lift without a fade —
+ * and so does a tile a filter brings in; a tile the filter takes out is simply
+ * gone, because React has removed it before Flip could animate it. A focus
+ * inside the grid finishes whatever is still moving, and each tile's plate
+ * lifts on hover or focus (`<Plate lift>`) in place of the photograph's hover
+ * zoom.
  */
 export function EventsBrowser() {
   const [filter, setFilter] = useState<string | null>(null);
   const grid = useRef<HTMLDivElement>(null);
   const flipState = useRef<Flip.FlipState | null>(null);
+  /** Brings the arrival to rest; set by the arrival, called before a filter measures. */
+  const settleArrival = useRef<(() => void) | null>(null);
+  /** The filters' Flips, in one context for the index's lifetime. */
+  const flips = useRef<gsap.Context | null>(null);
 
   const visible = useMemo(
     () => (filter ? signatureEvents.filter((e) => e.category === filter) : signatureEvents),
@@ -60,6 +72,10 @@ export function EventsBrowser() {
   /** Capture the layout BEFORE React re-renders with the new filter. */
   const changeFilter = (next: string | null) => {
     if (next === filter) return;
+    /* Every tile at rest first, so Flip measures where the tiles stay rather
+       than where an unfinished arrival holds them - and so no tile is left
+       waiting on a trigger whose position the new layout has moved. */
+    settleArrival.current?.();
     if (grid.current && !prefersReducedMotion()) {
       flipState.current = Flip.getState(grid.current.querySelectorAll("[data-tile]"));
     }
@@ -71,51 +87,96 @@ export function EventsBrowser() {
     const el = grid.current;
     if (!el || prefersReducedMotion()) return;
 
-    const ctx = gsap.context(() => {
+    const settles: gsap.core.Animation[] = [];
+    const offs: (() => void)[] = [];
+    const hold = (settle: gsap.core.Animation) => {
+      settles.push(settle);
+      offs.push(finishOnFocus(el, settle));
+    };
+
+    const ctx = gsap.context((self) => {
       /* See EditorialGallery — anything already on screen stays painted, so the
          LCP does not wait for hydration. */
       const tiles = gsap.utils
         .toArray<HTMLElement>("[data-tile]", el)
         .filter((t) => !startsInViewport(t));
       if (!tiles.length) return;
-      gsap.set(tiles, { opacity: 0, y: 28 });
+      gsap.set(tiles, { y: 28 });
+
+      /* Never played: a focus inside the grid, or a filter, jumps it to its
+         end, which brings every tile still waiting for its batch home at once. */
+      hold(gsap.to(tiles, { y: 0, duration: DUR.settle, ease: EASE, paused: true }));
+
       ScrollTrigger.batch(tiles, {
         start: "top 94%",
         once: true,
+        /* batch() calls this a tick after the trigger fires, outside the
+           context, so the settle is added back into it: an unmount reverts a
+           batch still in flight. */
         onEnter: (batch) =>
-          gsap.to(batch, {
-            opacity: 1,
-            y: 0,
-            duration: DUR.reveal,
-            ease: EASE,
-            stagger: STAGGER.normal,
-            overwrite: true,
-          }),
+          hold(
+            self.add(() =>
+              gsap.to(batch, {
+                y: 0,
+                duration: DUR.settle,
+                ease: EASE,
+                stagger: STAGGER.normal,
+              }),
+            ),
+          ),
       });
     }, el);
 
-    return () => ctx.revert();
+    settleArrival.current = () => {
+      for (const settle of settles) if (settle.progress() < 1) settle.progress(1);
+    };
+
+    return () => {
+      settleArrival.current = null;
+      offs.forEach((off) => off());
+      ctx.revert();
+    };
   }, []);
+
+  /* The Flips' context is reverted on unmount only, never by the next filter:
+     Flip.getState completes an unfinished Flip, and the next one measures from
+     there. Reverting between filters would strip a Flip's styles just before
+     the next one measured. */
+  useIsomorphicLayoutEffect(
+    () => () => {
+      flips.current?.revert();
+      flips.current = null;
+    },
+    [],
+  );
 
   /* Then play the difference on every filter change. */
   useIsomorphicLayoutEffect(() => {
+    const el = grid.current;
     const state = flipState.current;
-    if (!state) return;
+    if (!el || !state) return;
     flipState.current = null;
 
-    Flip.from(state, {
-      duration: 0.72,
-      ease: EASE,
-      scale: true,
-      absolute: true,
-      onEnter: (els) =>
-        gsap.fromTo(
-          els,
-          { opacity: 0, scale: 0.94 },
-          { opacity: 1, scale: 1, duration: 0.55, ease: EASE, stagger: STAGGER.tight },
-        ),
-      onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.94, duration: 0.35, ease: EASE }),
-    });
+    const ctx = (flips.current ??= gsap.context(() => {}));
+    const flip = ctx.add(() =>
+      Flip.from(state, {
+        duration: 0.72,
+        ease: EASE,
+        scale: true,
+        absolute: true,
+        /* A tile the filter brings in settles into its place; it does not fade
+           in, because its caption is type on paper. There is no onLeave: React
+           has already removed a leaving tile, so nothing is left to animate. */
+        onEnter: (els) =>
+          gsap.fromTo(
+            els,
+            { y: 28 },
+            { y: 0, duration: DUR.settle, ease: EASE, stagger: STAGGER.tight },
+          ),
+      }),
+    );
+
+    return finishOnFocus(el, flip);
   }, [filter]);
 
   return (
@@ -148,7 +209,10 @@ export function EventsBrowser() {
         className="mt-20 columns-1 gap-8 sm:columns-2 lg:mt-28 lg:columns-3 lg:gap-14"
       >
         {visible.map((event, i) => (
-          <div key={event.slug} data-tile className="mb-8 break-inside-avoid lg:mb-14">
+          /* The tile is also a .group: its plate lifts while a .group
+             :has(:focus-visible), and :has() looks only inside, so the focused
+             link's own .group cannot lift it. Same box as the link. */
+          <div key={event.slug} data-tile className="group mb-8 break-inside-avoid lg:mb-14">
             <EventTile event={event} index={i} />
           </div>
         ))}
@@ -218,7 +282,7 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
         A div rather than Plate's default figure: inside a link, a figure role
         is one more node between the link and the words that name it.
       */}
-      <Plate as="div" frameClassName={ratio}>
+      <Plate as="div" lift frameClassName={ratio}>
         <Image
           src={event.coverImage}
           alt={`${event.title} — ${event.category}`}
@@ -228,7 +292,7 @@ function EventTile({ event, index }: { event: SignatureEvent; index: number }) {
           // everything below it stays lazy.
           priority={index === 0}
           loading={index === 0 ? "eager" : "lazy"}
-          className="grade-b object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+          className="grade-b object-cover"
         />
 
         {film && canHover && (

@@ -18,6 +18,11 @@ import { prefersReducedMotion, hasFinePointer } from "@/lib/gsap";
  * keyboard-focusing) a row brings that venue's photograph up full-bleed behind
  * the type while its siblings dim and the name shifts right.
  *
+ * Stage 6: the siblings dim by a step down the text ramp, not by opacity. A
+ * dimmed row's name goes from primary to secondary, the one solved step that
+ * still holds AA over a raised backdrop (see the wash below), and nothing in
+ * the list is ever part-transparent type.
+ *
  * All four images are mounted up front and cross-faded by opacity, so the swap
  * is instant on hover rather than triggering a fetch.
  *
@@ -138,10 +143,7 @@ export function VenueIndex() {
                   onFocus={() => setActive(i)}
                   onBlur={() => setActive(null)}
                   onClick={(e) => enter(e, i, venue.slug)}
-                  className={cn(
-                    "group flex items-baseline gap-8 py-12 transition-opacity duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] xl:gap-12 xl:py-16",
-                    active !== null && active !== i ? "opacity-30" : "opacity-100",
-                  )}
+                  className="group flex items-baseline gap-8 py-12 xl:gap-12 xl:py-16"
                 >
                   <span
                     className={cn(
@@ -152,10 +154,14 @@ export function VenueIndex() {
                     {pad2(i + 1)}
                   </span>
 
+                  {/* The dim: a sibling's name steps down to secondary while
+                      another row is up. Its other type is secondary already
+                      whenever a backdrop is up, and cannot step lower over it. */}
                   <span
                     className={cn(
-                      "flex-1 font-display text-[clamp(2.75rem,5.8vw,6.5rem)] font-light leading-[0.92] tracking-[-0.028em] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+                      "flex-1 font-display text-[clamp(2.75rem,5.8vw,6.5rem)] font-light leading-[0.92] tracking-[-0.028em] transition-[color,transform,translate] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
                       "group-hover:translate-x-5 group-focus-visible:translate-x-5",
+                      active !== null && active !== i ? "text-[var(--text-secondary)]" : "text-[var(--text-primary)]",
                     )}
                   >
                     {venue.name}

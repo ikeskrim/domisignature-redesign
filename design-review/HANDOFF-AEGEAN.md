@@ -22,9 +22,14 @@ touch the siblings' processes or their ports (3000, 3005, 3104). Local servers
 bind 127.0.0.1 only. `npm run build` is `scripts/build.mjs`: tsc first,
 then Next, then a freshness check; a silent death is named as one.
 
-**Gate:** sixteen checks (`npm run qa`, `PORT` env sets the server port); the
-sixteenth, `metadata`, fails any tracked file carrying GPS, a camera serial or
-an embedded thumbnail. Measurement scripts read `SHOTS_BASE`.
+**Gate:** nineteen checks (`npm run qa`, `PORT` env sets the server port).
+`metadata` fails any tracked file carrying GPS, a camera serial or an embedded
+thumbnail; stage 6 added `motion-tier` (the drop switch applies exactly its
+prefix on a phone, nothing on desktop), `focus-motion` (motion on: a focused
+element is never hidden, clipped or covered) and `typeset-clip` (no TextReveal
+line clips its own ink). INP (`npm run audit:inp`), Lighthouse and the paper
+sweeps with `--motion` and `--lift` run beside the gate, not in it.
+Measurement scripts read `SHOTS_BASE`.
 
 **Stage state:** see the stage log in `design-review/INVERSION-PLAN.md`.
 Stage 4 closed at snapshot `118f48c` (preview `lwycv01tj`, removed on
@@ -52,7 +57,33 @@ pre-push guard is installed (`94be282`); (3) the four loading fixes
 (PageTransition first mount, gallery tile preloads, the /venues fetch priority,
 GSAP Flip out of the shared chunk) — `41c473b`, measured against a Lighthouse
 reference taken on `c40de6c` before them; (4) the conventions layer
-(`CLAUDE.md` and the `aegean-bone` project skill). Then the motion work.
+(`CLAUDE.md` and the `aegean-bone` project skill). Pre-work snapshot
+`a553df2` (preview `e1p6wei5j`).
+
+**Stage 6 motion** (local commits): the lead primitives `60c5c3d`
+(`src/lib/motion-tier.ts`, the curtain ease and `finishOnFocus`, the intro
+handshake, `<Plate lift>`), the six groups `4483b9b`, the lead's integration
+`057bcde`, the INP gate fix `24e8bb7`, the fix round `747ad78` (focus
+scrolling, the lift shadow, TextReveal's clip), TextReveal's word spaces
+`4921161`, and the arrival's ScrollTrigger refresh order `4b7f238`. The
+drop-level matrix chose level 0: every level clears the mobile floor, so
+phones drop nothing. Two causes worth knowing before touching scroll or
+motion. GSAP ScrollTrigger writes the root's computed `scroll-behavior` back
+as an inline style, so a stylesheet `scroll-behavior: smooth` on `<html>`
+defeats the Lenis rule — keep it off. And ScrollTrigger refreshes in creation
+order: a trigger or pin created late (after an effect-decided state flips)
+must `ScrollTrigger.sort()` and `refresh()`, or every trigger below it keeps
+positions measured without it. **Stage 6 measured green on `4b7f238`**: gate
+19/19, hero-states identical to stage 5 at all sixteen offsets apart from the
+declared facts change, Lighthouse mobile at level 0 every route over the floor
+(Home 87), INP 64–120 ms. The stage log in `design-review/INVERSION-PLAN.md`
+has the entry; the stage-6 snapshot follows the docs commit.
+
+**Next — stage 7:** baselines rebuilt (captures and hero states from the final
+tree, medians of three), the full QA pass, the www-to-apex redirect and the
+production seal re-verified, the superseded dark capture sets deleted from the
+branch, the docs pass; then `design-review/MERGE-REPORT.md`, and stop for the
+owner's stage-8 approval.
 
 **Publishing rule:** never push a local branch — local history holds the
 private originals. Push only single-parent snapshots through `boundary.sh`,

@@ -13,6 +13,7 @@ import { Magnetic } from "@/components/motion/Magnetic";
 import { VenueTransition } from "@/components/motion/VenueTransition";
 import { Grain } from "@/components/motion/Grain";
 import { robotsForEnvironment } from "@/lib/seo";
+import { DROP_SCRIPT } from "@/lib/motion-tier";
 import { LegacyAnchorRedirect } from "@/components/layout/LegacyAnchorRedirect";
 
 import "./globals.css";
@@ -123,6 +124,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "try{var p=new URLSearchParams(location.search).get('palette');if(p==='ember'||p==='ember-deep')document.documentElement.dataset.palette=p}catch(e){}",
           }}
         />
+        {/*
+          The drop switch (stage 6, src/lib/motion-tier.ts). On a phone it sets
+          data-drop on <html> to the motion features the measured level gives
+          up, before first paint, for the same reason as the palette switch: an
+          effect would paint the dropped layer first and then remove it. It is
+          a constant string, so every server render is identical; desktop
+          never drops.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: DROP_SCRIPT }} />
       </head>
       <body className="min-h-dvh antialiased">
         <a

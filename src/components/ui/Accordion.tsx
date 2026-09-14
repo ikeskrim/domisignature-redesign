@@ -22,43 +22,66 @@ export interface AccordionEntry {
  * Collapsed panels are set `visibility: hidden` once closed, so their text
  * leaves both the accessibility tree and the tab order rather than lurking at
  * zero height.
+ *
+ * Stage 6 — motion on paper: the panel animates its height and nothing else.
+ * Its text is on paper, so the panel's edge uncovers and covers it; it never
+ * fades. Under reduced motion a panel is simply set open or closed.
  */
 export function Accordion({ items }: { items: AccordionEntry[] }) {
   const [open, setOpen] = useState<number | null>(0);
   const panels = useRef<(HTMLDivElement | null)[]>([]);
   /* Skip the very first pass so the initially-open panel is simply open. */
   const mounted = useRef(false);
+  const ctx = useRef<gsap.Context | null>(null);
+
+  /* One gsap.context for the component's life, reverted on unmount so no
+     tween outlives its panels across a client navigation. Declared before the
+     effect that animates, so it exists when that effect first runs. Resetting
+     `mounted` makes a remount (React's development double-mount included) set
+     its panels rather than animate them from their unstyled height. */
+  useIsomorphicLayoutEffect(() => {
+    ctx.current = gsap.context(() => {});
+    return () => {
+      ctx.current?.revert();
+      ctx.current = null;
+      mounted.current = false;
+    };
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     const reduced = prefersReducedMotion();
 
-    panels.current.forEach((el, i) => {
-      if (!el) return;
-      const expanded = open === i;
+    const apply = () => {
+      panels.current.forEach((el, i) => {
+        if (!el) return;
+        const expanded = open === i;
 
-      if (!mounted.current || reduced) {
-        gsap.set(el, {
-          height: expanded ? "auto" : 0,
-          opacity: expanded ? 1 : 0,
-          visibility: expanded ? "visible" : "hidden",
-        });
-        return;
-      }
+        if (!mounted.current || reduced) {
+          gsap.killTweensOf(el);
+          gsap.set(el, {
+            height: expanded ? "auto" : 0,
+            visibility: expanded ? "visible" : "hidden",
+          });
+          return;
+        }
 
-      gsap.killTweensOf(el);
-      if (expanded) {
-        gsap.set(el, { visibility: "visible" });
-        gsap.to(el, { height: "auto", opacity: 1, duration: 0.5, ease: EASE });
-      } else {
-        gsap.to(el, {
-          height: 0,
-          opacity: 0,
-          duration: 0.5,
-          ease: EASE,
-          onComplete: () => gsap.set(el, { visibility: "hidden" }),
-        });
-      }
-    });
+        gsap.killTweensOf(el);
+        if (expanded) {
+          gsap.set(el, { visibility: "visible" });
+          gsap.to(el, { height: "auto", duration: 0.5, ease: EASE });
+        } else {
+          gsap.to(el, {
+            height: 0,
+            duration: 0.5,
+            ease: EASE,
+            onComplete: () => gsap.set(el, { visibility: "hidden" }),
+          });
+        }
+      });
+    };
+
+    if (ctx.current) ctx.current.add(apply);
+    else apply();
 
     mounted.current = true;
   }, [open]);

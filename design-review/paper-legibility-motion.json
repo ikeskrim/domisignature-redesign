@@ -1,0 +1,184 @@
+[
+  {
+    "width": "1440",
+    "route": "home",
+    "measured": 186,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venues",
+    "measured": 69,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venue-mountain-escape",
+    "measured": 71,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venue-thalasses",
+    "measured": 76,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venue-olive-stories",
+    "measured": 72,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "events",
+    "measured": 87,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "event-sunset-by-the-pool",
+    "measured": 49,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "event-villa-party",
+    "measured": 48,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "services",
+    "measured": 70,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "wedding-guide",
+    "measured": 71,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "about",
+    "measured": 67,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "contact",
+    "measured": 65,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "404",
+    "measured": 47,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "home",
+    "measured": 168,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venues",
+    "measured": 69,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-mountain-escape",
+    "measured": 71,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-thalasses",
+    "measured": 76,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-olive-stories",
+    "measured": 72,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "events",
+    "measured": 87,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "event-sunset-by-the-pool",
+    "measured": 49,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "event-villa-party",
+    "measured": 48,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "services",
+    "measured": 70,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "wedding-guide",
+    "measured": 65,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "about",
+    "measured": 67,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "contact",
+    "measured": 65,
+    "failing": 0,
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "404",
+    "measured": 47,
+    "failing": 0,
+    "bad": []
+  }
+]

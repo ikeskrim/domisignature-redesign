@@ -13,7 +13,9 @@
  *
  * Lighthouse is deliberately NOT here. It needs a stable machine to produce
  * comparable numbers and takes several minutes; it stays a local, deliberate
- * measurement (`npm run audit:lighthouse`).
+ * measurement (`npm run audit:lighthouse`). INP is not here either, for the
+ * same reason: a 4x CPU throttle on top of this machine's own speed is not a
+ * number two machines agree on (`npm run audit:inp`).
  *
  * Usage: npm run qa              — everything
  *        npm run qa -- --static  — only the checks that need no server
@@ -61,9 +63,17 @@ const SERVED_CHECKS = [
   ["focus", ["scripts/focus-ring.mjs"], "every focus indicator changes the page by 3:1, all round"],
   ["paper", ["scripts/paper-legibility.mjs"], "all text on paper clears its bar on the worst pixel"],
   ["launch", ["scripts/launch-check.mjs"], "SEO flips, sitemap and all 21 legacy redirects"],
+  /* Stage 6, motion on paper. All three are deterministic: they read states,
+     computed styles and pixels at fixed moments, not timings that vary with
+     the machine (INP does, which is why it stays out — see the header). */
+  ["motion-tier", ["scripts/motion-tier.mjs"], "the drop switch applies its prefix at 390, nothing at 1440"],
+  ["focus-motion", ["scripts/focus-motion.mjs"], "a focused element is never hidden, clipped or covered"],
+  ["typeset-clip", ["scripts/typeset-clip.mjs"], "no TextReveal line clips its own ink"],
 ];
 
 const results = [];
+/* The name column fits the longest name, so a new check never breaks the table. */
+const NAME_WIDTH = Math.max(...[...STATIC_CHECKS, ...SERVED_CHECKS].map(([name]) => name.length)) + 1;
 
 function run(args, env = {}) {
   return new Promise((resolve) => {
@@ -88,7 +98,7 @@ function run(args, env = {}) {
 async function section(title, checks, env) {
   console.log(`\n${title}`);
   for (const [name, args, what] of checks) {
-    process.stdout.write(`  ${name.padEnd(10)} ${what.padEnd(58)}`);
+    process.stdout.write(`  ${name.padEnd(NAME_WIDTH)} ${what.padEnd(58)}`);
     const { code, signal, out } = await run(args, env);
     const ok = code === 0;
     results.push({ name, ok, signal, out });

@@ -37,6 +37,9 @@ msg*.txt
 *.bak
 *.log
 design-review/_prod.*
+# Probe captures (a label starting with an underscore, e.g. _s6probe) are
+# measurement scratch, never a published set.
+design-review/_*/
 public/_grade-preview.html
 
 # ─── Withheld frames — MUST NOT be published ──────────────────────────────────

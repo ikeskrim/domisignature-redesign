@@ -1,0 +1,138 @@
+{
+  "label": {
+    "source": "local build 057bcde, next 15.5.25",
+    "framework": "next 15.5.25",
+    "runs": 1,
+    "drop": null,
+    "throttling": "simulate"
+  },
+  "rows": [
+    {
+      "preset": "desktop",
+      "label": "Home",
+      "route": "/",
+      "performance": 99,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0",
+      "tbt": "40 ms",
+      "lcpElement": "<span data-hero-line=\"true\" class=\"block font-display text-hero font-light uppercase leading-[0.9] tracking-[…",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "network-dependency-tree-insight",
+        "total-byte-weight (Total size was 3,496 KiB)",
+        "image-delivery-insight (Est savings of 5 KiB)",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "render-blocking-insight",
+        "speed-index (1.4 s)"
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Venues",
+      "route": "/venues",
+      "performance": 99,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0",
+      "tbt": "0 ms",
+      "lcpElement": "<p class=\"prose-editorial\">",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 210 ms)",
+        "image-delivery-insight (Est savings of 139 KiB)",
+        "legacy-javascript-insight (Est savings of 12 KiB)"
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Venue detail",
+      "route": "/venues/thalasses",
+      "performance": 99,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.7 s",
+      "cls": "0.001",
+      "tbt": "0 ms",
+      "lcpElement": "<img alt=\"Thalasses — White walls, blue water, and a private beach fifty metres away.\" fetchpriority=\"high\" de",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "network-dependency-tree-insight",
+        "image-delivery-insight (Est savings of 18 KiB)",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "render-blocking-insight"
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Signature Events",
+      "route": "/events",
+      "performance": 99,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0",
+      "tbt": "0 ms",
+      "lcpElement": "<span class=\"inline-block\">",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 210 ms)",
+        "image-delivery-insight (Est savings of 567 KiB)"
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Wedding Guide",
+      "route": "/wedding-guide",
+      "performance": 99,
+      "accessibility": 95,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0",
+      "tbt": "0 ms",
+      "lcpElement": "<span class=\"inline-block\">",
+      "failing": [
+        "color-contrast",
+        "heading-order",
+        "forced-reflow-insight",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 210 ms)",
+        "legacy-javascript-insight (Est savings of 12 KiB)"
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Contact",
+      "route": "/contact",
+      "performance": 99,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0",
+      "tbt": "0 ms",
+      "lcpElement": "<p class=\"prose-editorial\">",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 210 ms)"
+      ]
+    }
+  ]
+}

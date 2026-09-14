@@ -7,7 +7,7 @@ import { venues } from "@content/venues";
 import { journey } from "@content/journey";
 import { RuleDraw, TextReveal } from "@/components/motion/Reveal";
 import { CountUp } from "@/components/motion/CountUp";
-import { gsap, EASE, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, EASE, DUR, prefersReducedMotion, startsInViewport } from "@/lib/gsap";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -26,6 +26,12 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * reading: the word CRETE and the paragraph are already set and still by the
  * time the pin engages, and only the backdrop and the not-yet-read stats move
  * during it. The scene releases as soon as the last figure lands.
+ *
+ * Stage 6 — nothing on paper fades. The facts used to arrive as a scrubbed
+ * opacity fade, so a scroll that stopped mid-pin left paper type
+ * part-transparent. They are now uncovered by a clip that opens down the block
+ * while it lifts, on the same position in the same timeline; at any stop every
+ * glyph that shows is at full ink. Below the pin they settle: a lift, no fade.
  */
 /**
  * The arrival sequence — five real photographs, scrubbed.
@@ -141,9 +147,14 @@ export function Arrival() {
          * measures is the worst case by construction rather than a midpoint
          * that a scrub could wander past.
          */
-        tl.to(backdrop.current, { opacity: 0.5, scale: 1.06, ease: "none" }, 0).from(
+        tl.to(backdrop.current, { opacity: 0.5, scale: 1.06, ease: "none" }, 0).fromTo(
           facts.current,
-          { y: 60, opacity: 0, ease: "none" },
+          /* Uncovered, not faded: the clip's lower inset opens 100% -> 0% as
+             the block lifts 60 -> 0, at the position and default duration the
+             fade had. The block holds no focusable, so the clip can never cut a
+             focus ring. */
+          { y: 60, clipPath: "inset(0 0 100% 0)" },
+          { y: 0, clipPath: "inset(0 0 0% 0)", ease: "none" },
           0.15,
         );
 
@@ -162,14 +173,31 @@ export function Arrival() {
             0.1 + (i / stack.length) * 0.72,
           );
         });
+
+        /*
+         * This pin is created late: `sequence` is decided in an effect, so the
+         * scene mounts, then re-runs this effect a commit later - after every
+         * section below it has made its own ScrollTriggers and after
+         * SmoothScroll's refresh. ScrollTrigger refreshes in creation order, so
+         * those later sections kept start and end positions measured without
+         * this pin's 180% of spacing, and at desktop sizes every scrub below the
+         * arrival ran a full pin distance early (the closing chapter's exit had
+         * already finished before it reached the screen; measured, stage 6).
+         * Sorting puts the triggers back in page order, and the refresh measures
+         * everything below with the pin in place.
+         */
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
       });
 
-      /* Below that, the facts simply reveal on arrival — no pin. */
+      /* Below that, the facts simply settle on arrival — no pin, and no fade:
+         a lift onto the page. A block already on screen at mount was painted
+         correctly by the server and is left where it is. */
       mm.add("(max-width: 1023px), (max-height: 699px)", () => {
+        if (!facts.current || startsInViewport(facts.current)) return;
         gsap.from(facts.current, {
           y: 40,
-          opacity: 0,
-          duration: 0.95,
+          duration: DUR.settle,
           ease: EASE,
           scrollTrigger: { trigger: facts.current, start: "top 88%", once: true },
         });

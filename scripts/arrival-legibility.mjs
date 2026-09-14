@@ -93,7 +93,10 @@ for (const subject of SUBJECTS) {
         const el = document.querySelector('[data-measure="arrival-word"]');
         const section = el?.closest("section");
         if (!section) return 0;
-        section.scrollIntoView();
+        /* Stage 6 added scroll-padding-top for the fixed header, which would
+           land scrollIntoView() below the section's top and move every frame
+           this reads. Scroll to the section's exact top, where it always stood. */
+        window.scrollTo(0, section.getBoundingClientRect().top + window.scrollY);
         await new Promise((r) => setTimeout(r, 900));
         const backdrop = section.querySelector(".absolute.inset-0");
         if (!backdrop) return 0;

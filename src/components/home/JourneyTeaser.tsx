@@ -47,7 +47,15 @@ export function JourneyTeaser() {
         <div className="mt-20 grid gap-16 lg:mt-28 lg:grid-cols-12 lg:gap-20">
           {/* Chapter one, in full. Its photograph sits inside the column, an
               object on the page, so it is a plate; the drift and zoom still run
-              inside the ScrollImage's own frame, which the mat surrounds. */}
+              inside the ScrollImage's own frame, which the mat surrounds.
+              Stage 6 halves the amplitude (drift 4, zoom 0.06, against the
+              default 8 and 0.1): at full strength the picture's own top edge
+              slid into view inside the mat while the plate was leaving the
+              top of the screen, several pixels deep. Halved, a sliver still
+              showed as the plate's top reached the viewport's top edge (about
+              2px at 1440x900, 4px at 390x844); ScrollImage now clamps the
+              drift to the headroom its scale leaves, so no edge shows at any
+              amplitude and the halved values stay for the quieter motion. */}
           <div className="lg:col-span-6">
             <Plate as="div">
               <ScrollImage
@@ -55,6 +63,8 @@ export function JourneyTeaser() {
                 alt={lead.imageAlt}
                 sizes="(max-width: 1024px) 100vw, 48vw"
                 className="aspect-[4/3] w-full"
+                drift={4}
+                zoom={0.06}
               />
             </Plate>
             <Reveal delay={0.08}>

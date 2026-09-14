@@ -12,6 +12,10 @@
  * transform that pushes it off, or by clip-path. It also checks the preloader
  * never appears and that nothing is left mid-animation.
  *
+ * Stage 6 adds two: no container holding text keeps a leftover inline
+ * clip-path or a non-identity inline transform (a reveal's start state that was
+ * never cleared), and no `.plate-lift` shows its lift shadow at rest.
+ *
  * Usage: npm run audit:reduced-motion
  */
 
@@ -99,6 +103,50 @@ for (const [name, route] of ROUTES) {
 
       if (cs.clipPath && cs.clipPath !== "none" && /inset\((?!0)/.test(cs.clipPath)) {
         problems.push(`clipped ${cs.clipPath} — "${own.slice(0, 40)}"`);
+      }
+    }
+
+    /*
+     * Stage 6: leftovers. A reveal that sets its start state inline and never
+     * clears it leaves a transform or a clip on the block even when the block
+     * looks right — a stacking context that breaks a pin, a clip that cuts a
+     * focus ring. The check above reads computed styles on text elements; this
+     * one reads the inline styles on every container that holds text, because
+     * the start state lives on the wrapper, not on the words.
+     */
+    const identity = (value) => {
+      if (!value || value === "none") return true;
+      try {
+        return new DOMMatrixReadOnly(value).isIdentity;
+      } catch {
+        /* Percentages cannot be parsed without a box: identity only if every
+           number is a zero translate, a unit scale or a zero rotation. */
+        return /^(\s*(translate(3d|X|Y|Z)?\((\s*-?0(\.0+)?(px|%)?\s*,?)+\)|scale(3d|X|Y|Z)?\((\s*1(\.0+)?\s*,?)+\)|rotate[XYZ]?\(\s*-?0(\.0+)?(deg|rad|turn)?\s*\)))+\s*$/.test(value);
+      }
+    };
+    for (const el of document.querySelectorAll("main *, footer *")) {
+      if (el.closest('[aria-hidden="true"]') && !el.querySelector("[data-word]") && !el.closest("[data-word]")) continue;
+      if (getComputedStyle(el).position === "fixed") continue;
+      if (!el.textContent.trim()) continue;
+      const s = el.style;
+      const text = el.textContent.trim().replace(/\s+/g, " ").slice(0, 40);
+      if (s.clipPath && s.clipPath !== "none") problems.push(`leftover inline clip-path ${s.clipPath} — "${text}"`);
+      if (!identity(s.transform)) problems.push(`leftover inline transform ${s.transform} — "${text}"`);
+      for (const prop of ["translate", "scale", "rotate"]) {
+        const v = s[prop];
+        if (v && v !== "none" && !/^(0(px|%)?(\s+0(px|%)?){0,2}|1(\s+1){0,2}|0deg)$/.test(v.trim())) {
+          problems.push(`leftover inline ${prop} ${v} — "${text}"`);
+        }
+      }
+    }
+
+    /* Stage 6: a lift shadow exists only while something is lifted. Nothing
+       is hovered or focused here, so every plate is at rest. */
+    for (const el of document.querySelectorAll(".plate-lift")) {
+      const op = parseFloat(getComputedStyle(el, "::before").opacity);
+      if (op > 0) {
+        const text = (el.textContent || el.querySelector("img")?.getAttribute("src") || "").trim().replace(/\s+/g, " ").slice(0, 40);
+        problems.push(`lift shadow at rest (::before opacity ${op.toFixed(2)}) — "${text}"`);
       }
     }
 

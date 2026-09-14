@@ -29,6 +29,10 @@ import { Plate } from "@/components/ui/Plate";
  * A drag is distinguished from a click by distance: past 6px of travel the
  * click that ends the gesture is swallowed, so pulling the shelf never
  * accidentally opens a gallery, while a genuine click still navigates.
+ *
+ * Stage 6: each card's plate lifts on a fine pointer's hover or while its link
+ * holds keyboard focus (`<Plate lift>`), in place of the photograph's hover
+ * zoom.
  */
 export function EventsStrip() {
   const scroller = useRef<HTMLDivElement>(null);
@@ -36,6 +40,10 @@ export function EventsStrip() {
   useEffect(() => {
     const el = scroller.current;
     if (!el || !hasFinePointer()) return;
+
+    /* The glide is created in a pointer handler, long after this effect ran,
+       so it is added into a context of its own and reverted on unmount. */
+    const ctx = gsap.context(() => {});
 
     let down = false;
     let startX = 0;
@@ -71,15 +79,17 @@ export function EventsStrip() {
       /* A little glide out of the gesture, unless motion is turned down. */
       if (travelled > 6 && !prefersReducedMotion()) {
         const dx = e.clientX - startX;
-        gsap.to(el, {
-          scrollLeft: gsap.utils.clamp(
-            0,
-            el.scrollWidth - el.clientWidth,
-            el.scrollLeft - dx * 0.22,
-          ),
-          duration: 0.7,
-          ease: "power3.out",
-        });
+        ctx.add(() =>
+          gsap.to(el, {
+            scrollLeft: gsap.utils.clamp(
+              0,
+              el.scrollWidth - el.clientWidth,
+              el.scrollLeft - dx * 0.22,
+            ),
+            duration: 0.7,
+            ease: "power3.out",
+          }),
+        );
       }
     };
 
@@ -102,6 +112,7 @@ export function EventsStrip() {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
       el.removeEventListener("click", onClick, true);
+      ctx.revert();
     };
   }, []);
 
@@ -111,15 +122,17 @@ export function EventsStrip() {
      that was the previous card's, which left the focused card and its ring 36px
      past the viewport. Run a frame later, after the browser's own scroll and
      snap, and only when the card is not already whole in view. Every device:
-     a keyboard can be attached to anything. */
+     a keyboard can be attached to anything. The focused element is the card's
+     link; the card is the link's parent, and the scroller's child. */
   useEffect(() => {
     const el = scroller.current;
     if (!el) return;
 
     let frame = 0;
     const onFocus = (e: FocusEvent) => {
-      const card = e.target as HTMLElement;
-      if (card.parentElement !== el || !card.matches(":focus-visible")) return;
+      const link = e.target as HTMLElement;
+      const card = link.parentElement;
+      if (!card || card.parentElement !== el || !link.matches(":focus-visible")) return;
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         const box = el.getBoundingClientRect();
@@ -168,59 +181,65 @@ export function EventsStrip() {
       style={{ scrollPaddingInline: "calc(var(--spacing-gutter, 1.5rem) + 0.75rem)" }}
     >
       {signatureEvents.map((event, i) => (
-        /* self-start: the cards are flex items, and a stretched link is as tall
-           as the tallest card - a focused 4:3 or square card's ring outlined
-           empty paper beneath it. Now the ring hugs the plate and its caption. */
-        <Link
+        /* self-start: the cards are flex items, and a stretched card is as tall
+           as the tallest one - a focused 4:3 or square card's ring outlined
+           empty paper beneath it. Now the ring hugs the plate and its caption.
+           The card is a div around the link rather than the link itself: the
+           plate lifts while its .group :has(:focus-visible), and :has() looks
+           only inside, so the group must hold the focused link, not be it. The
+           link fills the card, so the ring is where it was. */
+        <div
           key={event.slug}
-          href={`/events/${event.slug}`}
-          className="group block w-[78vw] shrink-0 snap-start self-start sm:w-[46vw] lg:w-[30vw] xl:w-[26rem]"
+          className="group w-[78vw] shrink-0 snap-start self-start sm:w-[46vw] lg:w-[30vw] xl:w-[26rem]"
         >
-          {/*
-            The events-index idiom: the photograph is a plate on the shelf and
-            the title and category are its caption, set beneath on paper. With
-            no type on the photograph there is nothing to declare a dark ground
-            for, so the frame's data-ground and its wash are gone, and the grade
-            is the light-ground one. A div, not a figure: the plate sits inside
-            a link, and the link's name is its content, as before.
-          */}
-          <Plate
-            as="div"
-            frameClassName={i % 3 === 0 ? "aspect-[4/5]" : i % 3 === 1 ? "aspect-[4/3]" : "aspect-square"}
-          >
-            <Image
-              src={event.coverImage}
-              alt={`${event.title} — ${event.category}`}
-              fill
-              sizes="(max-width: 640px) 78vw, (max-width: 1024px) 46vw, 30vw"
-              loading="lazy"
-              draggable={false}
-              className="grade-b object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-            />
-          </Plate>
-
-          {/* The caption, set here rather than in Plate's caption slot because
-              the title is a heading and the slot is one eyebrow span. Its side
-              padding matches the mat's, so the words align with the
-              photograph's edge - the same caption as the events index. */}
-          <div className="mt-5 flex items-end justify-between gap-4 px-3 sm:px-4 lg:mt-6 lg:px-5">
-            <div>
-              {/* No index number — a collection, not a sequence. */}
-              <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-[var(--text-primary)]">
-                {event.title}
-              </h3>
-              <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
-                {event.category}
-              </p>
-            </div>
-            <span
-              aria-hidden
-              className="shrink-0 pb-1 text-[var(--text-secondary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
+          <Link href={`/events/${event.slug}`} className="block">
+            {/*
+              The events-index idiom: the photograph is a plate on the shelf and
+              the title and category are its caption, set beneath on paper. With
+              no type on the photograph there is nothing to declare a dark ground
+              for, so the frame's data-ground and its wash are gone, and the grade
+              is the light-ground one. A div, not a figure: the plate sits inside
+              a link, and the link's name is its content, as before.
+            */}
+            <Plate
+              as="div"
+              lift
+              frameClassName={i % 3 === 0 ? "aspect-[4/5]" : i % 3 === 1 ? "aspect-[4/3]" : "aspect-square"}
             >
-              &rarr;
-            </span>
-          </div>
-        </Link>
+              <Image
+                src={event.coverImage}
+                alt={`${event.title} — ${event.category}`}
+                fill
+                sizes="(max-width: 640px) 78vw, (max-width: 1024px) 46vw, 30vw"
+                loading="lazy"
+                draggable={false}
+                className="grade-b object-cover"
+              />
+            </Plate>
+
+            {/* The caption, set here rather than in Plate's caption slot because
+                the title is a heading and the slot is one eyebrow span. Its side
+                padding matches the mat's, so the words align with the
+                photograph's edge - the same caption as the events index. */}
+            <div className="mt-5 flex items-end justify-between gap-4 px-3 sm:px-4 lg:mt-6 lg:px-5">
+              <div>
+                {/* No index number — a collection, not a sequence. */}
+                <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-[var(--text-primary)]">
+                  {event.title}
+                </h3>
+                <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+                  {event.category}
+                </p>
+              </div>
+              <span
+                aria-hidden
+                className="shrink-0 pb-1 text-[var(--text-secondary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5"
+              >
+                &rarr;
+              </span>
+            </div>
+          </Link>
+        </div>
       ))}
     </div>
   );

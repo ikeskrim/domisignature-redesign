@@ -13,6 +13,10 @@
  *
  * It is NOT gated on prefers-reduced-motion: it does not move. Reduced motion
  * asks for less animation, not less texture.
+ *
+ * It is one of the four things a phone may give up, third in the owner's
+ * order: the drop switch (`src/lib/motion-tier.ts`) hides it with
+ * `[data-drop~="grain"]` in globals.css when the measured level reaches it.
  */
 export function Grain() {
   return <div className="grain" aria-hidden="true" />;

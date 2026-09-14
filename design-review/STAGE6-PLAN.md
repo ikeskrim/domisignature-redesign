@@ -1,5 +1,11 @@
 # Stage 6 — motion on paper: the plan
 
+> **Status (2026-09-14): implemented and measured green.** Lead primitives
+> `60c5c3d`, six groups `4483b9b`, integration `057bcde`, then the fix rounds
+> `24e8bb7`, `747ad78`, `4921161` and `4b7f238`. Gate 19/19; the drop-level
+> matrix chose level 0. What was built, what the measurements found and the
+> final numbers are in the stage log (`design-review/INVERSION-PLAN.md`).
+
 Branch `aegean`. Written 2026-09-14 from the stage-6 planning pass, the brief
 audit (`design-review/BRIEF-AUDIT.md`) and the owner's decisions of the same
 day. This file supersedes the stage-4 do-not-touch list for stage 6: from here

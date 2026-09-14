@@ -155,9 +155,9 @@
     "measured": 66,
     "failing": 0,
     "worst": {
-      "ratio": 4.738087709721292,
+      "ratio": 4.7071358044522515,
       "bar": 4.5,
-      "text": "Home",
+      "text": "About",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1
@@ -350,9 +350,9 @@
     "measured": 66,
     "failing": 0,
     "worst": {
-      "ratio": 4.7505526830412865,
+      "ratio": 4.741035624360071,
       "bar": 4.5,
-      "text": "Home",
+      "text": "Where we work",
       "color": "rgb(107, 101, 88)",
       "alpha": 1,
       "opacity": 1

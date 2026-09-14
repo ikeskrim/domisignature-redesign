@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { venues } from "@content/venues";
 import { capacityLabel, cn, pad2 } from "@/lib/utils";
 import { Plate } from "@/components/ui/Plate";
+import { RuleDraw } from "@/components/motion/Reveal";
 import { runVenueTransition } from "@/components/motion/VenueTransition";
 import { prefersReducedMotion, hasFinePointer } from "@/lib/gsap";
 
@@ -30,6 +31,10 @@ import { prefersReducedMotion, hasFinePointer } from "@/lib/gsap";
  * Headings keep the shipped outline: the sr-only "Our venues" h2 labels the
  * region and each name is an h3, as on the list this replaces. The study used
  * h2 names because it had no region heading above them.
+ *
+ * Stage 6: the row is the `.group`, so a fine pointer anywhere on it, or a
+ * keyboard focus on its link, lifts the plate (`<Plate lift>`); and the hairline
+ * under the standfirst draws itself as it comes into view (RuleDraw).
  */
 export function VenuePlates() {
   const plates = useRef<(HTMLImageElement | null)[]>([]);
@@ -85,8 +90,12 @@ export function VenuePlates() {
                 {/* The plate sits outside the link, and its photograph keeps the
                     empty alt this list's photographs always had: the link that
                     follows already reads the name and standfirst, so an alt
-                    carrying them would say both twice. Alt text is frozen. */}
+                    carrying them would say both twice. Alt text is frozen.
+                    Lifting makes the plate positioned, but it sets no z-index,
+                    so the link's stretched ::after (z-index 1) still covers it
+                    and a click on the photograph is still the link's. */}
                 <Plate
+                  lift
                   className={cn("lg:col-span-7", flip && "lg:order-2")}
                   frameClassName="aspect-[4/3]"
                 >
@@ -135,7 +144,7 @@ export function VenuePlates() {
                     {venue.standfirst}
                   </p>
 
-                  <div aria-hidden className="rule mt-8" />
+                  <RuleDraw className="mt-8" />
 
                   {/* The separator takes a text role, not --rule: set as a
                       hairline colour a glyph measured 1.24:1 (the breadcrumb

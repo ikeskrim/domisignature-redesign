@@ -1,0 +1,376 @@
+{
+  "cpu": 4,
+  "good": 200,
+  "browser": "chromium 151.0.7922.34",
+  "results": [
+    {
+      "route": "home",
+      "path": "/",
+      "inp": 96,
+      "ok": true,
+      "actions": [
+        {
+          "action": "menu",
+          "label": "menu open + close",
+          "interactions": 2,
+          "counted": "performance.interactionCount"
+        },
+        {
+          "action": "navigate",
+          "label": "menu -> /venues (client navigation)",
+          "interactions": 2,
+          "counted": "performance.interactionCount"
+        }
+      ],
+      "skipped": [],
+      "interactions": 4,
+      "worst": {
+        "id": 2969,
+        "type": "pointerdown",
+        "duration": 96,
+        "target": "span Menu"
+      },
+      "environment": {
+        "pointer": "coarse",
+        "hover": false,
+        "dataDrop": null,
+        "hardwareConcurrency": 20,
+        "interactionCount": true,
+        "benchMs": {
+          "1x": 72,
+          "4x": 298
+        }
+      },
+      "scroll": {
+        "supported": {
+          "longAnimationFrame": true,
+          "layoutShift": true
+        },
+        "longAnimationFrames": {
+          "count": 0,
+          "blockingMs": 0,
+          "worstMs": 0,
+          "worst": []
+        },
+        "layoutShift": {
+          "count": 0,
+          "sum": 0,
+          "max": 0
+        }
+      }
+    },
+    {
+      "route": "venues",
+      "path": "/venues",
+      "inp": 80,
+      "ok": true,
+      "actions": [
+        {
+          "action": "menu",
+          "label": "menu open + close",
+          "interactions": 2,
+          "counted": "performance.interactionCount"
+        },
+        {
+          "action": "plate",
+          "label": "/venues plate -> /venues/thalasses",
+          "interactions": 1,
+          "counted": "performance.interactionCount"
+        }
+      ],
+      "skipped": [],
+      "interactions": 3,
+      "worst": {
+        "id": 2032,
+        "type": "pointerdown",
+        "duration": 80,
+        "target": "span Menu"
+      },
+      "environment": {
+        "pointer": "coarse",
+        "hover": false,
+        "dataDrop": null,
+        "hardwareConcurrency": 20,
+        "interactionCount": true,
+        "benchMs": {
+          "1x": 78,
+          "4x": 311
+        }
+      },
+      "scroll": {
+        "supported": {
+          "longAnimationFrame": true,
+          "layoutShift": true
+        },
+        "longAnimationFrames": {
+          "count": 0,
+          "blockingMs": 0,
+          "worstMs": 0,
+          "worst": []
+        },
+        "layoutShift": {
+          "count": 0,
+          "sum": 0,
+          "max": 0
+        }
+      }
+    },
+    {
+      "route": "events",
+      "path": "/events",
+      "inp": 120,
+      "ok": true,
+      "actions": [
+        {
+          "action": "chips",
+          "label": "filter chips x3 (of 5)",
+          "interactions": 3,
+          "counted": "performance.interactionCount"
+        },
+        {
+          "action": "menu",
+          "label": "menu open + close",
+          "interactions": 2,
+          "counted": "performance.interactionCount"
+        }
+      ],
+      "skipped": [],
+      "interactions": 5,
+      "worst": {
+        "id": 6227,
+        "type": "pointerdown",
+        "duration": 120,
+        "target": "button Celebration3"
+      },
+      "environment": {
+        "pointer": "coarse",
+        "hover": false,
+        "dataDrop": null,
+        "hardwareConcurrency": 20,
+        "interactionCount": true,
+        "benchMs": {
+          "1x": 78,
+          "4x": 325
+        }
+      },
+      "scroll": {
+        "supported": {
+          "longAnimationFrame": true,
+          "layoutShift": true
+        },
+        "longAnimationFrames": {
+          "count": 0,
+          "blockingMs": 0,
+          "worstMs": 0,
+          "worst": []
+        },
+        "layoutShift": {
+          "count": 0,
+          "sum": 0,
+          "max": 0
+        }
+      }
+    },
+    {
+      "route": "venue-detail",
+      "path": "/venues/thalasses",
+      "inp": 88,
+      "ok": true,
+      "actions": [
+        {
+          "action": "tile",
+          "label": "gallery tile -> lightbox, next, Escape",
+          "interactions": 3,
+          "counted": "performance.interactionCount"
+        },
+        {
+          "action": "menu",
+          "label": "menu open + close",
+          "interactions": 2,
+          "counted": "performance.interactionCount"
+        },
+        {
+          "action": "logoHome",
+          "label": "header mark -> / (client navigation)",
+          "interactions": 1,
+          "counted": "performance.interactionCount"
+        }
+      ],
+      "skipped": [],
+      "interactions": 6,
+      "worst": {
+        "id": 7488,
+        "type": "pointerdown",
+        "duration": 88,
+        "target": "img "
+      },
+      "environment": {
+        "pointer": "coarse",
+        "hover": false,
+        "dataDrop": null,
+        "hardwareConcurrency": 20,
+        "interactionCount": true,
+        "benchMs": {
+          "1x": 75,
+          "4x": 328
+        }
+      },
+      "scroll": {
+        "supported": {
+          "longAnimationFrame": true,
+          "layoutShift": true
+        },
+        "longAnimationFrames": {
+          "count": 2,
+          "blockingMs": 66,
+          "worstMs": 88,
+          "worst": [
+            {
+              "start": 7750.80000000447,
+              "duration": 87.79999999701977,
+              "blocking": 37.6,
+              "scripts": [
+                {
+                  "invoker": "FrameRequestCallback",
+                  "source": "/_next/static/chunks/c15bf2b0-bfa95b308e62c6cc.js",
+                  "duration": 9
+                }
+              ]
+            },
+            {
+              "start": 7623.89999999851,
+              "duration": 79.60000000149012,
+              "blocking": 28,
+              "scripts": [
+                {
+                  "invoker": "FrameRequestCallback",
+                  "source": "/_next/static/chunks/c15bf2b0-bfa95b308e62c6cc.js",
+                  "duration": 8
+                }
+              ]
+            }
+          ]
+        },
+        "layoutShift": {
+          "count": 0,
+          "sum": 0,
+          "max": 0
+        }
+      }
+    },
+    {
+      "route": "event-detail",
+      "path": "/events/villa-party",
+      "inp": 88,
+      "ok": true,
+      "actions": [
+        {
+          "action": "tile",
+          "label": "gallery tile -> lightbox, next, Escape",
+          "interactions": 3,
+          "counted": "performance.interactionCount"
+        },
+        {
+          "action": "video",
+          "label": "video poster play",
+          "interactions": 1,
+          "counted": "performance.interactionCount"
+        }
+      ],
+      "skipped": [],
+      "interactions": 4,
+      "worst": {
+        "id": 212,
+        "type": "pointerdown",
+        "duration": 88,
+        "target": "?"
+      },
+      "environment": {
+        "pointer": "coarse",
+        "hover": false,
+        "dataDrop": null,
+        "hardwareConcurrency": 20,
+        "interactionCount": true,
+        "benchMs": {
+          "1x": 80,
+          "4x": 309
+        }
+      },
+      "scroll": {
+        "supported": {
+          "longAnimationFrame": true,
+          "layoutShift": true
+        },
+        "longAnimationFrames": {
+          "count": 0,
+          "blockingMs": 0,
+          "worstMs": 0,
+          "worst": []
+        },
+        "layoutShift": {
+          "count": 0,
+          "sum": 0,
+          "max": 0
+        }
+      }
+    },
+    {
+      "route": "wedding-guide",
+      "path": "/wedding-guide",
+      "inp": 64,
+      "ok": true,
+      "actions": [
+        {
+          "action": "menu",
+          "label": "menu open + close",
+          "interactions": 2,
+          "counted": "performance.interactionCount"
+        },
+        {
+          "action": "navigate",
+          "label": "menu -> /venues (client navigation)",
+          "interactions": 2,
+          "counted": "performance.interactionCount"
+        }
+      ],
+      "skipped": [
+        "faq: content/pending.ts has no answers, so /wedding-guide renders no accordion"
+      ],
+      "interactions": 4,
+      "worst": {
+        "id": 9590,
+        "type": "pointerdown",
+        "duration": 64,
+        "target": "span Menu"
+      },
+      "environment": {
+        "pointer": "coarse",
+        "hover": false,
+        "dataDrop": null,
+        "hardwareConcurrency": 20,
+        "interactionCount": true,
+        "benchMs": {
+          "1x": 74,
+          "4x": 313
+        }
+      },
+      "scroll": {
+        "supported": {
+          "longAnimationFrame": true,
+          "layoutShift": true
+        },
+        "longAnimationFrames": {
+          "count": 0,
+          "blockingMs": 0,
+          "worstMs": 0,
+          "worst": []
+        },
+        "layoutShift": {
+          "count": 0,
+          "sum": 0,
+          "max": 0
+        }
+      }
+    }
+  ]
+}

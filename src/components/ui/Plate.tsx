@@ -25,12 +25,20 @@ import { cn } from "@/lib/utils";
  * `as="span"` builds the same plate out of spans (set to block), for a plate
  * inside a <button>: a button may hold phrasing content only, and the gallery
  * tiles are buttons.
+ *
+ * `lift` is for a plate that is (or sits inside) something to activate: on a
+ * fine pointer's hover, or while its row holds keyboard focus, the plate rises
+ * a few pixels and a soft shadow appears beneath it — a shadow only while it
+ * is lifted, never at rest (stage 6, `.plate-lift` in globals.css). The
+ * shadow lives on the plate, never on the focused element, so it cannot
+ * replace the focus halo. Its row is the nearest `.group` ancestor.
  */
 export function Plate({
   children,
   caption,
   number,
   as = "figure",
+  lift = false,
   className,
   frameClassName,
 }: {
@@ -40,6 +48,8 @@ export function Plate({
   /** Plate number, derived from position — rendered as 01, 02 … */
   number?: number;
   as?: "figure" | "div" | "span";
+  /** Lifts on hover or row focus, with a shadow only while lifted. */
+  lift?: boolean;
   className?: string;
   /** Classes for the image frame (aspect ratio, overflow). */
   frameClassName?: string;
@@ -53,6 +63,7 @@ export function Plate({
       className={cn(
         inline && "block",
         "border border-[var(--rule)] bg-[var(--surface-raised)] p-3 sm:p-4 lg:p-5",
+        lift && "plate-lift",
         className,
       )}
     >

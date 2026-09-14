@@ -21,16 +21,6 @@ export function Statement() {
 
   return (
     <section className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden bg-[var(--surface)] py-section">
-      {/*
-        The statement sits on the emptiest ground on the site — no photograph,
-        just type on paper. A single lighter pool behind the headline gives
-        that void a source and stops it reading as dead space.
-      */}
-      <div
-        aria-hidden
-        className="glow left-[-10%] top-[8%] h-[70vh] w-[80vw] lg:left-[-5%] lg:w-[55vw]"
-      />
-
       <div className="relative mx-auto w-full max-w-[104rem] px-gutter">
         <Reveal>
           <div className="flex items-center gap-6">

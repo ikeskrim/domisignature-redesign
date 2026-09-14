@@ -1,13 +1,13 @@
 # QA toolkit
 
-Sixteen automated checks, one command, and a GitHub Action that runs them on every
+Nineteen automated checks, one command, and a GitHub Action that runs them on every
 push. This is what stops the site quietly rotting.
 
 ```bash
 npm run qa
 ```
 
-Green means all sixteen passed. It exits non-zero if any failed, so it is safe to
+Green means all nineteen passed. It exits non-zero if any failed, so it is safe to
 put in front of anything.
 
 `npm run qa` builds nothing — run `npm run build` first, or the server-backed
@@ -44,6 +44,9 @@ half will be measuring a stale build. CI does the build itself.
 | **focus** | `scripts/focus-ring.mjs` | Every route is tabbed through as a keyboard user would. At each stop the element is photographed focused and with its indicator suppressed, and the perimeter is walked: at every position the strongest change on the line running outward must be 3:1 or more (WCAG 2.4.13). A ring that fades over a photograph, is clipped by a scroller, or is never drawn fails. Embeds (`iframe`) are listed, not scored: focus inside a third-party document is invisible to this page, the same reason axe excludes them. axe does not evaluate any of this. |
 | **paper** | `scripts/paper-legibility.mjs` | Every text element on paper, at 1440 and 390, scored against the worst pixel behind its glyphs with every glyph hidden — so the vignette, the grain and anything else painted on the ground are counted, which axe (reading CSS colours) cannot do. 4.5:1, or 3:1 for large text. |
 | **launch** | `scripts/launch-check.mjs` | The SEO environment flips are correct for this build, the sitemap resolves, and all 21 legacy URLs from the old site land where `design-review/redirect-map.md` says. Also regenerates that map, with the real result of each row. |
+| **motion-tier** | `scripts/motion-tier.mjs` | The drop switch (`src/lib/motion-tier.ts`) does exactly what it says (stage 6). Home at 390 with `?drop=0…4` in a fresh session: `<html data-drop>` holds exactly that prefix of the owner's order (preloader, parallax, grain, shadow), the preloader appears only when it is not dropped, parallax moves only when it is not dropped, grain and the lift and sheet-edge shadows are hidden only when dropped; at 1440 nothing is ever dropped. |
+| **focus-motion** | `scripts/focus-motion.mjs` | **Motion on**, at 390 and 1440 — every other audit runs with reduced motion, so none of them can see motion hide a focus. At 50, 200, 500 and 900 ms after each trigger (Tab into a reveal that has not played, Enter on a header link under the page curtain, opening the mobile menu, Enter on a venue row, Tab into the closing chapter mid-scrub), the focused element is never part-transparent, never cut by a clipping ancestor across its indicator's 7px reach, and never covered by another layer. A trigger whose target or precondition cannot be set up fails; it is never skipped. |
+| **typeset-clip** | `scripts/typeset-clip.mjs` | No TextReveal line clips its own ink. Every line of word masks is photographed as rendered and again with every mask unclipped; any pixel that differs is ink the mask cut. It cannot see a missing space between words — the height comparison against the previous stage's captures is what caught that. |
 
 ---
 
@@ -53,6 +56,8 @@ half will be measuring a stale build. CI does the build itself.
 | --- | --- |
 | **Lighthouse** (`npm run audit:lighthouse`) | Needs a quiet, consistent machine to produce comparable numbers; a shared CI runner is neither, and a performance gate that flaps gets ignored within a week. Run locally before a release. Results and history: `design-review/lighthouse.md`. |
 | **Cross-browser** (`npm run cross-browser`) | Produces captures for a human to look at. There is no pass/fail to assert. Firefox additionally cannot launch on this machine — see the manual checklist in the report. |
+| **INP** (`npm run audit:inp`) | Interaction to Next Paint under a 4× CPU throttle at 390, on the real interactions (the menu, route navigations, the events filter, a gallery tile and its lightbox, a film poster, a venue plate), each confirmed to have done something. Machine-dependent, like Lighthouse, so it is measured locally. Green is ≤ 200 ms on every route. The wedding guide's FAQ is left out, and reported as left out, while its answers are pending. |
+| **Paper in motion, plates lifted** (`node scripts/paper-legibility.mjs --motion` / `--lift`) | `--motion` scrolls every route with motion on and fails any paper text left part-transparent at any stop; `--lift` forces every interactive plate into its lifted state and fails if the lift shadow darkens a pixel under type by more than 3%. Slow by design (minutes per route), so they run with each motion change rather than on every push. |
 | **Keyboard, layout, reduced-motion, iOS hero** | Diagnostic tools that print findings for a person to judge rather than a verdict a machine can act on. Run them when touching motion, focus order or layout. |
 
 ---

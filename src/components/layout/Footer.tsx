@@ -4,7 +4,7 @@ import { contact, legal, nav, site, social } from "@content/site";
 import { venues } from "@content/venues";
 import { BackToTop } from "@/components/layout/BackToTop";
 import { Marquee } from "@/components/motion/Marquee";
-import { Stagger, StaggerItem, TextReveal } from "@/components/motion/Reveal";
+import { RuleDraw, Stagger, StaggerItem, TextReveal } from "@/components/motion/Reveal";
 import { Phone } from "@/components/ui/Phone";
 
 /**
@@ -44,19 +44,16 @@ export function Footer() {
 
   return (
     <footer className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden bg-[var(--surface-raised)] text-[var(--text-primary)]">
-      {/* The closing scene gets the last light, low and wide behind the wordmark.
-          On the raised colophon the pool paints its own ground and shows
-          nothing; it stays as it was because the pools are deleted in stage 6. */}
-      <div
-        aria-hidden
-        className="glow bottom-[-18%] left-1/2 h-[60vh] w-[120vw] -translate-x-1/2"
-      />
-
       <div className="relative mx-auto w-full max-w-[104rem] px-gutter pt-24 lg:pt-32">
         {/* The one gold hairline the colophon is allowed — decorative, hidden
-            from assistive technology; gold marks, it never sets type. Static:
-            rule draw-ons are stage 6's. */}
-        <div aria-hidden className="mb-10 h-px w-14 bg-[var(--accent)] lg:mb-12" />
+            from assistive technology; gold marks, it never sets type. It draws
+            itself (RuleDraw: scaleX from the left, never a fade). The wrapper
+            carries aria-hidden and the margins; RuleDraw's .rule sets the 1px
+            height, and the gold utility overrides its --rule ground, so at rest
+            it is the same 3.5rem hairline in the same place as the static one. */}
+        <div aria-hidden className="mb-10 lg:mb-12">
+          <RuleDraw className="w-14 bg-[var(--accent)]" />
+        </div>
 
         {/* Closing line — the last thing the site says, so it is set. */}
         <TextReveal
@@ -160,7 +157,11 @@ export function Footer() {
       {/* Legal + the giant wordmark, clipped by the viewport edge */}
       <div className="relative mt-20">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
-          <div className="flex flex-col gap-4 border-t border-[var(--rule)] py-7 text-[0.7rem] text-[var(--text-tertiary)] sm:flex-row sm:items-center sm:justify-between">
+          {/* The legal rule draws itself in --rule (RuleDraw's .rule ground). It
+              replaces the line's 1px border-top and sits directly above it, so
+              at rest it is the same full-width hairline in the same place. */}
+          <RuleDraw />
+          <div className="flex flex-col gap-4 py-7 text-[0.7rem] text-[var(--text-tertiary)] sm:flex-row sm:items-center sm:justify-between">
             <p>{legal.copyright}</p>
             <p>{legal.registration}</p>
             <BackToTop />

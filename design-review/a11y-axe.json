@@ -3,140 +3,140 @@
     "route": "home",
     "path": "/",
     "viewport": "mobile",
-    "contrastNeedsReview": 174,
+    "contrastNeedsReview": 171,
     "violations": []
   },
   {
     "route": "venues",
     "path": "/venues",
     "viewport": "mobile",
-    "contrastNeedsReview": 53,
+    "contrastNeedsReview": 50,
     "violations": []
   },
   {
     "route": "venue-detail",
     "path": "/venues/thalasses",
     "viewport": "mobile",
-    "contrastNeedsReview": 49,
+    "contrastNeedsReview": 46,
     "violations": []
   },
   {
     "route": "events",
     "path": "/events",
     "viewport": "mobile",
-    "contrastNeedsReview": 63,
+    "contrastNeedsReview": 60,
     "violations": []
   },
   {
     "route": "event-detail",
     "path": "/events/villa-party",
     "viewport": "mobile",
-    "contrastNeedsReview": 33,
+    "contrastNeedsReview": 30,
     "violations": []
   },
   {
     "route": "services",
     "path": "/services",
     "viewport": "mobile",
-    "contrastNeedsReview": 59,
+    "contrastNeedsReview": 56,
     "violations": []
   },
   {
     "route": "wedding-guide",
     "path": "/wedding-guide",
     "viewport": "mobile",
-    "contrastNeedsReview": 51,
+    "contrastNeedsReview": 48,
     "violations": []
   },
   {
     "route": "about",
     "path": "/about",
     "viewport": "mobile",
-    "contrastNeedsReview": 54,
+    "contrastNeedsReview": 51,
     "violations": []
   },
   {
     "route": "contact",
     "path": "/contact",
     "viewport": "mobile",
-    "contrastNeedsReview": 34,
+    "contrastNeedsReview": 31,
     "violations": []
   },
   {
     "route": "404",
     "path": "/no-such-page",
     "viewport": "mobile",
-    "contrastNeedsReview": 19,
+    "contrastNeedsReview": 16,
     "violations": []
   },
   {
     "route": "home",
     "path": "/",
     "viewport": "desktop",
-    "contrastNeedsReview": 185,
+    "contrastNeedsReview": 182,
     "violations": []
   },
   {
     "route": "venues",
     "path": "/venues",
     "viewport": "desktop",
-    "contrastNeedsReview": 59,
+    "contrastNeedsReview": 56,
     "violations": []
   },
   {
     "route": "venue-detail",
     "path": "/venues/thalasses",
     "viewport": "desktop",
-    "contrastNeedsReview": 55,
+    "contrastNeedsReview": 52,
     "violations": []
   },
   {
     "route": "events",
     "path": "/events",
     "viewport": "desktop",
-    "contrastNeedsReview": 69,
+    "contrastNeedsReview": 66,
     "violations": []
   },
   {
     "route": "event-detail",
     "path": "/events/villa-party",
     "viewport": "desktop",
-    "contrastNeedsReview": 39,
+    "contrastNeedsReview": 36,
     "violations": []
   },
   {
     "route": "services",
     "path": "/services",
     "viewport": "desktop",
-    "contrastNeedsReview": 65,
+    "contrastNeedsReview": 62,
     "violations": []
   },
   {
     "route": "wedding-guide",
     "path": "/wedding-guide",
     "viewport": "desktop",
-    "contrastNeedsReview": 57,
+    "contrastNeedsReview": 54,
     "violations": []
   },
   {
     "route": "about",
     "path": "/about",
     "viewport": "desktop",
-    "contrastNeedsReview": 60,
+    "contrastNeedsReview": 57,
     "violations": []
   },
   {
     "route": "contact",
     "path": "/contact",
     "viewport": "desktop",
-    "contrastNeedsReview": 40,
+    "contrastNeedsReview": 37,
     "violations": []
   },
   {
     "route": "404",
     "path": "/no-such-page",
     "viewport": "desktop",
-    "contrastNeedsReview": 25,
+    "contrastNeedsReview": 22,
     "violations": []
   }
 ]

@@ -43,6 +43,10 @@
     "verify:palette": "node scripts/palette-literals.mjs",
     "audit:paper": "node scripts/paper-legibility.mjs",
     "audit:hero": "node scripts/hero-states.mjs",
+    "audit:focus-motion": "node scripts/focus-motion.mjs",
+    "audit:motion-tier": "node scripts/motion-tier.mjs",
+    "audit:typeset": "node scripts/typeset-clip.mjs",
+    "audit:inp": "node scripts/inp.mjs",
     "derive:tokens": "node scripts/derive-tokens.mjs"
   },
   "dependencies": {

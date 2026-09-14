@@ -13,15 +13,24 @@
  *   copy     the copy's lift and fade (-70px, opacity to 0)
  *   arrival  where the pinned scene sits, whether it is pinned, the spacer
  *   backdrop the plate's exposure and scale during the pin
- *   facts    the stats' arrival
+ *   facts    the stats' arrival (their lift, opacity and, from stage 6, clip)
  *   layers   which of the five photographs is up
  *
  * Run it against two builds and diff the files: identical numbers mean
  * identical behaviour, and any difference is named with the offset it
  * appears at. Screenshots are kept beside the numbers for the eye.
  *
+ * `--intended` declares the sample keys a change set out to alter (stage 6:
+ * the facts arrive as a clip plus a lift instead of a fade). Those keys may
+ * differ and are printed as intended; every other key must still be identical.
+ * A key names one sample (`facts.opacity`) or a whole group (`facts`). A
+ * capture taken before a sample existed has no value for it, which counts as
+ * a difference: compare a stage-5 capture (s5) with that key declared.
+ * Without `--intended` the comparison is exactly the old one.
+ *
  * Usage: node scripts/hero-states.mjs <label>      -> design-review/stage4/hero/<label>.json
  *        node scripts/hero-states.mjs --compare a b
+ *        node scripts/hero-states.mjs --compare s5 s6 --intended facts.opacity,facts.clipPath
  */
 
 import { chromium } from "playwright";
@@ -33,6 +42,15 @@ const OFFSETS = [0, 100, 250, 400, 550, 700, 850, 1000, 1200, 1500, 1800, 2100, 
 
 if (process.argv[2] === "--compare") {
   const [a, b] = [process.argv[3], process.argv[4]];
+  /* --intended k1,k2 or --intended=k1,k2 */
+  const at = process.argv.findIndex((x) => x === "--intended" || x.startsWith("--intended="));
+  const intendedArg = at < 0 ? null : process.argv[at].includes("=") ? process.argv[at].split("=")[1] : process.argv[at + 1];
+  if (at >= 0 && !intendedArg) {
+    console.log("--intended needs a comma-separated list of sample keys, e.g. facts.opacity,facts.clipPath");
+    process.exit(2);
+  }
+  const INTENDED = (intendedArg ?? "").split(",").map((k) => k.trim()).filter(Boolean);
+  const isIntended = (key) => INTENDED.some((k) => key === k || key.startsWith(`${k}.`));
   const A = JSON.parse(await readFile(`${OUT}/${a}.json`, "utf8"));
   const B = JSON.parse(await readFile(`${OUT}/${b}.json`, "utf8"));
   const flat = (o, p = "", acc = {}) => {
@@ -49,19 +67,25 @@ if (process.argv[2] === "--compare") {
   };
   let behaviour = 0;
   let mask = 0;
-  console.log(`\nHERO CHOREOGRAPHY — ${a} vs ${b}\n`);
+  let intended = 0;
+  const intendedSeen = new Set();
+  console.log(`\nHERO CHOREOGRAPHY — ${a} vs ${b}${INTENDED.length ? `   (intended: ${INTENDED.join(", ")})` : ""}\n`);
   for (let i = 0; i < A.length; i++) {
     const fa = flat(A[i]);
     const fb = flat(B[i]);
     const keys = [...new Set([...Object.keys(fa), ...Object.keys(fb)])];
     const diffs = keys.filter((k) => !near(fa[k], fb[k]));
     const maskDiffs = diffs.filter((k) => k === "hero.clipPath");
-    const other = diffs.filter((k) => k !== "hero.clipPath");
+    const declared = diffs.filter((k) => k !== "hero.clipPath" && isIntended(k));
+    const other = diffs.filter((k) => k !== "hero.clipPath" && !isIntended(k));
     behaviour += other.length;
     mask += maskDiffs.length;
+    intended += declared.length;
+    for (const k of declared) intendedSeen.add(INTENDED.find((d) => k === d || k.startsWith(`${d}.`)));
     const line = `  offset ${String(A[i].offset).padStart(4)}  ${other.length ? "DIFFERS" : "same   "}`;
     console.log(line + (maskDiffs.length ? `   (clip: ${fa["hero.clipPath"]}  vs  ${fb["hero.clipPath"]})` : ""));
     for (const k of other) console.log(`      ${k}: ${JSON.stringify(fa[k])}  vs  ${JSON.stringify(fb[k])}`);
+    for (const k of declared) console.log(`      intended  ${k}: ${JSON.stringify(fa[k])}  vs  ${JSON.stringify(fb[k])}`);
   }
   console.log(`\n${"-".repeat(70)}`);
   console.log(
@@ -69,6 +93,12 @@ if (process.argv[2] === "--compare") {
       ? `pin and scrub identical at all ${A.length} offsets. ${mask ? `The hero's clip differs at ${mask} offsets — that is the chapter exit mask, not the choreography.` : "The clip is identical too."}`
       : `${behaviour} choreography value(s) differ.`,
   );
+  if (INTENDED.length) {
+    console.log(`${intended} intended difference(s) across ${intendedSeen.size} of ${INTENDED.length} declared key(s).`);
+    /* Printed, not failed: a declared change that never shows is worth a look,
+       but the rule is only that nothing undeclared moved. */
+    for (const k of INTENDED.filter((d) => !intendedSeen.has(d))) console.log(`  declared but identical at every offset: ${k}`);
+  }
   if (behaviour) process.exitCode = 1;
   process.exit();
 }
@@ -123,7 +153,9 @@ const measure = () =>
         spacer: spacer ? r2(spacer.getBoundingClientRect().height) : null,
       },
       backdrop: tf(backdrop),
-      facts: tf(facts),
+      /* Stage 6: the facts arrive as a clip plus a lift, so the clip is read
+         beside the opacity it replaces. */
+      facts: { ...tf(facts), clipPath: getComputedStyle(facts).clipPath },
       layers: [...backdrop.children].map((c) => r2(Number(getComputedStyle(c).opacity))).join(" "),
     };
   });
