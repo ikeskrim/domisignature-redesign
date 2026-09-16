@@ -111,9 +111,12 @@ const median = (xs) => {
 async function main() {
   await mkdir(OUT, { recursive: true });
 
+  /* The version is read from the checkout running this script. When it measures
+     another build (the published site, served from its own worktree), pass that
+     build's version in LH_FRAMEWORK, or the label names the wrong one. */
   let framework = "unknown";
   try {
-    framework = JSON.parse(await readFile(path.join(ROOT, "node_modules", "next", "package.json"), "utf8")).version;
+    framework = process.env.LH_FRAMEWORK ?? JSON.parse(await readFile(path.join(ROOT, "node_modules", "next", "package.json"), "utf8")).version;
   } catch {
     /* labelled as unknown rather than guessed */
   }

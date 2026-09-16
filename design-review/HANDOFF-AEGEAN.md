@@ -77,13 +77,31 @@ positions measured without it. **Stage 6 measured green on `4b7f238`**: gate
 19/19, hero-states identical to stage 5 at all sixteen offsets apart from the
 declared facts change, Lighthouse mobile at level 0 every route over the floor
 (Home 87), INP 64–120 ms. The stage log in `design-review/INVERSION-PLAN.md`
-has the entry; the stage-6 snapshot follows the docs commit.
+has the entry. **Stage 6 closed at snapshot `189e059`** (preview
+`kui9vpbga`; CI green on it: install, build and the gate).
 
-**Next — stage 7:** baselines rebuilt (captures and hero states from the final
-tree, medians of three), the full QA pass, the www-to-apex redirect and the
-production seal re-verified, the superseded dark capture sets deleted from the
-branch, the docs pass; then `design-review/MERGE-REPORT.md`, and stop for the
-owner's stage-8 approval.
+**Stage 7 closed** at the snapshot that carries this paragraph; its id and preview are added by the commit after it. Baselines
+rebuilt from the final tree (`design-review/final/` at 390, 768 and 1440 and the 1920
+hero, the palette strips, all ten contact sheets); the dark-era capture sets deleted
+from the branch; before/after pairs for every route at 1440 and 390 in
+`design-review/merge-report/`. The final gate: 19/19 green (`7490369`, on a build of the `840286c` source; nothing the build reads has changed since but three `package.json` script entries). Lighthouse medians of three
+on the final build, mobile at drop level 0: every route over the floor (Home 87);
+desktop 99 everywhere; the published `main` measured the same way beside it. New
+beside the gate: the seal matrix (`npm run audit:seal`, run after a push, 96/96
+sealed), the CSP harness (`npm run audit:csp`, before any headers change; 248 of 248 runs clean on the final build) and the
+`/media` pixel guard (`npm run audit:pixels`, enforced in the boundary script and
+the pre-push hook — a published file never changes its pixels under its old name
+without a verdict in `design-review/media-pixel-verdicts.json`). CI runs with a
+read-only token; its production dependency audit is a warning until the owner
+decides next 16, sharp 0.35.4 and the nanoid bump. `scripts/contact-sheet.mjs` now
+normalises CRLF (a CRLF checkout of `content/venues.ts` had dropped two sheets).
+
+**The work stops here.** `design-review/MERGE-REPORT.md` is what stage 8 waits on:
+the preview, the changes stage by stage, the before/after pairs, the Lighthouse
+table against the standing bars and against `main`, the regressions and why, five
+improvements described only, and everything waiting on the owner. Nothing merges to
+`main` without the owner's approval; production promotion, DNS, deployments,
+repository settings and history rewrites stay the owner's.
 
 **Publishing rule:** never push a local branch — local history holds the
 private originals. Push only single-parent snapshots through `boundary.sh`,

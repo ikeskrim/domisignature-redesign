@@ -47,6 +47,9 @@
     "audit:motion-tier": "node scripts/motion-tier.mjs",
     "audit:typeset": "node scripts/typeset-clip.mjs",
     "audit:inp": "node scripts/inp.mjs",
+    "audit:csp": "node scripts/csp-harness.mjs",
+    "audit:seal": "node scripts/seal-matrix.mjs",
+    "audit:pixels": "node scripts/media-pixel-guard.mjs",
     "derive:tokens": "node scripts/derive-tokens.mjs"
   },
   "dependencies": {

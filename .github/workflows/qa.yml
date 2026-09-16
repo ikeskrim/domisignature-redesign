@@ -17,6 +17,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Least privilege. qa.yml had no `permissions:` key, so the job's token took the
+# repository default (BRIEF-AUDIT.md section 4, hygiene). Nothing here writes to
+# the repository: checkout only reads it, and the npm and Playwright caches and
+# the failure artifact go through the Actions runtime token, not GITHUB_TOKEN.
+permissions:
+  contents: read
+
 concurrency:
   group: qa-${{ github.ref }}
   cancel-in-progress: true
@@ -41,6 +48,19 @@ jobs:
 
       - name: Install
         run: npm ci
+
+      # Production dependencies only, at high severity: it fails the job on a
+      # high or critical advisory in a dependency that ships. It never runs
+      # `npm audit fix`; a fix is a reviewed upgrade in its own commit, and one
+      # that crosses a major or changes output is the owner's call
+      # (BRIEF-AUDIT.md section 4.4). Dev tooling advisories are out of scope.
+      # It reads the registry's advisory database, so a new advisory or a
+      # registry outage can turn an unchanged tree red. The verdict is held back
+      # until the last step, so a red audit never hides the QA gate's result.
+      - name: Dependency audit
+        id: audit
+        continue-on-error: true
+        run: npm audit --omit=dev --audit-level=high
 
       # Only Chromium. WebKit and Firefox are for the cross-browser pass, which
       # is a human-reviewed capture run, not a pass/fail gate.
@@ -86,3 +106,16 @@ jobs:
             design-review/redirect-map.md
           retention-days: 7
           if-no-files-found: ignore
+
+      # The dependency audit's verdict, reported, not enforced - for now. On
+      # 2026-09-15 the audit names four findings whose fixes are the owner's
+      # call, not a reviewed patch: next's bundled postcss and next itself (fixed
+      # only in next 16, a major), sharp (fixed in 0.35.4, a major), and nanoid
+      # (a transitive in-range bump that needs its own approved commit). Failing
+      # the job on them would keep CI red on a tree nobody may change. This
+      # annotates every run instead; make it `exit 1` again once those are
+      # decided. It runs last, so it never hides the QA gate's result.
+      - name: Dependency audit verdict
+        if: ${{ !cancelled() && steps.audit.outcome == 'failure' }}
+        run: |
+          echo "::warning::npm audit found a high or critical advisory in a production dependency (known on 2026-09-15: next/postcss, sharp, nanoid - owner decisions); see the Dependency audit step"

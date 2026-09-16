@@ -83,6 +83,11 @@ while read -r lref lsha rref rsha; do
   count=$(git -C "$ROOT" grep -c -F -f "$names" "$tree" -- . 2>/dev/null | awk -F: '{s += $NF} END {print s + 0}')
   [ "$count" = "0" ] || fail "$count occurrence(s) of a withheld name in the pushed tree"
 
+  # The /media pixel rule: a file modified under public/ since the remote tip
+  # keeps its pixels (or video packets) unless a human verdict approves it.
+  [ -f "$ROOT/scripts/media-pixel-guard.mjs" ] || fail "scripts/media-pixel-guard.mjs is missing; /media pixels cannot be proven unchanged"
+  (cd "$ROOT" && node scripts/media-pixel-guard.mjs "$rsha" "$lsha" --out "${TMPDIR:-${TEMP:-/tmp}}/domi-media-pixel-guard.json" >/dev/null 2>&1) || fail "a public/ file changed pixels under its existing name without an approved verdict (run: node scripts/media-pixel-guard.mjs $rsha $lsha)"
+
   [ -f "$ROOT/scripts/metadata-audit.mjs" ] || fail "scripts/metadata-audit.mjs is missing; media cannot be proven clean"
   (cd "$ROOT" && node scripts/metadata-audit.mjs >/dev/null 2>&1) || fail "published media carry GPS, serials or thumbnails (run: node scripts/metadata-audit.mjs)"
 done

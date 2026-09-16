@@ -3,11 +3,13 @@
 Everything needed to take this live, written so it can be followed by someone
 who did not build it.
 
-**Nothing in this document has been executed.** No deployment has been promoted
-to production, no domain has been added, and no DNS record has been touched.
-The site has only ever been deployed as a preview, and previews are `noindex` in
-both the platform and the application. Promotion is the owner's decision and the
-owner's action.
+**Where this stands.** Steps 1 and 4 have been done on the Vercel side, and
+production builds from `main`. `WAITING-FOR-DNS.md` records exactly what is done
+and verified, and it is the authority on the DNS records. No DNS record has been
+touched: the domain still resolves to the old host. Every address other than
+`domisignature.com` is sealed from search engines by `src/middleware.ts`.
+Pointing the domain at the new site is the owner's decision and the owner's
+action.
 
 **Time:** about 30 minutes of work, then up to a few hours of waiting for DNS.
 **Reversible:** yes, in minutes — see [Rollback](#rollback). Do the TTL step first
@@ -54,7 +56,8 @@ invite Google into a staging site.
 Set it to `main`. This is the branch the public repository publishes to.
 
 Until this is set, "Production" has no meaning for the project and every deploy
-stays a preview — which is the current, intentional state.
+stays a preview. It is set: `WAITING-FOR-DNS.md` records `main`, proven by a
+push that produced a production deployment.
 
 ## 2. Pre-flight — before the domain, not after
 
@@ -64,37 +67,37 @@ production URL, and no amount of checking afterwards will undo a day of Google
 seeing that.
 
 ```bash
-npm run launch:check
-```
-
-That builds with `VERCEL=1 VERCEL_ENV=production`, starts the server, and asserts
-42 things: `robots.txt` allows crawling and declares the sitemap and host; all 17
-pages carry `index, follow`; every canonical is absolute and matches its own
-path; every `og:image` and `twitter:image` is an absolute URL that resolves;
-every sitemap URL returns 200; the study and direction routes are still
-`noindex`; and every legacy URL and fragment from the old site lands where
-`design-review/redirect-map.md` says it does.
-
-Then the standing quality gate:
-
-```bash
+VERCEL=1 VERCEL_ENV=production npm run build
 npm run qa
 ```
 
-Both must be green. If either is not, stop — do not point the domain at a build
+The first line makes a production build, the way CI does. `npm run qa` then
+serves that build itself on 127.0.0.1 and runs the standing quality gate. Its
+launch check (`scripts/launch-check.mjs`) asserts 46 things: `robots.txt` allows
+crawling and declares the sitemap and host; all 17 pages carry `index, follow`;
+every canonical is absolute and matches its own path; every `og:image` and
+`twitter:image` is an absolute URL that resolves; every sitemap URL returns 200;
+the study and direction routes are still `noindex`; a non-canonical host is
+sealed and `www` redirects to the apex; and every legacy URL and fragment from
+the old site lands where `design-review/redirect-map.md` says it does. Run on
+its own, `npm run launch:check` builds nothing and starts no server: it measures
+a build that is already serving.
+
+The gate must be green. If it is not, stop — do not point the domain at a build
 that fails its own checks.
 
 ## 3. Deploy to production
 
-```bash
-npx vercel deploy --prod
-```
-
-Or promote the latest preview from the Vercel dashboard. Either way, open the
-`*.vercel.app` production URL and confirm before touching DNS:
+Production builds from git: with the production branch set to `main`, every
+push to `main` builds a production deployment (`WAITING-FOR-DNS.md` records it
+Ready). You can also promote a git-built preview from the Vercel dashboard.
+Deploy from git only, never with `npx vercel deploy --prod` from a local folder:
+a local working copy holds ignored raw camera masters that must never be
+published, and `.vercelignore` does not list them
+(`design-review/BRIEF-AUDIT.md` §3). Either way, open the `*.vercel.app`
+production URL and confirm before touching DNS:
 
 - the hero film plays,
-- `/robots.txt` says `Allow: /` and names the sitemap,
 - `/sitemap.xml` lists 17 URLs,
 - view-source on any page shows `<meta name="robots" content="index, follow">`.
 
@@ -102,38 +105,62 @@ That last one is the whole ballgame. If it still says `noindex`, the deploy is
 not a production deploy — check the production branch setting in step 1 and
 redeploy. **Do not proceed to DNS until it reads `index, follow`.**
 
+On this address `/robots.txt` says `Disallow: /` and every page carries
+`X-Robots-Tag: noindex`, even on a correct production build. That is the host
+seal in `src/middleware.ts`, not a fault: only `domisignature.com` is served the
+permissive `robots.txt`, and step 6 checks it there.
+
 ## 4. Add the domain in Vercel
 
 **Vercel → Project → Settings → Domains → Add**
 
-Add `domisignature.com`. Vercel will offer to also add `www.domisignature.com`
-redirecting to the apex — accept it. Then add nothing else; extra domains are
-extra things to get wrong.
+Done: `WAITING-FOR-DNS.md` records `domisignature.com` added, verified and
+attached, and `www.domisignature.com` added and attached. If it is ever redone,
+add those two and nothing else; extra domains are extra things to get wrong.
+The `www` → apex redirect is a 308 served by the site's own code
+(`src/middleware.ts`) and tested by the launch check, so it does not depend on a
+dashboard redirect setting; that setting is the owner's.
 
-Vercel now shows the exact DNS records to create. **Use the values Vercel shows
-you, not the values below.** These are correct at the time of writing and are
-here so you know what to expect, but Vercel's published IPs have changed before
-and the dashboard is the authority:
+The records to create were read from Vercel's API for this project and are
+written out in `WAITING-FOR-DNS.md`, which is the authority. An older draft of
+this table gave a single `A @ 76.76.21.21` and `CNAME www cname.vercel-dns.com`;
+those were generic values, not the records Vercel issued for this project:
 
 | Type | Name | Value |
 | --- | --- | --- |
-| `A` | `@` | `76.76.21.21` |
-| `CNAME` | `www` | `cname.vercel-dns.com` |
+| `A` | `@` | `216.198.79.1` |
+| `A` | `@` | `64.29.17.1` |
+| `CNAME` | `www` | `6994f780d349dc94.vercel-dns-017.com.` |
+| `A` | `webmail` | `31.22.115.30` |
+| `A` | `ftp` | `31.22.115.30` |
+
+If the panel accepts only one apex `A`, Vercel's documented fallback is
+`76.76.21.21` alone; if it rejects the long `www` value, `cname.vercel-dns.com.`
+also works (`design-review/launch/dns-cutover.md`).
 
 ## 5. Change DNS
 
-**Lower the TTL first.** At your DNS host, set the TTL on the existing `A` and
-`www` records to 300 seconds and save. Wait for the *old* TTL to expire — if it
-was 24 hours, that is a day. This is the step that makes rollback take five
-minutes instead of a day, and it is the step everyone skips.
+**Lower the TTL first.** At your DNS host (aspx.gr, nameservers `ns17.aspx.gr`
+/ `ns18.aspx.gr`), set the TTL on the existing `A` and `www` records to 300
+seconds and save. Wait for the *old* TTL to expire — it is 3600 seconds today
+(`design-review/launch/dns-before.md`), so that is an hour. This is the step
+that makes rollback take five minutes instead of an hour, and it is the step
+everyone skips. Enter the new records with TTL 300 as well. If the panel will
+not let you set TTL, enter the records anyway; rollback then takes up to an
+hour, which is not worth delaying the launch for.
 
 Then, on launch day:
 
-1. Replace the apex `A` record with Vercel's value.
-2. Replace or create the `www` `CNAME` with Vercel's value.
-3. Leave **everything else alone.** In particular do not touch `MX`, `TXT`
-   (SPF/DKIM/verification), or `CAA` records. Deleting an `MX` record is how a
-   website launch turns into a business losing its email.
+1. Replace the apex `A` record with Vercel's two `A` records.
+2. Delete the existing `A www` record first — most panels refuse a `CNAME` on a
+   name that already has an `A` — then create the `www` `CNAME`.
+3. Change `webmail` and `ftp` from `CNAME`s to the apex into `A` records
+   pointing at `31.22.115.30`, where they already resolve. Without this they
+   follow the apex to Vercel and stop working.
+4. Leave **everything else alone.** In particular do not touch `MX`, `TXT`
+   (SPF/DKIM/verification), `NS`, the `mail` `A` record, or `CAA` records.
+   Deleting an `MX` record is how a website launch turns into a business losing
+   its email.
 
    An earlier draft of this document claimed the domain's mail was on Gmail and
    therefore unaffected. That was an inference from the published contact
@@ -144,7 +171,7 @@ Then, on launch day:
    picture, including two subdomains that *do* follow the apex, is in
    [`design-review/launch/dns-before.md`](design-review/launch/dns-before.md).
    Read it before changing anything.
-4. Save, and wait. Propagation is usually minutes with a low TTL. Vercel issues
+5. Save, and wait. Propagation is usually minutes with a low TTL. Vercel issues
    the TLS certificate automatically once it sees the records; the domain shows
    "Invalid Configuration" until then, which is normal and not an error.
 
@@ -157,15 +184,24 @@ dig +short domisignature.com A
 
 ## 6. Confirm the switch
 
-Once `https://domisignature.com` serves the new site:
+Once the records are saved:
 
 ```bash
-SHOTS_BASE=https://domisignature.com node scripts/launch-check.mjs
+npm run watch:dns      # polls the apex; exits 0 when the new site answers, 3 to be re-run
+npm run verify:launch  # the whole live-domain battery
 ```
 
-Every check should pass against the live domain, including all 21 legacy
-redirects. If the fragment rows fail here but passed locally, the site is being
-served from cache — wait, then re-run.
+`verify:launch` checks indexability from outside (including that the
+`vercel.app` alias stays sealed), re-executes the legacy redirect map against the
+live domain, and crawls every route for dead assets, mixed content and TLS
+validity. Every check should pass; if anything fails it exits non-zero and
+prints the rollback line. If the fragment rows fail here but passed locally, the
+site is being served from cache — wait, then re-run.
+
+Do not point `scripts/launch-check.mjs` at the live domain. It is the local
+rehearsal: its host rows speak plain HTTP to port 80, which Vercel answers with a
+redirect to HTTPS rather than the page, so they fail on a healthy site, and it
+rewrites `design-review/redirect-map.md` with whatever it saw.
 
 Then by hand, in a browser:
 
@@ -218,9 +254,12 @@ old site back. **DNS is the rollback**, and with the TTL already at 300 seconds
 it takes effect in about five minutes.
 
 1. At the DNS host, restore the previous `A` record for `@` and the previous
-   `www` record. Write those two values down **before** step 5 — a screenshot of
-   the DNS panel before you change anything is the cheapest insurance in this
-   document.
+   `www` record: `A @ 31.22.115.30` and `A www 31.22.115.30`, removing Vercel's
+   two apex `A` records and the `www` `CNAME` as you do (`WAITING-FOR-DNS.md`;
+   every earlier record is in `design-review/launch/dns-before.md`). Nothing
+   else is needed: the `webmail` and `ftp` pins already point at the old host.
+   A screenshot of the DNS panel before you change anything is still the
+   cheapest insurance in this document.
 2. Leave the old hosting account active and paid until the new site has been
    live and healthy for a full month. Cancelling it on launch day removes the
    thing you would roll back to.

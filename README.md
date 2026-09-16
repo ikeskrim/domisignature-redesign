@@ -28,17 +28,12 @@ The dev server is pinned to **port 3004**.
 
 ### Audits
 
-The build is gated on six checks, all of which exist because something got past
-a review once. `design-review/PHASE6-REPORT.md` explains each one.
-
-| Script | Catches |
-|---|---|
-| `npm run audit:a11y` | axe-core, 10 routes × 2 viewports |
-| `npm run audit:claims` | scarcity and exclusivity claims, by idea rather than phrasing |
-| `npm run audit:media` | broken galleries, duplicate frames, unoptimised video posters, non-camera PNGs |
-| `npm run audit:prose` | facts lost from the original copy |
-| `npm run audit:keyboard` | focus traps, missing focus indicators, stranded stops |
-| `npm run audit:layout` | horizontal overflow, prose below 14px |
+The build is gated by `npm run qa`: nineteen checks, from TypeScript and the
+palette law to axe, the focus ring, paper legibility and the motion gates, run
+against a production build. `QA-TOOLKIT.md` explains every check, what green
+means and what runs beside the gate (Lighthouse, INP, the paper sweeps with
+motion and lift, the CSP harness, the seal matrix). The script list in
+`scripts/qa.mjs` is the authority; the count is never hard-coded anywhere else.
 
 ### A note on missing files
 
@@ -79,6 +74,9 @@ To change a word on the site, change it in `/content`. Nowhere else.
 Next.js 15 App Router · TypeScript · Tailwind CSS v4 · Motion (Framer Motion) ·
 Lenis · `next/font` · `next/image`.
 
+> **Superseded:** Framer Motion is no longer used. Motion ships on GSAP +
+> ScrollTrigger + Lenis (`src/lib/gsap.ts`).
+
 ```
 src/
   app/                 routes — one folder per page, plus sitemap.ts and robots.ts
@@ -104,6 +102,10 @@ Defined once in `src/app/globals.css` under `@theme`. Warm whites, soft blacks,
 stone and sand, with muted gold used only for small accents. Type is
 Cormorant Garamond (display) over Manrope (UI), both self-hosted by `next/font`.
 Nothing uses a stock Tailwind colour or a default type scale.
+
+> **Superseded:** the type that ships is Playfair Display (display) and Jost
+> (sans), self-hosted by `next/font` in `src/app/layout.tsx`. Colour is asked
+> for by semantic role; the rules are in `design-review/SEMANTIC-TOKENS.md`.
 
 ### Old URLs still work
 

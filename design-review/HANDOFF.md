@@ -1,5 +1,14 @@
 # Handoff — content queue
 
+> **Historical, superseded by [`HANDOFF-AEGEAN.md`](HANDOFF-AEGEAN.md).** This is
+> the pre-Aegean handoff from the dark-palette build, kept for the record. Its
+> queue was completed (see `PHASE6-REPORT.md` §1), and its standing law "Dark
+> ground" was inverted on branch `aegean`. Its publishing procedure is retired
+> and must not be followed: never push a local branch, never force-push, never
+> push `main`. The resume point, the privacy gate and the snapshot procedure are
+> in `HANDOFF-AEGEAN.md`. The capture set linked below, `design-review/atmosphere/`,
+> was removed from the branch in stage 7 and lives in `main`'s history.
+
 Last commit: **`066a096`** on `master` (22+ commits, full history). Public tree
 pushed as a single commit, `9265170` → https://github.com/ikeskrim/domisignature-redesign
 

@@ -1,0 +1,526 @@
+{
+  "generated": "2026-09-14T21:07:32.917Z",
+  "spec": "design-review/BRIEF-AUDIT.md section 8 (stage-7 seal matrix); section 11, stage 7 item 6",
+  "limits": {
+    "imageWidth": 640,
+    "imageQuality": 75,
+    "maxRequestsPerLegacyRow": 6,
+    "maxHops": 5
+  },
+  "hosts": [
+    {
+      "label": "alias",
+      "build": "pre-Aegean build (no data-ground on <html>)",
+      "photo": {
+        "path": "/media/mdGEOR3108.jpg",
+        "source": "og:image of the home page"
+      },
+      "probes": [
+        {
+          "id": "home",
+          "kind": "page",
+          "path": "/",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": null,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "venues",
+          "kind": "page",
+          "path": "/venues/thalasses",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": null,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "events",
+          "kind": "page",
+          "path": "/events/sunset-by-the-pool",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": null,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "services",
+          "kind": "page",
+          "path": "/services",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": null,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "wedding-guide",
+          "kind": "page",
+          "path": "/wedding-guide",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": null,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "about",
+          "kind": "page",
+          "path": "/about",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": null,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "contact",
+          "kind": "page",
+          "path": "/contact",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": null,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "sitemap",
+          "kind": "sitemap",
+          "path": "/sitemap.xml",
+          "expect": 200,
+          "status": 200,
+          "contentType": "application/xml",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "not-found",
+          "kind": "page",
+          "path": "/seal-matrix-no-such-page",
+          "expect": 404,
+          "status": 404,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": null,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "next-image",
+          "kind": "image",
+          "path": "/_next/image?url=%2Fmedia%2FmdGEOR3108.jpg&w=640&q=75",
+          "expect": 200,
+          "status": 200,
+          "contentType": "image/jpeg",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=31536000, immutable",
+          "location": null,
+          "noindex": "ok",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "media",
+          "kind": "media",
+          "path": "/media/mdGEOR3108.jpg",
+          "expect": 200,
+          "status": 200,
+          "contentType": "image/jpeg",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=31536000, immutable",
+          "location": null,
+          "noindex": "ok",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "robots",
+          "kind": "robots",
+          "path": "/robots.txt",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/plain",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ok": true,
+          "reasons": []
+        }
+      ],
+      "robots": {
+        "userAgentStar": true,
+        "disallowAllInStarGroup": true,
+        "allowAllLine": false,
+        "lines": [
+          "User-Agent: *",
+          "Disallow: /"
+        ]
+      },
+      "legacy": [
+        {
+          "from": "/index.html",
+          "to": "/",
+          "chain": [
+            {
+              "path": "/index.html",
+              "status": 308
+            },
+            {
+              "path": "/",
+              "status": 200
+            }
+          ],
+          "hops": 1,
+          "landed": "/",
+          "finalStatus": 200,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "from": "/events/party-dance",
+          "to": "/events/sunset-by-the-pool",
+          "chain": [
+            {
+              "path": "/events/party-dance",
+              "status": 308
+            },
+            {
+              "path": "/events/sunset-by-the-pool",
+              "status": 200
+            }
+          ],
+          "hops": 1,
+          "landed": "/events/sunset-by-the-pool",
+          "finalStatus": 200,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "from": "/venues/villa-aetos",
+          "to": "/venues",
+          "chain": [
+            {
+              "path": "/venues/villa-aetos",
+              "status": 308
+            },
+            {
+              "path": "/venues",
+              "status": 200
+            }
+          ],
+          "hops": 1,
+          "landed": "/venues",
+          "finalStatus": 200,
+          "ok": true,
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "label": "preview",
+      "build": "Aegean light build (<html data-ground=\"light\">)",
+      "photo": {
+        "path": "/media/mdGEOR3108.jpg",
+        "source": "og:image of the home page"
+      },
+      "probes": [
+        {
+          "id": "home",
+          "kind": "page",
+          "path": "/",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "venues",
+          "kind": "page",
+          "path": "/venues/thalasses",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "events",
+          "kind": "page",
+          "path": "/events/sunset-by-the-pool",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "services",
+          "kind": "page",
+          "path": "/services",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "wedding-guide",
+          "kind": "page",
+          "path": "/wedding-guide",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "about",
+          "kind": "page",
+          "path": "/about",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "contact",
+          "kind": "page",
+          "path": "/contact",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "sitemap",
+          "kind": "sitemap",
+          "path": "/sitemap.xml",
+          "expect": 200,
+          "status": 200,
+          "contentType": "application/xml",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "not-found",
+          "kind": "page",
+          "path": "/seal-matrix-no-such-page",
+          "expect": 404,
+          "status": 404,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "next-image",
+          "kind": "image",
+          "path": "/_next/image?url=%2Fmedia%2FmdGEOR3108.jpg&w=640&q=75",
+          "expect": 200,
+          "status": 200,
+          "contentType": "image/jpeg",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=31536000, immutable",
+          "location": null,
+          "noindex": "ok",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "media",
+          "kind": "media",
+          "path": "/media/mdGEOR3108.jpg",
+          "expect": 200,
+          "status": 200,
+          "contentType": "image/jpeg",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=31536000, immutable",
+          "location": null,
+          "noindex": "ok",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "robots",
+          "kind": "robots",
+          "path": "/robots.txt",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/plain",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ok": true,
+          "reasons": []
+        }
+      ],
+      "robots": {
+        "userAgentStar": true,
+        "disallowAllInStarGroup": true,
+        "allowAllLine": false,
+        "lines": [
+          "User-Agent: *",
+          "Disallow: /"
+        ]
+      },
+      "legacy": [
+        {
+          "from": "/index.html",
+          "to": "/",
+          "chain": [
+            {
+              "path": "/index.html",
+              "status": 308
+            },
+            {
+              "path": "/",
+              "status": 200
+            }
+          ],
+          "hops": 1,
+          "landed": "/",
+          "finalStatus": 200,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "from": "/events/party-dance",
+          "to": "/events/sunset-by-the-pool",
+          "chain": [
+            {
+              "path": "/events/party-dance",
+              "status": 308
+            },
+            {
+              "path": "/events/sunset-by-the-pool",
+              "status": 200
+            }
+          ],
+          "hops": 1,
+          "landed": "/events/sunset-by-the-pool",
+          "finalStatus": 200,
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "from": "/venues/villa-aetos",
+          "to": "/venues",
+          "chain": [
+            {
+              "path": "/venues/villa-aetos",
+              "status": 308
+            },
+            {
+              "path": "/venues",
+              "status": 200
+            }
+          ],
+          "hops": 1,
+          "landed": "/venues",
+          "finalStatus": 200,
+          "ok": true,
+          "reasons": []
+        }
+      ]
+    }
+  ],
+  "notAsserted": [
+    "/services?modal (next.config.ts:63) redirects to itself. Its fix is an owner decision (BRIEF-AUDIT.md section 10, item 5), so it is not requested and nothing about it is asserted."
+  ],
+  "passed": 96,
+  "failed": 0,
+  "failures": []
+}

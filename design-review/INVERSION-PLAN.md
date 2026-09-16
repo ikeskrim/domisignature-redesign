@@ -1057,6 +1057,162 @@ register when a session starts) and read it directly.
   unstripped media; two canceled production deployments (`n9yg989zc`,
   `7gujchx43`) still serve all eight withheld paths. Production is the owner's.
 
+### Stage 7 — baselines, the full QA pass, the seal and the docs (2026-09-14 to 2026-09-16)
+
+Built on the closed stage-6 tree (`840286c`, source identical to `4b7f238`). Six
+tasks with no servers ran in parallel, each checked by an independent reader and
+fixed where the checker found a real defect; every measurement was run by the
+lead on this machine.
+
+**Baselines rebuilt.** `design-review/final/` regenerated from the final tree —
+all thirteen routes at 390, 768 and 1440, and the 1920 hero — so the branch no
+longer shows the dark era beside the light one. The palette study's strips were
+rebuilt with the Aegean panel beside the three studied palettes, and the full-page home strip at 1440 (written only by `palette-shots.mjs fullpage`) was rebuilt with them. The
+contact sheets were rebuilt — all ten galleries, 146 frames. The superseded dark-era capture sets were
+deleted from the branch (68 files: `final-scroll`, `atmosphere`, `run3`, `stats`,
+`study`, `directions`, `graffiti`); they stay in `main`'s history, and every report
+that linked them now says so. `grade/`, `arrival/` and the stage-4 and stage-5 sets
+are the light system's own record and stay.
+
+**The full gate:** 19/19 green (`7490369`, on a build of the `840286c` source; nothing the build reads has changed since but three `package.json` script entries). Hero-states against stage 5: pin and scrub identical at
+all sixteen offsets, the clip identical, only the declared facts change.
+
+**Lighthouse,** medians of three runs (worst beside it), local production build of
+`840286c`, Next.js 15.5.25, phones at drop level 0:
+
+| Route | Mobile performance | Mobile LCP | Desktop performance | Desktop LCP |
+|---|---|---|---|---|
+| Home | **87** / 86 | 3.3 s | **99** / 92 | 0.7 s |
+| Venues | **92** / 92 | 3.1 s | **99** / 99 | 0.6 s |
+| Venue detail | **91** / 91 | 3.2 s | **99** / 99 | 0.6 s |
+| Signature Events | **92** / 92 | 3.0 s | **99** / 99 | 0.6 s |
+| Wedding Guide | **91** / 91 | 3.0 s | **99** / 99 | 0.6 s |
+| Contact | **93** / 93 | 2.9 s | **99** / 99 | 0.6 s |
+
+Accessibility 95–96 on both presets (the decorative logotype, stage 6), best
+practices and SEO 100, CLS 0–0.001. Every standing bar holds: mobile performance
+≥ 80 on every route (the lowest median 87, the lowest single run 86), every other
+category ≥ 90, desktop ≥ 90 everywhere. Largest paints: Home's hero headline, the
+first `/venues` plate, the venue title card's photograph, a TextReveal word on
+`/events`, the Mountain Escape photograph on `/wedding-guide` (settled, as the
+brief audit asked), the editorial paragraph on `/contact`.
+
+**The published site, measured the same way** (`origin/main`, its own locked
+dependencies and build, the same Lighthouse script on this machine): mobile Home 83 (worst 83), Venues 93 (92), Venue detail 88 (87), Signature Events 93 (91), Wedding Guide 92 (91), Contact 93 (91); desktop 98–99 on every route; accessibility 98–100 (`design-review/lighthouse-main-ab-mobile.md`, `-desktop.md`). Against it the branch gains four points on Home (a largest paint half a second earlier) and three on the venue page, stays within `main`'s own spread on Venues, Events and the Wedding Guide (one point each), and gives up 2–5 points of accessibility to the exempt logotype. The published site's own single-run table (Events 97) was one run on an earlier state of the machine; three runs put it at 93. Those two reports first named Next.js 15.5.25 as their framework: `lighthouse.mjs` read the version from the checkout running it, not from the build it measured. They were corrected to 15.5.22 by hand, and the script now takes the served build's version in `LH_FRAMEWORK`.
+
+**The seal, re-verified from outside:** a new seal matrix (`npm run audit:seal`)
+asks the production alias and the stage-6 preview, over the internet, for every
+route family, the sitemap, a 404, `/_next/image` at `w=640`, a `/media` file and
+robots.txt. **96 checks, all green: sealed.** Every non-redirect response carries
+`noindex`; robots.txt holds `Disallow: /` at line start and no `Allow: /`; the
+preview serves the light build and the alias still serves `main`'s; each of the
+three legacy path rows lands in one hop with a 200, and a hop-following guard
+fails any loop. `/services?modal` is deliberately not requested while its
+redirect loop waits on the owner. The preview's host is never written down.
+
+**Content Security Policy, measured without shipping it:** the full Chromium matrix of
+`npm run audit:csp` (31 routes, 390 and 1440, both motion modes, report and enforce:
+248 runs on the final build) **passes, 248 of 248** (`98703f8`,
+`design-review/csp-harness.md`). No run recorded a violation other than the two
+positive-control probes, and the probes fired on every run with that run's own
+disposition. All 48 embeds loaded, the one real Monday form included, with no page
+error. Child frames went only to the Monday form and the Maps embed. None of the three
+full matrices saw a redirect to `consent.google.com` from this machine.
+
+Two earlier full runs are part of the record; neither recorded an unexpected
+violation. The first (`7490369`) failed four runs: three lost a fetch to a dropped
+loopback connection between the harness and the server, and one Maps embed never
+loaded. The second, with a transport retry (`2699238`), failed two, each a Maps
+embed on the first run of its route (`/contact` and `/venues/mountain-escape`),
+with nothing recorded to say why. The harness now records any child frame whose
+document fails to load, with the browser's reason, and reloads such a frame once
+after a network error (`98703f8`). A throwaway copy that reset the first Maps
+document of 16 runs proved it: every reset was recorded, one frame was reloaded, and
+every map loaded. The passing run needed one transport retry and no reload, so the
+two unexplained Maps failures were not caught again; if they recur, the report will
+name the cause. Every retry and reload is counted in the report.
+
+**The `/media` pixel rule, enforced.** `scripts/media-pixel-guard.mjs` compares
+every `public/` file modified between two revisions by its decoded pixels (images,
+EXIF orientation honoured on both sides) or its copied packets and display
+geometry (video), and fails any change that has no human verdict in
+`design-review/media-pixel-verdicts.json`. It runs in the boundary script and in
+the pre-push hook. Proof on the metadata strip itself (`c40de6c`): 149 files
+modified, 149 metadata-only.
+
+**CI.** `qa.yml` now runs with a read-only token and audits production
+dependencies. The audit is reported, not enforced, because today it names four
+findings whose fixes are the owner's to choose, not a reviewed patch: Next's bundled
+PostCSS (high) and Next itself through it (moderate), fixed only in Next 16; sharp
+(high, libvips and libheif), fixed only in sharp 0.35.4; and nanoid (high), a
+transitive in-range bump that needs its own approved commit. The stage-6 snapshot (`189e059`) passed CI on GitHub's runner: install, build and the full gate.
+
+**The docs pass.** `DESIGN.md` and the old handoff carry superseded banners;
+README's stack and type notes say what ships now, and its audits section points to
+the nineteen-check gate; the reports that linked the deleted captures say where they
+went; `OWNER-MANUAL.md` describes the gate as it is; `LAUNCH-RUNBOOK.md` is corrected
+against `WAITING-FOR-DNS.md` in eleven places (the DNS records, the TTL, the
+launch-day steps, and a step 6 that would have false-failed over plain HTTP), each
+old and new text kept in the task's record. `WAITING-FOR-DNS.md` is untouched.
+
+**Found on the way.** The gate's media check went red after the contact sheets
+were rebuilt: the sheet script reads the content files as text and split venues on
+LF line endings, and `content/venues.ts` is checked out with CRLF, so every venue
+after the first merged into one block and two venue sheets vanished. The reader now
+normalises line endings.
+
+**Advisories.**
+
+**Next.js advisories on this branch**
+
+| Advisory | Severity | Affected 15.x → fixed in | 1. Disclosed and fixed upstream | 2. When this branch was affected (next 15.5.22) | 3. When this branch was patched |
+|---|---|---|---|---|---|
+| **GHSA-2xp9-vwfh-vxw4**: remote code execution without login in the Image Optimization API, triggered by a crafted AVIF input (libheif, reached through sharp). Next's advisory has no CVE. The upstream libheif advisory is GHSA-g89c-p67h-r497 / CVE-2026-84383. | Critical, CVSS v4 9.5 | >= 10.0.0 < 15.5.24 → 15.5.24 | **2026-08-25.** The repository advisory went up at 16:16 UTC and next 15.5.24 reached npm at 16:14 UTC (the upstream libheif advisory was out at 11:17 UTC). No NVD entry. It reached GitHub's global database, and so `npm audit`, on 2026-09-08 at 21:21 UTC. | **2026-08-06 to 2026-09-14.** The branch's first lockfile (`cd3a28e`) already resolved 15.5.22; before 2026-08-25 the flaw was unknown. It was public for about 19 days 6 hours (2026-08-25 16:16 UTC to `e7252a7` at 2026-09-13 21:52 UTC). `npm audit` could report it for the last 5 days. | **2026-09-14 00:52 +03:00:** local commit `e7252a7`, next and eslint-config-next 15.5.25. **2026-09-14 17:56 +03:00:** snapshot `a553df2` put it on origin/aegean. |
+| **GHSA-p293-qw3h-jr36 / CVE-2026-75604**: remote code execution without login on servers using a Windows filesystem, in apps using the Pages Router and App Router without Cache Components (path traversal). | Critical, CVSS v3.1 9.0 | >= 13.4 < 15.5.24 → 15.5.24 | **2026-08-25.** The repository advisory went up at 16:15 UTC and next 15.5.24 reached npm at 16:14 UTC. NVD published the CVE on 2026-09-01 at 22:17 UTC. It reached GitHub's global database, and so `npm audit`, on 2026-09-08 at 20:51 UTC. | **2026-08-06 to 2026-09-14.** Same lockfile history. It was public for about 19 days 6 hours (2026-08-25 16:15 UTC to 2026-09-13 21:52 UTC). `npm audit` could report it for the last 5 days. Local QA servers listened on every network interface until `e6db177` (2026-09-14 00:15 +03:00). | **2026-09-14 00:52 +03:00:** `e7252a7` (15.5.25). **2026-09-14 17:56 +03:00:** snapshot `a553df2`. |
+
+Commit times are local (+03:00); advisory and registry times are UTC. The bump committed on 2026-09-14 is 2026-09-13 in UTC.
+
+**Timeline**
+
+| When | Event | Source |
+|---|---|---|
+| 2026-07-25 20:45 UTC | next 15.5.22 published | npm registry |
+| 2026-08-06 16:41 +03:00 | First lockfile on the branch resolves next 15.5.22 | `cd3a28e`, package-lock.json |
+| 2026-08-25 11:17 UTC | Upstream libheif advisory GHSA-g89c-p67h-r497 / CVE-2026-84383 | GitHub advisory record (libheif) |
+| 2026-08-25 16:14 UTC | next 15.5.24 on npm (GitHub release 16:16 UTC) | npm registry; GitHub releases |
+| 2026-08-25 16:15 / 16:16 UTC | Repository advisories GHSA-p293-qw3h-jr36 / GHSA-2xp9-vwfh-vxw4 published | GitHub advisory records (vercel/next.js) |
+| 2026-08-25 16:39 UTC | Vercel changelog published (edited 2026-08-27 18:44 UTC) | page metadata |
+| 2026-08-25 18:00 UTC | nextjs.org August 2026 security-release post | page metadata |
+| 2026-08-31 19:59 UTC | next 15.5.25 on npm | npm registry |
+| 2026-09-01 10:49 +03:00 | origin/main `1757bbe` committed on next 15.5.22 (7 days after the fix) | git |
+| 2026-09-01 22:17 UTC | NVD publishes CVE-2026-75604 | GitHub global advisory record |
+| 2026-09-03 to 2026-09-14 00:25 +03:00 | Six origin/aegean snapshots carry 15.5.22 (`ce525d5`, `036b4e6`, `118f48c`, `538f0bc`, `0c89d8c`, `cb7ecba`) | git |
+| 2026-09-08 20:51 / 21:21 UTC | GitHub global database (so `npm audit`) lists p293 / 2xp9 | GitHub global advisory records |
+| 2026-09-14 00:15 +03:00 | Gate server binds 127.0.0.1 (`e6db177`); with-server.ps1 follows at 00:17 (`c918be5`) | scripts/qa.mjs:143-147 |
+| 2026-09-14 00:52 +03:00 | `e7252a7`: next and eslint-config-next 15.5.25 | git |
+| 2026-09-14 17:56 +03:00 | Snapshot `a553df2` puts 15.5.25 on origin/aegean | git |
+| Now (HEAD `840286c`) | Lockfile and installed next are 15.5.25. GitHub lists 0 advisories against next@15.5.25 and 2 against 15.5.22. | package-lock.json:6036-6038; node_modules/next/package.json |
+
+**Whether the preconditions held on this branch**
+
+- **GHSA-2xp9-vwfh-vxw4:** the installed version was affected, but no route for an attacker's AVIF was found. AVIF appears only as an output format (next.config.ts:33-34), there is no `remotePatterns`, and no .avif, .heic or .heif file exists under public/ or content/.
+- **GHSA-p293-qw3h-jr36:** the installed version was affected, and local QA runs on Windows, so the host condition was met. The router condition looks unmet: the site has no `pages/` or `src/pages/` and no Cache Components flag in next.config.ts. Next's and Vercel's write-ups describe apps that use both routers (this agrees with BRIEF-AUDIT.md:670).
+- **Production on Vercel:** protected according to Vercel's changelog (see the citation check). Production itself was not probed.
+- **origin/main:** still resolves next 15.5.22.
+
+The Vercel changelog the audit relies on was re-read: in its section on Vercel
+deployments it says hosted apps are protected — "No upgrades, configuration
+changes, or redeploys are required." The page was edited on 27 August, after its
+25 August publication, so the wording on the day is not confirmed.
+
+**Flagged for the owner:** the four dependency findings above; `origin/main` still
+resolves Next 15.5.22, inside both August advisories, until the merge; the
+runbook's step 3 now says to deploy from git only, never `vercel deploy --prod` from
+a local folder (a local checkout holds ignored camera masters) — more than drift,
+and easy to reverse; the Google Maps embed may redirect through
+`consent.google.com`, which an enforced policy would need to allow. No run of the three full
+CSP matrices saw that redirect from this machine; visitors elsewhere may differ.
+
 ---
 
 ## Stages and gates
@@ -1072,7 +1228,7 @@ next begins; a red gate stops the phase and reports rather than proceeding.
 | 4 | Leaf components and scenes migrated | axe 0; visual diff reviewed |
 | 5 | Routes migrated; chrome, menu, footer | axe 0; focus-ring check; mobile floor |
 | 6 | Motion re-tuned | mobile floor with CPU 4× throttle; INP green |
-| 7 | Baselines rebuilt; graffiti retired + replaced; full QA | 11/11 gate; Lighthouse table; CI green |
+| 7 | Baselines rebuilt; full QA (graffiti was retired and replaced by the arrival check in stage 3) | the full gate (19 checks since stage 6); Lighthouse table; CI green |
 | 8 | Merge to default palette | **your final approval** |
 
 **Honest estimate: one to two weeks of working time**, most of it judgement
