@@ -1,6 +1,6 @@
 # Seal matrix
 
-Stage 7, as specified in `design-review/BRIEF-AUDIT.md` section 8. Generated 2026-09-14T21:07:32.917Z by `node scripts/seal-matrix.mjs`. Result: **sealed** (96 checks passed).
+Stage 7, as specified in `design-review/BRIEF-AUDIT.md` section 8. Generated 2026-09-16T12:26:26.219Z by `node scripts/seal-matrix.mjs`. Result: **sealed** (96 checks passed).
 
 Hosts appear as labels only. `alias` is the production alias (`ALIAS_URL`, defaulting to the alias `scripts/alias-check.mjs` checks). `preview` is the host passed in `SEAL_PREVIEW`, which is never recorded. Redirect targets are paths.
 

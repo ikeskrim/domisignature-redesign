@@ -80,7 +80,9 @@ declared facts change, Lighthouse mobile at level 0 every route over the floor
 has the entry. **Stage 6 closed at snapshot `189e059`** (preview
 `kui9vpbga`; CI green on it: install, build and the gate).
 
-**Stage 7 closed** at the snapshot that carries this paragraph; its id and preview are added by the commit after it. Baselines
+**Stage 7 closed at snapshot `1e218d3`** (preview `fkjxrm479`; CI green on it:
+install, build and the gate; the dependency audit warned as designed; seal matrix
+96/96 against that preview). Baselines
 rebuilt from the final tree (`design-review/final/` at 390, 768 and 1440 and the 1920
 hero, the palette strips, all ten contact sheets); the dark-era capture sets deleted
 from the branch; before/after pairs for every route at 1440 and 390 in

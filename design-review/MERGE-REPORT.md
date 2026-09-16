@@ -1,6 +1,7 @@
 # Aegean Bone — the merge report
 
-**Preview:** added by the commit that follows the stage-7 snapshot (the snapshot's own preview cannot be named inside it).
+**Preview:** https://domisignature-redesign-fkjxrm479-domisi.vercel.app
+(the stage-7 snapshot `1e218d3` on `aegean`, the site this report describes; this line was added by the docs-only commit after it)
 The branch is sealed against search engines; the production alias still serves `main`.
 
 This is the report stage 8 waits on. Nothing here has touched `main`; merging is

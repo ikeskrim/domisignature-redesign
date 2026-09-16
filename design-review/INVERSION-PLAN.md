@@ -1108,7 +1108,9 @@ robots.txt. **96 checks, all green: sealed.** Every non-redirect response carrie
 preview serves the light build and the alias still serves `main`'s; each of the
 three legacy path rows lands in one hop with a 200, and a hop-following guard
 fails any loop. `/services?modal` is deliberately not requested while its
-redirect loop waits on the owner. The preview's host is never written down.
+redirect loop waits on the owner. The preview's host is never written down. Run
+again after the stage-7 push, against the stage-7 preview: 96 of 96, sealed, the
+results unchanged.
 
 **Content Security Policy, measured without shipping it:** the full Chromium matrix of
 `npm run audit:csp` (31 routes, 390 and 1440, both motion modes, report and enforce:
