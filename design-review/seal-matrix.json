@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-16T12:26:26.219Z",
+  "generated": "2026-09-18T09:02:16.735Z",
   "spec": "design-review/BRIEF-AUDIT.md section 8 (stage-7 seal matrix); section 11, stage 7 item 6",
   "limits": {
     "imageWidth": 640,
@@ -260,7 +260,13 @@
           "ok": true,
           "reasons": []
         }
-      ]
+      ],
+      "modalRecorded": {
+        "path": "/services?modal",
+        "status": 307,
+        "location": "/services?modal",
+        "error": null
+      }
     },
     {
       "label": "preview",
@@ -364,6 +370,21 @@
           "id": "contact",
           "kind": "page",
           "path": "/contact",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "services-modal",
+          "kind": "page",
+          "path": "/services?modal",
           "expect": 200,
           "status": 200,
           "contentType": "text/html",
@@ -518,9 +539,9 @@
     }
   ],
   "notAsserted": [
-    "/services?modal (next.config.ts:63) redirects to itself. Its fix is an owner decision (BRIEF-AUDIT.md section 10, item 5), so it is not requested and nothing about it is asserted."
+    "/services?modal on a pre-Aegean build (the alias until the merge): main still carries the rule that redirects it to itself, so its answer is recorded, not asserted. On the Aegean build it must answer 200."
   ],
-  "passed": 96,
+  "passed": 100,
   "failed": 0,
   "failures": []
 }

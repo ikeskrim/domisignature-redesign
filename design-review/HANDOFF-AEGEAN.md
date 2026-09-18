@@ -99,7 +99,8 @@ read-only token; its production dependency audit is a warning while next and its
 bundled postcss wait for next 16 (sharp and nanoid were fixed at stage 8). `scripts/contact-sheet.mjs` now
 normalises CRLF (a CRLF checkout of `content/venues.ts` had dropped two sheets).
 
-**Stage 8 measured green** at the snapshot that carries this paragraph; its id and preview are added by the commit after it. **Stage 8 — approved, and waiting on one word.** The owner approved the merge on
+**Stage 8 measured green at snapshot `3317771`** (preview `gisaogyvn`) — approved,
+and waiting on one word. The owner approved the merge on
 2026-09-17 after one pre-merge fix commit and a green gate, with "merge" to come
 as a separate word. Nothing has touched `main`. The fixes, each measured:
 Home's venues sentence names three settings, not four, and the button's count

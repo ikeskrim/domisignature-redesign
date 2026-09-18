@@ -1,14 +1,16 @@
 # Seal matrix
 
-Stage 7, as specified in `design-review/BRIEF-AUDIT.md` section 8. Generated 2026-09-16T12:26:26.219Z by `node scripts/seal-matrix.mjs`. Result: **sealed** (96 checks passed).
+Stage 7, as specified in `design-review/BRIEF-AUDIT.md` section 8. Generated 2026-09-18T09:02:16.735Z by `node scripts/seal-matrix.mjs`. Result: **sealed** (100 checks passed).
 
 Hosts appear as labels only. `alias` is the production alias (`ALIAS_URL`, defaulting to the alias `scripts/alias-check.mjs` checks). `preview` is the host passed in `SEAL_PREVIEW`, which is never recorded. Redirect targets are paths.
 
-What is asserted: every response that is not a 3xx carries `X-Robots-Tag` with `noindex` (a 3xx is exempt); robots.txt has a `User-Agent: *` line whose group holds a line that is exactly `Disallow: /` and no `Allow: /` line; on the preview every HTML response carries `<html data-ground="light">` (on the alias the build is recorded, never failed); /_next/image is requested at `w=640`; each legacy path row of `scripts/launch-check.mjs` is followed hop by hop, at most 6 requests, and fails on a revisit, on more than 5 hops or on leaving the host, and must land on its destination with a 200.
+What is asserted: every response that is not a 3xx carries `X-Robots-Tag` with `noindex` (a 3xx is exempt); robots.txt has a `User-Agent: *` line whose group holds a line that is exactly `Disallow: /` and no `Allow: /` line; on the preview every HTML response carries `<html data-ground="light">` (on the alias the build is recorded, never failed); /_next/image is requested at `w=640`; each legacy path row of `scripts/launch-check.mjs` is followed hop by hop, at most 6 requests, and fails on a revisit, on more than 5 hops or on leaving the host, and must land on its destination with a 200; `/services?modal`, which once redirected to itself, must answer 200 on any host serving the Aegean build (on a pre-Aegean build its answer is recorded, never failed).
 
 ## alias
 
 Build served: pre-Aegean build (no data-ground on <html>).
+
+`/services?modal` on this pre-Aegean build (recorded, not asserted): 307 -> /services?modal.
 
 Probe photograph: `/media/mdGEOR3108.jpg` (og:image of the home page).
 
@@ -61,6 +63,7 @@ Probe photograph: `/media/mdGEOR3108.jpg` (og:image of the home page).
 | wedding-guide | `/wedding-guide` | 200 | text/html | noindex, nofollow | ok | light | ok |
 | about | `/about` | 200 | text/html | noindex, nofollow | ok | light | ok |
 | contact | `/contact` | 200 | text/html | noindex, nofollow | ok | light | ok |
+| services-modal | `/services?modal` | 200 | text/html | noindex, nofollow | ok | light | ok |
 | sitemap | `/sitemap.xml` | 200 | application/xml | noindex, nofollow | ok | n/a | ok |
 | not-found | `/seal-matrix-no-such-page` | 404 | text/html | noindex, nofollow | ok | light | ok |
 | next-image | `/_next/image?url=%2Fmedia%2FmdGEOR3108.jpg&w=640&q=75` | 200 | image/jpeg | noindex, nofollow | ok | n/a | ok |
@@ -88,7 +91,7 @@ Disallow: /
 
 ## Not asserted
 
-- /services?modal (next.config.ts:63) redirects to itself. Its fix is an owner decision (BRIEF-AUDIT.md section 10, item 5), so it is not requested and nothing about it is asserted.
+- /services?modal on a pre-Aegean build (the alias until the merge): main still carries the rule that redirects it to itself, so its answer is recorded, not asserted. On the Aegean build it must answer 200.
 
 ## Failures
 

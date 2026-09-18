@@ -1,6 +1,7 @@
 # Aegean Bone — the merge report
 
-**Preview:** added by the commit that follows the stage-8 snapshot (the snapshot's own preview cannot be named inside it).
+**Preview:** https://domisignature-redesign-gisaogyvn-domisi.vercel.app
+(the stage-8 snapshot `3317771` on `aegean`, the site this report describes; this line was added by the docs-only commit after it)
 The branch is sealed against search engines; the production alias still serves `main`.
 
 The owner approved the merge on 2026-09-17, after one pre-merge fix commit and a
