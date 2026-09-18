@@ -28,9 +28,13 @@
  *               and the chain must land on the row's destination with a 200.
  *               Chains are reported as paths only.
  *
- * Not asserted: /services?modal (next.config.ts:63) answers a redirect to
- * itself. The fix is the owner's decision (BRIEF-AUDIT.md section 10, item 5),
- * so the matrix neither requests it nor asserts anything about it.
+ *   modal       /services?modal once answered a redirect to itself
+ *               (BRIEF-AUDIT.md section 4.4). The owner chose option A at stage 8
+ *               and the rule was deleted from next.config.ts, so a host serving
+ *               the Aegean build must answer it with a 200 page. The alias serves
+ *               pre-Aegean main, which keeps the rule until the merge: there the
+ *               answer is recorded and never failed, and the check arms itself
+ *               once the alias serves the Aegean build.
  *
  * Privacy: the preview host is never printed or written. It is labelled
  * "preview", error text is scrubbed of it, redirect targets are reduced to
@@ -85,9 +89,12 @@ const FAMILIES = [
   ["contact", "/contact"],
 ];
 
+/** The query that looped before stage 8 (see "modal" above). */
+const MODAL_PATH = "/services?modal";
+
 const NOT_ASSERTED = [
-  "/services?modal (next.config.ts:63) redirects to itself. Its fix is an owner decision " +
-    "(BRIEF-AUDIT.md section 10, item 5), so it is not requested and nothing about it is asserted.",
+  "/services?modal on a pre-Aegean build (the alias until the merge): main still carries the rule that " +
+    "redirects it to itself, so its answer is recorded, not asserted. On the Aegean build it must answer 200.",
 ];
 
 /* ------------------------------------------------------------------------ */
@@ -434,6 +441,16 @@ async function runHost(host, withheld, pathRows) {
     result.probes.push((await probe(host, { id, kind: "page", path: p, expect: 200 })).row);
   }
 
+  if (host.requireLight || home.g?.ground === "light") {
+    result.probes.push((await probe(host, { id: "services-modal", kind: "page", path: MODAL_PATH, expect: 200 })).row);
+  } else {
+    const { res, error } = await request(host, MODAL_PATH);
+    if (res) await discardBody(res);
+    const location = res && isRedirect(res.status) ? locationOf(host, MODAL_PATH, header(res, "location")).path : null;
+    result.modalRecorded = { path: MODAL_PATH, status: res ? res.status : null, location, error: error ?? null };
+    note(`${host.label} services-modal (${MODAL_PATH})`, `${error ?? res.status}${location ? ` -> ${location}` : ""}; pre-Aegean main keeps the rule until the merge (recorded, never failed)`);
+  }
+
   result.probes.push((await probe(host, { id: "sitemap", kind: "sitemap", path: "/sitemap.xml", expect: 200 })).row);
   result.probes.push((await probe(host, { id: "not-found", kind: "page", path: NOT_FOUND_PATH, expect: 404 })).row);
 
@@ -499,7 +516,9 @@ function markdown(report) {
       "and no `Allow: /` line; on the preview every HTML response carries `<html data-ground=\"light\">` (on the " +
       `alias the build is recorded, never failed); /_next/image is requested at \`w=${IMAGE_WIDTH}\`; each legacy ` +
       `path row of \`scripts/launch-check.mjs\` is followed hop by hop, at most ${MAX_REQUESTS} requests, and fails on a ` +
-      `revisit, on more than ${MAX_HOPS} hops or on leaving the host, and must land on its destination with a 200.`,
+      `revisit, on more than ${MAX_HOPS} hops or on leaving the host, and must land on its destination with a 200; ` +
+      `\`${MODAL_PATH}\`, which once redirected to itself, must answer 200 on any host serving the Aegean build ` +
+      "(on a pre-Aegean build its answer is recorded, never failed).",
     "",
   );
 
@@ -509,6 +528,11 @@ function markdown(report) {
       continue;
     }
     out.push(`## ${h.label}`, "", `Build served: ${cell(h.build)}.`, "");
+    if (h.modalRecorded) {
+      const m = h.modalRecorded;
+      const answer = m.error ? `no response (${cell(m.error)})` : `${m.status}${m.location ? ` -> ${m.location}` : ""}`;
+      out.push(`\`${MODAL_PATH}\` on this pre-Aegean build (recorded, not asserted): ${cell(answer)}.`, "");
+    }
     if (h.photo) out.push(`Probe photograph: ${code(h.photo.path)} (${h.photo.source}).`, "");
     out.push(
       "| Probe | Path | Status | Content-Type | X-Robots-Tag | noindex | `<html data-ground>` | Result |",

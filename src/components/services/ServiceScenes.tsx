@@ -22,7 +22,10 @@ export function ServiceScenes({ idPrefix = true }: { idPrefix?: boolean }) {
           <section
             key={service.slug}
             id={idPrefix ? service.slug : undefined}
-            className="scroll-mt-32"
+            /* No scroll margin of its own: html's scroll-padding-top
+               (globals.css) already clears the fixed header. The scroll-mt-32
+               this carried was added on top of it, so a /services#… link
+               landed 232px below the section's top at desktop. */
             aria-labelledby={`${service.slug}-heading`}
           >
             <div className="mx-auto w-full max-w-[104rem] px-gutter">

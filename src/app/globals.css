@@ -30,7 +30,14 @@
   --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
 
   /* Display scale */
-  --text-hero: clamp(3.5rem, 11vw, 11rem);
+  /* The hero wordmark never outgrows its measure (stage 8). Set in Playfair at
+     -0.03em the word is 7.69em of advance, trailing tracking included; the ink
+     ends inside it. Under ~479px the 3.5rem floor pushed it past the hero's
+     content box (100vw less two gutters) and cut it. So below ~498px the size
+     follows that box / 8, a 4% margin. From 498px up, at the default 16px
+     root, min() returns the clamp unchanged (with a 5vw gutter the box / 8 is
+     11.25vw, more than 11vw), so desktop is identical. */
+  --text-hero: min(clamp(3.5rem, 11vw, 11rem), calc((100vw - 2 * var(--spacing-gutter)) / 8));
   --text-display: clamp(2.5rem, 6vw, 6.5rem);
   --text-title: clamp(2.25rem, 4.5vw, 4.25rem);
   --text-heading: clamp(1.75rem, 2.6vw, 2.5rem);

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { contact, legal, nav, site, social } from "@content/site";
 import { venues } from "@content/venues";
 import { BackToTop } from "@/components/layout/BackToTop";
+import { WORDMARK } from "@/components/layout/wordmark-outline";
 import { Marquee } from "@/components/motion/Marquee";
 import { RuleDraw, Stagger, StaggerItem, TextReveal } from "@/components/motion/Reveal";
 import { Phone } from "@/components/ui/Phone";
@@ -169,11 +170,16 @@ export function Footer() {
         </div>
 
         {/*
-          Decorative brand text, not content. It duplicates the wordmark in the
-          header, the footer contact column and the page title, so it is hidden
-          from assistive technology and carries data-a11y-exempt so the axe run
-          skips it. Approved as a WCAG 1.4.3 logotype/decorative exemption —
-          see design-review/a11y.md.
+          The wordmark as a drawing, not text (stage 8, owner's instruction).
+          It duplicates the name in the header, the footer contact column and
+          the page title, so it is decoration: set as text it needed a WCAG
+          1.4.3 logotype exemption, which the gate honoured and Lighthouse could
+          not. It is now Playfair Display's own outlines, generated from the
+          built font and site.name by scripts/wordmark-outline.mjs (the gate
+          fails if they drift), laid out exactly as the text was: the span
+          keeps the size clamp, so 1em is the font-size it had, and the drawing
+          is 7.56em by the 0.8em line box. The path is defined once here and
+          used by both copies the marquee renders.
 
           Its colour is --rule stepped 45% toward the colophon's ground, so it
           is felt rather than read: plain --rule is 1.45:1 on --surface-raised,
@@ -181,13 +187,24 @@ export function Footer() {
           is 1.22:1, still above the 1.10:1 step that parts a plate's mat from
           the page, so it does not vanish. Built from two roles, no colour named.
         */}
+        <svg aria-hidden="true" focusable="false" className="pointer-events-none absolute h-0 w-0 overflow-hidden">
+          <defs>
+            <path id="footer-wordmark" d={WORDMARK.d} />
+          </defs>
+        </svg>
         <Marquee className="select-none">
           <span
             aria-hidden="true"
-            data-a11y-exempt="decorative-logotype"
-            className="block translate-y-[22%] whitespace-nowrap pr-[0.35em] font-display text-[clamp(3.5rem,17.5vw,17rem)] font-light uppercase leading-[0.8] tracking-[-0.04em] text-[color:color-mix(in_srgb,var(--rule)_55%,var(--surface-raised))]"
+            className="block translate-y-[22%] pr-[0.35em] text-[clamp(3.5rem,17.5vw,17rem)] text-[color:color-mix(in_srgb,var(--rule)_55%,var(--surface-raised))]"
           >
-            {site.name}
+            <svg
+              viewBox={`0 0 ${WORDMARK.width} ${WORDMARK.height}`}
+              focusable="false"
+              className="block overflow-visible"
+              style={{ width: `${WORDMARK.width / 1000}em`, height: `${WORDMARK.height / 1000}em` }}
+            >
+              <use href="#footer-wordmark" fill="currentColor" />
+            </svg>
           </span>
         </Marquee>
       </div>

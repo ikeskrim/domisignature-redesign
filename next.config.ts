@@ -60,7 +60,6 @@ const nextConfig: NextConfig = {
        * site a crawled page or a shared link.
        */
       { source: "/venues/villa-aetos", destination: "/venues", permanent: true },
-      { source: "/services", has: [{ type: "query", key: "modal" }], destination: "/services", permanent: false },
     ];
   },
   async headers() {

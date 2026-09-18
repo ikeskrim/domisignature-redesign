@@ -129,7 +129,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 226,
         "failing": 0,
-        "worst": 13.08,
+        "worst": 13.21,
         "failSides": [],
         "strict": "0/226",
         "area": "1590px² changed, 1005px² required"

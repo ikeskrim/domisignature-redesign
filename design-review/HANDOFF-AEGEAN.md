@@ -22,7 +22,8 @@ touch the siblings' processes or their ports (3000, 3005, 3104). Local servers
 bind 127.0.0.1 only. `npm run build` is `scripts/build.mjs`: tsc first,
 then Next, then a freshness check; a silent death is named as one.
 
-**Gate:** nineteen checks (`npm run qa`, `PORT` env sets the server port).
+**Gate:** twenty checks (`npm run qa`, `PORT` env sets the server port); stage 8 added
+`wordmark` (the footer's drawn wordmark matches `site.name` and the built font).
 `metadata` fails any tracked file carrying GPS, a camera serial or an embedded
 thumbnail; stage 6 added `motion-tier` (the drop switch applies exactly its
 prefix on a phone, nothing on desktop), `focus-motion` (motion on: a focused
@@ -94,16 +95,59 @@ sealed), the CSP harness (`npm run audit:csp`, before any headers change; 248 of
 `/media` pixel guard (`npm run audit:pixels`, enforced in the boundary script and
 the pre-push hook — a published file never changes its pixels under its old name
 without a verdict in `design-review/media-pixel-verdicts.json`). CI runs with a
-read-only token; its production dependency audit is a warning until the owner
-decides next 16, sharp 0.35.4 and the nanoid bump. `scripts/contact-sheet.mjs` now
+read-only token; its production dependency audit is a warning while next and its
+bundled postcss wait for next 16 (sharp and nanoid were fixed at stage 8). `scripts/contact-sheet.mjs` now
 normalises CRLF (a CRLF checkout of `content/venues.ts` had dropped two sheets).
 
-**The work stops here.** `design-review/MERGE-REPORT.md` is what stage 8 waits on:
-the preview, the changes stage by stage, the before/after pairs, the Lighthouse
-table against the standing bars and against `main`, the regressions and why, five
-improvements described only, and everything waiting on the owner. Nothing merges to
-`main` without the owner's approval; production promotion, DNS, deployments,
-repository settings and history rewrites stay the owner's.
+**Stage 8 measured green** at the snapshot that carries this paragraph; its id and preview are added by the commit after it. **Stage 8 — approved, and waiting on one word.** The owner approved the merge on
+2026-09-17 after one pre-merge fix commit and a green gate, with "merge" to come
+as a separate word. Nothing has touched `main`. The fixes, each measured:
+Home's venues sentence names three settings, not four, and the button's count
+derives; `/venues`' guest ceiling derives from `content/venues.ts`; the hero
+wordmark fits at every phone width (the whole word's ink inside its clip at 15
+widths from 320 to 1920, desktop sizing identical, hero states identical to
+stage 7 at all sixteen offsets); the footer logotype is a drawing —
+Playfair Display's own outlines of `site.name`, generated from the built font by
+`scripts/wordmark-outline.mjs` and checked by the gate's twentieth check,
+`wordmark` — so the WCAG logotype exemption is gone from the footer and from
+`a11y.mjs`, `ground-verify.mjs` and `paper-legibility.mjs`; `/services?modal`
+no longer redirects to itself and `/services#…` anchors land on their section;
+the venue page sets capacity large once. Then, each its own commit with the gate
+green after it: sharp 0.35.4, nanoid 3.3.19. Then the review's findings: the
+venue JSON-LD capacity (Olive Stories told search engines 200300 guests) and the
+records that claimed guards they do not have. Then `/wedding-guide`'s six
+chapters became `h2` — the last thing between accessibility and 100.
+
+**Where the numbers are.** `design-review/MERGE-REPORT.md` is the report, with
+the Lighthouse table, the regressions, five improvements and everything waiting
+on the owner. The stage log in `design-review/INVERSION-PLAN.md` carries the
+measurements, the deployment removals and the corrections to earlier records.
+
+**Deployments.** 37 removed with the Vercel CLI on the owner's instruction (the
+two canceled production deployments, the two stage-5 previews and 33 superseded
+production deployments of `main`, all serving pre-strip media); 5 kept — the
+production alias's own deployment and the four post-strip `aegean` previews. No
+older production deployment remains to roll back to, and the kept production
+deployment still serves pre-strip media on the `vercel.app` alias until the merge
+rebuilds production. The live domain does not serve it: its DNS still points at
+the old host.
+
+**The merge, when the word comes.** `origin/main` is one snapshot (`1757bbe`)
+with no history in common with `origin/aegean`, and the pre-push guard allows
+`main` only with `DOMI_OWNER_PUSH_MAIN=1`, exactly one new commit whose single
+parent is the remote tip, and HEAD's tree — with the same privacy checks as every
+other push. So the merge is one snapshot of the approved tree on top of
+`1757bbe`, built the way `boundary.sh` builds `aegean`'s. Vercel rebuilds
+production from `main` on the push; after it: `npm run check:alias`, the seal
+matrix (its `/services?modal` check arms itself once the alias serves the Aegean
+build), and CI on `main` — whose first run misses the npm and Playwright caches,
+because caches are branch-scoped, not because anything is wrong.
+
+**Still not ours, ever:** production promotion beyond that push, DNS, domains,
+the old host, Vercel settings, repository visibility, history rewrites and
+credentials. The launch stays parked under `WAITING-FOR-DNS.md`, which is
+unchanged and still works: its two commands, the legacy map and the seal checks
+are the same on this branch as on `main`.
 
 **Publishing rule:** never push a local branch — local history holds the
 private originals. Push only single-parent snapshots through `boundary.sh`,

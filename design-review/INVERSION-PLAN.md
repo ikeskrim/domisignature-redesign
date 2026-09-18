@@ -1215,6 +1215,177 @@ and easy to reverse; the Google Maps embed may redirect through
 `consent.google.com`, which an enforced policy would need to allow. No run of the three full
 CSP matrices saw that redirect from this machine; visitors elsewhere may differ.
 
+### Stage 8 — the owner's approval, the pre-merge fixes and the deployments (2026-09-17 to 2026-09-18)
+
+**The owner's decision (2026-09-17):** approved to merge after one pre-merge fix
+commit and a green gate, with "merge" to come from the owner as a separate word.
+Facts and defects are never frozen; copy and routes otherwise stay frozen, and
+the launch stays parked under `WAITING-FOR-DNS.md`, which must keep working after
+the merge. The owner accepted the colour-step dimming and phones dropping no
+motion, moved the `/events` 3/3/1 split into the improvements, deferred the
+history rewrite until the repository is private, keeps Deployment Protection
+for themself, and asked that the merge report not be published as a web page.
+
+**The fix commit (`519fdf0`).**
+
+- Home's venues sentence named four settings for three venues; it names the
+  three. The "All three venues" count derives from the venue list.
+- `/venues`' "Up to 300 guests" was typed; it is the largest capacity in
+  `content/venues.ts` (`capacityCeiling`).
+- The hero wordmark, cut on every phone narrower than about 479px (on `main`
+  too), fits: `--text-hero` is the smaller of the old clamp and the hero's
+  content box / 8. Measured on the served build at fifteen
+  widths from 320 to 1920: the whole word's ink sits inside its clip at every
+  one, with 10.5px to spare at 320 and 13.3px at 390, and the computed size is
+  unchanged from 498px up (84.5px at 768, 158.4px at 1440, 176px at 1920).
+- The footer logotype is a drawing: Playfair Display's own outlines of
+  `site.name`, generated from the built font by `scripts/wordmark-outline.mjs`
+  (with `scripts/woff2-font.mjs`, a dependency-free WOFF2/TrueType/GPOS reader
+  checked against every glyph's stored bounds and against Next's bundled
+  fontkit) and set exactly as the text was. The served page carries one `<path>` definition and
+  the two `<use>` references the marquee needs, no text in the band and no
+  `data-a11y-exempt` anywhere; the drawing is 7.56em wide at both widths
+  measured (1905.1px at a font-size of 252, 516.0px at 68.25), and its fill
+  resolves to the same colour the text had. The exemption is gone
+  from the footer and from `a11y.mjs`, `ground-verify.mjs` and
+  `paper-legibility.mjs`; a twentieth gate check, `wordmark`, fails if the
+  drawing drifts from `site.name` or the font.
+- `/services?modal`: option A, the self-redirect is deleted; the seal matrix
+  requires a 200 there on any Aegean build and records the alias's answer until
+  the merge. `/services#…` anchors lost a `scroll-mt-32` that stacked on the
+  header clearance: all five sections land 6.7px below the
+  header at 1440 and 6.6 to 7.4px below it at 390, in both motion modes, on the
+  page's own scroll-padding (104px and 80px) with no scroll-margin of their own.
+- The venue page sets capacity large once, in the specimen card; the line under
+  the description is gone. The small title-card line (capacity / location)
+  stays — a judgement, recorded: the stage-5 flag named the two large settings.
+- CI: `actions/checkout@v7`, `actions/setup-node@v7`, `actions/cache@v6`, and
+  `actions/upload-artifact@v7` — not named by the owner, but it targets the
+  same deprecated Node 20 (a judgement, recorded). Tags only.
+
+Measured on the working tree before the commit (the committed tree is the same
+bytes): gate 20/20 green; hero states identical to stage 7 at all sixteen
+offsets; the footer's bottom 360px against the stage-7 text capture of
+`/contact` differ on 0.26% of pixels at 1440 (maximum 17 of 255) and 0.34% at
+390 — sub-pixel antialiasing; side by side they are the same picture.
+
+**Dependencies, one commit each, the gate green after each.** sharp 0.35.4
+(`0857d0c`): one copy serves the scripts and Next (next 15.5.25 accepts
+`^0.34.3 || ^0.35.4`); 26 lockfile entries changed and 2 added; decoded pixels,
+the ingest JPEG, WebP and Next's JPEG/PNG/WebP output byte-identical to 0.34.5 on
+two published photographs; only the local optimizer's AVIF output changes.
+Gate 20/20 green on `0857d0c`. nanoid 3.3.19 (`13dc2b3`): the in-range bump, one
+lockfile entry, `package.json` unchanged. Gate 20/20 green on `13dc2b3`.
+`npm audit --omit=dev` now names only next and its bundled postcss, fixed only
+in next 16, which waits for its own branch after the merge, before 21 October.
+
+**The review (`c24c48b`).** An independent review of those commits, each
+finding checked by a second reader, found one fact defect, fixed because facts
+are never frozen: a venue's JSON-LD `maximumAttendeeCapacity` stripped every
+non-digit, so Olive Stories ("up to 200-300") told search engines 200300 guests
+(on `main` too); it is now the integer ceiling, 300, 200 and 300. It also found
+that the `claims` check guards scarcity wording, not figures — the toolkit said
+it failed on any typed figure, and no audit does — and three stale records (the
+CI audit note, the handoff, the seal-matrix report's claim to record the
+alias's `?modal` answer). All corrected. Recorded, not changed: the wordmark
+check reads Next 15's CSS layout (`.next/static/css`, absolute media URLs) and
+must be taught Next 16's before that branch can pass; on a desktop window
+narrower than about 450px with a classic scrollbar the hero's last letter can
+still lose a pixel or two (100vw counts the scrollbar); while the web font
+loads, the fallback face sets the hero word wider than its box on every width,
+as it always did.
+
+**The final measurement.** Two more commits followed the review: `/wedding-guide`'s
+chapters became `h2` (`23f1297`), and the gate's axe run was widened to axe's
+best-practice rules (`8bb81d4`), which changes a script and not one byte the site
+serves. The gate: **20/20 green** on the final tree — zero axe violations on all
+ten routes at both widths, best-practice rules included, the widening measured
+before it was made. The fixes, as served: `/venues` reads "Up to 300 guests", derived; Home's
+sentence names the three settings and its button reads "All three venues"; each
+venue page states capacity once under the description's column, in the specimen
+card; `/services?modal` answers 200 with no Location; the venue structured data
+gives 300, 200 and 300 guests; `/wedding-guide` is one `h1` and eleven `h2`s,
+with no `h3`. `design-review/final/` was regenerated from this tree (40 captures), the palette
+strips rebuilt, and the 26 before/after pairs rebuilt against `origin/main`.
+`/wedding-guide` was re-captured after the heading change: byte-identical at 390
+and 768; at 1440 the type is identical and one scene's photograph differs by a
+sub-pixel scroll-linked transform (mean 1.1 of 255 inside that band), which is
+the drift landing where the capture's settle pass left it, not the heading.
+
+Lighthouse on the `23f1297` build (the last commit that changes what is served),
+five runs on mobile and three on desktop, median with the worst beside it,
+Next.js 15.5.25, sharp 0.35.4, Playwright's Chromium 151 (the browser
+of the stage-7 runs), phones at drop level 0; this session ran nothing else, though the machine is shared: `routes-crete` and
+`thalasses-villas-redesign` both committed inside the measurement windows:
+
+| Route | Mobile median (worst) | Mobile LCP | Desktop median (worst) | Desktop LCP |
+|---|---|---|---|---|
+| Home | **85** (84) | 3.4 s | **99** (98) | 0.6 s |
+| Venues | **91** (91) | 3.2 s | **99** (99) | 0.7 s |
+| Venue detail | **91** (90) | 3.2 s | **99** (99) | 0.7 s |
+| Signature Events | **91** (91) | 3.2 s | **99** (99) | 0.7 s |
+| Wedding Guide | **90** (90) | 3.2 s | **99** (99) | 0.7 s |
+| Contact | **92** (91) | 3.0 s | **99** (99) | 0.7 s |
+
+Accessibility, best practices and SEO are **100 on every route and both
+presets**; CLS 0–0.001. Every standing bar holds: mobile performance >= 80
+everywhere (lowest median 85, lowest single run 84), every other category >= 90,
+desktop >= 90 everywhere.
+
+Three mobile sets were measured on the same site, and they disagree by more than
+the fixes do: 3 runs at 21:20 on 17 September (Home 88/88, Venues 91, Contact 92,
+accessibility 95–96 before the heading fix was in), 3 runs at 11:24 (Home 85/80,
+and roughly double the blocking time on every route — load, not the site), and
+the 5-run set above, which is the record. Home's mobile median therefore reads
+85–88 against stage 7's 87, and its worst single run across all eleven runs was
+80, the floor itself. Two points of that are the hero fix working as asked: the
+wordmark is smaller on phones, so the largest paint is now the subtitle inside
+the faded hero copy rather than the wordmark, and it lands 0.1 s later.
+
+**Deployments (owner's instruction, 2026-09-17).** The inventory: 42 live
+deployments of the project (36 production, 6 preview). Each was sampled on seven
+of the files the privacy strip rewrote (`c40de6c`), by blob hash against the
+pre- and post-strip versions, with a metadata check that prints booleans only.
+Removed with the Vercel CLI, by exact deployment id, each re-checked before and
+confirmed gone after (404, and the CLI can no longer find it) — 37:
+
+- the two canceled production deployments `n9yg989zc` and `7gujchx43`;
+- the previews `7apxf9ext` (stage 5) and `ikw1wxqqc` (stage 5 log), which served
+  pre-strip media;
+- the 33 superseded production deployments of `main`, 17 August to 28 August, all
+  serving pre-strip media: `nq80gemoa`, `c70n2xvs8`, `a9qhrhqro`, `ldwgmyxk1`,
+  `pr9fofck3`, `pgbsduflh`, `6um9fx116`, `apcsnx7d9`, `jxfocwve0`, `q89hb29ac`,
+  `g96hgzupl`, `g2bt3qzao`, `kmfqjd14i`, `evwhyh6rz`, `lulp43i8f`, `amafat3m2`,
+  `adzx0ytdt`, `brna50oy9`, `anr1nel3l`, `5dfqfqvey`, `jok7iyhra`, `6m7pq6kgk`,
+  `4pyggek06`, `cth5thx3j`, `ftra5sdes`, `7h4a3l8i1`, `czpgmhbn7`, `9h6ptkbnr`,
+  `orj9hff6k`, `8rqp6vrxy`, `c97mbrmgl`, `a10hab6m2`, `7v9vpoqtl`.
+
+Kept — 5: `61pms10qu`, the production deployment serving the alias (`main`,
+`1757bbe`); and the post-strip previews `e1p6wei5j`, `kui9vpbga`, `fkjxrm479`
+and `ejlzvymwj` (the stage-6 and stage-7 snapshots). There is no older
+production deployment left to roll back to.
+
+**Corrections to earlier records.** The stage-6 pre-work and stage-7 entries (and
+the stage-7 merge report) said the two canceled deployments served all eight
+withheld photographs. Measured, they answered every path — withheld or not,
+existing or not — with Vercel's "Deployment was cancelled" page (HTTP 200); the
+withheld files were never in their commits. The earlier reading came from status
+codes alone. And the kept production deployment `61pms10qu` still serves
+pre-strip media on the `vercel.app` alias until the merge rebuilds production;
+the live domain does not serve it (its DNS still points at the old host).
+
+**The merge, when the owner says so.** `origin/main` is one snapshot (`1757bbe`)
+with no history in common with `origin/aegean`, and the pre-push guard allows
+`main` only with `DOMI_OWNER_PUSH_MAIN=1`, one new commit whose single parent is
+the remote tip, and HEAD's tree — the same privacy checks as every snapshot.
+So the merge is one snapshot of the approved tree on top of `1757bbe`, built as
+the boundary script builds `aegean`'s. Vercel then rebuilds production from
+`main`; the checks after it: the alias sealed, the seal matrix (its `?modal`
+check arms itself once the alias serves the Aegean build), CI on `main` (its
+first run misses both caches: they are branch-scoped), and the kept
+`61pms10qu` becomes a superseded deployment serving pre-strip media — the
+owner's call.
+
 ---
 
 ## Stages and gates
@@ -1231,7 +1402,7 @@ next begins; a red gate stops the phase and reports rather than proceeding.
 | 5 | Routes migrated; chrome, menu, footer | axe 0; focus-ring check; mobile floor |
 | 6 | Motion re-tuned | mobile floor with CPU 4× throttle; INP green |
 | 7 | Baselines rebuilt; full QA (graffiti was retired and replaced by the arrival check in stage 3) | the full gate (19 checks since stage 6); Lighthouse table; CI green |
-| 8 | Merge to default palette | **your final approval** |
+| 8 | Merge to default palette | **approved 2026-09-17** after one pre-merge fix commit and a green gate; the merge itself waits on the owner's word |
 
 **Honest estimate: one to two weeks of working time**, most of it judgement
 rather than typing. Stages 2 and 3 block on you; the rest do not.

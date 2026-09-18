@@ -36,7 +36,7 @@ const STATIC_CHECKS = [
   ["lint", ["node_modules/eslint/bin/eslint.js", "."], "ESLint is clean"],
   /* Stage 4's completion test: a count that has to be zero. */
   ["palette", ["scripts/palette-literals.mjs"], "zero palette literals outside the token definitions"],
-  ["claims", ["scripts/claims-audit.mjs"], "no claim on the site is unsupported by content/"],
+  ["claims", ["scripts/claims-audit.mjs"], "no scarcity or exclusivity claim, in any wording"],
   ["prose", ["scripts/prose-audit.mjs"], "no placeholder, no lorem, no double space"],
   ["media", ["scripts/media-audit.mjs"], "every image and video referenced actually exists"],
   ["manifest", ["scripts/publish-manifest.mjs"], "no withheld frame is referenced anywhere"],
@@ -49,6 +49,10 @@ const STATIC_CHECKS = [
 
 /** Audits that drive a browser against a running production build. */
 const SERVED_CHECKS = [
+  /* Stage 8: the footer wordmark is a drawing generated from the built font and
+     site.name, and must never drift from either. It reads the build, not the
+     server, so it sits here, where a build is guaranteed. */
+  ["wordmark", ["scripts/wordmark-outline.mjs"], "the footer wordmark drawing matches site.name and the font"],
   ["assets", ["scripts/asset-check.mjs"], "every asset the rendered pages request returns 200"],
   ["a11y", ["scripts/a11y.mjs"], "axe-core finds zero violations"],
   /*

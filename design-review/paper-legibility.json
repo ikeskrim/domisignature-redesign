@@ -32,7 +32,7 @@
   {
     "width": "1440",
     "route": "venue-mountain-escape",
-    "measured": 70,
+    "measured": 68,
     "failing": 0,
     "worst": {
       "ratio": 4.747604768402507,
@@ -47,7 +47,7 @@
   {
     "width": "1440",
     "route": "venue-thalasses",
-    "measured": 75,
+    "measured": 73,
     "failing": 0,
     "worst": {
       "ratio": 4.747604768402507,
@@ -62,7 +62,7 @@
   {
     "width": "1440",
     "route": "venue-olive-stories",
-    "measured": 71,
+    "measured": 69,
     "failing": 0,
     "worst": {
       "ratio": 4.747604768402507,
@@ -227,10 +227,10 @@
   {
     "width": "390",
     "route": "venue-mountain-escape",
-    "measured": 70,
+    "measured": 68,
     "failing": 0,
     "worst": {
-      "ratio": 4.704205397808176,
+      "ratio": 4.747604768402507,
       "bar": 4.5,
       "text": "16 images",
       "color": "rgb(107, 101, 88)",
@@ -245,7 +245,7 @@
     "measured": 68,
     "failing": 0,
     "worst": {
-      "ratio": 4.704205397808176,
+      "ratio": 4.747604768402507,
       "bar": 4.5,
       "text": "22 images",
       "color": "rgb(107, 101, 88)",
@@ -257,10 +257,10 @@
   {
     "width": "390",
     "route": "venue-olive-stories",
-    "measured": 71,
+    "measured": 69,
     "failing": 0,
     "worst": {
-      "ratio": 4.747604768402507,
+      "ratio": 4.704205397808176,
       "bar": 4.5,
       "text": "05 images",
       "color": "rgb(107, 101, 88)",

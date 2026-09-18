@@ -145,7 +145,9 @@ for (const [vw, vh, tag] of [
         const el = node.parentElement;
         if (!el || seen.has(el)) continue;
         seen.add(el);
-        if (el.closest("script,style,noscript,[data-a11y-exempt],.sr-only")) continue;
+        /* No [data-a11y-exempt] skip: the one exempt element, the footer
+           wordmark, is a drawing since stage 8 and holds no text. */
+        if (el.closest("script,style,noscript,.sr-only")) continue;
         let fixed = false;
         for (let a = el; a; a = a.parentElement) {
           if (getComputedStyle(a).position === "fixed") {

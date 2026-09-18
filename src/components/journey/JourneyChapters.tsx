@@ -173,10 +173,17 @@ export function JourneyChapters() {
                   </Reveal>
 
                   <Reveal delay={0.06}>
-                    <h3 className="mt-7 font-display text-[clamp(2rem,3.3vw,3.25rem)] font-light leading-[1.0] text-[var(--text-primary)]">
+                    {/* h2: these six chapters are the sections of /wedding-guide,
+                        the only page that renders them, and nothing else on it
+                        opens a level above them. As h3 they skipped a level from
+                        the page's h1 — the one thing Lighthouse still scored the
+                        route down for (98) once the logotype exemption went, and
+                        the gate's axe run could not see it: heading-order is an
+                        axe best-practice rule, outside the WCAG tags it asks for. */}
+                    <h2 className="mt-7 font-display text-[clamp(2rem,3.3vw,3.25rem)] font-light leading-[1.0] text-[var(--text-primary)]">
                       <span className="sr-only">Step {step.number} — </span>
                       {title}
-                    </h3>
+                    </h2>
                   </Reveal>
 
                   <RuleDraw className="mt-8 w-20" />

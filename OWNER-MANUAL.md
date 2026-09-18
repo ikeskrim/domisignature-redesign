@@ -205,7 +205,14 @@ change them there too, or it will fail against the real domain.
 **What happens on its own, correctly:** the homepage venue count goes to `04`.
 The guest figure stays `Up to 300` — Villa Aetos holds far fewer, and the figure
 is a maximum. The venue page, its row on `/venues`, its map and its related
-cards all come back with no further work.
+cards all come back with no further work, and so do the counts that derive: the
+"All … venues" button on the homepage and the venue page's "The other …".
+
+**What does not follow on its own: the words.** "Three settings, one island" (the
+homepage and `/venues`), the homepage's venues sentence, which names each setting,
+and the `/venues` standfirst and description ("Three private venues", "Three
+venues") are typed copy. Edit them in the same change, or the page will say three
+above four.
 
 Rehearsed on `2026-08-19`, on the dark-palette build; the branch was deleted
 afterwards and nothing shipped. Screenshots of the restored page and index were

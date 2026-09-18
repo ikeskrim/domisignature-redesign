@@ -1,11 +1,11 @@
 # Aegean Bone — the merge report
 
-**Preview:** https://domisignature-redesign-fkjxrm479-domisi.vercel.app
-(the stage-7 snapshot `1e218d3` on `aegean`, the site this report describes; this line was added by the docs-only commit after it)
+**Preview:** added by the commit that follows the stage-8 snapshot (the snapshot's own preview cannot be named inside it).
 The branch is sealed against search engines; the production alias still serves `main`.
 
-This is the report stage 8 waits on. Nothing here has touched `main`; merging is
-the owner's decision alone, and nothing merges without it.
+The owner approved the merge on 2026-09-17, after one pre-merge fix commit and a
+green gate. Nothing here has touched `main` yet: the merge itself waits on the
+owner's word, and this report is what it rests on.
 
 ---
 
@@ -67,6 +67,23 @@ check red. The docs pass put superseded banners on the dark-era documents, corre
 the launch runbook against `WAITING-FOR-DNS.md` (untouched), and rewrote the
 toolkit for the gate as it stands.
 
+**8 — Pre-merge fixes, approved.** Three stale or wrong facts went, each derived
+now rather than typed: Home named four settings for three venues, `/venues` typed
+its guest ceiling, and a venue's structured data told search engines 200300
+guests. The hero wordmark, cut on every phone narrower than about 479px on this
+branch and on `main`, fits at every phone width with desktop sizing untouched.
+The footer logotype is a drawing — the site's own typeface, in outlines generated
+from the built font and checked by a new gate check — so the WCAG logotype
+exemption is gone from the footer and from three audit scripts, and the
+`/wedding-guide` chapters became `h2` instead of skipping a heading level:
+**accessibility is 100 on every route, on both presets, with nothing exempted.**
+The `/services?modal` self-redirect is deleted and `/services#…` links land on
+their section instead of 232px below it. The venue page sets capacity large once.
+CI runs its actions on current majors, off the deprecated Node 20. sharp 0.35.4
+and nanoid 3.3.19 landed in their own commits, each with the gate green after it,
+which clears every dependency advisory except next's bundled postcss — next 16,
+on its own branch after the merge, before 21 October.
+
 ---
 
 ## Before and after — every route, 1440 and 390
@@ -97,39 +114,68 @@ The 768px captures and the 1920 hero are in `design-review/final/` with the rest
 
 ## Lighthouse against the standing bars
 
-Standing bars: mobile performance ≥ 80 and every other category ≥ 90; desktop ≥ 90
-in every category. Medians of three runs, local production build, labelled with
-build source and framework version.
+Standing bars: mobile performance >= 80 and every other category >= 90;
+desktop >= 90 in every category.
 
-Both sides measured on this machine, the same way, one after the other: `main` as published (`1757bbe`, its own locked dependencies — Next.js 15.5.22 — and its own build) and this branch (`840286c`, Next.js 15.5.25), each served locally, the branch's Lighthouse script, three runs per route. Performance median, worst run in brackets; LCP median.
+Both sides measured on this machine with the same script and the same browser
+(Playwright's Chromium 151, not the auto-updating installed Chrome): `main` as
+published (`1757bbe`, its own locked dependencies — Next.js 15.5.22 — and its own
+build, 3 runs) and this branch (the stage-8 tree, Next.js 15.5.25, sharp 0.35.4,
+5 runs mobile and 3 desktop), each served locally at drop level 0.
+Performance median with the worst run in brackets; LCP median. This session ran
+nothing else during the runs; the machine is shared with other sessions, and
+sibling repositories did commit inside the windows, so treat one-point
+differences as noise rather than signal.
 
 | Route | Mobile · main | Mobile · aegean | Desktop · main | Desktop · aegean |
 |---|---|---|---|---|
-| Home | 83 (83) · 3.8 s | **87** (86) · 3.3 s | 98 · 0.8 s | **99** (92) · 0.7 s |
-| Venues | 93 (92) · 3.0 s | **92** (92) · 3.1 s | 99 · 0.6 s | **99** · 0.6 s |
-| Venue detail | 88 (87) · 3.5 s | **91** (91) · 3.2 s | 98 · 0.7 s | **99** · 0.6 s |
-| Signature Events | 93 (91) · 2.9 s | **92** (92) · 3.0 s | 99 · 0.5 s | **99** · 0.6 s |
-| Wedding Guide | 92 (91) · 3.0 s | **91** (91) · 3.0 s | 99 · 0.5 s | **99** · 0.6 s |
-| Contact | 93 (91) · 2.9 s | **93** (93) · 2.9 s | 99 · 0.6 s | **99** · 0.6 s |
+| Home | 83 (83) · 3.8 s | **85** (84) · 3.4 s | 98 (98) · 0.8 s | **99** (98) · 0.6 s |
+| Venues | 93 (92) · 3.0 s | **91** (91) · 3.2 s | 99 (99) · 0.6 s | **99** (99) · 0.7 s |
+| Venue detail | 88 (87) · 3.5 s | **91** (90) · 3.2 s | 98 (98) · 0.7 s | **99** (99) · 0.7 s |
+| Signature Events | 93 (91) · 2.9 s | **91** (91) · 3.2 s | 99 (99) · 0.5 s | **99** (99) · 0.7 s |
+| Wedding Guide | 92 (91) · 3.0 s | **90** (90) · 3.2 s | 99 (99) · 0.5 s | **99** (99) · 0.7 s |
+| Contact | 93 (91) · 2.9 s | **92** (91) · 3.0 s | 99 (99) · 0.6 s | **99** (99) · 0.7 s |
 
-Accessibility: main 98–100, aegean 95–96. Best practices and SEO: 100 on both. CLS 0–0.001 on both.
+Accessibility: **aegean 100 on every route and both presets**, main 98–100 (main's `/venues` and `/wedding-guide` read 98). Best practices 100, SEO 100, CLS 0–0.001.
 
-**Against the bars, every one holds on this branch:** mobile performance ≥ 80 on every route (lowest median 87, lowest single run 86); every other category ≥ 90; desktop ≥ 90 in every category (lowest single run 92). Phones drop no motion (level 0; every drop level was measured and every level clears).
+**Against the bars, every one holds:** mobile performance >= 80 on every route (lowest median 85, lowest single run 84); every other category >= 90; desktop >= 90 in every category (lowest single run 98). Phones drop no motion (level 0).
 
 ---
 
 ## Regressions, and why
 
-Measured against `main` as published, on the same machine:
+Measured against `main` as published, on the same machine, the same script and the
+same browser:
 
-- **Accessibility, 98–100 → 95–96 on every route.** One node: the footer's decorative logotype (`aria-hidden`, 1.21:1). WCAG exempts logotypes and pure decoration, and the gate's own axe run already excludes it, but Lighthouse's contrast audit cannot. It appeared when stage 6 deleted the light pool that sat over it, which most likely left its background indeterminate before. Improvement 1 below removes it without an exemption.
-- **Mobile performance, −1 on Venues, Signature Events and the Wedding Guide** (93 → 92, 93 → 92, 92 → 91). Each is inside `main`'s own spread across its three runs (91–93), so none is a measured regression; they are recorded because they are the only routes that did not gain. What the branch adds there is motion the dark site did not have: plates that lift, rules that draw, settling reveals.
-- **Home desktop, one slow run** (92 against a median of 99). The median matches `main`; the single run is recorded, not explained away.
-- **Against its own history:** Home read 90 on mobile at stage 4 and 87 now. The four loading fixes of stage 6 took it from 81 back to 88; the motion stage cost it one point. Improvement 3 names what is left.
+- **None in accessibility — the stage-7 regression is gone.** Stage 7 read 95–96
+  on every route against main's 98–100, for one node: the footer's decorative
+  logotype. It is a drawing now, the exemption with it, and `/wedding-guide`'s
+  heading skip went too, so every route reads **100** on both presets, where main
+  reads 98 on `/venues` and `/wedding-guide`.
+- **Mobile performance, route by route, is within a point or two of main and
+  moves in both directions** (main first): Home 83 → 85, Venues 93 → 91, Venue detail 88 → 91, Signature Events 93 → 91, Wedding Guide
+  92 → 90, Contact 93 → 92. What the branch adds on those routes is motion the
+  dark site did not have: plates that lift, rules that draw, settling reveals.
+  Three measurement sets of the same tree put Home's mobile median between 85 and
+  88 and its worst single run at 80, the floor itself; the machine is shared, and
+  the set with the worst Home also had roughly double the blocking time on every
+  other route, which is load, not the site. Improvement 2 names what is actually
+  left to fix on Home.
+- **Home's mobile largest paint is now its subtitle, not the wordmark.** The
+  wordmark is smaller on phones since the sizing fix, so a different element is
+  the largest, and it paints 0.1 s later than the wordmark did at stage 7 — still
+  half a second earlier than main's 3.8 s. Two of Home's points are that.
+- **Against its own history:** Home read 90 on mobile at stage 4 and 85–88 now.
 
-Gains, for balance: Home +4 on mobile with a largest paint half a second earlier (3.8 → 3.3 s), the venue page +3 (3.5 → 3.2 s), every route's worst run at or above `main`'s except the one Home desktop run above.
+Gains, for balance: accessibility 100 everywhere against main's 98–100, Home's
+largest paint half a second earlier than main's, the venue page +3, and desktop 99
+on every route against main's 98–99.
 
-No visual or content regression is known beyond the flags below; copy, facts and routes are unchanged from `main`.
+No visual or content regression is known beyond the flags below. Copy and routes
+are otherwise unchanged from `main`. `/wedding-guide` was re-captured after the
+heading change: byte-identical at 390 and 768, and at 1440 the type is identical
+while one scene's photograph differs by a sub-pixel scroll-linked transform, which
+is where the capture's scroll pass left the drift, not the heading.
 
 ---
 
@@ -138,68 +184,90 @@ No visual or content regression is known beyond the flags below; copy, facts and
 None of these is built; each is a proposal for after the merge or for the owner
 to pick up.
 
-1. **The footer's logotype as a drawing, not text.** It is decorative and hidden
-   from assistive technology, and WCAG exempts logotypes, but Lighthouse's
-   contrast audit cannot see an exemption and scores every route 95–96 for it.
-   Set as an SVG (or a CSS background), accessibility reads 100 again with nothing
-   exempted.
-2. **A run-on-word check in the gate.** TextReveal's words lost their spaces in
+1. **A run-on-word check in the gate.** TextReveal's words lost their spaces in
    stage 6 and no check noticed: typeset-clip photographs a line masked and
    unmasked, which cannot see a missing gap. Measuring the gap between adjacent
    word masks on every line would make that failure impossible to ship again.
-3. **Home's main thread at hydration.** Home is the one route still below its
-   stage-4 reading (87 against 90). Its largest paint is the hero headline, not a
-   photograph, and what remains is script work while the page hydrates: 2.2 s of
-   main-thread work and a median 200 ms of blocking time on the throttled phone.
+2. **Home's main thread at hydration.** Home is the one route whose mobile median
+   sits below 90. Its largest paint is text, not a photograph, and what remains is
+   script work while the page hydrates: about 2 s of main-thread work and 150–350
+   ms of blocking time on the throttled phone, the widest spread of any route.
    Loading the cursor, the magnetic pull and the preloader's timeline after the
    page is interactive would take most of it.
-4. **The FAQ, closed in the server render.** The accordion ships open and
+3. **The FAQ, closed in the server render.** The accordion ships open and
    collapses after hydration, so closed answers flash on a slow load. It renders
    nothing today (the answers are pending); when they land, rendering the closed
    panels hidden-until-found keeps them searchable without the flash.
-5. **The mobile menu on short landscape phones.** Below the desktop breakpoint,
+4. **The mobile menu on short landscape phones.** Below the desktop breakpoint,
    on a phone held sideways (844×390), the six rows overflow a panel that does not
    scroll, so the last links can sit out of reach. Letting the panel scroll, or
    tightening the rows at short heights, keeps every link reachable.
+5. **The `/events` masonry's 3/3/1 split** (the owner's addition). Seven plates in
+   three CSS columns fill 3/3/1, and the aspect cycle repeats with the same period
+   as the columns, so the rows line up and the last column reads as unfinished.
+   Balancing the columns and breaking that period would settle it.
 
 ---
 
 ## Waiting on the owner
 
-**Before or at the merge**
+**The merge itself.** One word. `origin/main` is a single snapshot with no history
+in common with `origin/aegean`, and the pre-push guard allows `main` only with the
+owner's flag set, one commit whose parent is the remote tip, and this tree — the
+same privacy checks as every other push. So the merge is one snapshot of the
+approved tree on top of `1757bbe`; Vercel rebuilds production from `main` on the
+push, and the alias, the seal matrix and CI are checked after it.
 
-- **Deployments still serving private files.** Two canceled production
-  deployments (`n9yg989zc`, `7gujchx43`) serve all eight withheld photographs, and
-  every deployment built before the metadata strip — the two kept previews
-  (`7apxf9ext`, `ikw1wxqqc`) and older production builds — serves the originals
-  with GPS and camera serials. Production deployments were never mine to touch.
-- **History.** Earlier snapshots on `origin/aegean` still contain the pre-strip
-  files; removing them is a history rewrite.
-- **Deployment Protection** (previews public through stage 7, decide at stage 8),
-  and the www redirect setting at cutover.
-- **`/services?modal`:** the redirect loop the audit found (option A, delete the
-  line) waits on your approval; routes are frozen until then.
+**Deployments: done, and what is left.** 37 deployments were removed on the
+owner's instruction (the two canceled production deployments, the two stage-5
+previews, and 33 superseded production deployments of `main` that still served
+pre-strip media); the stage-8 log lists every id. Five are kept: the production
+alias's own deployment and the four post-strip `aegean` previews. Two consequences
+for the owner:
 
-**Copy and facts, flagged and never changed**
+- there is no older production deployment left to roll back to;
+- the kept production deployment (`main`, `1757bbe`) still serves pre-strip media
+  on the `vercel.app` alias. Only the merge's own production build replaces it,
+  and it then becomes a superseded pre-strip deployment in its turn — the owner's
+  call. The live domain serves none of this: its DNS still points at the old host.
 
-- Home says "four settings" for three venues (the fourth was Villa Aetos).
-- `/venues` types "Up to 300 guests" instead of deriving it.
-- The enquiry form is published from another brand's Monday account.
-- The venue page states capacity twice (both correct — a design call).
-- The hero wordmark is cut at 390; the `/events` masonry splits 3/3/1.
+**Correction to the stage-7 report.** It said the two canceled production
+deployments served all eight withheld photographs. Measured before deleting them,
+they answered every path — withheld or not, existing or not — with Vercel's
+"Deployment was cancelled" page, and the withheld files were never in their
+commits. The earlier claim came from reading status codes alone.
 
-**Judgement calls made in stage 6, yours to reverse**
+**Deferred by the owner, or theirs alone:** the history rewrite (earlier snapshots
+on `origin/aegean` still carry pre-strip files) until the repository is private;
+Deployment Protection; DNS, domains, the old host, Vercel settings and
+credentials. The launch stays parked under `WAITING-FOR-DNS.md`, which is
+unchanged and keeps working after the merge.
 
-- The home venue list dims its other rows by stepping to the secondary text colour
-  instead of fading them to 30% — no text on paper fades. A signature interaction.
-- Phones drop no motion (the measured rule's answer); the planning pass had
-  recommended dropping the preloader on phones, worth one point on Home.
-- `/services#…` links now land about 232px down at desktop: the scenes' own top
-  margin adds to the new header clearance.
+**Dependencies.** sharp and nanoid are done. next 16 is the one advisory left
+(next's bundled postcss, high), and it is a major: its own branch after the merge,
+before 15.x support ends on 21 October 2026. Two things to know on that branch:
+the local AVIF output changed with sharp 0.35 (Vercel's image pipeline does not
+use it), and the new `wordmark` gate check reads Next 15's CSS layout, so it must
+be taught Turbopack's before that branch can pass.
 
-**After the merge (decided, not started)**
+**Copy and facts, flagged and not changed:** the enquiry form is still published
+from another brand's Monday account (it lives in the Monday builder, outside this
+repository), and the venue page states capacity twice more quietly — the title
+card's line beside the location, and the specimen card's value — which is a design
+call, not a defect.
 
-Security headers static first, then CSP as Report-Only, then enforcing, never
-nonces; HSTS without `includeSubDomains` while webmail, ftp and mail resolve to
-the old host; Next.js 16 on its own branch before 15.x support ends on
-21 October 2026; sharp 0.35 at your call.
+**Judgement calls the owner accepted, recorded:** the home venue list dims its
+other rows by stepping to the secondary text colour rather than fading them;
+phones drop no motion; `/services#…` links land level with the header clearance.
+Two more, made at stage 8 and reversible: `actions/upload-artifact` was bumped
+with the three actions the owner named, because it targets the same deprecated
+runtime; and the venue page keeps the small capacity line in its title card.
+
+**Two guards that do not exist, now recorded rather than assumed.** The `claims`
+check guards scarcity and exclusivity wording, not figures — the toolkit claimed
+otherwise until stage 8, and both figure defects this stage fixed were found by
+reading code, not by a gate. A figures audit (every number rendered on the site
+traced to `content/`) would close it. And on a desktop window narrower than about
+450px with a classic scrollbar, the hero's last letter can still lose a pixel or
+two, because `100vw` counts the scrollbar; phones, which have none, are clear at
+every width from 320 up.

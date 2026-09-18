@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { VenuePlates } from "@/components/venue/VenuePlates";
 import { CtaBlock } from "@/components/ui/CtaBlock";
 import { BreadcrumbSchema } from "@/components/seo/StructuredData";
+import { capacityCeiling } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata({
   title: "Wedding Venues in Crete",
@@ -15,6 +16,9 @@ export const metadata: Metadata = pageMetadata({
   image: "/media/th3-DSC_5495.jpg",
   imageAlt: "Thalasses at dusk — a lit pool, palms and the Cretan sea beyond",
 });
+
+/* The header's ceiling derives from the venues; it was a typed 300. */
+const guestCeiling = Math.max(...venues.map((v) => capacityCeiling(v.capacity)));
 
 const crumbs = [
   { name: "Home", href: "/" },
@@ -42,7 +46,7 @@ export default function VenuesPage() {
             <div>
               <dt className="eyebrow">Up to</dt>
               <dd className="mt-3 font-display text-[2.75rem] font-light leading-none text-[var(--text-primary)]">
-                300
+                {guestCeiling}
                 <span className="ml-2 text-base tracking-normal text-[var(--text-secondary)]">guests</span>
               </dd>
             </div>

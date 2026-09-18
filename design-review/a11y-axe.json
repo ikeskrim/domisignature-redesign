@@ -17,7 +17,7 @@
     "route": "venue-detail",
     "path": "/venues/thalasses",
     "viewport": "mobile",
-    "contrastNeedsReview": 46,
+    "contrastNeedsReview": 44,
     "violations": []
   },
   {
@@ -87,7 +87,7 @@
     "route": "venue-detail",
     "path": "/venues/thalasses",
     "viewport": "desktop",
-    "contrastNeedsReview": 52,
+    "contrastNeedsReview": 50,
     "violations": []
   },
   {

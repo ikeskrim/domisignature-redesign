@@ -43,8 +43,9 @@ risk. If a law blocks the task, stop and report; never work around it.
 
 - **Copy, facts, numbers and SEO keywords are frozen.** Flag in the report;
   never fix. Exceptions need the owner's explicit approval in this session.
-- Figures derive from `content/` and are never typed into a component
-  (`audit:claims`).
+- Figures derive from `content/` and are never typed into a component. No
+  audit enforces this (`audit:claims` checks scarcity wording only), so read
+  every number in a diff against `content/`.
 - **No route, IA or structural change** beyond what the current stage's plan
   lists. Redirects in `next.config.ts` and `src/middleware.ts` are routes:
   report defects there, do not change them.

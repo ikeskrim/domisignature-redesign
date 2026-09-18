@@ -1,6 +1,8 @@
+import { venues } from "@content/venues";
 import { Reveal, RuleDraw, TextReveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 import { VenueIndex } from "@/components/venue/VenueIndex";
+import { countWord } from "@/lib/utils";
 
 /**
  * The venues scene. A quiet typographic opener on paper, then straight into
@@ -29,8 +31,11 @@ export function FeaturedVenues() {
 
             <div className="lg:col-span-4 lg:col-start-9 lg:pt-4">
               <Reveal delay={0.18}>
+                {/* One setting per venue. The house in the hills was Villa Aetos,
+                    withdrawn; the sentence kept it for three stages (owner-approved
+                    fix, stage 8). Prose cannot derive, so the button's count does. */}
                 <p className="prose-editorial">
-                  A mountain estate, a private beach, an olive field and a house in the hills.
+                  A mountain estate, a private beach and an olive field.
                   Each chosen for what it lets you do — the curfew, the capacity, the view at the
                   moment you say yes.
                 </p>
@@ -38,7 +43,7 @@ export function FeaturedVenues() {
               <Reveal delay={0.26}>
                 <div className="mt-10">
                   <Button href="/venues" variant="ghost">
-                    All three venues
+                    {`All ${countWord(venues.length)} venues`}
                   </Button>
                 </div>
               </Reveal>

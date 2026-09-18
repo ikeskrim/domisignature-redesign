@@ -75,7 +75,7 @@
     "ffmpeg-static": "^5.2.0",
     "lighthouse": "^13.4.1",
     "playwright": "^1.62.1",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.3"
   }

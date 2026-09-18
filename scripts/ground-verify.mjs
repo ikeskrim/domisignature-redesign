@@ -174,11 +174,9 @@ for (const route of ROUTES) {
       const el = node.parentElement;
       if (!el || seen.has(el)) continue;
       seen.add(el);
-      /* The footer's giant wordmark is a decorative logotype, hidden from
-         assistive technology and marked data-a11y-exempt: axe excludes exactly
-         this selector (a11y.mjs) and the paper sweep skips it, so this check
-         does too. It is set between two roles, felt rather than read. */
-      if (el.closest("script,style,noscript,template,[data-a11y-exempt='decorative-logotype']")) continue;
+      /* No exemption: the footer's giant wordmark, once skipped here as a
+         decorative logotype, is a drawing since stage 8 and holds no text. */
+      if (el.closest("script,style,noscript,template")) continue;
       const r = el.getBoundingClientRect();
       if (r.width < 1 || r.height < 1) continue;
       const cs = getComputedStyle(el);

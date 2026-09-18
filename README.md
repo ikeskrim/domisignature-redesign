@@ -28,7 +28,7 @@ The dev server is pinned to **port 3004**.
 
 ### Audits
 
-The build is gated by `npm run qa`: nineteen checks, from TypeScript and the
+The build is gated by `npm run qa`: twenty checks, from TypeScript and the
 palette law to axe, the focus ring, paper legibility and the motion gates, run
 against a production build. `QA-TOOLKIT.md` explains every check, what green
 means and what runs beside the gate (Lighthouse, INP, the paper sweeps with

@@ -132,18 +132,9 @@ export default async function VenuePage({ params }: { params: Promise<{ slug: st
                 </div>
               </Reveal>
 
-              <Reveal delay={0.1}>
-                <p className="mt-12 font-display text-heading font-light text-[var(--text-primary)]">
-                  {/*
-                    The unit is set apart in quieter type, so it is stripped from
-                    the label rather than added to it — capacityLabel already
-                    ends in "guests", and appending another one is exactly the
-                    bug this line used to have.
-                  */}
-                  {capacityLabel(venue.capacity).replace(/\s*guests$/i, "")}
-                  <span className="text-[var(--text-secondary)]"> guests</span>
-                </p>
-              </Reveal>
+              {/* Capacity is set large once, in the specimen card beside this
+                  column. A second large line here echoed it (a stage-5 flag,
+                  removed on the owner's instruction at stage 8). */}
             </div>
 
             {/* Five columns, not four: as a specimen card the facts gained a mat
