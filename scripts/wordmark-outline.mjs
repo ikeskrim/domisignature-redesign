@@ -67,27 +67,81 @@ async function siteName() {
   return name;
 }
 
-/** The Playfair Display file the build serves for normal 400 Basic Latin. */
-async function builtFont() {
-  const cssDir = path.join(ROOT, ".next", "static", "css");
-  let files;
-  try {
-    files = (await readdir(cssDir)).filter((f) => f.endsWith(".css"));
-  } catch {
-    fail("no build: .next/static/css is missing (run `npm run build` first)");
-  }
-  const found = new Set();
-  for (const f of files) {
-    const css = await readFile(path.join(cssDir, f), "utf8");
-    for (const [rule] of css.matchAll(/@font-face\{[^}]*\}/g)) {
-      if (!/font-family:\s*["']?Playfair Display["']?\s*[;}]/.test(rule)) continue;
-      if (!/font-style:\s*normal/.test(rule) || !/font-weight:\s*400\b/.test(rule)) continue;
-      if (!/unicode-range:[^;}]*u\+00\?\?/i.test(rule)) continue;
-      const url = /url\(["']?\/_next\/static\/media\/([^"')]+\.woff2)["']?\)/.exec(rule)?.[1];
-      if (url) found.add(url);
+/**
+ * Does a CSS unicode-range cover every character of the text? Ranges are
+ * compared by what they mean, not how they are spelled: Next 15's webpack CSS
+ * writes `u+00??` and Next 16's Turbopack writes `U+??`, and both mean
+ * U+0000-U+00FF. `?` is a wildcard digit; a bare value is one code point.
+ */
+function rangeCovers(value, text) {
+  const spans = [];
+  for (const token of value.split(",")) {
+    const t = token.trim().replace(/^u\+/i, "");
+    if (!t) continue;
+    if (t.includes("?")) {
+      const from = Number.parseInt(t.replace(/\?/g, "0"), 16);
+      const to = Number.parseInt(t.replace(/\?/g, "F"), 16);
+      spans.push([from, to]);
+    } else if (t.includes("-")) {
+      const [a, b] = t.split("-").map((x) => Number.parseInt(x, 16));
+      spans.push([a, b]);
+    } else {
+      const a = Number.parseInt(t, 16);
+      spans.push([a, a]);
     }
   }
-  if (found.size !== 1) fail(`expected one Playfair Display normal 400 Basic Latin file in the built CSS, found ${found.size}`);
+  if (!spans.length || spans.some(([a, b]) => Number.isNaN(a) || Number.isNaN(b))) return false;
+  return [...text].every((ch) => spans.some(([a, b]) => ch.codePointAt(0) >= a && ch.codePointAt(0) <= b));
+}
+
+/** Every .css the build wrote, wherever this Next version puts it. */
+async function builtCss() {
+  const staticDir = path.join(ROOT, ".next", "static");
+  const out = [];
+  const walk = async (dir) => {
+    let entries;
+    try {
+      entries = await readdir(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const p = path.join(dir, entry.name);
+      if (entry.isDirectory() && entry.name !== "media") await walk(p);
+      else if (entry.isFile() && entry.name.endsWith(".css")) out.push(p);
+    }
+  };
+  await walk(staticDir);
+  if (!out.length) fail("no build: .next/static holds no CSS (run `npm run build` first)");
+  return out;
+}
+
+/**
+ * The font file the build serves for the wordmark: Playfair Display, normal,
+ * weight 400 (the site loads 400 and 500, and 300 renders as 400), whose
+ * unicode-range covers every letter drawn. Next 15 wrote
+ * `url(/_next/static/media/x.woff2)` from `.next/static/css`; Next 16's
+ * Turbopack writes `url(../media/x.woff2)` from `.next/static/chunks`. Both are
+ * resolved to the file on disk.
+ */
+async function builtFont(text) {
+  const found = new Set();
+  for (const file of await builtCss()) {
+    const css = await readFile(file, "utf8");
+    for (const [rule] of css.matchAll(/@font-face\{[^}]*\}/g)) {
+      if (!/font-family:\s*["']?Playfair Display["']?\s*[;}]/.test(rule)) continue;
+      if (!/font-style:\s*normal/.test(rule)) continue;
+      const weight = /font-weight:\s*([^;}]+)/.exec(rule)?.[1]?.trim() ?? "";
+      const bounds = weight.match(/\d+/g)?.map(Number) ?? [];
+      const takes400 = bounds.length === 1 ? bounds[0] === 400 : bounds.length > 1 && Math.min(...bounds) <= 400 && Math.max(...bounds) >= 400;
+      if (!takes400) continue;
+      const range = /unicode-range:\s*([^;}]+)/.exec(rule)?.[1];
+      if (range && !rangeCovers(range, text)) continue;
+      const url = /url\(\s*["']?([^"')]+\.woff2)["']?\s*\)/.exec(rule)?.[1];
+      if (url) found.add(path.basename(url));
+    }
+  }
+  if (found.size !== 1) fail(`expected one Playfair Display normal 400 face covering "${text}" in the built CSS, found ${found.size}`);
   const [file] = found;
   return { file, bytes: await readFile(path.join(ROOT, ".next", "static", "media", file)) };
 }
@@ -149,7 +203,7 @@ export const WORDMARK = {
 }
 
 const text = (await siteName()).toUpperCase();
-const { file, bytes } = await builtFont();
+const { file, bytes } = await builtFont(text);
 const tables = decodeWoff2(bytes);
 const family = nameString(tables, 1) || "the site's display face";
 const version = nameString(tables, 5).replace(/;.*$/, "") || "unknown version";

@@ -106,7 +106,10 @@ const fresh = async (rel) => {
   }
 };
 const checks = await Promise.all(["BUILD_ID", "routes-manifest.json", "prerender-manifest.json"].map(fresh));
-if (!checks.every(Boolean) || !/Linting and checking validity of types/.test(next.out)) {
+/* Next 15 printed "Linting and checking validity of types"; Next 16 dropped
+   the lint pass and prints "Running TypeScript ... / Finished TypeScript in".
+   Either sentence proves Next validated types; neither being present does not. */
+if (!checks.every(Boolean) || !/Linting and checking validity of types|Finished TypeScript in/.test(next.out)) {
   console.error(bar("[build] next build exited 0 but did not leave a fresh, type-checked build. Not a pass."));
   process.exit(1);
 }
