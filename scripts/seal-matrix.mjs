@@ -20,8 +20,9 @@
  *               holds a line that is exactly "Disallow: /", matched from the
  *               start of the line. No line may be "Allow: /".
  *   markers     <html data-ground="light">, the Aegean light build. Required on
- *               every HTML response from the preview. On the alias it is only
- *               recorded: the alias serves pre-Aegean main until stage 8.
+ *               every HTML response from the preview. On the alias it is
+ *               recorded, not asserted: the alias followed main, and since the
+ *               stage-8 merge (2026-09-18) main is the Aegean build.
  *   loop guard  the legacy path rows of launch-check.mjs (PATH_ROWS, read from
  *               that file), followed hop by hop, at most 6 requests. A revisited
  *               path fails, more than 5 hops fails, a hop to another host fails,
@@ -31,10 +32,10 @@
  *   modal       /services?modal once answered a redirect to itself
  *               (BRIEF-AUDIT.md section 4.4). The owner chose option A at stage 8
  *               and the rule was deleted from next.config.ts, so a host serving
- *               the Aegean build must answer it with a 200 page. The alias serves
- *               pre-Aegean main, which keeps the rule until the merge: there the
- *               answer is recorded and never failed, and the check arms itself
- *               once the alias serves the Aegean build.
+ *               the Aegean build must answer it with a 200 page. Since the merge
+ *               both hosts do, and both are asserted. The check arms itself off
+ *               the build a host serves, so on a pre-Aegean host (a rollback, or
+ *               an older deployment) the answer is recorded and never failed.
  *
  * Privacy: the preview host is never printed or written. It is labelled
  * "preview", error text is scrubbed of it, redirect targets are reduced to
@@ -93,8 +94,9 @@ const FAMILIES = [
 const MODAL_PATH = "/services?modal";
 
 const NOT_ASSERTED = [
-  "/services?modal on a pre-Aegean build (the alias until the merge): main still carries the rule that " +
-    "redirects it to itself, so its answer is recorded, not asserted. On the Aegean build it must answer 200.",
+  "/services?modal on a pre-Aegean build, if one is ever served again (a rollback, or an older deployment): " +
+    "that build still carries the rule that redirects it to itself, so its answer is recorded, not asserted. " +
+    "On the Aegean build — both hosts since the stage-8 merge — it must answer 200.",
 ];
 
 /* ------------------------------------------------------------------------ */
@@ -434,7 +436,7 @@ async function runHost(host, withheld, pathRows) {
   result.probes.push(home.row);
   result.build = buildOf(home.g);
   if (host.label === "alias") {
-    note("alias serves", `${result.build}; pre-Aegean main is expected until stage 8 (recorded, never failed)`);
+    note("alias serves", `${result.build}; recorded, never failed — since the stage-8 merge main is the Aegean build`);
   }
 
   for (const [id, p] of FAMILIES) {

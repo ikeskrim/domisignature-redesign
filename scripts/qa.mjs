@@ -37,6 +37,9 @@ const STATIC_CHECKS = [
   /* Stage 4's completion test: a count that has to be zero. */
   ["palette", ["scripts/palette-literals.mjs"], "zero palette literals outside the token definitions"],
   ["claims", ["scripts/claims-audit.mjs"], "no scarcity or exclusivity claim, in any wording"],
+  /* Stage 8: the figures half of the same law, which nothing enforced until the
+     merge found two figures gone wrong — a typed 300 and a mangled capacity. */
+  ["figures", ["scripts/figures-audit.mjs"], "every rendered number derives from content/"],
   ["prose", ["scripts/prose-audit.mjs"], "no placeholder, no lorem, no double space"],
   ["media", ["scripts/media-audit.mjs"], "every image and video referenced actually exists"],
   ["manifest", ["scripts/publish-manifest.mjs"], "no withheld frame is referenced anywhere"],

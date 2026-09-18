@@ -1,13 +1,13 @@
 # QA toolkit
 
-Twenty automated checks, one command, and a GitHub Action that runs them on every
+Twenty-one automated checks, one command, and a GitHub Action that runs them on every
 push. This is what stops the site quietly rotting.
 
 ```bash
 npm run qa
 ```
 
-Green means all twenty passed. It exits non-zero if any failed, so it is safe to
+Green means all twenty-one passed. It exits non-zero if any failed, so it is safe to
 put in front of anything.
 
 `npm run qa` builds nothing — run `npm run build` first, or the server-backed
@@ -24,7 +24,8 @@ half will be measuring a stale build. CI does the build itself.
 | **typecheck** | `tsc --noEmit` | TypeScript compiles with no errors. |
 | **lint** | `eslint .` | No lint errors, including the accessibility rules. |
 | **palette** | `scripts/palette-literals.mjs` | **Zero palette literals** outside the token definitions. Every component asks for a semantic role (`--text-primary`, `--surface`, `--rule`) and the ground it sits on answers; the moment a file names `text-bone` or `#0a0a0b`, a dark chapter stops being a local inversion and becomes a conditional again. Comments do not count; `themeColor` in `layout.tsx` is the one named exception, because metadata cannot read a CSS variable. Rules in `design-review/SEMANTIC-TOKENS.md`. |
-| **claims** | `scripts/claims-audit.mjs` | **No scarcity or exclusivity claim ships, in any wording** — "by invitation", "a handful of celebrations", "waitlist", "limited to" and the rest of the idea, in `content/` or `src/`. Every allowed instance must be the client's own published copy (checked against `scripts/source.html`) or signed off by name. It does **not** check figures: that "3 venues" and "up to 300 guests" derive from `content/` rather than being typed is a review rule with no audit behind it (this line claimed otherwise until stage 8, when a typed 300 on `/venues` and a wrong capacity in the venue structured data were found by reading the code). |
+| **claims** | `scripts/claims-audit.mjs` | **No scarcity or exclusivity claim ships, in any wording** — "by invitation", "a handful of celebrations", "waitlist", "limited to" and the rest of the idea, in `content/` or `src/`. Every allowed instance must be the client's own published copy (checked against `scripts/source.html`) or signed off by name. It does **not** check figures — this line claimed it did until stage 8, when a typed 300 on `/venues` and a wrong capacity in the venue structured data were both found by reading code. That half of the law is now **figures**, below. |
+| **figures** | `scripts/figures-audit.mjs` | **No number the site renders is typed into a component** (stage 8, the half of the derived-figures law nothing enforced). Every `.tsx` under `src/` is parsed with the repository's own TypeScript, and every place a number reaches a visitor — JSX text, a literal as a child, `alt`/`aria-label`/`title`/`placeholder`, and the string properties that become copy or metadata — must either trace to `content/` (the same number, not a substring of a longer one) or be allowed by name here, with its reason: the design-direction and study routes, `Error 404`, and one SEO line whose acreage `content/venues.ts` spells in words. An allowance that covers nothing fails too. An expression that computes (`{venues.length}`, `{capacityLabel(...)}`) is not a candidate at all — that is the law working. It is a tripwire, not a proof: it asks whether a number exists in `content/`, not whether it means the same thing there. |
 | **prose** | `scripts/prose-audit.mjs` | No placeholder text, no lorem ipsum, no `TODO`, no doubled spaces, no straight quotes where the design uses typographic ones. |
 | **media** | `scripts/media-audit.mjs` | Every image and video path referenced in `content/` exists in `public/`. Catches a renamed file before a visitor finds the gap. |
 | **manifest** | `scripts/publish-manifest.mjs` | **The privacy gate.** Eight photographs are withheld from the repository — identifiable people, a licence plate, frames the owner pulled. This fails if any of them is referenced from anywhere in the code, so a withheld frame can never quietly come back through a component edit. Rationale per file is in `design-review/publish-manifest.md`. |
