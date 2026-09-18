@@ -20,6 +20,14 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * 42s. This is ambient texture at the very end of the page, not something
  * anyone should catch themselves watching.
  *
+ * It only runs while it is on screen (stage 6). The loop is created paused and
+ * an IntersectionObserver plays it while any of the band is in the viewport and
+ * pauses it when the band leaves, so the footer is not repainting a transform
+ * for the whole of a visitor's time further up the page. It resumes from where
+ * it stopped: the ease is linear, so there is no jump and no restart. An
+ * observer rather than a ScrollTrigger because it needs no refresh when the
+ * page above it changes height.
+ *
  * Under reduced motion the track simply does not move — the wordmark is still
  * there, still set enormous, just still.
  */
@@ -32,26 +40,47 @@ export function Marquee({
   className?: string;
   duration?: number;
 }) {
+  const band = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
   useIsomorphicLayoutEffect(() => {
+    const root = band.current;
     const el = track.current;
-    if (!el || prefersReducedMotion()) return;
+    if (!root || !el || prefersReducedMotion()) return;
 
-    const tween = gsap.to(el, {
-      xPercent: -50,
-      duration,
-      ease: "none",
-      repeat: -1,
+    let tween: gsap.core.Tween | undefined;
+    const ctx = gsap.context(() => {
+      tween = gsap.to(el, {
+        xPercent: -50,
+        duration,
+        ease: "none",
+        repeat: -1,
+        paused: true,
+      });
+    }, root);
+
+    /* No observer (a very old engine): run as it always did. Otherwise the
+       observer's first callback, delivered on observe, sets the initial state. */
+    if (typeof IntersectionObserver === "undefined") {
+      tween?.play();
+      return () => ctx.revert();
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!tween || !entry) return;
+      if (entry.isIntersecting) tween.play();
+      else tween.pause();
     });
+    observer.observe(root);
 
     return () => {
-      tween.kill();
+      observer.disconnect();
+      ctx.revert();
     };
   }, [duration]);
 
   return (
-    <div className={cn("overflow-hidden", className)} aria-hidden="true">
+    <div ref={band} className={cn("overflow-hidden", className)} aria-hidden="true">
       <div ref={track} className="flex w-max">
         <div className="shrink-0">{children}</div>
         {/* The seam-free half. Identical, and never announced twice because the

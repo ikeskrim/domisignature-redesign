@@ -33,7 +33,7 @@ export const journey: JourneyStep[] = [
     number: 1,
     title: "Choose your venue and date",
     body: [
-      "Pick one of the four and we hold the date. Each offers privacy, natural surroundings and flexible space for both the ceremony and the celebration.",
+      "Pick one of the three and we hold the date. Each offers privacy, natural surroundings and flexible space for both the ceremony and the celebration.",
     ],
     image: "/media/md1.jpg",
     imageAlt: "The Mountain Escape estate with its pools and panoramic mountain and sea views",

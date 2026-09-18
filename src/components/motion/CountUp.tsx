@@ -23,7 +23,16 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * `once: true` and no repeat: a number that keeps re-counting every time it
  * scrolls past reads as a gimmick, and the brief rules it out.
  */
-export function CountUp({ value, className }: { value: string; className?: string }) {
+export function CountUp({
+  value,
+  className,
+  measure,
+}: {
+  value: string;
+  className?: string;
+  /** Measurement target, rendered as `data-measure` — see TextReveal. */
+  measure?: string;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -73,7 +82,7 @@ export function CountUp({ value, className }: { value: string; className?: strin
   /* Server-rendered and reduced-motion output is the real figure, so the number
      is correct with no JavaScript at all and never animates from a wrong one. */
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={className} data-measure={measure}>
       {value}
     </span>
   );

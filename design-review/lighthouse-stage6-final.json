@@ -1,0 +1,293 @@
+{
+  "label": {
+    "source": "local build 4b7f238, next 15.5.25",
+    "framework": "next 15.5.25",
+    "runs": 3,
+    "drop": 0,
+    "throttling": "simulate"
+  },
+  "rows": [
+    {
+      "preset": "mobile",
+      "label": "Home",
+      "route": "/",
+      "performance": 87,
+      "performanceWorst": 86,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "3.3 s",
+      "cls": "0.000",
+      "tbt": "202 ms",
+      "lcpElement": "<span data-hero-line=\"true\" class=\"block font-display text-hero font-light uppercase leading-[0.9] tracking-[…",
+      "failing": [
+        "mainthread-work-breakdown (2.2 s)",
+        "color-contrast",
+        "forced-reflow-insight",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 910 ms)",
+        "max-potential-fid (400 ms)",
+        "image-delivery-insight (Est savings of 35 KiB)",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "largest-contentful-paint (3.3 s)",
+        "speed-index (3.6 s)",
+        "total-blocking-time (210 ms)"
+      ],
+      "runs": [
+        {
+          "performance": 88,
+          "lcp": "2.5 s",
+          "cls": "0",
+          "tbt": "190 ms",
+          "lcpElement": "<span data-hero-line=\"true\" class=\"block font-display text-hero font-light uppercase leading-[0.9] tracking-[…"
+        },
+        {
+          "performance": 87,
+          "lcp": "3.3 s",
+          "cls": "0",
+          "tbt": "210 ms",
+          "lcpElement": "<span data-hero-line=\"true\" class=\"block font-display text-hero font-light uppercase leading-[0.9] tracking-[…"
+        },
+        {
+          "performance": 86,
+          "lcp": "3.4 s",
+          "cls": "0",
+          "tbt": "200 ms",
+          "lcpElement": "<span data-hero-line=\"true\" class=\"block font-display text-hero font-light uppercase leading-[0.9] tracking-[…"
+        }
+      ]
+    },
+    {
+      "preset": "mobile",
+      "label": "Venues",
+      "route": "/venues",
+      "performance": 92,
+      "performanceWorst": 92,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "3.1 s",
+      "cls": "0.000",
+      "tbt": "57 ms",
+      "lcpElement": "<img alt=\"\" fetchpriority=\"high\" decoding=\"async\" data-nimg=\"fill\" class=\"grade-b object-cover\" style=\"positio",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 1,050 ms)",
+        "image-delivery-insight (Est savings of 124 KiB)",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "largest-contentful-paint (3.1 s)"
+      ],
+      "runs": [
+        {
+          "performance": 92,
+          "lcp": "3.1 s",
+          "cls": "0",
+          "tbt": "50 ms",
+          "lcpElement": "<img alt=\"\" fetchpriority=\"high\" decoding=\"async\" data-nimg=\"fill\" class=\"grade-b object-cover\" style=\"positio"
+        },
+        {
+          "performance": 92,
+          "lcp": "3.1 s",
+          "cls": "0",
+          "tbt": "70 ms",
+          "lcpElement": "<img alt=\"\" fetchpriority=\"high\" decoding=\"async\" data-nimg=\"fill\" class=\"grade-b object-cover\" style=\"positio"
+        },
+        {
+          "performance": 92,
+          "lcp": "3.1 s",
+          "cls": "0",
+          "tbt": "60 ms",
+          "lcpElement": "<img alt=\"\" fetchpriority=\"high\" decoding=\"async\" data-nimg=\"fill\" class=\"grade-b object-cover\" style=\"positio"
+        }
+      ]
+    },
+    {
+      "preset": "mobile",
+      "label": "Venue detail",
+      "route": "/venues/thalasses",
+      "performance": 91,
+      "performanceWorst": 91,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "3.2 s",
+      "cls": "0.001",
+      "tbt": "78 ms",
+      "lcpElement": "<img alt=\"Thalasses — White walls, blue water, and a private beach fifty metres away.\" fetchpriority=\"high\" de",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 900 ms)",
+        "image-delivery-insight (Est savings of 79 KiB)",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "largest-contentful-paint (3.2 s)",
+        "max-potential-fid (140 ms)"
+      ],
+      "runs": [
+        {
+          "performance": 91,
+          "lcp": "3.2 s",
+          "cls": "0.001",
+          "tbt": "80 ms",
+          "lcpElement": "<img alt=\"Thalasses — White walls, blue water, and a private beach fifty metres away.\" fetchpriority=\"high\" de"
+        },
+        {
+          "performance": 91,
+          "lcp": "3.2 s",
+          "cls": "0.001",
+          "tbt": "80 ms",
+          "lcpElement": "<img alt=\"Thalasses — White walls, blue water, and a private beach fifty metres away.\" fetchpriority=\"high\" de"
+        },
+        {
+          "performance": 91,
+          "lcp": "3.2 s",
+          "cls": "0.001",
+          "tbt": "70 ms",
+          "lcpElement": "<img alt=\"Thalasses — White walls, blue water, and a private beach fifty metres away.\" fetchpriority=\"high\" de"
+        }
+      ]
+    },
+    {
+      "preset": "mobile",
+      "label": "Signature Events",
+      "route": "/events",
+      "performance": 93,
+      "performanceWorst": 92,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "3.0 s",
+      "cls": "0.000",
+      "tbt": "65 ms",
+      "lcpElement": "<span class=\"inline-block\">",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 1,050 ms)",
+        "image-delivery-insight (Est savings of 39 KiB)",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "largest-contentful-paint (3.0 s)"
+      ],
+      "runs": [
+        {
+          "performance": 92,
+          "lcp": "3.1 s",
+          "cls": "0",
+          "tbt": "60 ms",
+          "lcpElement": "<span class=\"inline-block\">"
+        },
+        {
+          "performance": 93,
+          "lcp": "3.0 s",
+          "cls": "0",
+          "tbt": "70 ms",
+          "lcpElement": "<span class=\"inline-block\">"
+        },
+        {
+          "performance": 93,
+          "lcp": "3.0 s",
+          "cls": "0",
+          "tbt": "60 ms",
+          "lcpElement": "<span class=\"inline-block\">"
+        }
+      ]
+    },
+    {
+      "preset": "mobile",
+      "label": "Wedding Guide",
+      "route": "/wedding-guide",
+      "performance": 92,
+      "performanceWorst": 91,
+      "accessibility": 95,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "3.0 s",
+      "cls": "0.000",
+      "tbt": "113 ms",
+      "lcpElement": "<img alt=\"The Mountain Escape estate with its pools and panoramic mountain and sea v…\" loading=\"lazy\" decoding",
+      "failing": [
+        "color-contrast",
+        "heading-order",
+        "forced-reflow-insight",
+        "lcp-discovery-insight",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 1,060 ms)",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "max-potential-fid (190 ms)",
+        "largest-contentful-paint (3.0 s)"
+      ],
+      "runs": [
+        {
+          "performance": 91,
+          "lcp": "3.0 s",
+          "cls": "0",
+          "tbt": "110 ms",
+          "lcpElement": "<img alt=\"The Mountain Escape estate with its pools and panoramic mountain and sea v…\" loading=\"lazy\" decoding"
+        },
+        {
+          "performance": 92,
+          "lcp": "3.0 s",
+          "cls": "0",
+          "tbt": "130 ms",
+          "lcpElement": "<img alt=\"The Mountain Escape estate with its pools and panoramic mountain and sea v…\" loading=\"lazy\" decoding"
+        },
+        {
+          "performance": 93,
+          "lcp": "2.9 s",
+          "cls": "0",
+          "tbt": "110 ms",
+          "lcpElement": "<img alt=\"The Mountain Escape estate with its pools and panoramic mountain and sea v…\" loading=\"lazy\" decoding"
+        }
+      ]
+    },
+    {
+      "preset": "mobile",
+      "label": "Contact",
+      "route": "/contact",
+      "performance": 93,
+      "performanceWorst": 93,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "2.9 s",
+      "cls": "0.000",
+      "tbt": "66 ms",
+      "lcpElement": "<p class=\"prose-editorial\">",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 1,050 ms)",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "largest-contentful-paint (2.9 s)"
+      ],
+      "runs": [
+        {
+          "performance": 93,
+          "lcp": "2.9 s",
+          "cls": "0",
+          "tbt": "70 ms",
+          "lcpElement": "<p class=\"prose-editorial\">"
+        },
+        {
+          "performance": 93,
+          "lcp": "2.9 s",
+          "cls": "0",
+          "tbt": "70 ms",
+          "lcpElement": "<p class=\"prose-editorial\">"
+        },
+        {
+          "performance": 94,
+          "lcp": "2.9 s",
+          "cls": "0",
+          "tbt": "50 ms",
+          "lcpElement": "<p class=\"prose-editorial\">"
+        }
+      ]
+    }
+  ]
+}

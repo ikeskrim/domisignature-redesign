@@ -4,9 +4,10 @@ import { pageMetadata } from "@/lib/seo";
 
 import { venues } from "@content/venues";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { VenueIndex } from "@/components/venue/VenueIndex";
+import { VenuePlates } from "@/components/venue/VenuePlates";
 import { CtaBlock } from "@/components/ui/CtaBlock";
 import { BreadcrumbSchema } from "@/components/seo/StructuredData";
+import { capacityCeiling } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata({
   title: "Wedding Venues in Crete",
@@ -15,6 +16,9 @@ export const metadata: Metadata = pageMetadata({
   image: "/media/th3-DSC_5495.jpg",
   imageAlt: "Thalasses at dusk — a lit pool, palms and the Cretan sea beyond",
 });
+
+/* The header's ceiling derives from the venues; it was a typed 300. */
+const guestCeiling = Math.max(...venues.map((v) => capacityCeiling(v.capacity)));
 
 const crumbs = [
   { name: "Home", href: "/" },
@@ -34,23 +38,25 @@ export default function VenuesPage() {
         meta={
           <dl className="flex gap-12">
             <div>
-              <dt className="eyebrow text-faint">Venues</dt>
-              <dd className="mt-3 font-display text-[2.75rem] font-light leading-none text-bone">
+              <dt className="eyebrow">Venues</dt>
+              <dd className="mt-3 font-display text-[2.75rem] font-light leading-none text-[var(--text-primary)]">
                 {venues.length}
               </dd>
             </div>
             <div>
-              <dt className="eyebrow text-faint">Up to</dt>
-              <dd className="mt-3 font-display text-[2.75rem] font-light leading-none text-bone">
-                300
-                <span className="ml-2 text-base tracking-normal text-muted">guests</span>
+              <dt className="eyebrow">Up to</dt>
+              <dd className="mt-3 font-display text-[2.75rem] font-light leading-none text-[var(--text-primary)]">
+                {guestCeiling}
+                <span className="ml-2 text-base tracking-normal text-[var(--text-secondary)]">guests</span>
               </dd>
             </div>
           </dl>
         }
       />
 
-      <VenueIndex />
+      {/* The plates, not the hover list. /venues is the index you read, so it
+          ships the north-star study. VenueIndex stays Home's signature scene. */}
+      <VenuePlates />
 
       <CtaBlock
         heading={"Not sure which\nsuits you?"}

@@ -16,20 +16,35 @@ import { capacityLabel } from "@/lib/utils";
  * the live site. Nothing is lightened, faded or tinted to help it sit here.
  * That is the constraint the study exists to test.
  */
-export default function AegeanVenues() {
+/*
+ * Amendment 4: the grade is judged HERE, on the north star, not only on
+ * isolated frames. ?grade=a or ?grade=b swaps the filter. Read on the server,
+ * so a capture can never catch a half-applied state.
+ */
+export default async function AegeanVenues({
+  searchParams,
+}: {
+  searchParams: Promise<{ grade?: string }>;
+}) {
+  const { grade } = await searchParams;
+  /* Grade B — "window" — is the pick (stage 2, after the owner reviewed the
+     frames). ?grade=a still renders the runner-up, so the comparison that
+     produced the decision stays reachable rather than being deleted with it. */
+  const gradeClass = grade === "a" ? "grade-a" : "grade-b";
+
   return (
     <main className="px-gutter pb-28 pt-32 lg:pb-40 lg:pt-40">
       <div className="mx-auto w-full max-w-[104rem]">
-        <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--aegean-stone)]">
+        <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-tertiary)]">
           {venuesIntro.heading}
         </p>
-        <h1 className="mt-7 max-w-3xl font-display text-[clamp(2.5rem,5.5vw,4.75rem)] font-light leading-[1.02] text-[var(--aegean-ink)]">
+        <h1 className="mt-7 max-w-3xl font-display text-[clamp(2.5rem,5.5vw,4.75rem)] font-light leading-[1.02] text-[var(--text-primary)]">
           Three settings,
           <br />
           one island
         </h1>
 
-        <span aria-hidden className="mt-10 block h-px w-24 bg-[#b98f4a]" />
+        <span aria-hidden className="mt-10 block h-px w-24 bg-[var(--accent)]" />
 
         <div className="mt-20 space-y-24 lg:mt-28 lg:space-y-32">
           {venues.map((venue, i) => (
@@ -40,7 +55,7 @@ export default function AegeanVenues() {
               {/* The mat. Generous near-white border, hairline frame, and the
                   photograph inside it at full strength. */}
               <div className={i % 2 ? "lg:order-2 lg:col-span-7" : "lg:col-span-7"}>
-                <div className="border border-[var(--aegean-rule)] bg-[var(--aegean-card)] p-3 sm:p-4 lg:p-5">
+                <div className="border border-[var(--rule)] bg-[var(--surface-raised)] p-3 sm:p-4 lg:p-5">
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
                       src={venue.coverImage}
@@ -48,26 +63,26 @@ export default function AegeanVenues() {
                       fill
                       sizes="(max-width: 1024px) 100vw, 58vw"
                       quality={80}
-                      className="grade object-cover"
+                      className={`${gradeClass} object-cover`}
                     />
                   </div>
                 </div>
               </div>
 
               <div className={i % 2 ? "lg:order-1 lg:col-span-5" : "lg:col-span-5"}>
-                <p className="font-display text-[1.05rem] text-[var(--aegean-stone)]">
+                <p className="font-display text-[1.05rem] text-[var(--text-secondary)]">
                   {String(i + 1).padStart(2, "0")}
                 </p>
-                <h2 className="mt-4 font-display text-[clamp(2rem,3.4vw,3rem)] font-light leading-[1.02] text-[var(--aegean-ink)]">
+                <h2 className="mt-4 font-display text-[clamp(2rem,3.4vw,3rem)] font-light leading-[1.02] text-[var(--text-primary)]">
                   {venue.name}
                 </h2>
-                <p className="mt-6 max-w-md text-[1.0625rem] leading-relaxed text-[var(--aegean-stone)]">
+                <p className="mt-6 max-w-md text-[1.0625rem] leading-relaxed text-[var(--text-secondary)]">
                   {venue.standfirst}
                 </p>
-                <div className="mt-8 h-px w-full bg-[var(--aegean-rule)]" />
-                <p className="mt-6 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--aegean-stone)]">
+                <div className="mt-8 h-px w-full bg-[var(--rule)]" />
+                <p className="mt-6 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-tertiary)]">
                   {capacityLabel(venue.capacity)}
-                  <span className="mx-3 text-[var(--aegean-rule)]">/</span>
+                  <span className="mx-3 text-[var(--rule)]">/</span>
                   {venue.location}
                 </p>
               </div>

@@ -23,6 +23,10 @@ next-env.d.ts
 # ─── OS / editor noise ────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+# Agent settings and notes that belong to one machine. CLAUDE.md and
+# .claude/skills/ are the project's shared conventions and ARE committed.
+.claude/settings.local.json
+CLAUDE.local.md
 
 # ─── Scratch ──────────────────────────────────────────────────────────────────
 # One-off diagnostics and commit-message drafts. Anything worth keeping was
@@ -33,6 +37,9 @@ msg*.txt
 *.bak
 *.log
 design-review/_prod.*
+# Probe captures (a label starting with an underscore, e.g. _s6probe) are
+# measurement scratch, never a published set.
+design-review/_*/
 public/_grade-preview.html
 
 # ─── Withheld frames — MUST NOT be published ──────────────────────────────────
@@ -47,6 +54,10 @@ public/media/stHARLEY.jpg
 public/media/blDSC_9849.jpg
 public/media/ae9Z8A4481-Edit.jpg
 public/media/aeIMG_2133.jpg
+# posterimage.png: a 3 MB frame of a real couple's ceremony with identifiable
+# people, superseded by an optimised poster. It joined the withheld list on the
+# owner's decision (2026-09-14).
+public/media/posterimage.png
 
 # ─── Raw camera masters ───────────────────────────────────────────────────────
 # 125 MB of source footage. `content/*.ts` records each one in an `original:`
@@ -61,10 +72,7 @@ public/media/deIMG_8840.MOV
 public/media/deIMG_8845.MOV
 
 # ─── Unreferenced leftovers ───────────────────────────────────────────────────
-# posterimage.png is a 3 MB frame of a real couple's ceremony, superseded in §6
-# by an optimised poster. Nothing links to it and it shows identifiable people,
-# so it does not go to a public repository.
-public/media/posterimage.png
+# Nothing links to these. (posterimage.png moved to the withheld list above.)
 public/media/about_updated.png
 public/assets/img/close-icon.svg
 
@@ -96,4 +104,11 @@ public/media/aeIMG_6743_4_5.jpg
 # cross-browser/ stays out: it is raw engine probe output, superseded by the
 # summary in the report.
 design-review/cross-browser/
+# Review intermediates stay out too: the tile crops cut from the full-page
+# captures for the visual reviewers, and the Hero's per-offset state frames.
+# Both are reproducible (scripts/tile-capture.mjs, scripts/hero-states.mjs) and
+# what they found is in the stage log.
+design-review/*/tiles/
+design-review/*-tiles/
+design-review/*/hero/
 .dns-watch/

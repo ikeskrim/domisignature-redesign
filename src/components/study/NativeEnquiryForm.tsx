@@ -18,7 +18,7 @@ import { venues } from "@content/venues";
  * belongs in a prototype whose job is to be looked at.
  *
  * What it demonstrates that the embed cannot: our own typography on our own
- * dark ground, inline validation in our voice, a real focus order,
+ * ground, inline validation in our voice, a real focus order,
  * required-field semantics a screen reader can use, and no third-party
  * JavaScript at all.
  */
@@ -74,19 +74,19 @@ export function NativeEnquiryForm() {
 
   if (sent) {
     return (
-      <div role="status" className="border border-hair bg-graphite p-8 lg:p-10">
-        <p className="eyebrow text-faint">Prototype — not connected</p>
-        <h3 className="mt-5 font-display text-[1.75rem] font-light leading-tight text-bone">
+      <div role="status" className="border border-[var(--rule)] bg-[var(--surface-raised)] p-8 lg:p-10">
+        <p className="eyebrow">Prototype — not connected</p>
+        <h3 className="mt-5 font-display text-[1.75rem] font-light leading-tight text-[var(--text-primary)]">
           This is where the confirmation would go.
         </h3>
-        <p className="mt-4 max-w-md leading-relaxed text-bone/85">
+        <p className="mt-4 max-w-md leading-relaxed text-[var(--text-primary)]">
           Nothing was sent and nothing was stored. A wired version would confirm
           the enquiry, name the venue it was about, and say when to expect a reply.
         </p>
         <button
           type="button"
           onClick={() => setSent(false)}
-          className="mt-8 border border-hair/35 px-6 py-3 text-[0.6875rem] uppercase tracking-[0.18em] text-bone transition-colors duration-500 hover:bg-bone hover:text-ink"
+          className="mt-8 border border-[var(--rule)] px-6 py-3 text-[0.6875rem] uppercase tracking-[0.18em] text-[var(--text-primary)] transition-colors duration-500 hover:bg-[var(--inverse)] hover:text-[var(--text-on-inverse)]"
         >
           Back to the form
         </button>
@@ -97,22 +97,24 @@ export function NativeEnquiryForm() {
   const invalid = (k: string) =>
     errors[k] ? { "aria-invalid": true as const, "aria-describedby": `${field(k)}-error` } : {};
 
+  /* Focus is the global ring — `:focus-visible` resolves `--focus` — so nothing
+     here suppresses the outline or restyles the border to stand in for it. */
   const inputClass =
-    "mt-3 w-full border border-hair bg-ink px-4 py-3 text-bone outline-none transition-colors " +
-    "placeholder:text-faint focus-visible:border-bone";
+    "mt-3 w-full border border-[var(--rule-strong)] bg-[var(--surface)] px-4 py-3 " +
+    "text-[var(--text-primary)] transition-colors placeholder:text-[var(--text-tertiary)]";
 
   return (
-    <form noValidate onSubmit={onSubmit} className="border border-hair bg-graphite p-8 lg:p-10">
-      <p className="eyebrow text-faint">Prototype — not connected</p>
+    <form noValidate onSubmit={onSubmit} className="border border-[var(--rule)] bg-[var(--surface-raised)] p-8 lg:p-10">
+      <p className="eyebrow">Prototype — not connected</p>
 
       {Object.keys(errors).length > 0 && (
         <div
           ref={summaryRef}
           tabIndex={-1}
           role="alert"
-          className="mt-6 border border-hair bg-ink p-5 outline-none"
+          className="mt-6 border border-[var(--rule)] bg-[var(--surface)] p-5 outline-none"
         >
-          <p className="text-bone">
+          <p className="text-[var(--text-primary)]">
             Please check {Object.keys(errors).length} field
             {Object.keys(errors).length > 1 ? "s" : ""} below.
           </p>
@@ -121,7 +123,7 @@ export function NativeEnquiryForm() {
               <li key={k}>
                 <a
                   href={`#${field(k)}`}
-                  className="text-bone/85 underline underline-offset-4 hover:text-bone"
+                  className="text-[var(--text-primary)] underline underline-offset-4 hover:text-[var(--text-secondary)]"
                 >
                   {message}
                 </a>
@@ -133,7 +135,7 @@ export function NativeEnquiryForm() {
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2">
         <label htmlFor={field("name")} className="block sm:col-span-2">
-          <span className="eyebrow text-muted">Name (required)</span>
+          <span className="eyebrow">Name (required)</span>
           <input
             id={field("name")}
             name="name"
@@ -142,14 +144,14 @@ export function NativeEnquiryForm() {
             {...invalid("name")}
           />
           {errors.name && (
-            <span id={`${field("name")}-error`} className="mt-2 block text-sm text-bone/85">
+            <span id={`${field("name")}-error`} className="mt-2 block text-sm text-[var(--text-primary)]">
               {errors.name}
             </span>
           )}
         </label>
 
         <label htmlFor={field("email")} className="block">
-          <span className="eyebrow text-muted">Email (required)</span>
+          <span className="eyebrow">Email (required)</span>
           <input
             id={field("email")}
             name="email"
@@ -160,14 +162,14 @@ export function NativeEnquiryForm() {
             {...invalid("email")}
           />
           {errors.email && (
-            <span id={`${field("email")}-error`} className="mt-2 block text-sm text-bone/85">
+            <span id={`${field("email")}-error`} className="mt-2 block text-sm text-[var(--text-primary)]">
               {errors.email}
             </span>
           )}
         </label>
 
         <label htmlFor={field("phone")} className="block">
-          <span className="eyebrow text-muted">Phone (required)</span>
+          <span className="eyebrow">Phone (required)</span>
           <input
             id={field("phone")}
             name="phone"
@@ -178,14 +180,14 @@ export function NativeEnquiryForm() {
             {...invalid("phone")}
           />
           {errors.phone && (
-            <span id={`${field("phone")}-error`} className="mt-2 block text-sm text-bone/85">
+            <span id={`${field("phone")}-error`} className="mt-2 block text-sm text-[var(--text-primary)]">
               {errors.phone}
             </span>
           )}
         </label>
 
         <label htmlFor={field("guests")} className="block">
-          <span className="eyebrow text-muted">Estimated guests</span>
+          <span className="eyebrow">Estimated guests</span>
           <input
             id={field("guests")}
             name="guests"
@@ -195,19 +197,19 @@ export function NativeEnquiryForm() {
             {...invalid("guests")}
           />
           {errors.guests && (
-            <span id={`${field("guests")}-error`} className="mt-2 block text-sm text-bone/85">
+            <span id={`${field("guests")}-error`} className="mt-2 block text-sm text-[var(--text-primary)]">
               {errors.guests}
             </span>
           )}
         </label>
 
         <label htmlFor={field("date")} className="block">
-          <span className="eyebrow text-muted">Looking at</span>
+          <span className="eyebrow">Looking at</span>
           <input id={field("date")} name="date" type="date" className={inputClass} />
         </label>
 
         <label htmlFor={field("budget")} className="block">
-          <span className="eyebrow text-muted">Budget</span>
+          <span className="eyebrow">Budget</span>
           <select id={field("budget")} name="budget" className={inputClass} defaultValue="">
             <option value="" disabled>
               Select a range
@@ -226,7 +228,7 @@ export function NativeEnquiryForm() {
           lands already attached to a venue.
         */}
         <label htmlFor={field("venue")} className="block">
-          <span className="eyebrow text-muted">Venue</span>
+          <span className="eyebrow">Venue</span>
           <select id={field("venue")} name="venue" className={inputClass} defaultValue="">
             <option value="">Not sure yet</option>
             {venues.map((v) => (
@@ -238,7 +240,7 @@ export function NativeEnquiryForm() {
         </label>
 
         <label htmlFor={field("message")} className="block sm:col-span-2">
-          <span className="eyebrow text-muted">Anything else</span>
+          <span className="eyebrow">Anything else</span>
           <textarea id={field("message")} name="message" rows={5} className={inputClass} />
         </label>
       </div>
@@ -246,11 +248,11 @@ export function NativeEnquiryForm() {
       <div className="mt-9 flex flex-wrap items-center gap-6">
         <button
           type="submit"
-          className="border border-bone bg-bone px-8 py-4 text-[0.6875rem] uppercase tracking-[0.18em] text-ink transition-opacity duration-500 hover:opacity-85"
+          className="border border-[var(--inverse)] bg-[var(--inverse)] px-8 py-4 text-[0.6875rem] uppercase tracking-[0.18em] text-[var(--text-on-inverse)] transition-colors duration-500 hover:bg-[color-mix(in_srgb,var(--inverse)_85%,transparent)] hover:border-[color-mix(in_srgb,var(--inverse)_85%,transparent)]"
         >
           Send enquiry
         </button>
-        <p className="text-sm text-faint">Nothing is sent — this is a prototype.</p>
+        <p className="text-sm text-[var(--text-tertiary)]">Nothing is sent — this is a prototype.</p>
       </div>
     </form>
   );

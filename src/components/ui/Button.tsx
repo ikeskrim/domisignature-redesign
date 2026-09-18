@@ -7,8 +7,10 @@ type Size = "md" | "lg";
 
 /**
  * Buttons are hairline pills or text-plus-a-rule. There are no filled colour
- * buttons anywhere on the site — `solid` is ink on limestone, used once or
- * twice per page at most.
+ * buttons anywhere on the site — `solid` is the inverse fill: ink on limestone
+ * on paper, bone on night inside a chapter, used once or twice per page at
+ * most. Every variant asks for a role, so the same button sits on either ground
+ * without a call-site override.
  */
 const base =
   "group relative inline-flex items-center justify-center gap-4 font-sans " +
@@ -17,10 +19,11 @@ const base =
   "disabled:pointer-events-none disabled:opacity-45";
 
 const variants: Record<Variant, string> = {
-  solid: "rounded-full bg-bone text-ink hover:bg-bone/85",
+  solid:
+    "rounded-full bg-[var(--inverse)] text-[var(--text-on-inverse)] hover:bg-[color-mix(in_srgb,var(--inverse)_85%,transparent)]",
   outline:
-    "rounded-full border border-bone/30 text-bone hover:border-bone hover:bg-bone hover:text-ink",
-  ghost: "text-bone",
+    "rounded-full border border-[var(--rule-strong)] text-[var(--text-primary)] hover:border-[var(--text-primary)] hover:bg-[var(--inverse)] hover:text-[var(--text-on-inverse)]",
+  ghost: "text-[var(--text-primary)]",
 };
 
 const sizes: Record<Size, string> = {
@@ -110,7 +113,7 @@ export function TextLink({
   className?: string;
 }) {
   const classes = cn(
-    "group relative inline-block text-bone transition-colors duration-[450ms] hover:text-gold",
+    "group relative inline-block text-[var(--text-primary)] transition-colors duration-[450ms] hover:text-[var(--text-secondary)]",
     className,
   );
 
@@ -119,7 +122,7 @@ export function TextLink({
       {children}
       <span
         aria-hidden
-        className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-gold transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:origin-left group-hover:scale-x-100"
+        className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-[var(--rule-strong)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:origin-left group-hover:scale-x-100"
       />
     </>
   );

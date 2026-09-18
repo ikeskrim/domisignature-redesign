@@ -31,8 +31,11 @@ const LABEL_H = 22;
 /** Pull the gallery arrays straight out of the content files as text. */
 async function readGalleries() {
   const { readFile } = await import("node:fs/promises");
-  const events = await readFile(path.join(ROOT, "content", "events.ts"), "utf8");
-  const venues = await readFile(path.join(ROOT, "content", "venues.ts"), "utf8");
+  /* Line endings are normalised first: the block pattern below expects LF, and
+     a checkout with CRLF endings (core.autocrlf) silently merged every venue
+     after the first into one block, so two venue sheets disappeared. */
+  const events = (await readFile(path.join(ROOT, "content", "events.ts"), "utf8")).replace(/\r\n/g, "\n");
+  const venues = (await readFile(path.join(ROOT, "content", "venues.ts"), "utf8")).replace(/\r\n/g, "\n");
 
   const out = [];
   for (const [ts, kind] of [

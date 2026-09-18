@@ -36,20 +36,20 @@ export default function EventsPage() {
         meta={
           <dl className="flex gap-10 text-sm">
             <div>
-              <dt className="eyebrow text-faint">Galleries</dt>
-              <dd className="mt-2 font-display text-3xl font-light text-bone">
+              <dt className="eyebrow">Galleries</dt>
+              <dd className="mt-2 font-display text-3xl font-light text-[var(--text-primary)]">
                 {signatureEvents.length}
               </dd>
             </div>
             <div>
-              <dt className="eyebrow text-faint">Images</dt>
-              <dd className="mt-2 font-display text-3xl font-light text-bone">{imageCount}</dd>
+              <dt className="eyebrow">Images</dt>
+              <dd className="mt-2 font-display text-3xl font-light text-[var(--text-primary)]">{imageCount}</dd>
             </div>
           </dl>
         }
       />
 
-      <section className="bg-ink pb-section">
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <EventsBrowser />
         </div>

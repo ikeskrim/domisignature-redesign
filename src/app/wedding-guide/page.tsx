@@ -35,9 +35,9 @@ export default function WeddingGuidePage() {
         standfirst={journeyIntro.subheading}
         crumbs={crumbs}
         meta={
-          <p className="font-display text-3xl font-light text-bone">
+          <p className="font-display text-3xl font-light text-[var(--text-primary)]">
             {journey.length} steps
-            <span className="mt-2 block text-sm tracking-normal text-muted">
+            <span className="mt-2 block text-sm tracking-normal text-[var(--text-secondary)]">
               from first enquiry to the ceremony
             </span>
           </p>
@@ -45,7 +45,7 @@ export default function WeddingGuidePage() {
       />
 
       {/* The six chapters */}
-      <section className="bg-ink pb-section">
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <JourneyChapters />
         </div>
@@ -56,13 +56,13 @@ export default function WeddingGuidePage() {
         content/pending.ts. See CONTENT-NEEDED.md.
       */}
       {faqs.length > 0 && (
-        <section className="bg-graphite py-section">
+        <section className="bg-[var(--surface-raised)] py-section">
           <div className="mx-auto w-full max-w-[104rem] px-gutter">
             <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
               <div className="lg:col-span-4">
                 <Reveal>
-                  <span className="eyebrow text-muted">Questions</span>
-                  <h2 className="mt-6 font-display text-title font-light text-bone">
+                  <span className="eyebrow">Questions</span>
+                  <h2 className="mt-6 font-display text-title font-light text-[var(--text-primary)]">
                     Before you enquire
                   </h2>
                 </Reveal>

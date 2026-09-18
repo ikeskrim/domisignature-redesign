@@ -20,7 +20,7 @@ export function PageHeader({
   meta?: React.ReactNode;
 }) {
   return (
-    <header className="bg-ink pb-20 pt-36 lg:pb-32 lg:pt-56">
+    <header className="bg-[var(--surface)] pb-20 pt-36 lg:pb-32 lg:pt-56">
       <div className="mx-auto w-full max-w-[104rem] px-gutter">
         <Reveal>
           <Breadcrumbs items={crumbs} />
@@ -31,14 +31,14 @@ export function PageHeader({
           <div className="lg:col-span-7">
             <Reveal delay={0.05}>
               <div className="flex items-center gap-6">
-                <span className="eyebrow text-muted">{eyebrow}</span>
+                <span className="eyebrow">{eyebrow}</span>
                 <RuleDraw className="w-20" />
               </div>
             </Reveal>
             <TextReveal
               as="h1"
               text={heading}
-              className="mt-9 text-display font-light text-bone"
+              className="mt-9 text-display font-light text-[var(--text-primary)]"
               delay={0.05}
             />
           </div>

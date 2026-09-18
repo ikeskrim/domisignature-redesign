@@ -7,7 +7,7 @@ import { venues } from "@content/venues";
 import { journey } from "@content/journey";
 import { RuleDraw, TextReveal } from "@/components/motion/Reveal";
 import { CountUp } from "@/components/motion/CountUp";
-import { gsap, EASE, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, EASE, DUR, prefersReducedMotion, startsInViewport } from "@/lib/gsap";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -26,6 +26,12 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * reading: the word CRETE and the paragraph are already set and still by the
  * time the pin engages, and only the backdrop and the not-yet-read stats move
  * during it. The scene releases as soon as the last figure lands.
+ *
+ * Stage 6 — nothing on paper fades. The facts used to arrive as a scrubbed
+ * opacity fade, so a scroll that stopped mid-pin left paper type
+ * part-transparent. They are now uncovered by a clip that opens down the block
+ * while it lifts, on the same position in the same timeline; at any stop every
+ * glyph that shows is at full ink. Below the pin they settle: a lift, no fade.
  */
 /**
  * The arrival sequence — five real photographs, scrubbed.
@@ -46,8 +52,12 @@ const ARRIVAL_FRAMES = [
   { src: "/media/paDJI_2289.JPG", note: "the coast from the air" },
   /* A pure seascape, and the only frame here that is not also a card further
      down the page — the sequence should not end on something the visitor is
-     about to meet again. Small graffiti on a rock at mid-right sits inside the
-     gradient's 70% ink band at <=46% plate opacity, so it never resolves. */
+     about to meet again. It carries small graffiti on a rock at mid-right. The
+     ink band that used to swallow it is gone; what covers it now is the ivory
+     wash, which is heaviest (0.94 -> 0.72) across exactly the lower band the
+     rock sits in. Checked on the real composite at 62% before the ink went, not
+     assumed — but it is no longer the interesting risk in this scene, which is
+     why `scripts/graffiti-check.mjs` gave way to `arrival-legibility.mjs`. */
   { src: "/media/stDSC_5339.jpg", note: "the last light" },
 ] as const;
 
@@ -124,9 +134,27 @@ export function Arrival() {
           },
         });
 
-        tl.to(backdrop.current, { opacity: 0.46, scale: 1.06, ease: "none" }, 0).from(
+        /*
+         * The direction is inverted with the ground, and not arbitrarily.
+         *
+         * On ink the plate ROSE (30 -> 46): the island lifting out of the dark.
+         * On ivory the honest analogue is the opposite — the photograph is a
+         * plate laid on paper, strongest the moment you arrive at it, settling
+         * back as the page reasserts and the facts land underneath.
+         *
+         * It also puts the legibility floor at the resting state. Exposure only
+         * ever decreases during the pin, so the 62% that `arrival-legibility`
+         * measures is the worst case by construction rather than a midpoint
+         * that a scrub could wander past.
+         */
+        tl.to(backdrop.current, { opacity: 0.5, scale: 1.06, ease: "none" }, 0).fromTo(
           facts.current,
-          { y: 60, opacity: 0, ease: "none" },
+          /* Uncovered, not faded: the clip's lower inset opens 100% -> 0% as
+             the block lifts 60 -> 0, at the position and default duration the
+             fade had. The block holds no focusable, so the clip can never cut a
+             focus ring. */
+          { y: 60, clipPath: "inset(0 0 100% 0)" },
+          { y: 0, clipPath: "inset(0 0 0% 0)", ease: "none" },
           0.15,
         );
 
@@ -145,14 +173,31 @@ export function Arrival() {
             0.1 + (i / stack.length) * 0.72,
           );
         });
+
+        /*
+         * This pin is created late: `sequence` is decided in an effect, so the
+         * scene mounts, then re-runs this effect a commit later - after every
+         * section below it has made its own ScrollTriggers and after
+         * SmoothScroll's refresh. ScrollTrigger refreshes in creation order, so
+         * those later sections kept start and end positions measured without
+         * this pin's 180% of spacing, and at desktop sizes every scrub below the
+         * arrival ran a full pin distance early (the closing chapter's exit had
+         * already finished before it reached the screen; measured, stage 6).
+         * Sorting puts the triggers back in page order, and the refresh measures
+         * everything below with the pin in place.
+         */
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
       });
 
-      /* Below that, the facts simply reveal on arrival — no pin. */
+      /* Below that, the facts simply settle on arrival — no pin, and no fade:
+         a lift onto the page. A block already on screen at mount was painted
+         correctly by the server and is left where it is. */
       mm.add("(max-width: 1023px), (max-height: 699px)", () => {
+        if (!facts.current || startsInViewport(facts.current)) return;
         gsap.from(facts.current, {
           y: 40,
-          opacity: 0,
-          duration: 0.95,
+          duration: DUR.settle,
           ease: EASE,
           scrollTrigger: { trigger: facts.current, start: "top 88%", once: true },
         });
@@ -169,16 +214,41 @@ export function Arrival() {
   return (
     <section
       ref={root}
-      className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden bg-ink"
+      /*
+       * The arrival is the first ivory ground on the homepage.
+       *
+       * Everything else in this scene is unchanged — same five photographs,
+       * same pin, same derived figures. What changed is the MECHANISM. The ink
+       * version worked by concealment: plates held far back under a full-height
+       * gradient so the word carried the screen alone. An ivory wash cannot
+       * conceal, it reveals, so this is the one part of the inversion that had
+       * to be re-decided rather than re-coloured — and the decision was to let
+       * the photograph be deliberately seen, near-black type over it, closer to
+       * a printed title page than to a scrim.
+       *
+       * The runner-up is still reachable at /study/aegean/arrival/chapter, the
+       * proposal where the arrival stayed the one place the site goes to night.
+       */
+      data-ground="light"
+      className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden bg-[var(--surface)]"
     >
-      {/* The island itself, held far back so the word carries the scene */}
       {/*
-        Quality 50, not 75. These plates sit at 30–46% opacity under a
-        full-height gradient and never resolve as detail — the first one was
-        shipping 333 KB to be the largest paint on the homepage. At 50 they are
-        visually identical through the scrim and a fraction of the bytes.
+        Quality 75, not 50.
+        
+        50 was never a performance default — it was priced for concealment, when
+        these plates sat at 30-46% under an ink band and could not resolve as
+        detail. At 62% under ivory they can, and they do: measured on the real
+        composite, q50 leaves artefacts up to 15-16/255 against a q85 reference
+        on four of the five frames. q75 halves that to 6-8 and takes the mean
+        under 1; q80 buys about one more level of 255 for another 99 KB across
+        the set, which is not a trade worth making.
+        
+        The cost is +55 KB on the one frame every visitor loads and +209 KB
+        across all five — and four of those five only ever mount on desktop at
+        >=1024px, so the mobile floor pays the 55 and nothing more.
+        See `scripts/arrival-quality.mjs` for the measurement.
       */}
-      <div ref={backdrop} className="absolute inset-0 opacity-30">
+      <div ref={backdrop} className="absolute inset-0 opacity-[0.62]">
         {frames.map((frame, i) => (
           <div
             key={frame.src}
@@ -196,22 +266,36 @@ export function Arrival() {
               alt=""
               fill
               sizes="100vw"
-              quality={50}
+              quality={75}
               loading="lazy"
-              className="grade-hero object-cover"
+              /* grade-b, the light-ground grade, not the hero grade: `grade-hero`
+                 lifts brightness to keep shadows off a near-black ground, which
+                 on ivory only reads as grey. */
+              className="grade-b object-cover"
             />
           </div>
         ))}
       </div>
+      {/*
+        The wash, and the only thing holding this scene together. Ivory over a
+        62% photograph is what keeps near-black type legible; it is weighted to
+        the bottom because that is where the stats sit and where a photograph is
+        most likely to be busy. If it is ever eased, the number to watch is the
+        standfirst — the tightest of the three at 5.13:1 against a 4.5 bar.
+      */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/85"
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to top, rgb(var(--wash) / 0.94) 0%, rgb(var(--wash) / 0.72) 46%, rgb(var(--wash) / 0.58) 100%)",
+        }}
       />
 
       <div className="relative mx-auto w-full max-w-[104rem] px-gutter pt-28 lg:pt-36">
         <div className="flex items-center gap-6">
-          <span className="eyebrow text-muted">Arrival</span>
-          <RuleDraw className="w-20" />
+          <span className="eyebrow">Arrival</span>
+          <RuleDraw className="w-20 bg-[var(--rule-strong)]" />
         </div>
       </div>
 
@@ -219,9 +303,18 @@ export function Arrival() {
       <div className="relative mx-auto w-full max-w-[104rem] px-gutter">
         <TextReveal
           text="Crete"
-          className="font-display text-[clamp(5rem,21vw,19rem)] font-light leading-[0.82] tracking-[-0.045em] text-bone"
+          measure="arrival-word"
+          className="font-display text-[clamp(5rem,21vw,19rem)] font-light leading-[0.82] tracking-[-0.045em] text-[var(--text-primary)]"
         />
-        <p className="prose-editorial mt-10 max-w-lg">
+        {/*
+          Set with explicit roles rather than `prose-editorial`, which resolves
+          its colour from `--color-bone` and would put ivory type on an ivory
+          ground. The utility is a leaf-component migration, not this scene's.
+        */}
+        <p
+          data-measure="arrival-prose"
+          className="mt-10 max-w-lg text-[1.0625rem] leading-[1.7] text-[var(--text-secondary)]"
+        >
           One island, three private settings, and a small team who will be there on the day.
         </p>
       </div>
@@ -239,9 +332,10 @@ export function Arrival() {
               <dd>
                 <CountUp
                   value={stat.value}
-                  className="block font-display text-[clamp(3rem,7vw,7rem)] font-light leading-[0.85] tracking-[-0.04em] text-bone tabular-nums"
+                  measure="arrival-stat"
+                  className="block font-display text-[clamp(3rem,7vw,7rem)] font-light leading-[0.85] tracking-[-0.04em] text-[var(--text-primary)] tabular-nums"
                 />
-                <span aria-hidden className="eyebrow mt-5 block text-muted">
+                <span aria-hidden className="eyebrow mt-5 block">
                   {stat.label}
                 </span>
               </dd>

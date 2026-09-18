@@ -46,3 +46,23 @@ await sharp({
   .toFile(MONO);
 
 console.log("mark-bone.png written: 512x512");
+
+/*
+ * Aegean Bone. The same ring on the light ground, filled with the light
+ * ladder's primary. A bone mark on ivory would vanish; a teal one would be a
+ * second accent; gold at 2.52:1 is permitted for the mark but reads faint. The
+ * near-black is what the header and footer set the wordmark in, so the mark and
+ * the name are one colour, as on paper. Same alpha, same crop - only the fill
+ * changes, exactly as mark-bone.png was made.
+ */
+const INK = { r: 0x27, g: 0x21, b: 0x1b };
+const INK_OUT = path.join(ROOT, "public", "assets", "img", "mark-ink.png");
+
+await sharp({
+  create: { width: 512, height: 512, channels: 3, background: INK },
+})
+  .joinChannel(alpha)
+  .png()
+  .toFile(INK_OUT);
+
+console.log("mark-ink.png written: 512x512");

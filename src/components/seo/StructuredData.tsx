@@ -1,5 +1,6 @@
 import { contact, legal, site, siteMeta, social } from "@content/site";
 import type { Venue } from "@content/venues";
+import { capacityCeiling } from "@/lib/utils";
 
 function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
@@ -58,7 +59,10 @@ export function VenueSchema({ venue }: { venue: Venue }) {
           addressRegion: "Crete",
           addressCountry: "GR",
         },
-        maximumAttendeeCapacity: venue.capacity.replace(/\D+/g, "") || undefined,
+        /* The largest count the capacity allows, as the Integer schema.org asks
+           for. Stripping every non-digit turned "up to 200-300" into 200300
+           (found in the stage-8 review; also on main). */
+        maximumAttendeeCapacity: capacityCeiling(venue.capacity) || undefined,
         amenityFeature: venue.advantages.map((a) => ({
           "@type": "LocationFeatureSpecification",
           name: a,

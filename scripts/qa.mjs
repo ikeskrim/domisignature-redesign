@@ -13,7 +13,9 @@
  *
  * Lighthouse is deliberately NOT here. It needs a stable machine to produce
  * comparable numbers and takes several minutes; it stays a local, deliberate
- * measurement (`npm run audit:lighthouse`).
+ * measurement (`npm run audit:lighthouse`). INP is not here either, for the
+ * same reason: a 4x CPU throttle on top of this machine's own speed is not a
+ * number two machines agree on (`npm run audit:inp`).
  *
  * Usage: npm run qa              — everything
  *        npm run qa -- --static  — only the checks that need no server
@@ -23,29 +25,59 @@ import { spawn } from "node:child_process";
 import { setTimeout as sleep } from "node:timers/promises";
 
 const PORT = Number(process.env.PORT ?? 3004);
-const BASE = `http://localhost:${PORT}`;
+/* Loopback, not localhost: the server below binds 127.0.0.1 only, and
+   "localhost" can resolve to ::1 first. */
+const BASE = `http://127.0.0.1:${PORT}`;
 const STATIC_ONLY = process.argv.includes("--static");
 
 /** Audits that read the repository. No server, no browser. */
 const STATIC_CHECKS = [
   ["typecheck", ["node_modules/typescript/bin/tsc", "--noEmit"], "TypeScript compiles"],
   ["lint", ["node_modules/eslint/bin/eslint.js", "."], "ESLint is clean"],
-  ["claims", ["scripts/claims-audit.mjs"], "no claim on the site is unsupported by content/"],
+  /* Stage 4's completion test: a count that has to be zero. */
+  ["palette", ["scripts/palette-literals.mjs"], "zero palette literals outside the token definitions"],
+  ["claims", ["scripts/claims-audit.mjs"], "no scarcity or exclusivity claim, in any wording"],
   ["prose", ["scripts/prose-audit.mjs"], "no placeholder, no lorem, no double space"],
   ["media", ["scripts/media-audit.mjs"], "every image and video referenced actually exists"],
   ["manifest", ["scripts/publish-manifest.mjs"], "no withheld frame is referenced anywhere"],
+  /* Owner decision 2026-09-14: no published file may carry GPS, a camera serial
+     or an embedded thumbnail, ever again. Reads every git-tracked image, video
+     and PDF by magic bytes; photographer credit is kept and never fails. */
+  ["metadata", ["scripts/metadata-audit.mjs"], "no file carries GPS, a camera serial or a hidden thumbnail"],
   ["ingest", ["scripts/ingest-guard.mjs"], "no gallery is half-published with unfilled TODOs"],
 ];
 
 /** Audits that drive a browser against a running production build. */
 const SERVED_CHECKS = [
+  /* Stage 8: the footer wordmark is a drawing generated from the built font and
+     site.name, and must never drift from either. It reads the build, not the
+     server, so it sits here, where a build is guaranteed. */
+  ["wordmark", ["scripts/wordmark-outline.mjs"], "the footer wordmark drawing matches site.name and the font"],
   ["assets", ["scripts/asset-check.mjs"], "every asset the rendered pages request returns 200"],
   ["a11y", ["scripts/a11y.mjs"], "axe-core finds zero violations"],
-  ["graffiti", ["scripts/graffiti-check.mjs"], "the graffiti rock stays inside the ink band"],
+  /*
+   * This slot used to hold the graffiti check, which asked whether a rock stayed
+   * hidden inside the ink band. The ink band is gone from the arrival, so the
+   * question it guarded no longer exists; the live risk on a light ground is the
+   * opposite one. Swapped rather than dropped, so coverage never shrinks.
+   */
+  ["arrival", ["scripts/arrival-legibility.mjs"], "the arrival type holds over the photograph it sits on"],
+  /* Stage 4 depended on these three; they are the light system's own guards. */
+  ["ground", ["scripts/ground-verify.mjs"], "every role resolves on its ground; all text on its own ladder"],
+  ["focus", ["scripts/focus-ring.mjs"], "every focus indicator changes the page by 3:1, all round"],
+  ["paper", ["scripts/paper-legibility.mjs"], "all text on paper clears its bar on the worst pixel"],
   ["launch", ["scripts/launch-check.mjs"], "SEO flips, sitemap and all 21 legacy redirects"],
+  /* Stage 6, motion on paper. All three are deterministic: they read states,
+     computed styles and pixels at fixed moments, not timings that vary with
+     the machine (INP does, which is why it stays out — see the header). */
+  ["motion-tier", ["scripts/motion-tier.mjs"], "the drop switch applies its prefix at 390, nothing at 1440"],
+  ["focus-motion", ["scripts/focus-motion.mjs"], "a focused element is never hidden, clipped or covered"],
+  ["typeset-clip", ["scripts/typeset-clip.mjs"], "no TextReveal line clips its own ink"],
 ];
 
 const results = [];
+/* The name column fits the longest name, so a new check never breaks the table. */
+const NAME_WIDTH = Math.max(...[...STATIC_CHECKS, ...SERVED_CHECKS].map(([name]) => name.length)) + 1;
 
 function run(args, env = {}) {
   return new Promise((resolve) => {
@@ -70,7 +102,7 @@ function run(args, env = {}) {
 async function section(title, checks, env) {
   console.log(`\n${title}`);
   for (const [name, args, what] of checks) {
-    process.stdout.write(`  ${name.padEnd(10)} ${what.padEnd(58)}`);
+    process.stdout.write(`  ${name.padEnd(NAME_WIDTH)} ${what.padEnd(58)}`);
     const { code, signal, out } = await run(args, env);
     const ok = code === 0;
     results.push({ name, ok, signal, out });
@@ -112,7 +144,11 @@ if (!STATIC_ONLY) {
   }
 
   console.log(`\nstarting a production server on ${PORT}`);
-  server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "-p", String(PORT)], {
+  /* Loopback only. Without -H, next start listens on every interface, and a
+     build of a vulnerable next (GHSA-p293-qw3h-jr36 / CVE-2026-75604 is an RCE
+     on Windows-hosted servers) would be reachable from the network while the
+     gate runs. The gate only ever needs this machine to reach it. */
+  server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "-p", String(PORT), "-H", "127.0.0.1"], {
     stdio: "ignore",
     env: { ...process.env, NODE_ENV: "production" },
   });

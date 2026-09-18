@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { EditorialGallery } from "@/components/gallery/EditorialGallery";
 import { VideoPlayer } from "@/components/gallery/VideoPlayer";
 import { CtaBlock } from "@/components/ui/CtaBlock";
+import { Plate } from "@/components/ui/Plate";
 import { Reveal } from "@/components/motion/Reveal";
 import { BreadcrumbSchema } from "@/components/seo/StructuredData";
 
@@ -65,17 +66,22 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         crumbs={crumbs}
       />
 
-      <section className="bg-ink pb-section">
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <EditorialGallery images={event.gallery} alt={`${event.title} — ${event.category}`} columns={3} />
         </div>
       </section>
 
+      {/* The films sit on the page ground, not a raised panel: they are plates,
+          and a plate's mat is the raised tone - on a raised panel it vanished
+          to a hairline. The heading and the section's space set the films
+          apart from the stills; on one ground it takes bottom padding only, or
+          two section paddings stack into dead air. */}
       {event.videos && event.videos.length > 0 && (
-        <section className="bg-graphite py-section">
+        <section className="bg-[var(--surface)] pb-section">
           <div className="mx-auto w-full max-w-[104rem] px-gutter">
             <Reveal>
-              <h2 className="mb-12 font-display text-title font-light text-bone">
+              <h2 className="mb-12 font-display text-title font-light text-[var(--text-primary)]">
                 {event.videos.length > 1 ? "The films" : "The film"}
               </h2>
             </Reveal>
@@ -83,12 +89,19 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <div className="grid gap-8 lg:grid-cols-2">
               {event.videos.map((video, i) => (
                 <Reveal key={video.src} delay={i * 0.1}>
-                  <VideoPlayer
-                    src={video.src}
-                    webm={video.webm}
-                    poster={video.poster}
-                    label={`${event.title} — film ${i + 1}`}
-                  />
+                  {/* A poster is a photograph set on the page, so a film is laid
+                      as a plate like the stills above it rather than as a dark
+                      hole in the page. A div: VideoPlayer is already the
+                      figure. No caption - the heading above names the films,
+                      and there is no other text to set. */}
+                  <Plate as="div">
+                    <VideoPlayer
+                      src={video.src}
+                      webm={video.webm}
+                      poster={video.poster}
+                      label={`${event.title} — film ${i + 1}`}
+                    />
+                  </Plate>
                 </Reveal>
               ))}
             </div>
@@ -96,24 +109,25 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         </section>
       )}
 
-      {/* Next gallery */}
-      <section className="bg-ink py-section">
+      {/* Next gallery - bottom padding only: it follows a section on the same
+          ground, and its own rule marks the break. */}
+      <section className="bg-[var(--surface)] pb-section">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
           <Reveal>
             <Link
               href={`/events/${next.slug}`}
-              className="group flex flex-col gap-3 border-t border-hair pt-8 sm:flex-row sm:items-end sm:justify-between"
+              className="group flex flex-col gap-3 border-t border-[var(--rule)] pt-8 sm:flex-row sm:items-end sm:justify-between"
             >
               <div>
-                <span className="eyebrow text-faint">Next gallery</span>
-                <p className="mt-4 font-display text-title font-light text-bone">
+                <span className="eyebrow">Next gallery</span>
+                <p className="mt-4 font-display text-title font-light text-[var(--text-primary)]">
                   {next.title}{" "}
-                  <span className="text-muted">&mdash; {next.category}</span>
+                  <span className="text-[var(--text-secondary)]">&mdash; {next.category}</span>
                 </p>
               </div>
               <span
                 aria-hidden
-                className="text-3xl text-muted transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2"
+                className="text-3xl text-[var(--text-secondary)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2"
               >
                 &rarr;
               </span>

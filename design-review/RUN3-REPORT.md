@@ -1,12 +1,22 @@
 # Run 3 — guard the finish, build around it
 
+> **A record of Run 3, on the dark-palette build.** Figures are as measured that
+> night. Since then the gate has grown: `scripts/qa.mjs` is the list (nineteen
+> checks when stage 6 closed), and `QA-TOOLKIT.md` explains each. The withheld
+> list has eight entries, and a `metadata` check now fails any published file
+> carrying GPS, a camera serial or an embedded thumbnail. The captures this
+> report links in `design-review/run3/` were removed from branch `aegean` in
+> stage 7 and live in `main`'s history. The launch is parked under
+> `WAITING-FOR-DNS.md`, and nothing on `aegean` merges without your stage-8
+> approval.
+
 **Preview:** https://domisignature-redesign-jhwd6ce43-domisi.vercel.app
 
 Verified after deploying: 200, target `preview`, `X-Robots-Tag: noindex`,
 `robots.txt` says `Disallow: /`. Nothing promoted to production, no DNS touched.
 
 **Repository:** https://github.com/ikeskrim/domisignature-redesign
-**CI:** [green](https://github.com/ikeskrim/domisignature-redesign/actions) — 11/11 on every push
+**CI:** [green](https://github.com/ikeskrim/domisignature-redesign/actions) — 11/11 on every push at the time of this run
 **New for you:** [`OWNER-MANUAL.md`](../OWNER-MANUAL.md), with a Greek quick-start at the end.
 
 The site was launch-ready when this run started and it still is. Five real
@@ -91,7 +101,7 @@ scenes that both work. Tonight's brief puts refactors of working code out of
 bounds, and it is right to.
 
 **Demonstration:** [`/study/backlog`](https://domisignature-redesign-jhwd6ce43-domisi.vercel.app/study/backlog)
-· captures in `design-review/run3/` · `noindex`, unlinked, absent from the sitemap.
+· captures in `design-review/run3/` (removed from the branch in stage 7; in `main`'s history) · `noindex`, unlinked, absent from the sitemap.
 
 ---
 
@@ -111,7 +121,8 @@ EXIF and EXIF carries GPS. Publishing the coordinates of a private client's vill
 because they rode along inside a JPEG is a privacy failure none of the existing
 audits can see — the manifest check knows which files are withheld, not what is
 hidden inside the ones that ship. Verified: source frames had EXIF and ICC,
-every derivative had neither.
+every derivative had neither. (Since 2026-09-14 the gate's `metadata` check does
+read what is hidden inside every published file.)
 
 **It refuses to write a title or a word of alt text.** Both need eyes on the
 photograph, and a plausible sentence generated from a filename is exactly the
@@ -158,7 +169,8 @@ figure **stays at 300**, because it is a maximum and Aetos holds far fewer; page
 index row, map and related cards all return.
 
 The full tested procedure is in [`OWNER-MANUAL.md`](../OWNER-MANUAL.md) §5.
-Screenshots in `design-review/run3/`.
+Screenshots were in `design-review/run3/`, removed from the branch in stage 7 and
+kept in `main`'s history.
 
 ---
 
@@ -223,8 +235,9 @@ of how the evidence was made.
 
 ## The gate, and three flakes worth knowing about
 
-`npm run qa` is now **eleven checks**, and green. CI runs the same command on
-every push and is green on HEAD.
+`npm run qa` was **eleven checks** after this run, and green (it has grown since;
+`scripts/qa.mjs` is the list). CI runs the same command on every push and was
+green on HEAD.
 
 Three separate audits went red tonight on code that was fine, and each was fixed
 rather than re-run, because a gate that fails for unrelated reasons is one people

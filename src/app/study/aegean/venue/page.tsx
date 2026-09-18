@@ -23,7 +23,7 @@ export default function AegeanVenue() {
   return (
     <main>
       {/* ── dark chapter: the title card ─────────────────────────────────── */}
-      <section className="relative flex h-[80svh] min-h-[30rem] w-full flex-col justify-end overflow-hidden bg-ink">
+      <section data-ground="dark" className="relative flex h-[80svh] min-h-[30rem] w-full flex-col justify-end overflow-hidden bg-[var(--surface)]">
         <Image
           src={venue.coverImage}
           alt={`${venue.name} — ${venue.standfirst}`}
@@ -31,20 +31,20 @@ export default function AegeanVenue() {
           priority
           sizes="100vw"
           quality={75}
-          className="grade object-cover"
+          className="grade-b object-cover"
         />
-        <div aria-hidden className="scrim-full absolute inset-0" />
+        <div aria-hidden className="wash-bottom absolute inset-0" />
 
         <div className="relative mx-auto w-full max-w-[104rem] px-gutter pb-14">
-          <p className="eyebrow text-bone/55">{venue.category}</p>
-          <h1 className="mt-6 font-display text-[clamp(3rem,8vw,7.5rem)] font-light leading-[0.9] tracking-[-0.03em] text-bone">
+          <p className="eyebrow">{venue.category}</p>
+          <h1 className="mt-6 font-display text-[clamp(3rem,8vw,7.5rem)] font-light leading-[0.9] tracking-[-0.03em] text-[var(--text-primary)]">
             {venue.name}
           </h1>
-          <div className="mt-8 flex flex-col gap-4 border-t border-bone/20 pt-6 lg:flex-row lg:items-end lg:justify-between">
-            <p className="max-w-md text-[0.95rem] leading-relaxed text-bone/70">{venue.standfirst}</p>
-            <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-bone/60">
+          <div className="mt-8 flex flex-col gap-4 border-t border-[var(--rule)] pt-6 lg:flex-row lg:items-end lg:justify-between">
+            <p className="max-w-md text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">{venue.standfirst}</p>
+            <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-tertiary)]">
               {capacityLabel(venue.capacity)}
-              <span className="mx-3 text-bone/25">/</span>
+              <span className="mx-3 text-[var(--rule)]">/</span>
               {venue.location}
             </p>
           </div>
@@ -52,32 +52,32 @@ export default function AegeanVenue() {
       </section>
 
       {/* ── ivory chapter: the reading ───────────────────────────────────── */}
-      <section className="bg-[var(--aegean-ivory)] px-gutter py-24 lg:py-32">
+      <section className="bg-[var(--surface)] px-gutter py-24 lg:py-32">
         <div className="mx-auto grid w-full max-w-[104rem] gap-14 lg:grid-cols-12 lg:gap-20">
           <div className="lg:col-span-7">
             <div className="space-y-6">
               {venue.body.map((p) => (
-                <p key={p} className="text-[1.0625rem] leading-[1.75] text-[var(--aegean-stone)]">
+                <p key={p} className="text-[1.0625rem] leading-[1.75] text-[var(--text-secondary)]">
                   {p}
                 </p>
               ))}
             </div>
 
-            <p className="mt-12 font-display text-[clamp(1.75rem,2.6vw,2.5rem)] font-light text-[var(--aegean-ink)]">
+            <p className="mt-12 font-display text-[clamp(1.75rem,2.6vw,2.5rem)] font-light text-[var(--text-primary)]">
               {capacityLabel(venue.capacity).replace(/\s*guests$/i, "")}
-              <span className="text-[var(--aegean-stone)]"> guests</span>
+              <span className="text-[var(--text-secondary)]"> guests</span>
             </p>
           </div>
 
           <aside className="lg:col-span-4 lg:col-start-9">
-            <span aria-hidden className="block h-px w-16 bg-[#b98f4a]" />
-            <p className="mt-6 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--aegean-stone)]">
+            <span aria-hidden className="block h-px w-16 bg-[var(--accent)]" />
+            <p className="mt-6 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-tertiary)]">
               {venue.advantagesHeading}
             </p>
             <ul className="mt-6 space-y-3">
               {venue.advantages.map((a) => (
-                <li key={a} className="flex gap-3 text-[1rem] leading-relaxed text-[var(--aegean-ink)]">
-                  <span aria-hidden className="mt-3 h-px w-3 shrink-0 bg-[var(--aegean-rule)]" />
+                <li key={a} className="flex gap-3 text-[1rem] leading-relaxed text-[var(--text-primary)]">
+                  <span aria-hidden className="mt-3 h-px w-3 shrink-0 bg-[var(--rule)]" />
                   <span>{a}</span>
                 </li>
               ))}
@@ -87,8 +87,8 @@ export default function AegeanVenue() {
 
         {/* The gallery as matted plates. */}
         <div className="mx-auto mt-20 w-full max-w-[104rem] lg:mt-28">
-          <div className="h-px w-full bg-[var(--aegean-rule)]" />
-          <p className="mt-8 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--aegean-stone)]">
+          <div className="h-px w-full bg-[var(--rule)]" />
+          <p className="mt-8 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-tertiary)]">
             {String(venue.gallery.length).padStart(2, "0")} images
           </p>
 
@@ -96,7 +96,7 @@ export default function AegeanVenue() {
             {venue.gallery.slice(0, 6).map((src) => (
               <div
                 key={src}
-                className="border border-[var(--aegean-rule)] bg-[var(--aegean-card)] p-3 lg:p-4"
+                className="border border-[var(--rule)] bg-[var(--surface-raised)] p-3 lg:p-4"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
@@ -105,7 +105,7 @@ export default function AegeanVenue() {
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     quality={80}
-                    className="grade object-cover"
+                    className="grade-b object-cover"
                   />
                 </div>
               </div>

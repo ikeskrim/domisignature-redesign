@@ -1,5 +1,14 @@
 # Art direction
 
+> **Historical, not law.** This file records the pre-inversion build: Cormorant
+> Garamond over Manrope, a gold (`lamp`) focus ring, and Framer-era motion
+> (`whileInView`, `useReducedMotion`). None of that ships on branch `aegean`.
+> The laws now are `design-review/INVERSION-PLAN.md`,
+> `design-review/SEMANTIC-TOKENS.md` and `.claude/skills/aegean-bone/SKILL.md`:
+> Playfair Display and Jost, colour asked for by semantic role, a focus ring
+> that is never gold, and motion on GSAP + ScrollTrigger + Lenis. Where this
+> file disagrees with them, they win.
+
 The rules this build is held to, and where each one lives in the code.
 
 ---

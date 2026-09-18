@@ -36,7 +36,15 @@ const VIEWPORTS = [
 ];
 
 /** WCAG 2.1 A + AA only — that is the bar the brief sets. */
-const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
+/*
+ * The WCAG tags, plus axe's own best-practice set (stage 8). Without it this run
+ * could not see `heading-order`, which is not a WCAG failure but is one of the
+ * audits Lighthouse's accessibility score counts: /wedding-guide set its chapter
+ * titles as h3 under the page's h1 and scored 98 for it while this check stayed
+ * green. Measured before widening: zero best-practice violations on every route
+ * at both widths, so the standard does not move — only what the gate can see.
+ */
+const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"];
 
 async function main() {
   await mkdir(OUT, { recursive: true });
@@ -62,18 +70,28 @@ async function main() {
           // cannot fix; auditing them would only produce noise we cannot act on.
           .exclude("iframe")
           /*
-           * The oversized footer wordmark is decorative brand text, hidden from
-           * assistive technology and duplicated three other places on the page.
-           * Approved as a WCAG 1.4.3 logotype/decorative exemption and recorded
-           * in a11y.md, so it is excluded here rather than silently ignored.
+           * Nothing else is excluded. The footer wordmark was, as a WCAG 1.4.3
+           * logotype exemption, until stage 8 made it a drawing: it holds no
+           * text now, so there is nothing to exempt (design-review/a11y.md).
            */
-          .exclude("[data-a11y-exempt='decorative-logotype']")
           .analyze();
+
+        /*
+         * Contrast axe could not compute. The paper lamp is a background layer,
+         * and axe will not guess a colour over a gradient, so text on paper
+         * comes back "needs review" rather than pass or fail. Printed, never
+         * hidden: that coverage moved to scripts/paper-legibility.mjs, which
+         * reads the actual pixels behind every glyph on paper.
+         */
+        const needsReview = scan.incomplete
+          .filter((i) => i.id === "color-contrast")
+          .reduce((n, i) => n + i.nodes.length, 0);
 
         results.push({
           route: name,
           path: route,
           viewport: vp.tag,
+          contrastNeedsReview: needsReview,
           violations: scan.violations.map((v) => ({
             id: v.id,
             impact: v.impact,
@@ -84,7 +102,10 @@ async function main() {
         });
 
         const count = scan.violations.length;
-        console.log(`  ${vp.tag.padEnd(8)} ${name.padEnd(14)} ${count === 0 ? "clean" : `${count} violation(s)`}`);
+        console.log(
+          `  ${vp.tag.padEnd(8)} ${name.padEnd(14)} ${count === 0 ? "clean" : `${count} violation(s)`}` +
+            (needsReview ? `   (${needsReview} contrast checks need review — measured by audit:paper)` : ""),
+        );
       } catch (err) {
         results.push({ route: name, path: route, viewport: vp.tag, error: err.message.split("\n")[0] });
         console.log(`  ${vp.tag.padEnd(8)} ${name.padEnd(14)} ERROR`);
@@ -98,7 +119,9 @@ async function main() {
   await writeFile(path.join(OUT, "a11y-axe.json"), JSON.stringify(results, null, 2), "utf8");
 
   const total = results.reduce((n, r) => n + (r.violations?.length ?? 0), 0);
+  const review = results.reduce((n, r) => n + (r.contrastNeedsReview ?? 0), 0);
   console.log(`\ntotal violations: ${total}`);
+  console.log(`contrast checks axe could not compute: ${review} (covered on pixels by audit:paper)`);
   console.log("written -> design-review/a11y-axe.json");
 }
 

@@ -1,0 +1,392 @@
+[
+  {
+    "width": "1440",
+    "route": "home",
+    "measured": 145,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.673429838396537,
+      "bar": 4.5,
+      "text": "Venues",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venues",
+    "measured": 68,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.700619590624362,
+      "bar": 4.5,
+      "text": "Up to 200 guests/25 minutes from Rethymn",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venue-mountain-escape",
+    "measured": 68,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.747604768402507,
+      "bar": 4.5,
+      "text": "Capacity up to 300",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venue-thalasses",
+    "measured": 73,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.747604768402507,
+      "bar": 4.5,
+      "text": "Capacity up to 200",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "venue-olive-stories",
+    "measured": 69,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.747604768402507,
+      "bar": 4.5,
+      "text": "Capacity up to 300",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "events",
+    "measured": 86,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.700619590624362,
+      "bar": 4.5,
+      "text": "Signature Events",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "event-sunset-by-the-pool",
+    "measured": 48,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "Celebration",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "event-villa-party",
+    "measured": 45,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "Villa Party",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "services",
+    "measured": 68,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.738087709721292,
+      "bar": 4.5,
+      "text": "Services",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "wedding-guide",
+    "measured": 69,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.700619590624362,
+      "bar": 4.5,
+      "text": "Wedding Guide",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "about",
+    "measured": 66,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7071358044522515,
+      "bar": 4.5,
+      "text": "About",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "contact",
+    "measured": 64,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.704205397808176,
+      "bar": 4.5,
+      "text": "Brochure",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "1440",
+    "route": "404",
+    "measured": 33,
+    "failing": 0,
+    "worst": {
+      "ratio": 5.233919103169988,
+      "bar": 4.5,
+      "text": "Wedding Brochure",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "home",
+    "measured": 139,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.713722456489391,
+      "bar": 4.5,
+      "text": "Signature Events",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venues",
+    "measured": 68,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.704205397808176,
+      "bar": 4.5,
+      "text": "200–300 guests/Open countryside, Rethymn",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-mountain-escape",
+    "measured": 68,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.747604768402507,
+      "bar": 4.5,
+      "text": "16 images",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-thalasses",
+    "measured": 68,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.747604768402507,
+      "bar": 4.5,
+      "text": "22 images",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "venue-olive-stories",
+    "measured": 69,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.704205397808176,
+      "bar": 4.5,
+      "text": "05 images",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "events",
+    "measured": 86,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.7505526830412865,
+      "bar": 4.5,
+      "text": "Galleries",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "event-sunset-by-the-pool",
+    "measured": 48,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.744001076753331,
+      "bar": 4.5,
+      "text": "Celebration",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "event-villa-party",
+    "measured": 46,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.744001076753331,
+      "bar": 4.5,
+      "text": "Villa Party",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "services",
+    "measured": 69,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.747604768402507,
+      "bar": 4.5,
+      "text": "Home",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "wedding-guide",
+    "measured": 64,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.784646674091984,
+      "bar": 4.5,
+      "text": "Wedding Guide",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "about",
+    "measured": 66,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.741035624360071,
+      "bar": 4.5,
+      "text": "Where we work",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "contact",
+    "measured": 64,
+    "failing": 0,
+    "worst": {
+      "ratio": 4.738087709721292,
+      "bar": 4.5,
+      "text": "Follow",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  },
+  {
+    "width": "390",
+    "route": "404",
+    "measured": 33,
+    "failing": 0,
+    "worst": {
+      "ratio": 5.233919103169988,
+      "bar": 4.5,
+      "text": "WhatsApp",
+      "color": "rgb(107, 101, 88)",
+      "alpha": 1,
+      "opacity": 1
+    },
+    "bad": []
+  }
+]

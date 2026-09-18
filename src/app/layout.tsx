@@ -13,14 +13,15 @@ import { Magnetic } from "@/components/motion/Magnetic";
 import { VenueTransition } from "@/components/motion/VenueTransition";
 import { Grain } from "@/components/motion/Grain";
 import { robotsForEnvironment } from "@/lib/seo";
+import { DROP_SCRIPT } from "@/lib/motion-tier";
 import { LegacyAnchorRedirect } from "@/components/layout/LegacyAnchorRedirect";
 
 import "./globals.css";
 
 /*
  * Cretan Noir type pairing — next/font self-hosts both, so no requests reach
- * fonts.googleapis.com. Playfair's high stroke contrast is what makes the
- * display type read as light against the dark ground.
+ * fonts.googleapis.com. Playfair's high stroke contrast is what keeps the
+ * display type light on the page.
  */
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -81,18 +82,30 @@ export const metadata: Metadata = {
 };
 
 /*
- * Both of these still described the pre-noir palette, so mobile browser chrome
- * rendered cream above an almost-black site and form controls were asked to
- * style themselves for a light page. Matched to --color-ink in Phase 6 §5.
+ * The one hand edit the inversion plan names: metadata cannot read a CSS
+ * variable, so the mobile browser tint is the light ground's hex, written
+ * here by hand. It is the only palette literal permitted outside the token
+ * definitions, and scripts/palette-literals.mjs knows it by name.
  */
 export const viewport: Viewport = {
-  themeColor: "#0a0a0b",
-  colorScheme: "dark",
+  themeColor: "#f2ece1",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={site.locale} className={`${playfair.variable} ${jost.variable}`}>
+    <html
+      lang={site.locale}
+      className={`${playfair.variable} ${jost.variable}`}
+      /*
+        The page ground. Declared on the root so <html> itself resolves the
+        surface - custom properties only inherit downward, and a ground on
+        <body> would leave the canvas behind it reading the old palette. Dark
+        chapters invert locally by declaring their own ground; nothing else
+        in the tree names a colour.
+      */
+      data-ground="light"
+    >
       <head>
         {/*
           Palette study switch. Inert unless ?palette=ember is in the URL, and
@@ -111,11 +124,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "try{var p=new URLSearchParams(location.search).get('palette');if(p==='ember'||p==='ember-deep')document.documentElement.dataset.palette=p}catch(e){}",
           }}
         />
+        {/*
+          The drop switch (stage 6, src/lib/motion-tier.ts). On a phone it sets
+          data-drop on <html> to the motion features the measured level gives
+          up, before first paint, for the same reason as the palette switch: an
+          effect would paint the dropped layer first and then remove it. It is
+          a constant string, so every server render is identical; desktop
+          never drops.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: DROP_SCRIPT }} />
       </head>
       <body className="min-h-dvh antialiased">
         <a
           href="#main"
-          className="sr-only-focusable fixed left-4 top-4 z-[100] bg-ink px-5 py-3 text-sm text-bone"
+          className="sr-only-focusable fixed left-4 top-4 z-[100] bg-[var(--inverse)] px-5 py-3 text-sm text-[var(--text-on-inverse)]"
         >
           Skip to content
         </a>

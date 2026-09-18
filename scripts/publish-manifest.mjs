@@ -32,7 +32,8 @@ import { fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const PUBLIC = path.join(ROOT, "public");
 
-/** Pulled in Phase 6 §4 — see design-review/imagery-report.md. */
+/** Pulled in Phase 6 §4 — see design-review/imagery-report.md. posterimage.png
+    joined on the owner's decision (2026-09-14, design-review/BRIEF-AUDIT.md). */
 export const WITHHELD = new Map([
   ["/media/olLK_LD_072.jpg", "a couple's names legible, no confirmed permission"],
   ["/media/spire2.png", "reads as AI-generated (no EXIF/ICC, impossible reflection)"],
@@ -41,6 +42,7 @@ export const WITHHELD = new Map([
   ["/media/blDSC_9849.jpg", "withdrawn as a weak frame"],
   ["/media/ae9Z8A4481-Edit.jpg", "withdrawn as off-register"],
   ["/media/aeIMG_2133.jpg", "withdrawn as off-register"],
+  ["/media/posterimage.png", "identifiable people at a real ceremony; superseded by an optimised poster, never published"],
 ]);
 
 async function* walk(dir, exts) {

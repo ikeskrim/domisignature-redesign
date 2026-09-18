@@ -1,0 +1,187 @@
+{
+  "before": "origin/main",
+  "pairs": [
+    {
+      "width": "1440",
+      "route": "404",
+      "file": "design-review/merge-report/1440-404.png",
+      "beforeHeight": 611,
+      "afterHeight": 627
+    },
+    {
+      "width": "1440",
+      "route": "about",
+      "file": "design-review/merge-report/1440-about.png",
+      "beforeHeight": 1411,
+      "afterHeight": 1353
+    },
+    {
+      "width": "1440",
+      "route": "contact",
+      "file": "design-review/merge-report/1440-contact.png",
+      "beforeHeight": 1520,
+      "afterHeight": 1536
+    },
+    {
+      "width": "1440",
+      "route": "event-sunset-by-the-pool",
+      "file": "design-review/merge-report/1440-event-sunset-by-the-pool.png",
+      "beforeHeight": 1810,
+      "afterHeight": 1822
+    },
+    {
+      "width": "1440",
+      "route": "event-villa-party",
+      "file": "design-review/merge-report/1440-event-villa-party.png",
+      "beforeHeight": 2018,
+      "afterHeight": 1949
+    },
+    {
+      "width": "1440",
+      "route": "events",
+      "file": "design-review/merge-report/1440-events.png",
+      "beforeHeight": 1327,
+      "afterHeight": 1449
+    },
+    {
+      "width": "1440",
+      "route": "home",
+      "file": "design-review/merge-report/1440-home.png",
+      "beforeHeight": 5541,
+      "afterHeight": 5080
+    },
+    {
+      "width": "1440",
+      "route": "services",
+      "file": "design-review/merge-report/1440-services.png",
+      "beforeHeight": 2378,
+      "afterHeight": 2394
+    },
+    {
+      "width": "1440",
+      "route": "venue-mountain-escape",
+      "file": "design-review/merge-report/1440-venue-mountain-escape.png",
+      "beforeHeight": 2579,
+      "afterHeight": 2557
+    },
+    {
+      "width": "1440",
+      "route": "venue-olive-stories",
+      "file": "design-review/merge-report/1440-venue-olive-stories.png",
+      "beforeHeight": 2489,
+      "afterHeight": 2452
+    },
+    {
+      "width": "1440",
+      "route": "venue-thalasses",
+      "file": "design-review/merge-report/1440-venue-thalasses.png",
+      "beforeHeight": 2941,
+      "afterHeight": 2927
+    },
+    {
+      "width": "1440",
+      "route": "venues",
+      "file": "design-review/merge-report/1440-venues.png",
+      "beforeHeight": 1125,
+      "afterHeight": 1537
+    },
+    {
+      "width": "1440",
+      "route": "wedding-guide",
+      "file": "design-review/merge-report/1440-wedding-guide.png",
+      "beforeHeight": 2408,
+      "afterHeight": 2425
+    },
+    {
+      "width": "390",
+      "route": "404",
+      "file": "design-review/merge-report/390-404.png",
+      "beforeHeight": 1817,
+      "afterHeight": 1848
+    },
+    {
+      "width": "390",
+      "route": "about",
+      "file": "design-review/merge-report/390-about.png",
+      "beforeHeight": 4575,
+      "afterHeight": 4468
+    },
+    {
+      "width": "390",
+      "route": "contact",
+      "file": "design-review/merge-report/390-contact.png",
+      "beforeHeight": 4458,
+      "afterHeight": 4492
+    },
+    {
+      "width": "390",
+      "route": "event-sunset-by-the-pool",
+      "file": "design-review/merge-report/390-event-sunset-by-the-pool.png",
+      "beforeHeight": 7346,
+      "afterHeight": 7447
+    },
+    {
+      "width": "390",
+      "route": "event-villa-party",
+      "file": "design-review/merge-report/390-event-villa-party.png",
+      "beforeHeight": 7641,
+      "afterHeight": 7458
+    },
+    {
+      "width": "390",
+      "route": "events",
+      "file": "design-review/merge-report/390-events.png",
+      "beforeHeight": 4707,
+      "afterHeight": 5238
+    },
+    {
+      "width": "390",
+      "route": "home",
+      "file": "design-review/merge-report/390-home.png",
+      "beforeHeight": 12885,
+      "afterHeight": 12999
+    },
+    {
+      "width": "390",
+      "route": "services",
+      "file": "design-review/merge-report/390-services.png",
+      "beforeHeight": 5145,
+      "afterHeight": 5232
+    },
+    {
+      "width": "390",
+      "route": "venue-mountain-escape",
+      "file": "design-review/merge-report/390-venue-mountain-escape.png",
+      "beforeHeight": 8486,
+      "afterHeight": 8488
+    },
+    {
+      "width": "390",
+      "route": "venue-olive-stories",
+      "file": "design-review/merge-report/390-venue-olive-stories.png",
+      "beforeHeight": 6739,
+      "afterHeight": 6611
+    },
+    {
+      "width": "390",
+      "route": "venue-thalasses",
+      "file": "design-review/merge-report/390-venue-thalasses.png",
+      "beforeHeight": 10909,
+      "afterHeight": 10868
+    },
+    {
+      "width": "390",
+      "route": "venues",
+      "file": "design-review/merge-report/390-venues.png",
+      "beforeHeight": 3612,
+      "afterHeight": 4203
+    },
+    {
+      "width": "390",
+      "route": "wedding-guide",
+      "file": "design-review/merge-report/390-wedding-guide.png",
+      "beforeHeight": 5555,
+      "afterHeight": 5640
+    }
+  ]
+}

@@ -1,0 +1,590 @@
+{
+  "times": [
+    50,
+    200,
+    500,
+    900
+  ],
+  "report": [
+    {
+      "width": 390,
+      "trigger": "reveal",
+      "samples": [
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> All three venues",
+          "problems": [],
+          "phase": "key",
+          "at": 50,
+          "actual": 69
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> All three venues",
+          "problems": [],
+          "phase": "key",
+          "at": 200,
+          "actual": 220
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> All three venues",
+          "problems": [],
+          "phase": "key",
+          "at": 500,
+          "actual": 515
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> All three venues",
+          "problems": [],
+          "phase": "key",
+          "at": 900,
+          "actual": 919
+        }
+      ],
+      "route": "/",
+      "atKey": {
+        "offset": 20,
+        "chapter": null
+      },
+      "passedOver": []
+    },
+    {
+      "width": 390,
+      "trigger": "nav",
+      "samples": [
+        {
+          "pathname": "/venues",
+          "menuPanel": true,
+          "inMenu": true,
+          "firstInMenu": true,
+          "inTarget": true,
+          "active": "<a.block.py-4> 01Venues",
+          "problems": [],
+          "phase": "key",
+          "at": 50,
+          "actual": 80
+        },
+        {
+          "pathname": "/venues",
+          "menuPanel": true,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": "<button.-mr-2.flex> Menu",
+          "problems": [],
+          "phase": "key",
+          "at": 200,
+          "actual": 216
+        },
+        {
+          "pathname": "/venues",
+          "menuPanel": true,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": "<button.-mr-2.flex> Menu",
+          "problems": [],
+          "phase": "key",
+          "at": 500,
+          "actual": 513
+        },
+        {
+          "pathname": "/venues",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": "<button.-mr-2.flex> Menu",
+          "problems": [],
+          "phase": "key",
+          "at": 900,
+          "actual": 914
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "trigger": "menu",
+      "samples": [
+        {
+          "pathname": "/",
+          "menuPanel": true,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<button.-mr-2.flex> Close",
+          "problems": [],
+          "phase": "key",
+          "at": 50,
+          "actual": 65
+        },
+        {
+          "pathname": "/",
+          "menuPanel": true,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<button.-mr-2.flex> Close",
+          "problems": [],
+          "phase": "key",
+          "at": 200,
+          "actual": 214
+        },
+        {
+          "pathname": "/",
+          "menuPanel": true,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<button.-mr-2.flex> Close",
+          "problems": [],
+          "phase": "key",
+          "at": 500,
+          "actual": 521
+        },
+        {
+          "pathname": "/",
+          "menuPanel": true,
+          "inMenu": true,
+          "firstInMenu": true,
+          "inTarget": false,
+          "active": "<a.block.py-4> 01Venues",
+          "problems": [],
+          "phase": "key",
+          "at": 900,
+          "actual": 934
+        },
+        {
+          "pathname": "/",
+          "menuPanel": true,
+          "inMenu": true,
+          "firstInMenu": true,
+          "inTarget": false,
+          "active": "<a.block.py-4> 01Venues",
+          "problems": [],
+          "phase": "focus",
+          "at": 50,
+          "actual": 82
+        },
+        {
+          "pathname": "/",
+          "menuPanel": true,
+          "inMenu": true,
+          "firstInMenu": true,
+          "inTarget": false,
+          "active": "<a.block.py-4> 01Venues",
+          "problems": [],
+          "phase": "focus",
+          "at": 200,
+          "actual": 249
+        },
+        {
+          "pathname": "/",
+          "menuPanel": true,
+          "inMenu": true,
+          "firstInMenu": true,
+          "inTarget": false,
+          "active": "<a.block.py-4> 01Venues",
+          "problems": [],
+          "phase": "focus",
+          "at": 500,
+          "actual": 521
+        },
+        {
+          "pathname": "/",
+          "menuPanel": true,
+          "inMenu": true,
+          "firstInMenu": true,
+          "inTarget": false,
+          "active": "<a.block.py-4> 01Venues",
+          "problems": [],
+          "phase": "focus",
+          "at": 900,
+          "actual": 934
+        }
+      ],
+      "focusAt": 716
+    },
+    {
+      "width": 390,
+      "trigger": "venue-row",
+      "samples": [
+        {
+          "pathname": "/venues/thalasses",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": null,
+          "problems": [],
+          "phase": "key",
+          "at": 50,
+          "actual": 82
+        },
+        {
+          "pathname": "/venues/thalasses",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": null,
+          "problems": [],
+          "phase": "key",
+          "at": 200,
+          "actual": 202
+        },
+        {
+          "pathname": "/venues/thalasses",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": null,
+          "problems": [],
+          "phase": "key",
+          "at": 500,
+          "actual": 511
+        },
+        {
+          "pathname": "/venues/thalasses",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": null,
+          "problems": [],
+          "phase": "key",
+          "at": 900,
+          "actual": 911
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "trigger": "cta",
+      "samples": [
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Enquire→",
+          "problems": [],
+          "phase": "key",
+          "at": 50,
+          "actual": 72
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Enquire→",
+          "problems": [],
+          "phase": "key",
+          "at": 200,
+          "actual": 225
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Enquire→",
+          "problems": [],
+          "phase": "key",
+          "at": 500,
+          "actual": 520
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Enquire→",
+          "problems": [],
+          "phase": "key",
+          "at": 900,
+          "actual": 922
+        }
+      ],
+      "atKey": {
+        "offset": 0,
+        "chapter": {
+          "in": 11.9727,
+          "out": 0,
+          "inset": 11.9727,
+          "gutter": 24
+        }
+      },
+      "position": {
+        "y": 13813,
+        "rank": 10.00151522056143,
+        "inView": false,
+        "scrub": "entry",
+        "progress": 0.5
+      }
+    },
+    {
+      "width": 1440,
+      "trigger": "reveal",
+      "samples": [
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> All three venues",
+          "problems": [],
+          "phase": "key",
+          "at": 50,
+          "actual": 70
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> All three venues",
+          "problems": [],
+          "phase": "key",
+          "at": 200,
+          "actual": 222
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> All three venues",
+          "problems": [],
+          "phase": "key",
+          "at": 500,
+          "actual": 520
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> All three venues",
+          "problems": [],
+          "phase": "key",
+          "at": 900,
+          "actual": 921
+        }
+      ],
+      "route": "/",
+      "atKey": {
+        "offset": 20,
+        "chapter": null
+      },
+      "passedOver": []
+    },
+    {
+      "width": 1440,
+      "trigger": "nav",
+      "samples": [
+        {
+          "pathname": "/venues",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Venues",
+          "problems": [],
+          "phase": "key",
+          "at": 50,
+          "actual": 79
+        },
+        {
+          "pathname": "/venues",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Venues",
+          "problems": [],
+          "phase": "key",
+          "at": 200,
+          "actual": 208
+        },
+        {
+          "pathname": "/venues",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Venues",
+          "problems": [],
+          "phase": "key",
+          "at": 500,
+          "actual": 507
+        },
+        {
+          "pathname": "/venues",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Venues",
+          "problems": [],
+          "phase": "key",
+          "at": 900,
+          "actual": 907
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "trigger": "venue-row",
+      "samples": [
+        {
+          "pathname": "/venues/thalasses",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": null,
+          "problems": [],
+          "phase": "key",
+          "at": 50,
+          "actual": 93
+        },
+        {
+          "pathname": "/venues/thalasses",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": null,
+          "problems": [],
+          "phase": "key",
+          "at": 200,
+          "actual": 206
+        },
+        {
+          "pathname": "/venues/thalasses",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": null,
+          "problems": [],
+          "phase": "key",
+          "at": 500,
+          "actual": 505
+        },
+        {
+          "pathname": "/venues/thalasses",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": false,
+          "active": null,
+          "problems": [],
+          "phase": "key",
+          "at": 900,
+          "actual": 911
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "trigger": "cta",
+      "samples": [
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Enquire→",
+          "problems": [],
+          "phase": "key",
+          "at": 50,
+          "actual": 78
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Enquire→",
+          "problems": [],
+          "phase": "key",
+          "at": 200,
+          "actual": 232
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Enquire→",
+          "problems": [],
+          "phase": "key",
+          "at": 500,
+          "actual": 526
+        },
+        {
+          "pathname": "/",
+          "menuPanel": false,
+          "inMenu": false,
+          "firstInMenu": false,
+          "inTarget": true,
+          "active": "<a.group.relative> Enquire→",
+          "problems": [],
+          "phase": "key",
+          "at": 900,
+          "actual": 921
+        }
+      ],
+      "atKey": {
+        "offset": 0,
+        "chapter": {
+          "in": 0,
+          "out": 32.9231,
+          "inset": 32.9231,
+          "gutter": 72
+        }
+      },
+      "position": {
+        "y": 15454,
+        "rank": 0.04220085470085472,
+        "inView": true,
+        "scrub": "exit",
+        "progress": 0.46
+      }
+    }
+  ],
+  "failures": []
+}

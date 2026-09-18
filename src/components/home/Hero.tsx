@@ -5,12 +5,44 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { contact, hero } from "@content/site";
+import { Chapter } from "@/components/layout/Chapter";
 import { gsap, EASE, prefersReducedMotion } from "@/lib/gsap";
-import { introDone } from "@/lib/intro";
+import { booted, introDone, introWillShow } from "@/lib/intro";
+import { isDropped } from "@/lib/motion-tier";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 const CROSSFADE_MS = 6500;
+
+/* The sheets that cover a page: the preloader on a hard load, the page
+   curtain on a client navigation. */
+const SHEETS = ["[data-preloader]", "[data-curtain]"] as const;
+
+/**
+ * True when an opaque sheet lies over every part of `el` that is on screen.
+ * Style is read first, so a sheet at rest (transparent, or hidden) costs no
+ * layout.
+ */
+function coveredBySheet(el: Element): boolean {
+  for (const selector of SHEETS) {
+    const sheet = document.querySelector(selector);
+    if (!sheet) continue;
+    const style = getComputedStyle(sheet);
+    if (style.visibility === "hidden" || Number(style.opacity) < 0.99) continue;
+
+    const box = el.getBoundingClientRect();
+    const top = Math.max(box.top, 0);
+    const bottom = Math.min(box.bottom, window.innerHeight);
+    const left = Math.max(box.left, 0);
+    const right = Math.min(box.right, window.innerWidth);
+    /* Off screen, nothing of it can flash; leave it as painted. */
+    if (bottom <= top || right <= left) return false;
+
+    const s = sheet.getBoundingClientRect();
+    if (s.top <= top + 1 && s.bottom >= bottom - 1 && s.left <= left + 1 && s.right >= right - 1) return true;
+  }
+  return false;
+}
 
 type Mode = "video" | "stills";
 
@@ -28,6 +60,16 @@ type Mode = "video" | "stills";
  * Phase 6 §5: the entrance is a single GSAP timeline that waits on the intro
  * gate, so the headline lifts as the preloader clears rather than behind it.
  * Parallax is a scrubbed ScrollTrigger sharing Lenis's clock.
+ *
+ * Stage 6: the entrance is held only while something covers the hero — the
+ * preloader's sheet on this hard load, or the page curtain on a client
+ * navigation — and only once that sheet is actually on screen. Otherwise the
+ * server-painted headline is already correct and is left exactly as painted:
+ * hiding it to replay it would be a flash on the first screen. The parallax
+ * is the owner's second drop, so a phone that drops it gets the hero at rest;
+ * a focused CTA inside the scrubbed copy is shown at full ink; the stills
+ * pause while the hero is off-screen, and the scroll cue runs at `lg` only,
+ * where it is shown.
  */
 export function Hero() {
   const [mode, setMode] = useState<Mode>("stills");
@@ -36,7 +78,7 @@ export function Hero() {
   /** Highest still index reached; -1 means none have been shown yet. */
   const [maxStill, setMaxStill] = useState(-1);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const root = useRef<HTMLElement>(null);
+  /** The media layer. Its parent is the chapter element the scoped effects bind to. */
   const media = useRef<HTMLDivElement>(null);
   const copy = useRef<HTMLDivElement>(null);
   const stillLayers = useRef<(HTMLDivElement | null)[]>([]);
@@ -56,13 +98,40 @@ export function Hero() {
     setMode("video");
   }, []);
 
-  /* Cross-fade the stills whenever the film is not playing. */
+  /* Cross-fade the stills whenever the film is not playing — and only while
+     the hero is on screen. Off-screen the interval stops, so no layer mounts
+     and no photograph downloads behind the reader; it starts again, from a
+     full interval, when the hero returns. */
   useEffect(() => {
     if (prefersReducedMotion()) return;
     if (mode === "video" && videoReady) return;
 
-    const id = setInterval(() => setStill((i) => (i + 1) % hero.images.length), CROSSFADE_MS);
-    return () => clearInterval(id);
+    let id: ReturnType<typeof setInterval> | undefined;
+    const start = () => {
+      if (id === undefined) id = setInterval(() => setStill((i) => (i + 1) % hero.images.length), CROSSFADE_MS);
+    };
+    const stop = () => {
+      if (id !== undefined) clearInterval(id);
+      id = undefined;
+    };
+
+    const el = media.current?.parentElement;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      start();
+      return stop;
+    }
+
+    /* The observer reports the current state on observe, so an on-screen hero
+       starts at once. A batch can carry several records for this one target,
+       oldest first; only the last is the hero's state now. */
+    const io = new IntersectionObserver((entries) =>
+      entries[entries.length - 1]?.isIntersecting ? start() : stop(),
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      stop();
+    };
   }, [mode, videoReady]);
 
   /* Mount the layer we are about to show, then fade it up on the next pass. */
@@ -75,10 +144,17 @@ export function Hero() {
      the gap mid-transition. */
   useIsomorphicLayoutEffect(() => {
     if (prefersReducedMotion()) return;
-    stillLayers.current.forEach((el, i) => {
-      if (!el || i > maxStill) return;
-      gsap.to(el, { opacity: i <= still ? 1 : 0, duration: 1.8, ease: "power1.inOut" });
+    const ctx = gsap.context(() => {
+      stillLayers.current.forEach((el, i) => {
+        if (!el || i > maxStill) return;
+        gsap.to(el, { opacity: i <= still ? 1 : 0, duration: 1.8, ease: "power1.inOut" });
+      });
     });
+    /* Killed, not reverted: each pass hands its opacities on to the next, and a
+       revert would drop every layer back to transparent between passes. A pass
+       has finished long before the next still (1.8s against 6.5s); on unmount
+       the layers go with it. */
+    return () => ctx.kill();
   }, [still, maxStill]);
 
   /* Some browsers reject autoplay even when muted; treat that as a failure. */
@@ -91,26 +167,39 @@ export function Hero() {
     if (play) play.catch(() => setMode("stills"));
   }, [mode]);
 
-  /* Entrance, once the intro gate opens. */
+  /* Entrance, once the intro gate opens — and only while something covers the
+     hero until then. */
   useIsomorphicLayoutEffect(() => {
-    const el = root.current;
+    const el = media.current?.parentElement;
     if (!el || prefersReducedMotion()) return;
 
+    /*
+     * Nothing can cover this page: no preloader on this hard load, and no page
+     * curtain, because this is the hard load (`booted()` is false until the
+     * first commit's passive effects). The server painted the headline in its
+     * final place; leave it there — no hide, no replay.
+     */
+    if (!introWillShow() && !booted()) return;
+
+    let held: gsap.Context | undefined;
     let ctx: gsap.Context | undefined;
+    let tl: gsap.core.Timeline | undefined;
+    let gateOpen = false;
     let cancelled = false;
 
-    /* Hold the entrance state immediately so nothing flashes in unanimated. */
-    const held = gsap.context(() => {
-      gsap.set("[data-hero-line]", { yPercent: 112 });
-      gsap.set("[data-hero-fade]", { opacity: 0, y: 14 });
-      gsap.set("[data-hero-cue]", { opacity: 0 });
-    }, el);
+    const hold = () => {
+      held = gsap.context(() => {
+        gsap.set("[data-hero-line]", { yPercent: 112 });
+        gsap.set("[data-hero-fade]", { opacity: 0, y: 14 });
+        gsap.set("[data-hero-cue]", { opacity: 0 });
+      }, el);
+    };
 
-    void introDone.then(() => {
-      if (cancelled) return;
-      held.revert();
+    const play = () => {
+      held?.revert();
+      held = undefined;
       ctx = gsap.context(() => {
-        const tl = gsap.timeline();
+        tl = gsap.timeline();
         tl.from("[data-hero-line]", {
           yPercent: 112,
           duration: 1.3,
@@ -120,19 +209,70 @@ export function Hero() {
           .from("[data-hero-fade]", { opacity: 0, y: 14, duration: 1, ease: EASE, stagger: 0.15 }, 0.5)
           .from("[data-hero-cue]", { opacity: 0, duration: 1.2 }, 1.1);
       }, el);
+    };
+
+    /*
+     * A preloader or a curtain may still not come: the preloader's sheet
+     * commits a render after hydration, and the curtain sits out a keyboard or
+     * a venue navigation. So the hold waits for the sheet itself, read on each
+     * GSAP tick. The root timeline renders first in a tick, so a curtain set in
+     * this same commit is already drawn when this runs, and a tick lands before
+     * the frame paints: the headline is held under a sheet that is on screen,
+     * never on a bare page. If the gate opens while nothing covers the hero,
+     * the watch ends and the headline stays as painted.
+     */
+    const watch = () => {
+      if (coveredBySheet(el)) {
+        gsap.ticker.remove(watch);
+        if (gateOpen) play();
+        else hold();
+      } else if (gateOpen) {
+        gsap.ticker.remove(watch);
+      }
+    };
+
+    /*
+     * A focus arriving inside the hero finishes the entrance, the rule
+     * `finishOnFocus` sets, extended to the hold: before the gate opens it
+     * releases the held state (or ends the watch) and the entrance never
+     * plays; once it is playing it jumps to the end. A CTA is never focused
+     * while transparent or below its line.
+     */
+    const finish = () => {
+      if (tl) {
+        if (tl.progress() < 1) tl.progress(1);
+        return;
+      }
+      cancelled = true;
+      gsap.ticker.remove(watch);
+      held?.revert();
+      held = undefined;
+    };
+    el.addEventListener("focusin", finish);
+
+    void introDone.then(() => {
+      gateOpen = true;
+      if (held && !cancelled) play();
     });
+
+    gsap.ticker.add(watch);
 
     return () => {
       cancelled = true;
-      held.revert();
+      gsap.ticker.remove(watch);
+      el.removeEventListener("focusin", finish);
+      held?.revert();
+      held = undefined;
       ctx?.revert();
     };
   }, []);
 
-  /* Parallax: media drifts down, copy lifts and fades as the page leaves. */
+  /* Parallax: media drifts down, copy lifts and fades as the page leaves. A
+     phone that drops parallax (src/lib/motion-tier.ts) keeps the hero at rest:
+     no drift, no lift, no fade. */
   useIsomorphicLayoutEffect(() => {
-    const el = root.current;
-    if (!el || prefersReducedMotion()) return;
+    const el = media.current?.parentElement;
+    if (!el || prefersReducedMotion() || isDropped("parallax")) return;
 
     const ctx = gsap.context(() => {
       const scrub = {
@@ -149,11 +289,22 @@ export function Hero() {
     return () => ctx.revert();
   }, []);
 
+  /*
+   * A designated dark chapter, and the page opener. <Chapter> is the section
+   * element: it sets the ground, so every role below resolves to the night
+   * ladder, and it draws the one defined boundary. No entry mask, because
+   * there is nothing to arrive from; the exit mask is on, so the bottom edge
+   * narrows back into the margins before the arrival's ivory resumes rather
+   * than meeting it as a hard edge.
+   *
+   * Chapter owns its element and forwards no ref, so the effects above bind
+   * to it as the media layer's parent — the same element and geometry, and
+   * no second implementation of the join. Nothing here is pinned; the
+   * parallax scrub and the chapter's exit scrub are independent triggers on
+   * one element.
+   */
   return (
-    <section
-      ref={root}
-      className="relative h-[100svh] min-h-[36rem] w-full overflow-hidden bg-ink"
-    >
+    <Chapter ground="dark" enter={false} className="h-[100svh] min-h-[36rem] w-full overflow-hidden">
       <div ref={media} className="absolute inset-0">
         {/* LCP: the poster photograph, painted immediately. */}
         <Image
@@ -239,17 +390,28 @@ export function Hero() {
         )}
       </div>
 
-      {/* Scrim — gradient, never a box. */}
-      <div aria-hidden className="scrim-full absolute inset-0" />
+      {/* Wash — gradient, never a box; drawn in the chapter's own ground. */}
+      <div aria-hidden className="wash-full absolute inset-0" />
 
-      {/* Copy */}
-      <div ref={copy} className="relative flex h-full flex-col justify-end pb-20 lg:pb-24">
+      {/*
+        Copy. The parallax scrubs its opacity toward 0 as the page leaves, and
+        it holds both CTAs: a keyboard focus inside it would draw its ring at
+        whatever ink the scroll had reached. While it contains a visible focus,
+        an important opacity outranks the scrub's inline value, so the focused
+        CTA and its ring are at full ink; on blur the scrub's value applies
+        again. The lift is untouched, and nothing is focused in the hero-states
+        measurement, so every copy sample re-measures identical.
+      */}
+      <div
+        ref={copy}
+        className="relative flex h-full flex-col justify-end pb-20 has-[:focus-visible]:!opacity-100 lg:pb-24"
+      >
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
-          <p data-hero-fade className="eyebrow text-bone/75">
+          <p data-hero-fade className="eyebrow">
             {hero.eyebrow}
           </p>
 
-          <h1 className="mt-8 text-bone">
+          <h1 className="mt-8 text-[var(--text-primary)]">
             <span className="block overflow-hidden">
               <span
                 data-hero-line
@@ -261,7 +423,7 @@ export function Hero() {
             <span className="mt-4 block overflow-hidden lg:mt-6">
               <span
                 data-hero-line
-                className="block font-display text-[clamp(1.5rem,3.4vw,3rem)] font-light italic leading-[1.05] text-bone/85"
+                className="block font-display text-[clamp(1.5rem,3.4vw,3rem)] font-light italic leading-[1.05] text-[var(--text-primary)]"
               >
                 {hero.tagline}
               </span>
@@ -269,18 +431,18 @@ export function Hero() {
           </h1>
 
           <div data-hero-fade className="mt-14 flex items-end justify-between gap-8">
-            <p className="max-w-sm text-[0.95rem] leading-relaxed text-bone/80">{hero.subtitle}</p>
+            <p className="max-w-sm text-[0.95rem] leading-relaxed text-[var(--text-primary)]">{hero.subtitle}</p>
 
             {/* Two persistent CTAs: Enquire primary, Wedding Brochure secondary. */}
             <div className="hidden shrink-0 items-center gap-8 pb-1 sm:flex">
               <Link
                 href={hero.cta.href}
                 data-magnetic
-                className="group flex items-center gap-4 text-bone"
+                className="group flex items-center gap-4 text-[var(--text-primary)]"
               >
                 <span className="eyebrow">{hero.cta.label}</span>
-                <span className="relative block h-px w-14 bg-bone/45 sm:w-20">
-                  <span className="absolute inset-0 origin-left scale-x-0 bg-bone transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+                <span className="relative block h-px w-14 bg-[var(--rule-strong)] sm:w-20">
+                  <span className="absolute inset-0 origin-left scale-x-0 bg-[var(--text-primary)] transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
                 </span>
               </Link>
 
@@ -288,7 +450,7 @@ export function Hero() {
                 href={contact.brochure.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="eyebrow text-bone/60 transition-colors duration-[450ms] hover:text-bone"
+                className="eyebrow transition-colors duration-[450ms] hover:text-[var(--text-primary)]"
               >
                 {contact.brochure.label}
               </a>
@@ -298,25 +460,29 @@ export function Hero() {
       </div>
 
       <ScrollCue />
-    </section>
+    </Chapter>
   );
 }
 
 function ScrollCue() {
   const tick = useRef<HTMLSpanElement>(null);
 
+  /* The cue is shown at `lg` only, so its endless tween runs there only. Below
+     `lg` it is simply at rest, and crossing the breakpoint reverts the tween
+     rather than leaving it running on a hidden element. */
   useIsomorphicLayoutEffect(() => {
     const el = tick.current;
     if (!el || prefersReducedMotion()) return;
 
-    const tween = gsap.fromTo(
-      el,
-      { yPercent: -100 },
-      { yPercent: 380, duration: 2.6, repeat: -1, ease: "power3.inOut" },
-    );
-    return () => {
-      tween.kill();
-    };
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 1024px)", () => {
+      gsap.fromTo(
+        el,
+        { yPercent: -100 },
+        { yPercent: 380, duration: 2.6, repeat: -1, ease: "power3.inOut" },
+      );
+    });
+    return () => mm.revert();
   }, []);
 
   return (
@@ -325,8 +491,8 @@ function ScrollCue() {
       className="pointer-events-none absolute bottom-7 left-1/2 hidden -translate-x-1/2 lg:block"
       aria-hidden
     >
-      <span className="relative block h-14 w-px overflow-hidden bg-bone/25">
-        <span ref={tick} className="absolute inset-x-0 top-0 block h-5 bg-bone/80" />
+      <span className="relative block h-14 w-px overflow-hidden bg-[var(--rule)]">
+        <span ref={tick} className="absolute inset-x-0 top-0 block h-5 bg-[var(--text-primary)]" />
       </span>
     </div>
   );

@@ -14,16 +14,16 @@ export function ChromeGate({ children }: { children: React.ReactNode }) {
   if (pathname?.startsWith("/direction")) return null;
 
   /*
-   * The Aegean Bone light study is gated too, and only it. Framing a warm-ivory
-   * page in the site's near-black header and footer misrepresents the thing
-   * being judged — the first capture of it came back showing the dark footer
-   * under an ivory page, which is not what a light site would look like.
+   * Two study routes are gated too, and only those. /study/aegean and
+   * /study/motion are compared without the live chrome so the frame does not
+   * influence the judgement: what is under review is the study itself, not
+   * how it reads inside the header and footer.
    *
    * The other study routes deliberately keep the chrome: /study/enquiry exists
    * to judge a form inside the design it would ship into, and removing the
    * frame there would be the misrepresentation.
    */
-  if (pathname?.startsWith("/study/aegean")) return null;
+  if (pathname?.startsWith("/study/aegean") || pathname?.startsWith("/study/motion")) return null;
 
   return <>{children}</>;
 }

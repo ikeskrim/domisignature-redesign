@@ -6,15 +6,19 @@ what stops you breaking it if you try.
 It assumes you are not a developer. Where something genuinely needs one, it says
 so plainly instead of pretending otherwise.
 
-**The one rule.** After any change, run this and wait for green:
+**The one rule.** After any change, build the site, run the gate, and wait for
+green:
 
 ```bash
+npm run build
 npm run qa
 ```
 
-Eleven checks. If it says `the gate is green`, the change is safe. If it names a
-failure, the change is not on the site yet and nothing is broken — fix what it
-names, or undo. It is very hard to publish something wrong past this.
+The gate checks the last build, so the build always comes first.
+`QA-TOOLKIT.md` lists every check. If it says `the gate is green`, the change is
+safe. If it names a failure, the change is not on the site yet and nothing is
+broken — fix what it names, or undo. It is very hard to publish something wrong
+past this.
 
 ---
 
@@ -85,7 +89,7 @@ change Thalasses' description, find `slug: "thalasses"` and edit the text under
 every link anyone has ever shared to that venue. Don't, unless a developer sets
 up a redirect at the same time.
 
-Then `npm run qa`, and wait for green.
+Then `npm run build` and `npm run qa`, and wait for green.
 
 ---
 
@@ -138,7 +142,7 @@ steps. Do all four or you leave broken links behind.
 3. **Repoint the old anchor**, if that venue was on the original one-page site.
    In `src/components/layout/LegacyAnchorRedirect.tsx`, send its `#portfolioModal`
    entry to `/venues`.
-4. **`npm run contact-sheets`**, then `npm run qa`.
+4. **`npm run contact-sheets`**, then `npm run build` and `npm run qa`.
 
 Steps 2 and 3 are developer-shaped. If that is not you, this is the point to
 ask — the site will look fine to you and be quietly broken for anyone arriving
@@ -195,14 +199,25 @@ npm run contact-sheets
 `scripts/launch-check.mjs` stops expecting `/venues/villa-aetos` to redirect and
 `#portfolioModal4` to land on `/venues`. That failure is the system working —
 it is telling you the map on file no longer matches the site.
+`scripts/verify-launch.mjs`, the live-domain check, carries the same two rows;
+change them there too, or it will fail against the real domain.
 
 **What happens on its own, correctly:** the homepage venue count goes to `04`.
 The guest figure stays `Up to 300` — Villa Aetos holds far fewer, and the figure
 is a maximum. The venue page, its row on `/venues`, its map and its related
-cards all come back with no further work.
+cards all come back with no further work, and so do the counts that derive: the
+"All … venues" button on the homepage and the venue page's "The other …".
 
-Rehearsed on `2026-08-19`; the branch was deleted afterwards and nothing shipped.
-Screenshots of the restored page and index are in `design-review/run3/`.
+**What does not follow on its own: the words.** "Three settings, one island" (the
+homepage and `/venues`), the homepage's venues sentence, which names each setting,
+and the `/venues` standfirst and description ("Three private venues", "Three
+venues") are typed copy. Edit them in the same change, or the page will say three
+above four.
+
+Rehearsed on `2026-08-19`, on the dark-palette build; the branch was deleted
+afterwards and nothing shipped. Screenshots of the restored page and index were
+in `design-review/run3/`; that capture set was removed from branch `aegean` in
+stage 7 and lives in `main`'s history.
 
 ---
 
@@ -246,7 +261,7 @@ public/assets/files/Weddingbrochure.pdf
 
 Every link to it — on the site, and every one shared since the old site — points
 at that exact address. Keep the filename and they all keep working. Rename it and
-they all break silently. Then `npm run qa`.
+they all break silently. Then `npm run build` and `npm run qa`.
 
 ---
 
@@ -272,8 +287,9 @@ Add them to the lists in `content/pending.ts` and the sections switch on.
 
 ## 9. What protects you
 
-Eleven automatic checks run on your machine with `npm run qa`, and again on every
-publish. `QA-TOOLKIT.md` has the full detail; in plain words:
+Every check listed in `scripts/qa.mjs` runs on your machine with `npm run qa`,
+and again on every push to GitHub. `QA-TOOLKIT.md` has the full list and the
+detail; in plain words:
 
 | Check | What it stops |
 | --- | --- |
@@ -281,19 +297,25 @@ publish. `QA-TOOLKIT.md` has the full detail; in plain words:
 | **prose** | Placeholder text, lorem ipsum, doubled spaces, the wrong kind of quotation mark. |
 | **media** | A photograph or video referenced but missing. Catches a renamed file before a visitor finds the gap. |
 | **assets** | Anything the finished pages ask for that doesn't come back. |
-| **manifest** | **The privacy gate.** Seven photographs were deliberately withheld from the public code — identifiable people, a licence plate, a frame you pulled. This fails if any of them is ever referenced again, so a withheld photograph cannot quietly return through an innocent edit. |
+| **manifest** | **The privacy gate.** Eight photographs were deliberately withheld from the public code — identifiable people, a licence plate, frames you pulled. This fails if any of them is ever referenced again, so a withheld photograph cannot quietly return through an innocent edit. |
+| **metadata** | A photograph, video or PDF that still carries hidden data: where it was taken, a camera's serial number, or a hidden thumbnail. Photographer credit is kept and never fails. |
 | **ingest** | A gallery published with its title or descriptions unfilled (§6). |
 | **a11y** | Accessibility faults. The standard here is zero, not "few". |
+| **arrival**, **paper** | Text that becomes hard to read over what sits behind it — the photograph in the homepage arrival, and the paper texture everywhere else. Scored on the worst spot, not the average. |
+| **ground**, **palette** | The colours drifting: text on a dark section keeping the colour meant for a light one, or a colour typed straight into the code instead of taken from the design's named roles. |
+| **focus**, **focus-motion** | A keyboard visitor losing their place: every focus outline must stand out from what is behind it, and no animation may hide, cut off or cover the item they are on. |
 | **launch** | The search-engine settings, the sitemap, and all 21 old addresses from the previous site still landing in the right place. |
-| **graffiti**, **typecheck**, **lint** | A specific photograph staying inside its dark band, and the code being valid. |
+| **motion-tier**, **typeset-clip** | The animation layer misbehaving: the switch that can lighten motion on phones doing more or less than it says, or an animated heading cutting off its own letters. |
+| **typecheck**, **lint** | The code being valid. |
 
-**What is withheld, and why.** Seven photographs are not in the public code:
+**What is withheld, and why.** Eight photographs are not in the public code:
 frames showing identifiable people who did not agree to appear in a public code
 repository, a readable licence plate, and the frames you asked to be pulled.
 The raw camera files are also excluded — 135 MB of masters that nothing on the
 site needs. Every reason is recorded per file in
-`design-review/publish-manifest.md`. This is checked by exact filename against
-the published code before every publish.
+`design-review/publish-manifest.md`. Before every publish this is checked by
+exact filename and by the files' contents under any name, so a renamed copy is
+caught too.
 
 ---
 
@@ -319,14 +341,18 @@ It should say `sealed.`
 
 **Production — the real thing.** `domisignature.com` still points at the old
 site. Going live is a decision, not an accident: nobody has done it, and it
-cannot happen by pushing a change. **`LAUNCH-RUNBOOK.md`** is the complete
+cannot happen by pushing a change. **`WAITING-FOR-DNS.md`** is where it stands
+today: the Vercel side is done and verified, and the one remaining step is the
+DNS records, which are yours to enter. **`LAUNCH-RUNBOOK.md`** is the complete
 procedure — domain, DNS, checks before and after, and what to watch in the first
 week.
 
 **If something goes wrong after launch**, the runbook's rollback puts the old
-site back within about five minutes, provided its two preparation steps were
-done: lower the DNS time-to-live beforehand, and photograph the DNS settings
-before changing them. Keep the old hosting paid for a month after launch — it is
+site back within about five minutes, provided the records were entered with a
+short time-to-live (300 seconds, as `WAITING-FOR-DNS.md` lists them); without
+it, up to an hour. The two lines that restore the old site are written out at
+the top of that file, and a photograph of the DNS settings before changing them
+is still worth taking. Keep the old hosting paid for a month after launch — it is
 the thing you would roll back to.
 
 **If a change is wrong but the site is up**, that is smaller: in Vercel, open
@@ -340,9 +366,10 @@ Deployments, find the last good one, and Promote to Production. Seconds, no DNS.
 
 ### Ο βασικός κανόνας
 
-Μετά από κάθε αλλαγή, τρέξε την εντολή:
+Μετά από κάθε αλλαγή, τρέξε αυτές τις δύο εντολές, με αυτή τη σειρά:
 
 ```bash
+npm run build
 npm run qa
 ```
 
@@ -374,7 +401,7 @@ npm run qa
 | αλλάξω τηλέφωνο ή email | `content/site.ts` |
 | προσθέσω γκαλερί | `npm run ingest:gallery -- "διαδρομή/φακέλου" --slug το-slug` |
 | αλλάξω το brochure | αντικατέστησε το αρχείο `public/assets/files/Weddingbrochure.pdf` **με το ίδιο όνομα** |
-| δω αν είναι όλα εντάξει | `npm run qa` |
+| δω αν είναι όλα εντάξει | `npm run build` και μετά `npm run qa` |
 
 ### Οι αριθμοί στην αρχική σελίδα
 
@@ -405,4 +432,6 @@ npm run qa
 Το `domisignature.com` δείχνει ακόμα στο **παλιό** site. Η μετάβαση στο νέο
 είναι δική σου απόφαση και γίνεται με το χέρι — δεν συμβαίνει κατά λάθος.
 Η πλήρης διαδικασία είναι στο **`LAUNCH-RUNBOOK.md`**, μαζί με τον τρόπο
-επιστροφής στο παλιό site αν χρειαστεί (περίπου πέντε λεπτά).
+επιστροφής στο παλιό site αν χρειαστεί (περίπου πέντε λεπτά). Το πού βρίσκεται
+σήμερα η μετάβαση γράφεται στο **`WAITING-FOR-DNS.md`**: στην πλευρά του Vercel
+όλα είναι έτοιμα και μένουν μόνο οι εγγραφές DNS.

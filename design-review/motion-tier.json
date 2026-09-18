@@ -1,0 +1,337 @@
+{
+  "order": [
+    "preloader",
+    "parallax",
+    "grain",
+    "shadow"
+  ],
+  "phone": [
+    {
+      "drop": 0,
+      "expected": [],
+      "preloader": true,
+      "dataDrop": null,
+      "grain": [
+        "block"
+      ],
+      "parallax": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -0.710336)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.42067)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.42067)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.42067)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.3856)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.42067)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -2.15072)",
+          "moved": true
+        }
+      ],
+      "shadowFrom": {
+        "plates": "/",
+        "edges": "/"
+      },
+      "shadow": {
+        "plates": [
+          "block",
+          "block",
+          "block",
+          "block",
+          "block",
+          "block",
+          "block"
+        ],
+        "edges": [
+          "block"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "drop": 1,
+      "expected": [
+        "preloader"
+      ],
+      "preloader": false,
+      "dataDrop": "preloader",
+      "grain": [
+        "block"
+      ],
+      "parallax": [
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -0.710336)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.42067)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.42067)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.42067)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.3856)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -1.42067)",
+          "moved": true
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, 0, -2.15072)",
+          "moved": true
+        }
+      ],
+      "shadowFrom": {
+        "plates": "/",
+        "edges": "/"
+      },
+      "shadow": {
+        "plates": [
+          "block",
+          "block",
+          "block",
+          "block",
+          "block",
+          "block",
+          "block"
+        ],
+        "edges": [
+          "block"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "drop": 2,
+      "expected": [
+        "preloader",
+        "parallax"
+      ],
+      "preloader": false,
+      "dataDrop": "preloader parallax",
+      "grain": [
+        "block"
+      ],
+      "parallax": [
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        }
+      ],
+      "shadowFrom": {
+        "plates": "/",
+        "edges": "/"
+      },
+      "shadow": {
+        "plates": [
+          "block",
+          "block",
+          "block",
+          "block",
+          "block",
+          "block",
+          "block"
+        ],
+        "edges": [
+          "block"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "drop": 3,
+      "expected": [
+        "preloader",
+        "parallax",
+        "grain"
+      ],
+      "preloader": false,
+      "dataDrop": "preloader parallax grain",
+      "grain": [
+        "none"
+      ],
+      "parallax": [
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        }
+      ],
+      "shadowFrom": {
+        "plates": "/",
+        "edges": "/"
+      },
+      "shadow": {
+        "plates": [
+          "block",
+          "block",
+          "block",
+          "block",
+          "block",
+          "block",
+          "block"
+        ],
+        "edges": [
+          "block"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "drop": 4,
+      "expected": [
+        "preloader",
+        "parallax",
+        "grain",
+        "shadow"
+      ],
+      "preloader": false,
+      "dataDrop": "preloader parallax grain shadow",
+      "grain": [
+        "none"
+      ],
+      "parallax": [
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        },
+        {
+          "transform": "none",
+          "moved": false
+        }
+      ],
+      "shadowFrom": {
+        "plates": "/",
+        "edges": "/"
+      },
+      "shadow": {
+        "plates": [
+          "none",
+          "none",
+          "none",
+          "none",
+          "none",
+          "none",
+          "none"
+        ],
+        "edges": [
+          "none"
+        ]
+      },
+      "ok": true
+    }
+  ],
+  "desktop": [
+    {
+      "drop": 0,
+      "dataDrop": null
+    },
+    {
+      "drop": 1,
+      "dataDrop": null
+    },
+    {
+      "drop": 2,
+      "dataDrop": null
+    },
+    {
+      "drop": 3,
+      "dataDrop": null
+    },
+    {
+      "drop": 4,
+      "dataDrop": null
+    }
+  ],
+  "failures": []
+}

@@ -14,7 +14,7 @@ export function CopyRuns({ runs }: { runs: CopyRun[] }) {
             href={run.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline decoration-gold/60 underline-offset-4 transition-colors duration-300 hover:decoration-gold"
+            className="underline decoration-[var(--rule-strong)] underline-offset-4 transition-colors duration-300 hover:decoration-[var(--text-primary)]"
           >
             {run.value}
           </a>

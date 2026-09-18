@@ -1,0 +1,162 @@
+{
+  "tolerance": 6,
+  "linesMeasured": 164,
+  "results": [
+    {
+      "width": "1440",
+      "route": "home",
+      "lines": 22,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "venues",
+      "lines": 6,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "venue-mountain-escape",
+      "lines": 4,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "venue-thalasses",
+      "lines": 4,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "venue-olive-stories",
+      "lines": 4,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "events",
+      "lines": 5,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "event-sunset-by-the-pool",
+      "lines": 5,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "event-villa-party",
+      "lines": 5,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "services",
+      "lines": 8,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "wedding-guide",
+      "lines": 5,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "about",
+      "lines": 8,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "contact",
+      "lines": 3,
+      "failing": []
+    },
+    {
+      "width": "1440",
+      "route": "404",
+      "lines": 2,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "home",
+      "lines": 22,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "venues",
+      "lines": 6,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "venue-mountain-escape",
+      "lines": 5,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "venue-thalasses",
+      "lines": 4,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "venue-olive-stories",
+      "lines": 4,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "events",
+      "lines": 5,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "event-sunset-by-the-pool",
+      "lines": 5,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "event-villa-party",
+      "lines": 5,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "services",
+      "lines": 9,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "wedding-guide",
+      "lines": 5,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "about",
+      "lines": 8,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "contact",
+      "lines": 3,
+      "failing": []
+    },
+    {
+      "width": "390",
+      "route": "404",
+      "lines": 2,
+      "failing": []
+    }
+  ]
+}

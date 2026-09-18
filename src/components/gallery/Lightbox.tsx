@@ -23,6 +23,10 @@ export interface LightboxItem {
  * close routes through `dismiss()`, so Escape, the close button and a backdrop
  * click all fade out identically instead of Escape snapping shut while the
  * button faded. Focus is still returned to whatever opened it.
+ *
+ * The lightbox is a dark room. It declares `data-ground="dark"` on its root and
+ * nothing else: the veil, the counter, the controls and the caption each ask
+ * for a role and take the night ladder, whichever page opened them.
  */
 export function Lightbox({
   items,
@@ -121,17 +125,18 @@ export function Lightbox({
       aria-modal="true"
       aria-label={`Image ${(index ?? 0) + 1} of ${items.length}`}
       tabIndex={-1}
-      className="fixed inset-0 z-[80] flex flex-col bg-ink/97 outline-none backdrop-blur-sm"
+      data-ground="dark"
+      className="fixed inset-0 z-[80] flex flex-col bg-[rgb(var(--wash)/0.97)] outline-none backdrop-blur-sm"
     >
       {/* Top bar */}
       <div className="flex shrink-0 items-center justify-between px-gutter py-6">
-        <span className="eyebrow text-bone/55" aria-hidden>
+        <span className="eyebrow" aria-hidden>
           {String((index ?? 0) + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
         </span>
         <button
           type="button"
           onClick={dismiss}
-          className="group flex items-center gap-3 p-2 text-bone/70 transition-colors hover:text-bone"
+          className="group flex items-center gap-3 p-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
         >
           <span className="eyebrow">Close</span>
           <span className="relative block h-4 w-4" aria-hidden>
@@ -160,7 +165,7 @@ export function Lightbox({
               type="button"
               onClick={() => go(-1)}
               aria-label="Previous image"
-              className="absolute left-1 top-1/2 -translate-y-1/2 p-4 text-2xl text-bone/60 transition-colors hover:text-bone sm:left-4"
+              className="absolute left-1 top-1/2 -translate-y-1/2 p-4 text-2xl text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)] sm:left-4"
             >
               &larr;
             </button>
@@ -168,7 +173,7 @@ export function Lightbox({
               type="button"
               onClick={() => go(1)}
               aria-label="Next image"
-              className="absolute right-1 top-1/2 -translate-y-1/2 p-4 text-2xl text-bone/60 transition-colors hover:text-bone sm:right-4"
+              className="absolute right-1 top-1/2 -translate-y-1/2 p-4 text-2xl text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)] sm:right-4"
             >
               &rarr;
             </button>
@@ -176,7 +181,7 @@ export function Lightbox({
         )}
       </div>
 
-      <p className="shrink-0 px-gutter pb-7 text-center text-xs text-bone/55">{current.alt}</p>
+      <p className="shrink-0 px-gutter pb-7 text-center text-xs text-[var(--text-tertiary)]">{current.alt}</p>
     </div>
   );
 }

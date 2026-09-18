@@ -5,6 +5,7 @@ import { useRef, useLayoutEffect, useEffect } from "react";
 import { journey } from "@content/journey";
 import { Reveal, RuleDraw } from "@/components/motion/Reveal";
 import { ScrollImage } from "@/components/motion/ScrollImage";
+import { Plate } from "@/components/ui/Plate";
 import { pad2 } from "@/lib/utils";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
@@ -20,8 +21,8 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * Phase 6 §5 — the second scrubbed scene. A chapter rail holds at the left edge
  * for the length of the sequence: six numerals, a hairline track, and a fill
  * that scrubs with scroll position so you can always see how far through a
- * six-step process you are. The active numeral lifts from faint to bone as its
- * chapter arrives.
+ * six-step process you are. The active numeral lifts from tertiary to primary
+ * as its chapter arrives.
  *
  * Held with CSS `position: sticky` rather than a GSAP pin, deliberately. A pin
  * injects a pin-spacer into the flow, and these chapters bleed their images
@@ -30,7 +31,8 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * The *scrubbing* is still GSAP, sharing Lenis's clock with everything else.
  *
  * The rail is `aria-hidden`: it is a decorative restatement of the ordered list
- * beside it, and a screen reader already gets "1 of 6" from the <ol>.
+ * beside it, and a screen reader already gets "1 of 6" from the <ol>. On paper
+ * it is a thumb-index tab in the gutter - see the note at the element.
  */
 export function JourneyChapters() {
   const root = useRef<HTMLDivElement>(null);
@@ -68,7 +70,7 @@ export function JourneyChapters() {
           if (!numeral) return;
 
           gsap.to(numeral, {
-            color: "var(--color-bone)",
+            color: "var(--text-primary)",
             ease: "none",
             scrollTrigger: {
               trigger: chapter,
@@ -91,13 +93,16 @@ export function JourneyChapters() {
       {/* The chapter rail */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-2 top-0 hidden h-full xl:block"
+        className="pointer-events-none absolute right-full top-0 z-10 mr-3 hidden h-full xl:block"
       >
-        <div className="sticky top-1/2 flex -translate-y-1/2 items-center gap-4">
-          <span className="relative block h-40 w-px bg-hair">
+        {/* A thumb-index tab: raised paper and a hairline, so the numerals read
+            on paper even while a bleeding plate passes beneath it. It lives
+            wholly in the gutter (right-full), clear of every text column. */}
+        <div className="sticky top-1/2 flex -translate-y-1/2 items-center gap-3 border border-[var(--rule)] bg-[var(--surface-raised)] px-2 py-3">
+          <span className="relative block h-40 w-px bg-[var(--rule)]">
             <span
               ref={fill}
-              className="absolute inset-x-0 top-0 block h-full origin-top bg-bone/70"
+              className="absolute inset-x-0 top-0 block h-full origin-top bg-[var(--rule-strong)]"
             />
           </span>
           <span className="flex flex-col gap-2.5">
@@ -107,7 +112,7 @@ export function JourneyChapters() {
                 ref={(node) => {
                   numerals.current[i] = node;
                 }}
-                className="block font-sans text-[0.6rem] uppercase tracking-[0.18em] text-faint"
+                className="block font-sans text-[0.6rem] uppercase tracking-[0.18em] text-[var(--text-tertiary)]"
               >
                 {pad2(step.number)}
               </span>
@@ -135,12 +140,18 @@ export function JourneyChapters() {
                     : "lg:col-span-7 lg:-ml-gutter"
                 }
               >
-                <ScrollImage
-                  src={step.image}
-                  alt={step.imageAlt}
-                  sizes="(max-width: 1024px) 100vw, 62vw"
-                  className="aspect-[4/3] w-full lg:aspect-auto lg:h-[72vh] lg:min-h-[28rem]"
-                />
+                {/* Below lg the chapter's photograph sits inside the gutter - an
+                    object on the page, so it is matted as a plate; a burnt-out
+                    sun or a pale sky otherwise dissolved into the paper
+                    (stage-5 review). From lg it bleeds as a scene, bare. */}
+                <Plate as="div" className="lg:border-0 lg:bg-transparent lg:p-0">
+                  <ScrollImage
+                    src={step.image}
+                    alt={step.imageAlt}
+                    sizes="(max-width: 1024px) 100vw, 62vw"
+                    className="aspect-[4/3] w-full lg:aspect-auto lg:h-[72vh] lg:min-h-[28rem]"
+                  />
+                </Plate>
               </div>
 
               <div
@@ -155,17 +166,24 @@ export function JourneyChapters() {
                   <Reveal>
                     <span
                       aria-hidden
-                      className="block font-display text-[clamp(3.5rem,6vw,5.5rem)] font-light leading-[0.8] text-faint"
+                      className="block font-display text-[clamp(3.5rem,6vw,5.5rem)] font-light leading-[0.8] text-[var(--text-tertiary)]"
                     >
                       {pad2(step.number)}
                     </span>
                   </Reveal>
 
                   <Reveal delay={0.06}>
-                    <h3 className="mt-7 font-display text-[clamp(2rem,3.3vw,3.25rem)] font-light leading-[1.0] text-bone">
+                    {/* h2: these six chapters are the sections of /wedding-guide,
+                        the only page that renders them, and nothing else on it
+                        opens a level above them. As h3 they skipped a level from
+                        the page's h1 — the one thing Lighthouse still scored the
+                        route down for (98) once the logotype exemption went, and
+                        the gate's axe run could not see it: heading-order is an
+                        axe best-practice rule, outside the WCAG tags it asks for. */}
+                    <h2 className="mt-7 font-display text-[clamp(2rem,3.3vw,3.25rem)] font-light leading-[1.0] text-[var(--text-primary)]">
                       <span className="sr-only">Step {step.number} — </span>
                       {title}
-                    </h3>
+                    </h2>
                   </Reveal>
 
                   <RuleDraw className="mt-8 w-20" />
@@ -184,8 +202,8 @@ export function JourneyChapters() {
                     <Reveal delay={0.18}>
                       <ul className="mt-6 space-y-3">
                         {step.bullets.map((bullet) => (
-                          <li key={bullet} className="flex gap-4 leading-relaxed text-bone/85">
-                            <span aria-hidden className="mt-3.5 h-px w-4 shrink-0 bg-muted" />
+                          <li key={bullet} className="flex gap-4 leading-relaxed text-[var(--text-primary)]">
+                            <span aria-hidden className="mt-3.5 h-px w-4 shrink-0 bg-[var(--text-secondary)]" />
                             {bullet}
                           </li>
                         ))}

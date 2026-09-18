@@ -34,16 +34,16 @@ const EMBED = [
 
 export default function EnquiryStudy() {
   return (
-    <main className="bg-ink pb-section pt-32 lg:pt-40">
+    <main className="bg-[var(--surface)] pb-section pt-32 lg:pt-40">
       <div className="mx-auto w-full max-w-[104rem] px-gutter">
-        <p className="eyebrow text-muted">Study — not part of the site</p>
-        <h1 className="mt-8 font-display text-[clamp(2.25rem,5vw,4.5rem)] font-light leading-[1.02] text-bone">
+        <p className="eyebrow">Study — not part of the site</p>
+        <h1 className="mt-8 font-display text-[clamp(2.25rem,5vw,4.5rem)] font-light leading-[1.02] text-[var(--text-primary)]">
           Native form, or the embed?
         </h1>
         <p className="prose-editorial mt-8 max-w-2xl">
           The same fields, twice. Left is a prototype in our own design language;
           right is the Monday.com embed exactly as it ships on{" "}
-          <a href="/contact" className="underline underline-offset-4 hover:text-bone">
+          <a href="/contact" className="underline underline-offset-4 hover:text-[var(--text-primary)]">
             /contact
           </a>{" "}
           today. Neither is wired up here — the prototype&rsquo;s submit shows a stub, and
@@ -52,15 +52,15 @@ export default function EnquiryStudy() {
 
         <div className="mt-16 grid gap-14 lg:mt-24 lg:grid-cols-2 lg:gap-10">
           <section aria-labelledby="native-h">
-            <h2 id="native-h" className="font-display text-title font-light text-bone">
+            <h2 id="native-h" className="font-display text-title font-light text-[var(--text-primary)]">
               A. Native
             </h2>
             <ul className="mt-7 space-y-3">
               {NATIVE.map(([k, why]) => (
-                <li key={k} className="flex gap-4 leading-relaxed text-bone/85">
-                  <span aria-hidden className="mt-3 h-px w-4 shrink-0 bg-muted" />
+                <li key={k} className="flex gap-4 leading-relaxed text-[var(--text-primary)]">
+                  <span aria-hidden className="mt-3 h-px w-4 shrink-0 bg-[var(--rule-strong)]" />
                   <span>
-                    <strong className="font-normal text-bone">{k}.</strong> {why}
+                    <strong className="font-normal text-[var(--text-primary)]">{k}.</strong> {why}
                   </span>
                 </li>
               ))}
@@ -72,15 +72,15 @@ export default function EnquiryStudy() {
           </section>
 
           <section aria-labelledby="embed-h">
-            <h2 id="embed-h" className="font-display text-title font-light text-bone">
+            <h2 id="embed-h" className="font-display text-title font-light text-[var(--text-primary)]">
               B. The Monday embed — what ships today
             </h2>
             <ul className="mt-7 space-y-3">
               {EMBED.map(([k, why]) => (
-                <li key={k} className="flex gap-4 leading-relaxed text-bone/85">
-                  <span aria-hidden className="mt-3 h-px w-4 shrink-0 bg-muted" />
+                <li key={k} className="flex gap-4 leading-relaxed text-[var(--text-primary)]">
+                  <span aria-hidden className="mt-3 h-px w-4 shrink-0 bg-[var(--rule-strong)]" />
                   <span>
-                    <strong className="font-normal text-bone">{k}.</strong> {why}
+                    <strong className="font-normal text-[var(--text-primary)]">{k}.</strong> {why}
                   </span>
                 </li>
               ))}
@@ -92,8 +92,8 @@ export default function EnquiryStudy() {
           </section>
         </div>
 
-        <section aria-labelledby="wiring-h" className="mt-24 max-w-3xl border-t border-hair pt-12">
-          <h2 id="wiring-h" className="font-display text-title font-light text-bone">
+        <section aria-labelledby="wiring-h" className="mt-24 max-w-3xl border-t border-[var(--rule)] pt-12">
+          <h2 id="wiring-h" className="font-display text-title font-light text-[var(--text-primary)]">
             What choosing A would actually cost
           </h2>
           <div className="prose-editorial mt-7">

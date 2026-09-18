@@ -11,15 +11,22 @@
  * Registration happens once, on import, and only in the browser. Every consumer
  * is a "use client" component, so this module is never pulled into a server
  * render.
+ *
+ * Stage 6 — motion on paper. Nothing on paper fades: type is set from behind
+ * its line, blocks settle, photographs are uncovered, rules draw, sheets move.
+ * The additions here are the sheet's ease, the settle and draw durations, and
+ * `finishOnFocus`, which lets no focused element wait on an entrance.
  */
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CustomEase } from "gsap/CustomEase";
-import { Flip } from "gsap/Flip";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, CustomEase, Flip);
+  /* Flip is not registered here: only the events index uses it, and this
+     module is in every route's shared chunk. EventsBrowser imports and
+     registers it itself (stage 6, the loading fixes). */
+  gsap.registerPlugin(ScrollTrigger, CustomEase);
 
   /*
    * The house ease, identical to the CSS `--ease-cinema` token
@@ -28,12 +35,23 @@ if (typeof window !== "undefined") {
    * mixing the two would show wherever CSS and JS animate side by side.
    */
   CustomEase.create("cinema", "M0,0 C0.16,1 0.3,1 1,1");
+
+  /*
+   * The sheet's ease, identical to `--ease-curtain`
+   * cubic-bezier(0.83, 0, 0.17, 1): a sheet of paper is lifted, travels, and
+   * is set down. Used only by the moving ivory panels (the preloader, the page
+   * transition, the mobile menu), never by a reveal.
+   */
+  CustomEase.create("curtain", "M0,0 C0.83,0 0.17,1 1,1");
 }
 
-export { gsap, ScrollTrigger, Flip };
+export { gsap, ScrollTrigger };
 
 /** The one ease. Named so a call site reads as intent, not as a magic string. */
 export const EASE = "cinema";
+
+/** The moving sheet's ease. */
+export const CURTAIN = "curtain";
 
 /**
  * Durations, in seconds. The brief sets the bands; these are the values chosen
@@ -42,10 +60,18 @@ export const EASE = "cinema";
 export const DUR = {
   /** Blocks arriving on scroll. Brief: 0.8–1.2s. */
   reveal: 0.95,
-  /** Long wipes and masked uncoverings — the slowest thing that moves. */
+  /** Long wipes — the slowest thing that moves. */
   wipe: 1.2,
+  /** A photograph uncovered by its mask: between a draw and a wipe. */
+  uncover: 1.0,
   /** Hovers, chips, arrows, magnetic pulls. Brief: 0.3–0.45s. */
   micro: 0.38,
+  /** A sheet of paper travelling across the viewport. */
+  panel: 0.7,
+  /** A block settling onto the page — a lift without a fade. */
+  settle: 0.8,
+  /** A hairline drawing itself. */
+  draw: 0.9,
 } as const;
 
 /** Stagger between siblings, in seconds. Brief: 60–90ms. */
@@ -94,4 +120,27 @@ export function startsInViewport(el: Element): boolean {
 export function hasFinePointer(): boolean {
   if (typeof window === "undefined") return false;
   return window.matchMedia("(pointer: fine)").matches;
+}
+
+/**
+ * Finish an entrance the moment focus arrives inside it.
+ *
+ * A keyboard visitor can Tab into a block that is still settling (or has not
+ * started): its focus ring would move with it, or sit behind its mask. On
+ * `focusin` anywhere in `root` the tween jumps to its end state, so a focused
+ * element is always where it will rest. For triggered tweens and timelines
+ * only — a scrubbed animation belongs to the scroll position, not to focus.
+ *
+ * Returns the cleanup; call it from the effect's teardown.
+ */
+export function finishOnFocus(
+  root: Element | null | undefined,
+  tween: gsap.core.Animation | null | undefined,
+): () => void {
+  if (!root || !tween) return () => {};
+  const finish = () => {
+    if (tween.progress() < 1) tween.progress(1);
+  };
+  root.addEventListener("focusin", finish);
+  return () => root.removeEventListener("focusin", finish);
 }

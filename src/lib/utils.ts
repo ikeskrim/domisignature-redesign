@@ -49,6 +49,17 @@ export function capacityLabel(capacity: string) {
 }
 
 /**
+ * The largest guest count a venue's capacity string allows: "up to 300" is
+ * 300, and a range "up to 200-300" is its upper bound. For headline figures
+ * such as /venues' "Up to … guests", which was typed as 300 and would not have
+ * followed the venues if their capacities changed.
+ */
+export function capacityCeiling(capacity: string) {
+  const numbers = capacity.match(/\d+/g)?.map(Number) ?? [];
+  return numbers.length ? Math.max(...numbers) : 0;
+}
+
+/**
  * Builds a prefilled WhatsApp deep link. Falls back to the plain number when
  * no message is supplied.
  */

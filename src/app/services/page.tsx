@@ -39,9 +39,9 @@ export default function ServicesPage() {
                 <li key={service.slug}>
                   <a
                     href={`#${service.slug}`}
-                    className="group flex gap-5 text-[0.95rem] text-muted transition-colors duration-[450ms] hover:text-bone"
+                    className="group flex gap-5 text-[0.95rem] text-[var(--text-secondary)] transition-colors duration-[450ms] hover:text-[var(--text-primary)]"
                   >
-                    <span className="eyebrow pt-1.5 text-faint">{pad2(i + 1)}</span>
+                    <span className="eyebrow pt-1.5">{pad2(i + 1)}</span>
                     {service.title}
                   </a>
                 </li>
@@ -51,7 +51,7 @@ export default function ServicesPage() {
         }
       />
 
-      <div className="bg-ink pb-section">
+      <div className="bg-[var(--surface)] pb-section">
         <ServiceScenes />
       </div>
 

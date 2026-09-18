@@ -2,7 +2,7 @@
 #
 # The audits in scripts/ only protect the site if they actually run, and a check
 # that depends on someone remembering to run it is not a check. This runs the
-# same `npm run qa` a developer runs locally — same script, same ten checks — so
+# same `npm run qa` a developer runs locally — same script, same twenty checks — so
 # there is no second, weaker definition of "green" that only CI believes.
 #
 # Budget is ten minutes. Lighthouse is deliberately absent: it needs a quiet,
@@ -17,6 +17,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Least privilege. qa.yml had no `permissions:` key, so the job's token took the
+# repository default (BRIEF-AUDIT.md section 4, hygiene). Nothing here writes to
+# the repository: checkout only reads it, and the npm and Playwright caches and
+# the failure artifact go through the Actions runtime token, not GITHUB_TOKEN.
+permissions:
+  contents: read
+
 concurrency:
   group: qa-${{ github.ref }}
   cancel-in-progress: true
@@ -24,12 +31,21 @@ concurrency:
 jobs:
   qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # The light system added three browser-driven checks (ground, focus,
+    # paper); together they add about six minutes on a runner. Stage 6 added
+    # three more (motion-tier, focus-motion, typeset-clip), and the whole gate
+    # takes about fourteen minutes on a desktop machine, so the ceiling has
+    # room for a slower runner plus install and build.
+    timeout-minutes: 40
 
+    # Actions on their current majors (stage 8, 2026-09-17): the v4 tags targeted
+    # the deprecated Node 20 runtime. Only the tags changed; every input and
+    # default these steps use is the same in the new majors, and the npm and
+    # Playwright cache keys are computed as before.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -37,10 +53,23 @@ jobs:
       - name: Install
         run: npm ci
 
+      # Production dependencies only, at high severity: it fails the job on a
+      # high or critical advisory in a dependency that ships. It never runs
+      # `npm audit fix`; a fix is a reviewed upgrade in its own commit, and one
+      # that crosses a major or changes output is the owner's call
+      # (BRIEF-AUDIT.md section 4.4). Dev tooling advisories are out of scope.
+      # It reads the registry's advisory database, so a new advisory or a
+      # registry outage can turn an unchanged tree red. The verdict is held back
+      # until the last step, so a red audit never hides the QA gate's result.
+      - name: Dependency audit
+        id: audit
+        continue-on-error: true
+        run: npm audit --omit=dev --audit-level=high
+
       # Only Chromium. WebKit and Firefox are for the cross-browser pass, which
       # is a human-reviewed capture run, not a pass/fail gate.
       - name: Cache Playwright browsers
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -73,7 +102,7 @@ jobs:
       # something — enough to see what broke without downloading a green run.
       - name: Upload audit output
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: audit-output
           path: |
@@ -81,3 +110,16 @@ jobs:
             design-review/redirect-map.md
           retention-days: 7
           if-no-files-found: ignore
+
+      # The dependency audit's verdict, reported, not enforced - for now. Stage 8
+      # (2026-09-17) cleared sharp (0.35.4) and nanoid (3.3.19) in approved
+      # commits. What remains is next's bundled postcss and next itself, fixed
+      # only in next 16, a major the owner has scheduled on its own branch after
+      # the merge, before 15.x support ends on 21 October 2026. Failing the job
+      # on it would keep CI red on a tree nobody may change yet. This annotates
+      # every run instead; make it `exit 1` again once next 16 lands. It runs
+      # last, so it never hides the QA gate's result.
+      - name: Dependency audit verdict
+        if: ${{ !cancelled() && steps.audit.outcome == 'failure' }}
+        run: |
+          echo "::warning::npm audit found a high or critical advisory in a production dependency (known on 2026-09-17: next and its bundled postcss, fixed only in next 16 - scheduled after the merge); see the Dependency audit step"

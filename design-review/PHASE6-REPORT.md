@@ -304,6 +304,10 @@ in history.**
 | `design-review/contact-sheets/` | All 146 frames, 10 sheets, regenerated. |
 | `design-review/directions/`, `grade/` | The direction studies and the grade comparison. |
 
+> **Removed from this branch in stage 7:** the dark-era capture sets
+> `final-scroll/`, `stats/`, `atmosphere/`, `graffiti/` and `directions/`. They
+> live in `main`'s history.
+
 **The eight superseded round-by-round sets were deleted, not ignored** — a review
 folder showing two eras at once makes you doubt which is live. No capture
 carries a retired slug.

@@ -32,10 +32,10 @@ const ALT_SAMPLE = [
 
 export default function BacklogStudy() {
   return (
-    <main className="bg-ink pb-section pt-32 lg:pt-40">
+    <main className="bg-[var(--surface)] pb-section pt-32 lg:pt-40">
       <div className="mx-auto w-full max-w-[104rem] px-gutter">
-        <p className="eyebrow text-muted">Study — not part of the site</p>
-        <h1 className="mt-8 font-display text-[clamp(2.25rem,5vw,4.5rem)] font-light leading-[1.02] text-bone">
+        <p className="eyebrow">Study — not part of the site</p>
+        <h1 className="mt-8 font-display text-[clamp(2.25rem,5vw,4.5rem)] font-light leading-[1.02] text-[var(--text-primary)]">
           Two questions of taste
         </h1>
         <p className="prose-editorial mt-8 max-w-2xl">
@@ -49,7 +49,7 @@ export default function BacklogStudy() {
       {/* ---------- 1. the shelf ---------- */}
       <section aria-labelledby="rail-h" className="mt-24 lg:mt-32">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
-          <h2 id="rail-h" className="font-display text-title font-light text-bone">
+          <h2 id="rail-h" className="font-display text-title font-light text-[var(--text-primary)]">
             1. Does the shelf need a progress rail?
           </h2>
           <div className="prose-editorial mt-7 max-w-3xl">
@@ -57,7 +57,7 @@ export default function BacklogStudy() {
               The note said a touch visitor has &ldquo;only the cards running off
               the edge&rdquo;. Measured at 390px, that turns out to be wrong: the
               cards are 78vw wide, so the next one already peeks by{" "}
-              <strong className="font-normal text-bone">38px</strong> and its
+              <strong className="font-normal text-[var(--text-primary)]">38px</strong> and its
               title is visible at the edge. The affordance the note asked for is
               already there.
             </p>
@@ -72,7 +72,7 @@ export default function BacklogStudy() {
 
         <div className="mt-14 space-y-20">
           <div>
-            <p className="mx-auto mb-6 w-full max-w-[104rem] px-gutter text-[0.6875rem] uppercase tracking-[0.18em] text-faint">
+            <p className="mx-auto mb-6 w-full max-w-[104rem] px-gutter text-[0.6875rem] uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
               A — what ships today
             </p>
             <div className="px-gutter">
@@ -81,7 +81,7 @@ export default function BacklogStudy() {
           </div>
 
           <div>
-            <p className="mx-auto mb-6 w-full max-w-[104rem] px-gutter text-[0.6875rem] uppercase tracking-[0.18em] text-faint">
+            <p className="mx-auto mb-6 w-full max-w-[104rem] px-gutter text-[0.6875rem] uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
               B — with a progress rail
             </p>
             <div className="px-gutter">
@@ -105,7 +105,7 @@ export default function BacklogStudy() {
       {/* ---------- 2. alt text ---------- */}
       <section aria-labelledby="alt-h" className="mt-28 lg:mt-40">
         <div className="mx-auto w-full max-w-[104rem] px-gutter">
-          <h2 id="alt-h" className="font-display text-title font-light text-bone">
+          <h2 id="alt-h" className="font-display text-title font-light text-[var(--text-primary)]">
             2. What a screen reader hears in a gallery
           </h2>
           <div className="prose-editorial mt-7 max-w-3xl">
@@ -124,19 +124,19 @@ export default function BacklogStudy() {
             </p>
           </div>
 
-          <div className="mt-12 max-w-4xl divide-y divide-hair border-y border-hair">
+          <div className="mt-12 max-w-4xl divide-y divide-[var(--rule)] border-y border-[var(--rule)]">
             {ALT_SAMPLE.map((row) => (
               <div key={row.file} className="grid gap-4 py-8 sm:grid-cols-[10rem_1fr]">
-                <p className="text-[0.6875rem] uppercase tracking-[0.16em] text-faint">
+                <p className="text-[0.6875rem] uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
                   {row.file}
                 </p>
                 <div>
-                  <p className="text-bone/60">
-                    <span className="text-faint">now — </span>
+                  <p className="text-[var(--text-secondary)]">
+                    <span className="text-[var(--text-tertiary)]">now — </span>
                     {row.now}
                   </p>
-                  <p className="mt-3 leading-relaxed text-bone">
-                    <span className="text-faint">proposed — </span>
+                  <p className="mt-3 leading-relaxed text-[var(--text-primary)]">
+                    <span className="text-[var(--text-tertiary)]">proposed — </span>
                     {row.proposed}
                   </p>
                 </div>

@@ -30,7 +30,14 @@
   --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
 
   /* Display scale */
-  --text-hero: clamp(3.5rem, 11vw, 11rem);
+  /* The hero wordmark never outgrows its measure (stage 8). Set in Playfair at
+     -0.03em the word is 7.69em of advance, trailing tracking included; the ink
+     ends inside it. Under ~479px the 3.5rem floor pushed it past the hero's
+     content box (100vw less two gutters) and cut it. So below ~498px the size
+     follows that box / 8, a 4% margin. From 498px up, at the default 16px
+     root, min() returns the clamp unchanged (with a 5vw gutter the box / 8 is
+     11.25vw, more than 11vw), so desktop is identical. */
+  --text-hero: min(clamp(3.5rem, 11vw, 11rem), calc((100vw - 2 * var(--spacing-gutter)) / 8));
   --text-display: clamp(2.5rem, 6vw, 6.5rem);
   --text-title: clamp(2.25rem, 4.5vw, 4.25rem);
   --text-heading: clamp(1.75rem, 2.6vw, 2.5rem);
@@ -103,42 +110,88 @@
 }
 
 /* ---------------------------------------------------------------------------
-   AEGEAN BONE — the light mini-study. Scoped to [data-study="aegean"], which
-   only the /study/aegean/* routes set, so these can never leak into the site.
+   THE GROUND LAYER — Aegean Bone, stage 1.
 
-   Solved, not picked (scripts/derive-aegean.mjs):
-     ivory  #f2ece1  the brief's ground
-     card   #fbf7f0  the matte photographs sit in
-     ink    #27211b  warm near-black, 13.53:1 on ivory
-     stone  #6b6558  secondary, 4.92:1 on ivory
+   Two ladders and one switch. A section declares `data-ground="light"` or
+   `data-ground="dark"` and every role resolves underneath it, so a dark chapter
+   is a LOCAL INVERSION rather than a conditional. No component may name a
+   palette literal: it asks for --text-secondary, and whether that is stone or
+   muted is the section's business.
 
-   The accent does NOT get a token here, and that is the finding. #b98f4a is
-   6.68:1 on the shipped ink and 2.52:1 on ivory — it fails even the 3:1 bar for
-   large text. On a light ground it can be a hairline rule and nothing else.
-   Carrying small text would mean darkening it to about #856635, which is a
-   different colour, not the same accent rationed differently.
+   Every value is solved, not picked — scripts/derive-tokens.mjs — against the
+   ratio its ROLE requires: text 4.5:1, focus ring 3:1, rule-strong 3:1,
+   decorative rule exempt but measured anyway.
+
+   Two things this exposed that are worth knowing:
+
+   The light ground has room for a genuine three-step text ramp — 13.53 / 7.65 /
+   4.92 — but only just. Tertiary at 4.92:1 is close to the floor, so hierarchy
+   below it must come from size and tracking, not from another colour.
+
+   The dark ground had NO rule meeting the 3:1 a meaningful boundary needs:
+   today's `hair` is 1.41:1 on ink. That is a pre-existing gap, not one the
+   inversion created, and it is closed here with a solved `--rule-strong`.
+   `hair` keeps its job as the decorative hairline it already draws.
+
+   Gold appears in both ladders and means the same thing in each: the mark and
+   decorative hairlines. It measures 6.68:1 on night and 2.52:1 on ivory, but the
+   owner's stage-5 law is ground-independent - gold never carries text or focus.
+   The focus ring is near-black on paper and bone on night.
 --------------------------------------------------------------------------- */
-[data-study="aegean"] {
-  --aegean-ivory: #f2ece1;
-  --aegean-card: #fbf7f0;
-  --aegean-ink: #27211b;
-  --aegean-stone: #6b6558;
-  --aegean-rule: #d8cfc0;
+[data-ground="light"] {
+  --surface: #f2ece1;
+  --surface-raised: #fbf7f0;
+  --text-primary: #27211b;
+  --text-secondary: #4f4840;
+  --text-tertiary: #6b6558;
+  --rule: #d8cfc0;
+  --rule-strong: #8a8378;
+  --focus: #27211b;
+  --shadow-tint: 39 33 27;
+  --accent: #b98f4a;
+  --wash: 242 236 225;
+  /* An inverted fill on this ground - a solid pill, a text selection - is the
+     other ladder's surface with the other ladder's primary on it. */
+  --inverse: #27211b;
+  --text-on-inverse: #f2ece1;
+  /*
+   * Amendment 5 - the paper's own light. Every sheet of paper carries a lamp:
+   * a soft lift in its middle (the raised surface at 65%, about +3%:
+   * the raised step is only 4.6% above the page, so a weaker mix - 30% was
+   * tried - peaks near +1.3% and reads as nothing, as review measured) and two
+   * warm shaded lobes on its flanks (the shadow tint, ~6% at the very edge,
+   * ~2% where type begins at the gutter). Every layer fades to nothing before
+   * the sheet's top and bottom, so a sheet meets any neighbour - another
+   * sheet, a raised band, a veiled photograph, a dark chapter - on the plain
+   * ground, and no join can step. The first version darkened the margins top
+   * to bottom; an independent review measured it reading as rails and
+   * stepping at joins, and this replaced it. Ceiling, solved: no pixel under
+   * type or a boundary takes more than 3%.
+   */
+  --paper-sheet:
+    radial-gradient(ellipse 70% 42% at 50% 50%, color-mix(in srgb, var(--surface-raised) 65%, transparent) 0%, transparent 100%),
+    radial-gradient(ellipse 14% 40% at 0% 50%, rgb(var(--shadow-tint) / 0.06) 0%, rgb(var(--shadow-tint) / 0.02) 40%, transparent 100%),
+    radial-gradient(ellipse 14% 40% at 100% 50%, rgb(var(--shadow-tint) / 0.06) 0%, rgb(var(--shadow-tint) / 0.02) 40%, transparent 100%);
 }
 
-/* The focus ring has to change with the ground, and this is the one thing the
-   light study got wrong on its first pass.
-
-   The site's ring is `2px solid var(--color-gold)`. On the shipped near-black
-   that is 6.68:1 — comfortably over the 3:1 a focus indicator needs. On ivory
-   the same gold is 2.52:1 and fails, so a keyboard visitor would lose the ring
-   on exactly the surface that is hardest to track focus on.
-
-   axe did not catch it, and would not: it does not evaluate focus-indicator
-   contrast. Only measuring the pair does. Near-black gives 13.53:1. */
-[data-study="aegean"] :focus-visible {
-  outline-color: var(--aegean-ink);
+[data-ground="dark"] {
+  --surface: #0a0a0b;
+  --surface-raised: #1e1e22;
+  --text-primary: #f3efe7;
+  --text-secondary: #9b968c;
+  --text-tertiary: #8d8880;
+  --rule: #2b2b30;
+  --rule-strong: #5f5f66;
+  --focus: #f3efe7;
+  --shadow-tint: 0 0 0;
+  --accent: #b98f4a;
+  --wash: 10 10 11;
+  --inverse: #f3efe7;
+  --text-on-inverse: #0a0a0b;
+  /* Night needs no lamp; a dark chapter carries its own photograph. */
+  --paper-sheet: none;
 }
+
 
 /* ---------------------------------------------------------------------------
    Base
@@ -146,12 +199,35 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
-    background-color: var(--color-ink);
+    /* No scroll-behavior: smooth here (stage 6). GSAP ScrollTrigger records the
+       root's computed value before Lenis mounts and later restores it as an
+       INLINE style, which outranks html.lenis below - so every focus, anchor
+       and keyboard scroll animated, and a focused element sat off-screen for
+       its first ~200ms. Lenis smooths the wheel; everything else is instant. */
+    /* The root declares the page ground (layout.tsx), so this resolves to
+       ivory. Nothing below names a palette; everything asks for a role. */
+    background-color: var(--surface);
   }
 
   html.lenis {
     scroll-behavior: auto;
+  }
+
+  /* Focus clears the fixed header (WCAG 2.4.11). Tabbing to a link that sits
+     under the header must scroll it out: the browser only scrolls a focused
+     element it considers outside the scrollport, and scroll-padding is what
+     tells it the header's strip is not usable view. The header is 4.5rem
+     (6rem from lg) plus its 1px rule, and the focus halo reaches 7px beyond
+     the element, so the element stops 8px below the header's foot. Layout is
+     untouched; only scroll-into-view (focus, hash links, Lenis element
+     targets) reads it. */
+  html {
+    scroll-padding-top: calc(4.5rem + 8px);
+  }
+  @media (width >= 64rem) {
+    html {
+      scroll-padding-top: calc(6rem + 8px);
+    }
   }
   html.lenis body {
     height: auto;
@@ -160,9 +236,26 @@
     overscroll-behavior: contain;
   }
 
+  /*
+   * Colour re-resolves at every ground.
+   *
+   * CSS `color` inherits as a computed value, not as a variable: a section that
+   * sets text-[var(--text-primary)] hands its children the paper ink already
+   * resolved. A dark frame nested inside it redefines --text-primary, but a
+   * child that names no role never asks again - it keeps the ink, and
+   * near-black type lands on a night photograph. Stage 4 shipped exactly that
+   * on the mobile venue cards. Declaring the colour on the ground itself means
+   * an unroled child always inherits its NEAREST ground's primary. In the base
+   * layer, so any role a component names on the same element still wins.
+   * scripts/ground-verify.mjs proves it on every route.
+   */
+  [data-ground] {
+    color: var(--text-primary);
+  }
+
   body {
-    background-color: var(--color-ink);
-    color: var(--color-bone);
+    background-color: var(--surface);
+    color: var(--text-primary);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
     line-height: 1.65;
@@ -172,14 +265,31 @@
   }
 
   ::selection {
-    background-color: var(--color-bone);
-    color: var(--color-ink);
+    background-color: var(--inverse);
+    color: var(--text-on-inverse);
   }
 
+  /* Focus follows the ground it lands on: near-black on paper, bone on night -
+     never gold, on either (owner's law). axe will not catch a failure here,
+     because it does not evaluate focus-indicator contrast; the ring is
+     measured instead, at every perimeter position, by scripts/focus-ring.mjs. */
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 3px solid var(--focus);
     outline-offset: 3px;
     border-radius: 1px;
+    /*
+     * The halo. A ring of one colour is only as visible as its faintest
+     * stretch: measured, the near-black ring vanished wherever it crossed the
+     * dark hero or the mark. A band of the ground's own surface under the ring
+     * - the 3px gap inside it and a pixel outside - means every point of the
+     * indicator is either ring against halo or halo against page, and one of
+     * the two always clears 3:1. Near-black on paper, as the law says; the
+     * halo only guarantees it can be seen on whatever it lands on.
+     * Measured by scripts/focus-ring.mjs. The ring is 3px, not 2: over a dark
+     * scrim a night halo changes nothing, and a 2px ring on the venue title
+     * card's pill came to 572px2 of change against WCAG 2.4.13's 576.
+     */
+    box-shadow: 0 0 0 7px var(--surface);
   }
 
   h1,
@@ -206,6 +316,11 @@
    Components
 --------------------------------------------------------------------------- */
 @layer components {
+  /*
+   * Small letterspaced labels take the tertiary step - stage 1's finding, made
+   * the default here so an eyebrow cannot land on a different rung from the
+   * one beside it. A control label that must read as primary says so itself.
+   */
   .eyebrow {
     font-family: var(--font-sans);
     font-size: 0.6875rem;
@@ -213,12 +328,14 @@
     letter-spacing: 0.24em;
     text-transform: uppercase;
     line-height: 1;
+    color: var(--text-tertiary);
   }
 
   .rule {
     height: 1px;
-    background-color: var(--color-hair);
+    background-color: var(--rule);
   }
+
 
   /*
    * The single shared photographic grade — unchanged in register from Phase 5.
@@ -232,87 +349,260 @@
    * Hero and title-card media. Slightly lifted shadows so the noir scrims can
    * sit on top without crushing the blacks out of the photograph.
    */
+  /* ------------------------------------------------------------------
+     STAGE 2 — the two grade candidates, study routes only.
+
+     `.grade` was tuned to sit on near-black: contrast 1.06, saturate 1.08,
+     brightness 1.015, sepia 0.05. On ivory the same filter reads muddy, because
+     shadows that used to disappear into the ground now have a light ground
+     behind them and simply look grey.
+
+     Both candidates are FILTERS over the real photograph. No file is modified,
+     no pixel is generated, and either can be reverted by deleting a class.
+     ------------------------------------------------------------------ */
+
+  /* A — PLATE. Shadows lifted, contrast eased, warmth pulled back a touch.
+     Aims at a photograph printed on warm stock: the image belongs to the page. */
+  .grade-a {
+    filter: contrast(0.96) brightness(1.06) saturate(1.02) sepia(0.03);
+  }
+
+  /* B — WINDOW. Contrast raised, blacks held deep, warmth unchanged. Aims at a
+     dark photograph seen through an opening in a light wall: the image keeps
+     its own world and the paper frames it. */
+  .grade-b {
+    filter: contrast(1.12) brightness(0.99) saturate(1.1) sepia(0.05);
+  }
+
   .grade-hero {
     filter: contrast(1.04) saturate(1.1) brightness(1.06) sepia(0.05);
   }
 
+  /*
+   * Running prose sits on the secondary step, not on a faded primary. An
+   * alpha-faded colour was the dark site's idiom; on ivory it has no room -
+   * primary needs alpha >= 0.64 just to hold AA - so the ramp is three solved
+   * colours and prose takes the middle one. Links and emphasis step up to
+   * primary; the underline is a strong rule, never gold, which cannot carry
+   * anything that matters on paper.
+   */
   .prose-editorial {
     font-size: var(--text-lead);
     line-height: 1.7;
     max-width: 62ch;
-    color: color-mix(in srgb, var(--color-bone) 82%, transparent);
+    color: var(--text-secondary);
   }
   .prose-editorial > * + * {
     margin-top: 1.2em;
   }
   .prose-editorial strong {
     font-weight: 500;
-    color: var(--color-bone);
+    color: var(--text-primary);
   }
   .prose-editorial a {
-    color: var(--color-bone);
+    color: var(--text-primary);
     text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--color-gold) 70%, transparent);
+    text-decoration-color: var(--rule-strong);
     text-underline-offset: 0.25em;
     transition: text-decoration-color 0.4s var(--ease-cinema);
   }
   .prose-editorial a:hover {
-    text-decoration-color: var(--color-gold);
+    text-decoration-color: var(--text-primary);
   }
 
   /*
-   * Scrims. Tuned for noir: they darken enough to carry type but stop short of
-   * flattening the photograph's own shadows into the page ground.
+   * Washes - the scrims, expressed once in the ground's own colour so that a
+   * chapter boundary cannot invent its own. Inside a dark chapter `--wash` is
+   * night and these are exactly the noir scrims that shipped; on ivory they
+   * wash a plate back into the paper. Same shapes, same stops.
    */
+  .wash-bottom,
   .scrim-bottom {
     background: linear-gradient(
       to top,
-      color-mix(in srgb, var(--color-ink) 88%, transparent) 0%,
-      color-mix(in srgb, var(--color-ink) 45%, transparent) 34%,
+      rgb(var(--wash) / 0.88) 0%,
+      rgb(var(--wash) / 0.45) 34%,
       transparent 70%
     );
   }
 
+  .wash-full,
   .scrim-full {
     background:
       linear-gradient(
         to right,
-        color-mix(in srgb, var(--color-ink) 62%, transparent) 0%,
-        color-mix(in srgb, var(--color-ink) 24%, transparent) 48%,
+        rgb(var(--wash) / 0.62) 0%,
+        rgb(var(--wash) / 0.24) 48%,
         transparent 78%
       ),
       linear-gradient(
         to top,
-        color-mix(in srgb, var(--color-ink) 86%, transparent) 0%,
-        color-mix(in srgb, var(--color-ink) 44%, transparent) 40%,
-        color-mix(in srgb, var(--color-ink) 18%, transparent) 66%,
-        color-mix(in srgb, var(--color-ink) 40%, transparent) 100%
+        rgb(var(--wash) / 0.86) 0%,
+        rgb(var(--wash) / 0.44) 40%,
+        rgb(var(--wash) / 0.18) 66%,
+        rgb(var(--wash) / 0.4) 100%
       );
   }
 
   /*
-   * The warm bloom that makes a photograph read as the light source in the
-   * room. Applied on hover to venue and gallery plates.
+   * An indicator drawn INSIDE the element, for the places a ring outside it is
+   * clipped: a tile in a multi-column masonry (Chrome clips ink overflow at a
+   * column's edges - measured, the ring vanished along the bottom of a gallery
+   * tile and the sides of an event tile) and a button that fills a clipped
+   * frame. The same ring and halo as :focus-visible, 4px in from the edge, on a
+   * pseudo-element above the photograph. One definition; nothing else draws an
+   * inset ring.
    */
-  .bloom {
+  .focus-inset {
     position: relative;
   }
-  .bloom::after {
+  .focus-inset:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+  .focus-inset:focus-visible::after {
     content: "";
     position: absolute;
-    inset: -10% -6%;
+    inset: 4px;
+    z-index: 2;
     pointer-events: none;
-    background: radial-gradient(
-      ellipse at center,
-      color-mix(in srgb, var(--color-gold) 16%, transparent) 0%,
-      transparent 62%
-    );
-    opacity: 0;
-    transition: opacity 1.1s var(--ease-cinema);
+    border: 3px solid var(--focus);
+    box-shadow:
+      0 0 0 3px var(--surface),
+      inset 0 0 0 3px var(--surface);
   }
-  .bloom:hover::after,
-  .bloom:focus-within::after {
+
+  /*
+   * Amendment 5 - where the paper's light is painted.
+   *
+   * Every sheet of paper on the site is an element that paints --surface, so
+   * the lamp rides on that and no component is touched. It is a background
+   * layer: painted under the element's content, behind every word and every
+   * photograph. The cost, stated rather than hidden: axe will not compute
+   * contrast over a background image and reports those checks as "needs
+   * review" - scripts/a11y.mjs prints the count. The contrast of every text
+   * element on paper is measured instead, on the worst pixel behind its
+   * glyphs, by scripts/paper-legibility.mjs: every route, both widths, in the
+   * gate. Inside a dark chapter the token is none.
+   */
+  :where(section, footer, header, main, div).bg-\[var\(--surface\)\] {
+    background-image: var(--paper-sheet);
+  }
+
+  /*
+   * The chapter mask - see components/layout/Chapter.tsx, the one definition
+   * of a light/dark boundary. Two side insets, scrubbed on entry and exit;
+   * the larger wins. Both default to zero, so an opener's server render and
+   * reduced motion are its full-bleed final state.
+   *
+   * A mid-page chapter (data-rest="plate") rests as a plate laid on the page.
+   * Its sides are inset by a gutter, and so is its foot: paper shows on three
+   * sides, and it never stands on whatever follows (the footer, on every
+   * route). Its content steps in by the same gutter, so the type sits inside
+   * the plate rather than on the cut; the stage-5 review found the eyebrow,
+   * the heading and the Enquire pill 0-1px from the edge. The padding is
+   * static, never tied to the scrub, so nothing re-wraps while the sides open.
+   */
+  .chapter[data-rest="plate"] {
+    --chapter-in: var(--spacing-gutter);
+    --chapter-foot: var(--spacing-gutter);
+    padding-inline: var(--spacing-gutter);
+  }
+  .chapter {
+    --chapter-in: 0px;
+    --chapter-out: 0px;
+    --chapter-foot: 0px;
+    clip-path: inset(
+      0 max(var(--chapter-in), var(--chapter-out)) var(--chapter-foot) max(var(--chapter-in), var(--chapter-out))
+    );
+  }
+
+  /*
+   * Soft-shadow choreography (stage 6). On paper a shadow is the only honest
+   * sign that something has left the page, so a shadow exists only while
+   * something is lifted — never at rest — tinted from the ground's own ink,
+   * never animated as a box-shadow (the pseudo-element's opacity moves, the
+   * shadow itself is fixed), and never on the focused element, where it would
+   * replace the focus halo. Its darkening under type stays within the 3%
+   * ceiling (`paper-legibility --lift`). Three uses only:
+   *
+   *   1. `.plate-lift` — an interactive plate (`<Plate lift>`) rises on a fine
+   *      pointer's hover, or while its row (`.group`) holds keyboard focus.
+   *   2. `.panel-edge` — the leading edge of a moving ivory sheet.
+   *   3. `.lift-shadow` — the venue transition's travelling photograph.
+   *
+   * The drop switch (`src/lib/motion-tier.ts`) removes all three with
+   * `data-drop~="shadow"`. The old `.bloom` hover glow was deleted here: it
+   * was a dark-site flare, and nothing blooms on paper.
+   */
+  .plate-lift {
+    position: relative;
+    isolation: isolate;
+    transition: transform 0.6s var(--ease-cinema);
+  }
+  .plate-lift::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    box-shadow:
+      0 14px 20px -18px rgb(var(--shadow-tint) / 0.32),
+      0 3px 8px -4px rgb(var(--shadow-tint) / 0.12);
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-cinema);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .plate-lift:hover,
+    .group:hover .plate-lift {
+      transform: translateY(-3px);
+    }
+    .plate-lift:hover::before,
+    .group:hover .plate-lift::before {
+      opacity: 1;
+    }
+  }
+  /* :has() tests descendants only, so a .group that is itself the focused
+     link or button is matched by :focus-visible directly. */
+  .group:has(:focus-visible) .plate-lift,
+  .group:focus-visible .plate-lift,
+  .plate-lift:has(:focus-visible) {
+    transform: translateY(-3px);
+  }
+  .group:has(:focus-visible) .plate-lift::before,
+  .group:focus-visible .plate-lift::before,
+  .plate-lift:has(:focus-visible)::before {
     opacity: 1;
+  }
+
+  .panel-edge {
+    position: relative;
+  }
+  .panel-edge::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    height: 28px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgb(var(--shadow-tint) / 0.1), transparent);
+  }
+
+  .lift-shadow {
+    box-shadow:
+      0 24px 48px -28px rgb(var(--shadow-tint) / 0.34),
+      0 4px 12px -6px rgb(var(--shadow-tint) / 0.12);
+  }
+
+  [data-drop~="shadow"] .plate-lift {
+    transform: none !important;
+  }
+  [data-drop~="shadow"] .plate-lift::before,
+  [data-drop~="shadow"] .panel-edge::after {
+    display: none;
+  }
+  [data-drop~="shadow"] .lift-shadow {
+    box-shadow: none;
   }
 
   /*
@@ -331,9 +621,10 @@
   /*
    * Film grain.
    *
-   * A near-black ground renders as flat dead space on a good screen. A trace of
-   * grain gives it a surface, and ties the whole site to the "shot on film"
-   * register the photography already has.
+   * On paper, grain is the tooth of the sheet: a trace of texture that keeps
+   * the ivory from reading as a flat screen colour, and ties the pages to the
+   * "shot on film" register the photography already has. (It was first put
+   * here for the dark site, where a near-black ground rendered as dead space.)
    *
    * Deliberately STATIC. Real film grain shimmers, but animating it means
    * repainting the full viewport every frame — the single most expensive thing
@@ -344,6 +635,12 @@
    * enough to feel, far too little to touch text contrast. axe cannot see an
    * overlay like this, so the number is conservative by intent rather than by
    * measurement.
+   *
+   * A paper retune was tried in stage 4 (the tile's contrast stretched so ivory
+   * would show fibre). Read on the worst pixel under type it failed: the dark
+   * specks took tertiary text to 4.41:1 on the footer's legal line, and tertiary
+   * has only 9% headroom above AA. So the shipped tile stands; stage 6 re-tunes
+   * grain with scripts/paper-legibility.mjs in the gate to say how far it can go.
    */
   .grain {
     position: fixed;
@@ -354,24 +651,14 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
     background-repeat: repeat;
   }
-
-  /*
-   * Ambient light pools — the "photography is the only light" idea extended to
-   * the empty ground between scenes.
-   *
-   * Bone, not gold. Gold is the one accent and it is spent once per screen; a
-   * gold haze behind every section would quietly break that rule. This reads as
-   * light rather than as colour, which is the point.
-   */
-  .glow {
-    position: absolute;
-    pointer-events: none;
-    background: radial-gradient(
-      ellipse at center,
-      color-mix(in srgb, var(--color-bone) 7%, transparent) 0%,
-      transparent 68%
-    );
+  /* Third in the owner's drop order (src/lib/motion-tier.ts). */
+  [data-drop~="grain"] .grain {
+    display: none;
   }
+
+  /* The ambient light pools (.glow) were deleted in stage 6 with their two
+     uses (Statement, Footer): nothing blooms on paper. */
+
 }
 
 /* ---------------------------------------------------------------------------

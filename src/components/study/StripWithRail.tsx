@@ -45,8 +45,10 @@ export function StripWithRail() {
             key={event.slug}
             className="block w-[78vw] shrink-0 snap-start sm:w-[46vw] lg:w-[30vw] xl:w-[26rem]"
           >
+            {/* Type sits on the photograph, so the frame is a dark ground in miniature. */}
             <div
-              className={`relative overflow-hidden bg-graphite ${
+              data-ground="dark"
+              className={`relative overflow-hidden bg-[var(--surface-raised)] ${
                 i % 3 === 0 ? "aspect-[4/5]" : i % 3 === 1 ? "aspect-[4/3]" : "aspect-square"
               }`}
             >
@@ -59,12 +61,12 @@ export function StripWithRail() {
                 draggable={false}
                 className="grade object-cover"
               />
-              <div aria-hidden className="scrim-bottom absolute inset-0" />
+              <div aria-hidden className="wash-bottom absolute inset-0" />
               <div className="absolute inset-x-0 bottom-0 p-7">
-                <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-bone">
+                <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] font-light leading-none text-[var(--text-primary)]">
                   {event.title}
                 </h3>
-                <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-bone/60">
+                <p className="mt-2.5 text-[0.6875rem] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
                   {event.category}
                 </p>
               </div>
@@ -74,9 +76,9 @@ export function StripWithRail() {
       </div>
 
       {/* The proposal: one hairline, filled to show how far the shelf runs. */}
-      <div aria-hidden className="mt-6 h-px w-full bg-hair">
+      <div aria-hidden className="mt-6 h-px w-full bg-[var(--rule)]">
         <div
-          className="h-px bg-bone/70 transition-[width] duration-150 ease-out"
+          className="h-px bg-[var(--rule-strong)] transition-[width] duration-150 ease-out"
           style={{ width: `${Math.max(8, progress * 100)}%` }}
         />
       </div>

@@ -1,0 +1,279 @@
+{
+  "label": {
+    "source": "local build 840286c, next 15.5.25",
+    "framework": "next 15.5.25",
+    "runs": 3,
+    "drop": null,
+    "throttling": "simulate"
+  },
+  "rows": [
+    {
+      "preset": "desktop",
+      "label": "Home",
+      "route": "/",
+      "performance": 99,
+      "performanceWorst": 92,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.7 s",
+      "cls": "0.000",
+      "tbt": "30 ms",
+      "lcpElement": "<span data-hero-line=\"true\" class=\"block font-display text-hero font-light uppercase leading-[0.9] tracking-[…",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "network-dependency-tree-insight",
+        "total-byte-weight (Total size was 3,497 KiB)",
+        "image-delivery-insight (Est savings of 5 KiB)",
+        "render-blocking-insight",
+        "speed-index (1.3 s)"
+      ],
+      "runs": [
+        {
+          "performance": 92,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "30 ms",
+          "lcpElement": "<span data-hero-line=\"true\" class=\"block font-display text-hero font-light uppercase leading-[0.9] tracking-[…"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.7 s",
+          "cls": "0",
+          "tbt": "30 ms",
+          "lcpElement": "<span data-hero-line=\"true\" class=\"block font-display text-hero font-light uppercase leading-[0.9] tracking-[…"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.7 s",
+          "cls": "0",
+          "tbt": "30 ms",
+          "lcpElement": "<span data-hero-line=\"true\" class=\"block font-display text-hero font-light uppercase leading-[0.9] tracking-[…"
+        }
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Venues",
+      "route": "/venues",
+      "performance": 99,
+      "performanceWorst": 99,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0.000",
+      "tbt": "0 ms",
+      "lcpElement": "<p class=\"prose-editorial\">",
+      "failing": [
+        "color-contrast",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 210 ms)",
+        "image-delivery-insight (Est savings of 139 KiB)",
+        "legacy-javascript-insight (Est savings of 12 KiB)"
+      ],
+      "runs": [
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "0 ms",
+          "lcpElement": "<p class=\"prose-editorial\">"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "0 ms",
+          "lcpElement": "<p class=\"prose-editorial\">"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "0 ms",
+          "lcpElement": "<p class=\"prose-editorial\">"
+        }
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Venue detail",
+      "route": "/venues/thalasses",
+      "performance": 99,
+      "performanceWorst": 99,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0.001",
+      "tbt": "0 ms",
+      "lcpElement": "<img alt=\"Thalasses — White walls, blue water, and a private beach fifty metres away.\" fetchpriority=\"high\" de",
+      "failing": [
+        "color-contrast",
+        "forced-reflow-insight",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "network-dependency-tree-insight",
+        "image-delivery-insight (Est savings of 18 KiB)",
+        "render-blocking-insight"
+      ],
+      "runs": [
+        {
+          "performance": 99,
+          "lcp": "0.7 s",
+          "cls": "0.001",
+          "tbt": "0 ms",
+          "lcpElement": "<img alt=\"Thalasses — White walls, blue water, and a private beach fifty metres away.\" fetchpriority=\"high\" de"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0.001",
+          "tbt": "0 ms",
+          "lcpElement": "<img alt=\"Thalasses — White walls, blue water, and a private beach fifty metres away.\" fetchpriority=\"high\" de"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0.001",
+          "tbt": "0 ms",
+          "lcpElement": "<img alt=\"Thalasses — White walls, blue water, and a private beach fifty metres away.\" fetchpriority=\"high\" de"
+        }
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Signature Events",
+      "route": "/events",
+      "performance": 99,
+      "performanceWorst": 99,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0.000",
+      "tbt": "0 ms",
+      "lcpElement": "<span class=\"inline-block\">",
+      "failing": [
+        "color-contrast",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 210 ms)",
+        "image-delivery-insight (Est savings of 567 KiB)"
+      ],
+      "runs": [
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "0 ms",
+          "lcpElement": "<span class=\"inline-block\">"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "0 ms",
+          "lcpElement": "<span class=\"inline-block\">"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "0 ms",
+          "lcpElement": "<span class=\"inline-block\">"
+        }
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Wedding Guide",
+      "route": "/wedding-guide",
+      "performance": 99,
+      "performanceWorst": 99,
+      "accessibility": 95,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0.001",
+      "tbt": "0 ms",
+      "lcpElement": "<span class=\"inline-block\">",
+      "failing": [
+        "color-contrast",
+        "heading-order",
+        "forced-reflow-insight",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 210 ms)"
+      ],
+      "runs": [
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0.001",
+          "tbt": "0 ms",
+          "lcpElement": "<span class=\"inline-block\">"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0.001",
+          "tbt": "0 ms",
+          "lcpElement": "<span class=\"inline-block\">"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0.001",
+          "tbt": "0 ms",
+          "lcpElement": "<span class=\"inline-block\">"
+        }
+      ]
+    },
+    {
+      "preset": "desktop",
+      "label": "Contact",
+      "route": "/contact",
+      "performance": 99,
+      "performanceWorst": 99,
+      "accessibility": 96,
+      "bestPractices": 100,
+      "seo": 100,
+      "lcp": "0.6 s",
+      "cls": "0.000",
+      "tbt": "0 ms",
+      "lcpElement": "<p class=\"prose-editorial\">",
+      "failing": [
+        "color-contrast",
+        "legacy-javascript-insight (Est savings of 12 KiB)",
+        "network-dependency-tree-insight",
+        "render-blocking-insight (Est savings of 210 ms)"
+      ],
+      "runs": [
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "0 ms",
+          "lcpElement": "<p class=\"prose-editorial\">"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "0 ms",
+          "lcpElement": "<p class=\"prose-editorial\">"
+        },
+        {
+          "performance": 99,
+          "lcp": "0.6 s",
+          "cls": "0",
+          "tbt": "0 ms",
+          "lcpElement": "<p class=\"prose-editorial\">"
+        }
+      ]
+    }
+  ]
+}

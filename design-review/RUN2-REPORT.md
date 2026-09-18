@@ -76,7 +76,8 @@ Each is now a thing you can look at, with numbers. **One word answers each.**
 — both forms side by side, same fields, same order, same ground. `noindex`,
 excluded from the sitemap, and not linked from the site.
 Captures: [`design-review/study/`](study/) at 1440 and 390, plus the prototype's
-validation and success states.
+validation and success states. *(Those captures were removed from branch
+`aegean` in stage 7; they live in `main`'s history.)*
 
 **The prototype is not connected and says so on its face.** Submitting shows a
 stub. Nothing is sent anywhere, there is no mail provider and no key.
