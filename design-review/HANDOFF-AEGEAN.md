@@ -94,7 +94,7 @@ from the branch; before/after pairs for every route at 1440 and 390 in
 on the final build, mobile at drop level 0: every route over the floor (Home 87);
 desktop 99 everywhere; the published `main` measured the same way beside it. New
 beside the gate: the seal matrix (`npm run audit:seal`, run after a push, 96/96
-sealed), the CSP harness (`npm run audit:csp`, before any headers change; 248 of 248 runs clean on the final build) and the
+sealed), the CSP harness (`npm run audit:csp`; 248 of 248 runs clean on the final build at stage 7, by injection. Since 2026-09-19 the policy ships Report-Only, so `CSP_OBSERVE=1` measures the header the server actually sends and is what proves the alias clean) and the
 `/media` pixel guard (`npm run audit:pixels`, enforced in the boundary script and
 the pre-push hook — a published file never changes its pixels under its old name
 without a verdict in `design-review/media-pixel-verdicts.json`). CI runs with a

@@ -17,33 +17,59 @@
  *                  rule that reaches them is a rule matching more than it says.
  *   nowhere        X-Powered-By.
  *
- * The Content-Security-Policy is not asserted here yet: it ships next, in
- * Report-Only, as its own owner-approved commit. When it does, add it to
- * DOCUMENT_HEADERS with the disposition of the day.
+ *   CSP            documents carry Content-Security-Policy-Report-Only, exactly
+ *                  the policy next.config.ts exports, and **no** enforcing
+ *                  Content-Security-Policy: enforcing is the owner's word,
+ *                  after a week of clean reports.
+ *   the optimiser  /_next/image keeps the sandbox CSP Next sets on it (an
+ *                  enforcing one, and not ours). It is why DOCUMENTS excludes
+ *                  the optimiser, and clobbering it would be a real
+ *                  regression, so it is asserted present rather than absent.
+ *
+ * The expected values are imported from next.config.ts's SECURITY export, so
+ * the config and this check cannot drift apart into two different truths.
  *
  * Usage: npm run audit:headers        (SHOTS_BASE, or the gate's own server)
  */
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const BASE = process.env.SHOTS_BASE ?? "http://localhost:3004";
 
+/* The values the site actually ships, read from the config that ships them. */
+let SECURITY;
+try {
+  ({ SECURITY } = await import(pathToFileURL(path.join(ROOT, "next.config.ts")).href));
+} catch (err) {
+  console.error(`headers: could not read SECURITY from next.config.ts — ${err?.message ?? err}`);
+  process.exit(1);
+}
+
 /** Every response, whatever it is. */
 const EVERY = [
   ["x-content-type-options", "nosniff"],
-  ["strict-transport-security", "max-age=63072000"],
+  ["strict-transport-security", SECURITY.HSTS_VALUE],
 ];
 
 /** Documents only. */
 const DOCUMENT = [
+  ["content-security-policy-report-only", SECURITY.CSP],
   ["x-frame-options", "DENY"],
   ["referrer-policy", "strict-origin-when-cross-origin"],
   ["permissions-policy", 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self "https://www.google.com")'],
   ["cross-origin-opener-policy", "same-origin"],
 ];
+
+/*
+ * Next's image optimiser sets this on every optimised image, in `next start`
+ * and on Vercel alike. It is Next's, not ours, and it is the reason the
+ * DOCUMENTS rule in next.config.ts excludes `_next/image`.
+ */
+const OPTIMISER = `/_next/image?url=${encodeURIComponent("/media/mdGEOR3108.jpg")}&w=640&q=75`;
+const IMAGE_SANDBOX_CSP = "script-src 'none'; frame-src 'none'; sandbox;";
 
 const DOCUMENTS = [
   ["home", "/"],
@@ -56,7 +82,7 @@ const DOCUMENTS = [
 
 const NOT_DOCUMENTS = [
   ["media", "/media/mdGEOR3108.jpg"],
-  ["optimised image", `/_next/image?url=${encodeURIComponent("/media/mdGEOR3108.jpg")}&w=640&q=75`],
+  ["optimised image", OPTIMISER],
 ];
 
 let passed = 0;
@@ -116,6 +142,15 @@ for (const [label, route] of [...DOCUMENTS, ...NOT_DOCUMENTS]) {
   const hsts = res.headers.get("strict-transport-security") ?? "";
   check(`${label}: HSTS has no includeSubDomains or preload`, !/includesubdomains|preload/i.test(hsts), hsts || "(absent)");
   check(`${label}: no X-Powered-By`, !res.headers.get("x-powered-by"), res.headers.get("x-powered-by") ?? "absent");
+  /* Enforcing OUR policy is the owner's word, after a week of clean reports.
+     The optimiser's own sandbox is a different header from a different author:
+     it must survive, so it is checked for rather than checked against. */
+  const enforcing = res.headers.get("content-security-policy");
+  if (route === OPTIMISER) {
+    check(`${label}: Next's sandbox CSP is intact`, enforcing === IMAGE_SANDBOX_CSP, enforcing ?? "(absent)");
+  } else {
+    check(`${label}: the policy is Report-Only, not enforcing`, enforcing === null, enforcing ?? "absent");
+  }
 
   for (const [key, value] of DOCUMENT) {
     const got = res.headers.get(key);
