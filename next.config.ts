@@ -20,6 +20,54 @@ const HSTS_VALUE = "max-age=63072000";
  */
 const DOCUMENTS = "/:path((?!_next/static|_next/image|media/|assets/|images/|favicon.ico).*)";
 
+/** The only third-party documents this site embeds. */
+const FRAME_ORIGINS = [
+  "https://forms.monday.com", // content/site.ts contact.formEmbed
+  "https://www.google.com", // content/venues.ts mapEmbed (/maps/embed)
+];
+
+/**
+ * The Content Security Policy, `design-review/BRIEF-AUDIT.md` section 4.2, and
+ * the exact policy `scripts/csp-harness.mjs` measured over 248 runs before any
+ * of it was sent: every route, both widths, both motion modes, report and
+ * enforce, with no violation beyond the two deliberate probes and every embed
+ * still loading (`design-review/csp-harness.md`).
+ *
+ * `'unsafe-inline'` in `script-src` is deliberate: the App Router streams its
+ * RSC payload as inline `self.__next_f.push` scripts that differ per route and
+ * per build, so they cannot be hashed, and a nonce would force every page to
+ * render dynamically. `style-src` needs it for next/image's fill positioning
+ * and the scrims. The policy is therefore about *origins*, not inline code:
+ * nothing loads from anywhere but this site and those two frames.
+ *
+ * It ships **Report-Only** (owner, 2026-09-19). Enforcing it is a separate
+ * commit, on the owner's word, after a week of clean reports.
+ */
+const CSP = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "media-src 'self'",
+  "connect-src 'self'",
+  `frame-src ${FRAME_ORIGINS.join(" ")}`,
+  "worker-src 'none'",
+  "manifest-src 'self'",
+  "object-src 'none'",
+  "base-uri 'none'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join("; ");
+
+/**
+ * The same values the tools assert, so there is one source of truth rather than
+ * three copies drifting apart: `scripts/headers-audit.mjs` (the gate's
+ * `headers` check) and `scripts/csp-harness.mjs` both read this. Next itself
+ * only ever reads the default export below.
+ */
+export const SECURITY = { HSTS_VALUE, DOCUMENTS, FRAME_ORIGINS, CSP } as const;
+
 const nextConfig: NextConfig = {
   /*
    * There was a `distDir` override here, sending production builds to
@@ -107,6 +155,10 @@ const nextConfig: NextConfig = {
            its own sandbox CSP), the photographs, the brochure or the favicon. */
         source: DOCUMENTS,
         headers: [
+          /* Report-Only: the browser reports what the policy would have blocked
+             and blocks nothing. Enforcing is its own commit, on the owner's
+             word, after a week of clean reports. */
+          { key: "Content-Security-Policy-Report-Only", value: CSP },
           { key: "X-Frame-Options", value: "DENY" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           /* No autoplay token: the hero film is muted. fullscreen is delegated
@@ -119,9 +171,9 @@ const nextConfig: NextConfig = {
           { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
           /*
            * Deliberately absent, each for a reason:
-           *   - Content-Security-Policy: ships next, Report-Only first, on the
-           *     owner's order. The harness measured the policy clean over 248
-           *     runs (design-review/csp-harness.md) before anything was sent.
+           *   - Content-Security-Policy (enforcing): the owner's word, after a
+           *     week of clean Report-Only reports. Until then the header above
+           *     reports and blocks nothing.
            *   - COEP: would block the Monday form and the Google map.
            *   - CORP: optional here, and never on media.
            */

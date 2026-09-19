@@ -66,10 +66,23 @@
  *
  * Writes design-review/csp-harness.json and design-review/csp-harness.md.
  *
+ * Observe mode (CSP_OBSERVE=1). Since 2026-09-19 the policy actually ships, in
+ * Report-Only, so it no longer has to be injected to be measured. In observe
+ * mode the harness injects nothing at all: it passes every response through
+ * untouched, reads the `Content-Security-Policy-Report-Only` header the server
+ * itself sent, and fails any run where that header is missing, differs from the
+ * policy `next.config.ts` exports, or is joined by an enforcing
+ * `Content-Security-Policy` — enforcing is the owner's word, after a week of
+ * clean reports. The positive controls still fire, against the real header, so
+ * a run that measured nothing still cannot pass. This is the mode that proves
+ * the alias clean; injection mode stays for measuring a policy before it ships.
+ *
  * Usage: node scripts/csp-harness.mjs                      (server at SHOTS_BASE)
  *        ENGINES=chromium,firefox,webkit node scripts/csp-harness.mjs
+ *        CSP_OBSERVE=1 SHOTS_BASE=https://... node scripts/csp-harness.mjs
  * Optional:
- *   CSP_DISPOSITIONS=report,enforce   either or both (default both)
+ *   CSP_DISPOSITIONS=report,enforce   either or both (default both; observe mode
+ *                                     measures whatever the server sends)
  *   CSP_ROUTES=/,/contact             narrow the routes; the report is labelled partial
  *   CSP_CONCURRENCY=N                 contexts at once per engine, 1-8 (default 1)
  */
@@ -77,7 +90,7 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { chromium, firefox, webkit } from "playwright";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -114,9 +127,36 @@ const HEADER_KEYS = {
   report: "Content-Security-Policy-Report-Only",
   enforce: "Content-Security-Policy",
 };
-const DISPOSITIONS = list(process.env.CSP_DISPOSITIONS ?? "report,enforce").map((s) => s.toLowerCase());
+/*
+ * Observe mode measures what the server sends; there is nothing to choose a
+ * disposition for, and asking for one would suggest the harness could change
+ * what ships. The matrix therefore has a single disposition, and it is the
+ * server's.
+ */
+const OBSERVE = process.env.CSP_OBSERVE === "1";
+if (OBSERVE && process.env.CSP_DISPOSITIONS) {
+  usage("CSP_OBSERVE=1 measures the disposition the server sends; CSP_DISPOSITIONS cannot choose it");
+}
+const DISPOSITIONS = OBSERVE
+  ? ["report"]
+  : list(process.env.CSP_DISPOSITIONS ?? "report,enforce").map((s) => s.toLowerCase());
 if (!DISPOSITIONS.length) usage("CSP_DISPOSITIONS is empty (report, enforce)");
 for (const d of DISPOSITIONS) if (!(d in HEADER_KEYS)) usage(`CSP_DISPOSITIONS: unknown disposition "${d}" (report, enforce)`);
+
+/*
+ * The policy the site actually ships, read from the config that ships it, so
+ * observe mode compares the served header against one source of truth rather
+ * than a fourth copy. `scripts/headers-audit.mjs` reads the same export.
+ */
+let SHIPPED = null;
+try {
+  ({ SECURITY: SHIPPED } = await import(pathToFileURL(path.join(ROOT, "next.config.ts")).href));
+} catch (e) {
+  if (OBSERVE) usage(`CSP_OBSERVE=1 needs next.config.ts's SECURITY export — ${String(e?.message ?? e).slice(0, 200)}`);
+}
+if (OBSERVE && /'unsafe-eval'/.test(SHIPPED?.CSP ?? "")) {
+  usage("next.config.ts produced its development policy ('unsafe-eval'); run with NODE_ENV unset or production");
+}
 
 const CONCURRENCY = Number(process.env.CSP_CONCURRENCY ?? 1);
 if (!Number.isInteger(CONCURRENCY) || CONCURRENCY < 1 || CONCURRENCY > 8) {
@@ -147,6 +187,15 @@ const CSP = [
   "form-action 'self'",
   "frame-ancestors 'none'",
 ].join("; ");
+
+/*
+ * In observe mode the served header is the policy, and the copy above is only
+ * the stage-7 record of what was measured before anything shipped. A drift
+ * between them is reported rather than failed here: the gate's `headers` check
+ * (scripts/headers-audit.mjs) is what holds next.config.ts to its word.
+ */
+const EXPECTED_POLICY = OBSERVE ? SHIPPED.CSP : CSP;
+const POLICY_DRIFT = SHIPPED && SHIPPED.CSP !== CSP ? { measured: CSP, shipped: SHIPPED.CSP } : null;
 
 /* §4.2's DOCUMENTS header set beside the policy. X-Content-Type-Options is
    /:path* there; nosniff changes behaviour only for script and style
@@ -420,6 +469,23 @@ async function handle(route, run) {
       const res = await fetchBase(route, { headers, maxRedirects: 0 }, run);
       const served = res.headers();
       if ("content-security-policy" in served || "content-security-policy-report-only" in served) run.servedPolicyReplaced = true;
+      if (OBSERVE) {
+        /* The document this run is about, not a redirect on the way to it. */
+        if (new URL(url).pathname === run.route || run.servedPolicy === null) {
+          run.servedPolicy = served["content-security-policy-report-only"] ?? null;
+          run.servedEnforcing = served["content-security-policy"] ?? null;
+        }
+        if (run.expectedEmbeds === null && new URL(url).pathname === run.route && /text\/html/i.test(served["content-type"] ?? "")) {
+          const html = await res.text();
+          run.expectedEmbeds = Object.fromEntries(EMBEDS.map((e) => [e.kind, (html.match(e.marker) ?? []).length]));
+        }
+        /* Nothing added, nothing removed but the two headers route.fetch's
+           decoded body would contradict: the browser sees what a visitor sees. */
+        const asServed = Object.fromEntries(
+          Object.entries(served).filter(([k]) => !["content-encoding", "content-length", "transfer-encoding"].includes(k.toLowerCase())),
+        );
+        return await route.fulfill({ response: res, headers: asServed });
+      }
       if (run.expectedEmbeds === null && new URL(url).pathname === run.route && /text\/html/i.test(served["content-type"] ?? "")) {
         const html = await res.text();
         run.expectedEmbeds = Object.fromEntries(EMBEDS.map((e) => [e.kind, (html.match(e.marker) ?? []).length]));
@@ -429,6 +495,9 @@ async function handle(route, run) {
     }
 
     if (type === "script" || type === "stylesheet") {
+      /* Observe mode adds no nosniff of its own; the server's is the one that
+         matters, and the gate's `headers` check proves it is there. */
+      if (OBSERVE) return await route.continue(headers ? { headers } : undefined);
       const res = await fetchBase(route, { headers, maxRedirects: 0 }, run);
       const kept =Object.fromEntries(Object.entries(res.headers()).filter(([k]) => !DROP_HEADERS.has(k.toLowerCase())));
       return await route.fulfill({ response: res, headers: { ...kept, "x-content-type-options": "nosniff" } });
@@ -617,6 +686,8 @@ function newRun(spec) {
     error: null,
     expectedEmbeds: null,
     servedPolicyReplaced: false,
+    servedPolicy: null,
+    servedEnforcing: null,
     handlerErrors: [],
     transportRetries: 0,
     embedNetErrors: [],
@@ -793,6 +864,12 @@ function finalise(run) {
      renders both (src/app/contact/page.tsx:163 and :186). */
   if (run.route === "/contact" && run.status === 200 && run.expectedEmbeds && (!run.expectedEmbeds.monday || !run.expectedEmbeds.maps)) {
     reasons.push("facade markers not found in /contact's HTML (did MondayForm.tsx or MapEmbed.tsx change?)");
+  }
+  if (OBSERVE) {
+    /* A run that saw no policy measured nothing, and nothing is never a pass. */
+    if (run.servedPolicy === null) reasons.push(`no ${HEADER_KEYS.report} header was served`);
+    else if (run.servedPolicy !== EXPECTED_POLICY) reasons.push(`the served policy is not the one next.config.ts exports: ${run.servedPolicy}`);
+    if (run.servedEnforcing !== null) reasons.push(`an enforcing ${HEADER_KEYS.enforce} was served; enforcing is the owner's word: ${run.servedEnforcing}`);
   }
   if (run.console.mimeRefusals.length) reasons.push(`nosniff refused ${run.console.mimeRefusals.length} same-origin response(s): ${run.console.mimeRefusals[0]}`);
   if (run.handlerErrors.length) reasons.push(`harness route handler failed: ${run.handlerErrors[0]}`);
