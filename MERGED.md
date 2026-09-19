@@ -43,27 +43,42 @@ The launch is **still parked**. `WAITING-FOR-DNS.md` governs it and is unchanged
 `domisignature.com` and `www` still resolve to the old host, so the public domain
 serves none of this yet. Nothing here touched DNS, domains or Vercel settings.
 
-## Rollback, if it is ever wanted
+## Rollback is git
 
-`main`'s previous commit is `1757bbe` and its production deployment
-(`61pms10qu`) is still there — it is the one production deployment stage 8 kept,
-and it serves pre-strip media, which is why it is the owner's call whether it
-stays. Two ways back, in the owner's hands:
+The owner's decision, 2026-09-19: **rollback lives in git**, and nothing serving
+pre-strip media stays reachable. `61pms10qu` — the last production deployment of
+the old `main` (`1757bbe`), and the last place still serving photographs with GPS
+and camera serials — was deleted with the CLI that day, after the alias was
+confirmed to point at the new production build (`1co1gmsat`). It answers 404, and
+the alias still serves the Aegean light build. One production deployment remains,
+and every live deployment now serves stripped media.
 
-1. Vercel: promote `61pms10qu` again (instant, and production promotion is the
-   owner's alone).
-2. Git: one snapshot of `1757bbe`'s tree on top of the current tip, built the way
-   this merge was built. The guard allows that shape; it never allows a force-push.
+So the way back is to rebuild, not to promote:
+
+1. `1757bbe` is still in the repository, and so is every commit before it. Check
+   one out, and Vercel builds it like any other.
+2. To put it back on `main`: one snapshot of that tree on top of the current tip,
+   built the way this merge was built. The guard allows that shape, and only that
+   shape; it never allows a force-push, and it never allows history to be rewritten
+   to hide what shipped.
+
+The trade the owner took: no instant promote-back, in exchange for no reachable
+copy of the unstripped photographs.
 
 ## What is still open
 
-- **The old production deployment `61pms10qu`** serves pre-strip media on its own
-  URL. Deleting it removes the last rollback target.
-- **Next 16** on its own branch before 15.x support ends on 21 October 2026: the
-  one advisory left (`next` through its bundled `postcss`). The `wordmark` gate
-  check must be taught Turbopack's CSS layout on that branch.
-- **A figures audit** joins the gate: no number rendered on the site that does not
-  trace to `content/`. The `claims` check never covered figures.
+- **The security headers**, in the owner's order (2026-09-19): the static set
+  first, as its own commit on `main`; then the Content Security Policy in
+  Report-Only, with the harness proving zero violations on the alias; HSTS without
+  `includeSubDomains` while `webmail`, `ftp` and `mail` resolve to the old host.
+  Enforcing the policy waits for the owner's word, after a week of clean reports.
+- **Next 16** is open on branch `next16` (`design-review/NEXT16.md`): it builds on
+  Turbopack, the gate is 20 of 21 and `npm audit --omit=dev` reports 0
+  vulnerabilities. The red is 13 React Hooks findings in the motion and hydration
+  layer, kept for a dedicated session with the gate, the hero states and INP behind
+  each, before 15.x support ends on 21 October 2026.
+- **A figures audit** is in the gate since 2026-09-19 (`npm run audit:figures`, the
+  twenty-first check): no number the site renders is typed into a component.
 - **The history rewrite** (earlier `origin/aegean` snapshots still carry pre-strip
   files) is deferred until the repository is private — the owner's.
 - **Deployment Protection** is the owner's.

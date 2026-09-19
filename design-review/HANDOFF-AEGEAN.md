@@ -22,10 +22,11 @@ touch the siblings' processes or their ports (3000, 3005, 3104). Local servers
 bind 127.0.0.1 only. `npm run build` is `scripts/build.mjs`: tsc first,
 then Next, then a freshness check; a silent death is named as one.
 
-**Gate:** twenty-one checks (`npm run qa`, `PORT` env sets the server port); stage 8
+**Gate:** twenty-two checks (`npm run qa`, `PORT` env sets the server port); stage 8
 added `wordmark` (the footer's drawn wordmark matches `site.name` and the built
 font) and, after the merge, `figures` (every rendered number derives from
-`content/` or is allowed by name).
+`content/` or is allowed by name) and `headers` (the security headers ship, and
+only where they should).
 `metadata` fails any tracked file carrying GPS, a camera serial or an embedded
 thumbnail; stage 6 added `motion-tier` (the drop switch applies exactly its
 prefix on a phone, nothing on desktop), `focus-motion` (motion on: a focused

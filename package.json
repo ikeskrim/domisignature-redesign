@@ -19,6 +19,7 @@
     "audit:media": "node scripts/media-audit.mjs",
     "audit:claims": "node scripts/claims-audit.mjs",
     "audit:figures": "node scripts/figures-audit.mjs",
+    "audit:headers": "node scripts/headers-audit.mjs",
     "audit:keyboard": "node scripts/keyboard-audit.mjs",
     "audit:focus": "node scripts/focus-ring.mjs",
     "audit:layout": "node scripts/layout-audit.mjs",

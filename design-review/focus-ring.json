@@ -1099,7 +1099,7 @@
         "worst": 13.97,
         "failSides": [],
         "strict": "0/664",
-        "area": "4002px² changed, 2756px² required"
+        "area": "4008px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 2 of 22 full screen",
@@ -1107,7 +1107,7 @@
         "outline": "rgb(39, 33, 27)",
         "positions": 966,
         "failing": 0,
-        "worst": 13.97,
+        "worst": 14.05,
         "failSides": [],
         "strict": "0/966",
         "area": "5820px² changed, 3966px² required"
@@ -1121,7 +1121,7 @@
         "worst": 13.97,
         "failSides": [],
         "strict": "0/664",
-        "area": "4008px² changed, 2757px² required"
+        "area": "4002px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 4 of 22 full screen",
@@ -1143,7 +1143,7 @@
         "worst": 13.97,
         "failSides": [],
         "strict": "0/664",
-        "area": "4002px² changed, 2757px² required"
+        "area": "4008px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 6 of 22 full screen",
@@ -1165,7 +1165,7 @@
         "worst": 13.97,
         "failSides": [],
         "strict": "0/664",
-        "area": "4008px² changed, 2757px² required"
+        "area": "4002px² changed, 2757px² required"
       },
       {
         "label": "<button> Open image 8 of 22 full screen",

@@ -1,13 +1,13 @@
 # QA toolkit
 
-Twenty-one automated checks, one command, and a GitHub Action that runs them on every
+Twenty-two automated checks, one command, and a GitHub Action that runs them on every
 push. This is what stops the site quietly rotting.
 
 ```bash
 npm run qa
 ```
 
-Green means all twenty-one passed. It exits non-zero if any failed, so it is safe to
+Green means all twenty-two passed. It exits non-zero if any failed, so it is safe to
 put in front of anything.
 
 `npm run qa` builds nothing — run `npm run build` first, or the server-backed
@@ -40,6 +40,7 @@ half will be measuring a stale build. CI does the build itself.
 | --- | --- | --- |
 | **wordmark** | `scripts/wordmark-outline.mjs` | The footer's giant wordmark is a drawing (stage 8): Playfair Display's own outlines of `site.name`, laid out as the text was, in `src/components/layout/wordmark-outline.ts`. This regenerates the drawing from the font the build ships and the name in `content/site.ts` and fails if the committed file differs, so a renamed site or a new font version never leaves a stale drawing. It reads the build, not the server; `node scripts/wordmark-outline.mjs --write` regenerates. |
 | **assets** | `scripts/asset-check.mjs` | Every asset the rendered pages request returns 200. Not "the file exists" — what the browser actually asks for, including the responsive image variants Next generates. |
+| **headers** | `scripts/headers-audit.mjs` | **The security headers ship, and only where they should.** `next.config.ts` declares them; this asks a real server for a document, a build asset, an optimised image and a photograph, and checks what came back. Everywhere: `nosniff`, and HSTS **without `includeSubDomains` or `preload`** — `webmail`, `ftp` and `mail` are independent records still on the old host, and that promise would take them down with it (owner, 2026-09-19). Documents only: `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy` — and it fails if those reach an asset, because a rule that matches more than it says is the bug. Nowhere: `X-Powered-By`. It also reads the compiled rule out of `routes-manifest.json`, since a path regex that matches nothing passes every request and protects nothing. The CSP is not asserted here yet: it ships next, Report-Only first. |
 | **a11y** | `scripts/a11y.mjs` | axe-core finds **zero** violations across every route, at 390 and 1440, on the WCAG tags **and axe's best-practice set** (widened at stage 8: without it the run could not see `heading-order`, which Lighthouse's accessibility score counts, and `/wedding-guide` scored 98 for a skipped level while this check stayed green). Zero is the standard, not a target. Only third-party frames are excluded; since stage 8 there is no logotype exemption. |
 | **arrival** | `scripts/arrival-legibility.mjs` | The arrival's type stays legible over the photograph it sits on. The scene is rendered twice — once as it is, once with the type hidden — and every pixel behind each text block is scored against that text's own computed colour, with the **worst** one reported. Bars: 4.5:1 for the standfirst, 3:1 for the display word and the figures. Replaced the graffiti check, which asked whether that same seascape's graffitied rock stayed hidden inside the ink band; the ink band went with the light ground, and the live risk inverted with it. The rock was re-checked on the real composite before the swap and still does not resolve under the ivory wash. |
 | **ground** | `scripts/ground-verify.mjs` | The semantic switch resolves, read from the browser's cascade rather than the token file: every role clears its bar on both ladders, gold is the focus on neither, and — on every route — every visible text element's colour is one of the text roles of its *nearest* ground. That last part catches the failure CSS inheritance makes invisible: an unroled child inside a dark frame keeping its section's paper ink. |
