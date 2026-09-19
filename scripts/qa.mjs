@@ -57,6 +57,10 @@ const SERVED_CHECKS = [
      server, so it sits here, where a build is guaranteed. */
   ["wordmark", ["scripts/wordmark-outline.mjs"], "the footer wordmark drawing matches site.name and the font"],
   ["assets", ["scripts/asset-check.mjs"], "every asset the rendered pages request returns 200"],
+  /* The security headers, asserted on a real server rather than trusted from
+     next.config.ts: a header rule is a path regex, and a path regex can
+     silently match nothing. */
+  ["headers", ["scripts/headers-audit.mjs"], "the security headers ship, and only where they should"],
   ["a11y", ["scripts/a11y.mjs"], "axe-core finds zero violations"],
   /*
    * This slot used to hold the graffiti check, which asked whether a rock stayed
