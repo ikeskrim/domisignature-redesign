@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T09:02:16.735Z",
+  "generated": "2026-09-18T19:21:00.923Z",
   "spec": "design-review/BRIEF-AUDIT.md section 8 (stage-7 seal matrix); section 11, stage 7 item 6",
   "limits": {
     "imageWidth": 640,
@@ -10,7 +10,7 @@
   "hosts": [
     {
       "label": "alias",
-      "build": "pre-Aegean build (no data-ground on <html>)",
+      "build": "Aegean light build (<html data-ground=\"light\">)",
       "photo": {
         "path": "/media/mdGEOR3108.jpg",
         "source": "og:image of the home page"
@@ -27,7 +27,7 @@
           "cacheControl": "public, max-age=0, must-revalidate",
           "location": null,
           "noindex": "ok",
-          "ground": null,
+          "ground": "light",
           "ok": true,
           "reasons": []
         },
@@ -42,7 +42,7 @@
           "cacheControl": "public, max-age=0, must-revalidate",
           "location": null,
           "noindex": "ok",
-          "ground": null,
+          "ground": "light",
           "ok": true,
           "reasons": []
         },
@@ -57,7 +57,7 @@
           "cacheControl": "public, max-age=0, must-revalidate",
           "location": null,
           "noindex": "ok",
-          "ground": null,
+          "ground": "light",
           "ok": true,
           "reasons": []
         },
@@ -72,7 +72,7 @@
           "cacheControl": "public, max-age=0, must-revalidate",
           "location": null,
           "noindex": "ok",
-          "ground": null,
+          "ground": "light",
           "ok": true,
           "reasons": []
         },
@@ -87,7 +87,7 @@
           "cacheControl": "public, max-age=0, must-revalidate",
           "location": null,
           "noindex": "ok",
-          "ground": null,
+          "ground": "light",
           "ok": true,
           "reasons": []
         },
@@ -102,7 +102,7 @@
           "cacheControl": "public, max-age=0, must-revalidate",
           "location": null,
           "noindex": "ok",
-          "ground": null,
+          "ground": "light",
           "ok": true,
           "reasons": []
         },
@@ -117,7 +117,22 @@
           "cacheControl": "public, max-age=0, must-revalidate",
           "location": null,
           "noindex": "ok",
-          "ground": null,
+          "ground": "light",
+          "ok": true,
+          "reasons": []
+        },
+        {
+          "id": "services-modal",
+          "kind": "page",
+          "path": "/services?modal",
+          "expect": 200,
+          "status": 200,
+          "contentType": "text/html",
+          "xRobotsTag": "noindex, nofollow",
+          "cacheControl": "public, max-age=0, must-revalidate",
+          "location": null,
+          "noindex": "ok",
+          "ground": "light",
           "ok": true,
           "reasons": []
         },
@@ -146,7 +161,7 @@
           "cacheControl": "public, max-age=0, must-revalidate",
           "location": null,
           "noindex": "ok",
-          "ground": null,
+          "ground": "light",
           "ok": true,
           "reasons": []
         },
@@ -260,13 +275,7 @@
           "ok": true,
           "reasons": []
         }
-      ],
-      "modalRecorded": {
-        "path": "/services?modal",
-        "status": 307,
-        "location": "/services?modal",
-        "error": null
-      }
+      ]
     },
     {
       "label": "preview",
@@ -541,7 +550,7 @@
   "notAsserted": [
     "/services?modal on a pre-Aegean build (the alias until the merge): main still carries the rule that redirects it to itself, so its answer is recorded, not asserted. On the Aegean build it must answer 200."
   ],
-  "passed": 100,
+  "passed": 103,
   "failed": 0,
   "failures": []
 }

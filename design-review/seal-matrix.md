@@ -1,6 +1,6 @@
 # Seal matrix
 
-Stage 7, as specified in `design-review/BRIEF-AUDIT.md` section 8. Generated 2026-09-18T09:02:16.735Z by `node scripts/seal-matrix.mjs`. Result: **sealed** (100 checks passed).
+Stage 7, as specified in `design-review/BRIEF-AUDIT.md` section 8. Generated 2026-09-18T19:21:00.923Z by `node scripts/seal-matrix.mjs`. Result: **sealed** (103 checks passed).
 
 Hosts appear as labels only. `alias` is the production alias (`ALIAS_URL`, defaulting to the alias `scripts/alias-check.mjs` checks). `preview` is the host passed in `SEAL_PREVIEW`, which is never recorded. Redirect targets are paths.
 
@@ -8,23 +8,22 @@ What is asserted: every response that is not a 3xx carries `X-Robots-Tag` with `
 
 ## alias
 
-Build served: pre-Aegean build (no data-ground on <html>).
-
-`/services?modal` on this pre-Aegean build (recorded, not asserted): 307 -> /services?modal.
+Build served: Aegean light build (<html data-ground="light">).
 
 Probe photograph: `/media/mdGEOR3108.jpg` (og:image of the home page).
 
 | Probe | Path | Status | Content-Type | X-Robots-Tag | noindex | `<html data-ground>` | Result |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| home | `/` | 200 | text/html | noindex, nofollow | ok | (none) | ok |
-| venues | `/venues/thalasses` | 200 | text/html | noindex, nofollow | ok | (none) | ok |
-| events | `/events/sunset-by-the-pool` | 200 | text/html | noindex, nofollow | ok | (none) | ok |
-| services | `/services` | 200 | text/html | noindex, nofollow | ok | (none) | ok |
-| wedding-guide | `/wedding-guide` | 200 | text/html | noindex, nofollow | ok | (none) | ok |
-| about | `/about` | 200 | text/html | noindex, nofollow | ok | (none) | ok |
-| contact | `/contact` | 200 | text/html | noindex, nofollow | ok | (none) | ok |
+| home | `/` | 200 | text/html | noindex, nofollow | ok | light | ok |
+| venues | `/venues/thalasses` | 200 | text/html | noindex, nofollow | ok | light | ok |
+| events | `/events/sunset-by-the-pool` | 200 | text/html | noindex, nofollow | ok | light | ok |
+| services | `/services` | 200 | text/html | noindex, nofollow | ok | light | ok |
+| wedding-guide | `/wedding-guide` | 200 | text/html | noindex, nofollow | ok | light | ok |
+| about | `/about` | 200 | text/html | noindex, nofollow | ok | light | ok |
+| contact | `/contact` | 200 | text/html | noindex, nofollow | ok | light | ok |
+| services-modal | `/services?modal` | 200 | text/html | noindex, nofollow | ok | light | ok |
 | sitemap | `/sitemap.xml` | 200 | application/xml | noindex, nofollow | ok | n/a | ok |
-| not-found | `/seal-matrix-no-such-page` | 404 | text/html | noindex, nofollow | ok | (none) | ok |
+| not-found | `/seal-matrix-no-such-page` | 404 | text/html | noindex, nofollow | ok | light | ok |
 | next-image | `/_next/image?url=%2Fmedia%2FmdGEOR3108.jpg&w=640&q=75` | 200 | image/jpeg | noindex, nofollow | ok | n/a | ok |
 | media | `/media/mdGEOR3108.jpg` | 200 | image/jpeg | noindex, nofollow | ok | n/a | ok |
 | robots | `/robots.txt` | 200 | text/plain | noindex, nofollow | ok | n/a | ok |

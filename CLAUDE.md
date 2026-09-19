@@ -1,9 +1,11 @@
 # domisignature.com
 
 A luxury wedding-venue site: Next.js 15 App Router, TypeScript, Tailwind v4,
-GSAP + ScrollTrigger + Lenis, deployed on Vercel. Branch `aegean` carries the
-Aegean Bone light inversion; `main` is the verified dark palette and the parked
-launch.
+GSAP + ScrollTrigger + Lenis, deployed on Vercel. `main` carries the Aegean Bone
+light inversion since the stage-8 merge of 2026-09-18 (`MERGED.md`); `aegean` is
+the working branch, and `main` receives one snapshot per promotion, on the
+owner's word. The launch is still parked: `WAITING-FOR-DNS.md` governs it and the
+live domain still resolves to the old host.
 
 ## First
 
